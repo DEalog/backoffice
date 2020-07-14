@@ -1,0 +1,21 @@
+<header>
+  <%=
+    live_component @socket, DealogBackofficeWeb.NavigationComponent
+  %>
+</header>
+<main role="main" class="px-4 py-4">
+  <p class="alert alert-info" role="alert"
+    phx-click="lv:clear-flash"
+    phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+
+  <p class="alert alert-danger" role="alert"
+    phx-click="lv:clear-flash"
+    phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+
+  <%= @inner_content %>
+</main>
+<footer class="px-4 py-2 mt-2 border-t border-gray-200 bg-white text-sm">
+  <%=
+    live_component @socket, DealogBackofficeWeb.FooterComponent
+  %>
+</footer>

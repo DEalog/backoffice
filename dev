@@ -1,0 +1,182 @@
+#!/usr/bin/env bash
+
+function check_command {
+  local command=$1
+  command ${command} >/dev/null 2>&1
+  if [ "$?" != "0" ]; then
+    echo "⨯ ${command} not found"
+    echo "Please install ${command}!"
+    exit 1
+  fi
+  echo "✓ ${command} found"
+}
+
+function check_requirements {
+  check_command "docker"
+  check_command "mutagen"
+}
+
+function startup {
+  echo "Starting stack. This might take a while on the first run."
+  mutagen project start || mutagen project resume
+}
+
+function tail_logs {
+  docker-compose logs --follow
+}
+
+function shutdown {
+  echo "Shutting down..."
+  mutagen project pause
+  echo "done"
+}
+
+function run_start {
+  trap shutdown 2 3
+  check_requirements
+  startup
+  tail_logs
+}
+
+function run_restart {
+  mutagen project terminate
+  run_start
+}
+
+function run_clean {
+  mutagen project terminate
+  rm -fr _build deps assets/node_modules
+  docker-compose down --rmi=all --volumes
+}
+
+function run_tests {
+  docker-compose exec web mix test $@
+}
+
+function run_command {
+  local container_name=${1}
+  local command="${@:2}"
+  docker-compose exec ${container_name} bash -c "${command}"
+}
+
+function print_usage {
+  echo "Usage: ./dev [command] [args]"
+}
+
+function show_help {
+  cat  << EOF
+The following commands are supported:
+
+./dev start   # Start the development stack
+./dev restart # Restart the development stack
+./dev reset   # Reset the stack (including volumes and images)
+./dev test    # Run the tests
+./dev execute # Run arbitrary command in a container
+
+To get information about a single command use ./dev [command] --help
+EOF
+}
+
+function maybe_show_command_help {
+  if [ "${1}" == "--help" ]; then
+    return
+  fi
+  if [ "${2}" != "--help" ]; then
+    return
+  fi
+  case ${command} in
+    "start")
+      print_help_for_start
+      ;;
+    "restart")
+      print_help_for_restart
+      ;;
+    "reset")
+      print_help_for_reset
+      ;;
+    "test")
+      print_help_for_test
+      ;;
+    "execute")
+      print_help_for_execute
+      ;;
+    *) echo "No help found for '${command}'"
+  esac
+}
+
+function print_help_for_start {
+  cat << EOF
+# start
+
+The 'start' command checks if the required tools (Docker, Mutagen) are available.
+If so it will check and create or load the images needed for the application.
+It starts the application stack with all containers and opens the logs.
+Stop the command with ctrl-c. This will stop the stack.
+EOF
+}
+
+function print_help_for_restart {
+  cat << EOF
+# restart
+
+The 'restart' command will tear down the containers.
+The volumes and images will be preserved.
+EOF
+}
+
+function print_help_for_reset {
+  cat << EOF
+# reset
+
+The 'reset' command tears down the application and removes all built images and volumes.
+This is useful to start over.
+EOF
+}
+
+function print_help_for_test {
+  cat << EOF
+# test [test_file_path]
+
+The 'test' command runs the test suite.
+To run single tests the path can be passed as an argument.
+EOF
+}
+
+function print_help_for_execute {
+  cat << EOF
+# execute [container_name] [args]
+
+The 'execute' command runs arbitrary commands in the given container.
+F.e. you can run './dev execute web "cd assets && yarn add my_dep -D"' to add a javascript library.
+EOF
+}
+
+function main {
+  local command=${1}
+  local args="${@:2}"
+  maybe_show_command_help ${command} ${args}
+  case ${command} in
+    "--help")
+      show_help
+      ;;
+    "start")
+      run_start
+      ;;
+    "restart")
+      run_restart
+      ;;
+    "reset")
+      run_clean
+      run_start
+      ;;
+    "test")
+      run_tests ${args}
+      ;;
+    "execute")
+      run_command ${args}
+      ;;
+    *) print_usage; echo; show_help
+  esac
+}
+
+main $@

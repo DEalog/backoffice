@@ -1,0 +1,36 @@
+# Set up the Mutagen service and code volume before creating sessions.
+beforeCreate:
+  - docker-compose up --build --detach mutagen
+
+# Set up the main services after creating sessions. At this point, sessions will
+# have been established and code pushed to the shared volume.
+afterCreate:
+  - docker-compose up --build --detach
+
+# Pause services after pausing sessions.
+afterPause:
+  - docker-compose stop
+
+# Resume services before resume sessions.
+beforeResume:
+  - docker-compose start
+
+# Tear down all services and remove the code volume after terminating sessions.
+afterTerminate:
+  - docker-compose down
+
+forward:
+  web:
+    source: "tcp:localhost:4000"
+    destination: "docker://backoffice-mutagen:tcp:web:4000"
+
+# Synchronize code to the shared Docker volume via the Mutagen service.
+sync:
+  defaults:
+    flushOnCreate: true
+    ignore:
+      vcs: true
+  code:
+    alpha: "."
+    beta: "docker://backoffice-mutagen/app"
+    mode: "two-way-safe"
