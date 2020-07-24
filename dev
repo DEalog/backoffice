@@ -114,6 +114,7 @@ function maybe_show_command_help {
       ;;
     *) echo "No help found for '${command}'"
   esac
+  exit 0
 }
 
 function print_help_for_start {
