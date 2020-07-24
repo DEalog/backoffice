@@ -18,7 +18,6 @@ defmodule DealogBackofficeWeb.Router do
     pipe_through :browser
 
     live("/", DashboardLive, :index)
-    live "/page", PageLive, :index
   end
 
   # Other scopes may use custom stacks.

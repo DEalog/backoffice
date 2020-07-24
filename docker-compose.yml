@@ -9,6 +9,8 @@ services:
       - build:/app/_build
   web:
     build: ./docker/web
+    stdin_open: true
+    tty: true
     volumes:
       - app:/app
       - build:/app/_build

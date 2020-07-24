@@ -9,4 +9,4 @@ mix test
 
 cd assets/ && yarn install && cd -
 
-mix phx.server
+iex -S mix phx.server

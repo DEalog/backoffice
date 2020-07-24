@@ -21,6 +21,11 @@ function startup {
   mutagen project start || mutagen project resume
 }
 
+function attach_to_web {
+  echo "Attaching to the application container. Use Ctrl+p Ctrl+q to leave."
+  docker attach backoffice_web_1
+}
+
 function tail_logs {
   docker-compose logs --follow
 }
@@ -32,13 +37,16 @@ function shutdown {
 }
 
 function run_start {
-  trap shutdown 2 3
   check_requirements
   startup
-  tail_logs
+  attach_to_web
 }
 
-function run_restart {
+function run_stop {
+  shutdown
+}
+
+function run_rebuild {
   mutagen project terminate
   run_start
 }
@@ -68,9 +76,10 @@ function show_help {
 The following commands are supported:
 
 ./dev start   # Start the development stack
-./dev restart # Restart the development stack
+./dev stop    # Stop the development stack
+./dev rebuild # Rebuild the images and restart the development stack
 ./dev reset   # Reset the stack (including volumes and images)
-./dev test    # Run the tests
+./dev test    # Run the (Elixir) tests
 ./dev execute # Run arbitrary command in a container
 
 To get information about a single command use ./dev [command] --help
@@ -88,8 +97,11 @@ function maybe_show_command_help {
     "start")
       print_help_for_start
       ;;
-    "restart")
-      print_help_for_restart
+    "stop")
+      print_help_for_stop
+      ;;
+    "rebuild")
+      print_help_for_rebuild
       ;;
     "reset")
       print_help_for_reset
@@ -115,11 +127,19 @@ Stop the command with ctrl-c. This will stop the stack.
 EOF
 }
 
-function print_help_for_restart {
+function print_help_for_stop {
   cat << EOF
-# restart
+# stop
 
-The 'restart' command will tear down the containers.
+The 'stop' command will stop the stack. All data and containers will be preserved.
+EOF
+}
+
+function print_help_for_rebuild {
+  cat << EOF
+# rebuild
+
+The 'rebuild' command will tear down and rebuild the containers.
 The volumes and images will be preserved.
 EOF
 }
@@ -162,7 +182,10 @@ function main {
     "start")
       run_start
       ;;
-    "restart")
+    "stop")
+      run_stop
+      ;;
+    "rebuild")
       run_restart
       ;;
     "reset")
