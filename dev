@@ -187,7 +187,7 @@ function main {
       run_stop
       ;;
     "rebuild")
-      run_restart
+      run_rebuild
       ;;
     "reset")
       run_clean
