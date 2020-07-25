@@ -3,6 +3,13 @@
     &copy; <%= @current_year %> DEalog Team
   </span>
   <span>
-    Version <%= @version %>
+    <a 
+      href="<%= Routes.changelog_path(@socket, :index) %>"
+    >
+      <%= gettext "Changelog" %>
+    </a>
+    <span class="ml-2">
+      Version <%= @version %>
+    </span>
   </span>
 </div>

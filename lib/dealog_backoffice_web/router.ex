@@ -21,6 +21,7 @@ defmodule DealogBackofficeWeb.Router do
     live("/all-messages", AllMessagesLive, :index)
     live("/organization-messages", OrganizationMessagesLive, :index)
     live("/approvals", ApprovalsLive, :index)
+    live("/changelog", ChangelogLive, :index)
   end
 
   # Other scopes may use custom stacks.

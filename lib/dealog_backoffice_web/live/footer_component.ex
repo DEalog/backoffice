@@ -1,14 +1,14 @@
 defmodule DealogBackofficeWeb.FooterComponent do
-  use Phoenix.LiveComponent
+  use DealogBackofficeWeb, :live_component
 
   @impl true
   def mount(socket) do
-    socket =  assign(socket, current_year: display_year(), version: display_version())
+    socket = assign(socket, current_year: display_year(), version: display_version())
     {:ok, socket}
   end
 
   defp display_year do
-    today =  DateTime.utc_now()
+    today = DateTime.utc_now()
     today.year
   end
 
