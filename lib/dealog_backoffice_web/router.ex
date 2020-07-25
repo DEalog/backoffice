@@ -18,6 +18,9 @@ defmodule DealogBackofficeWeb.Router do
     pipe_through :browser
 
     live("/", DashboardLive, :index)
+    live("/all-messages", AllMessagesLive, :index)
+    live("/organization-messages", OrganizationMessagesLive, :index)
+    live("/approvals", ApprovalsLive, :index)
   end
 
   # Other scopes may use custom stacks.

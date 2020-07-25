@@ -1,6 +1,8 @@
 <header>
   <%=
-    live_component @socket, DealogBackofficeWeb.NavigationComponent
+    live_component @socket, 
+      DealogBackofficeWeb.NavigationComponent,
+      active_page: @active_page
   %>
 </header>
 <main role="main" class="px-4 py-4">
