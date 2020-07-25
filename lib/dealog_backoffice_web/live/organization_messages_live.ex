@@ -3,7 +3,9 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    socket = assign(socket, page_title: "Meine Organisation", active_page: :organization_messages)
+    socket =
+      assign(socket, page_title: gettext("My organization"), active_page: :organization_messages)
+
     {:ok, socket}
   end
 end

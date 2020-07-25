@@ -3,7 +3,7 @@ defmodule DealogBackofficeWeb.ApprovalsLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    socket = assign(socket, page_title: "Freigaben", active_page: :approvals)
+    socket = assign(socket, page_title: gettext("Approvals"), active_page: :approvals)
     {:ok, socket}
   end
 end

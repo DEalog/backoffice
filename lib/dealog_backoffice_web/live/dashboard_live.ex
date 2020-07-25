@@ -3,7 +3,7 @@ defmodule DealogBackofficeWeb.DashboardLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    socket = assign(socket, page_title: "Übersicht", active_page: :dashboard)
+    socket = assign(socket, page_title: gettext("Dashboard"), active_page: :dashboard)
     {:ok, socket}
   end
 end
