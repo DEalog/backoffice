@@ -2,6 +2,8 @@
 
 ## 0.1.0
 
+- ADDED Page placeholders are added and connected for navigation
+- ADDED Localization is implemented
 - ADDED Footer stays on bottom
 - CHANGED Attach to IEx session when starting the stack
 - ADDED The footer component is implemented

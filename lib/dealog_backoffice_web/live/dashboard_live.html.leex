@@ -1,17 +1,17 @@
 <section>
   <p>
-    In der Übersicht werden einige Kennzahlen präsentiert.
+    <%= gettext "The dashboard contains some key figures about the messages." %>
   </p>
   <div class="pt-4">
     <h3 class="text-lg leading-6 font-medium text-gray-900">
-      Meldungsübersicht
+      <%= gettext "Message overview" %>
     </h3>
     <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
       <div class="bg-white overflow-hidden shadow rounded-lg">
         <div class="px-4 py-5 sm:p-6">
           <dl>
             <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-              Aktive Meldungen meiner Organisation
+              <%= gettext "Active messages of my organization" %>
             </dt>
             <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
               10
@@ -23,7 +23,7 @@
         <div class="px-4 py-5 sm:p-6">
           <dl>
             <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-              Aktive Meldungen gesamt
+              <%= gettext "Active messages overall" %>
             </dt>
             <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
               58
@@ -35,7 +35,7 @@
         <div class="px-4 py-5 sm:p-6">
           <dl>
             <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-              Anzahl Meldungen der letzten 90 Tage
+              <%= gettext "Amount of message in the last 90 days" %>
             </dt>
             <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
               24
@@ -47,7 +47,7 @@
   </div>
   <div class="pt-4">
     <h3 class="text-lg leading-6 font-medium text-gray-900">
-      Benutzerverhalten
+      <%= gettext "User behavior" %>
     </h3>
     <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       <div class="bg-white overflow-hidden shadow rounded-lg">
@@ -61,7 +61,7 @@
             <div class="ml-5 w-0 flex-1">
               <dl>
                 <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                  Meldungen gesamt
+                  <%= gettext "Messages overall" %>
                 </dt>
                 <dd class="flex items-baseline">
                   <div class="text-2xl leading-8 font-semibold text-gray-900">
@@ -72,7 +72,7 @@
                       <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                     </svg>
                     <span class="sr-only">
-                      Veränderung um
+                      <%= gettext "Change by" %>
                     </span>
                     11
                   </div>
@@ -84,7 +84,7 @@
         <div class="bg-gray-50 px-4 py-4 sm:px-6">
           <div class="text-sm leading-5">
             <a href="#" class="font-medium text-yellow-600 hover:text-yellow-500 transition ease-in-out duration-150">
-              Alle anzeigen
+              <%= gettext "Show all" %>
             </a>
           </div>
         </div>
@@ -100,7 +100,7 @@
             <div class="ml-5 w-0 flex-1">
               <dl>
                 <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                  Geöffnete Meldungen
+                  <%= gettext "Viewed messages" %>
                 </dt>
                 <dd class="flex items-baseline">
                   <div class="text-2xl leading-8 font-semibold text-gray-900">
@@ -111,7 +111,7 @@
                       <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                     </svg>
                     <span class="sr-only">
-                      Veränderung um
+                      <%= gettext "Change by" %>
                     </span>
                     5,4%
                   </div>
@@ -123,7 +123,7 @@
         <div class="bg-gray-50 px-4 py-4 sm:px-6">
           <div class="text-sm leading-5">
             <a href="#" class="font-medium text-yellow-600 hover:text-yellow-500 transition ease-in-out duration-150">
-              Alle ansehen
+              <%= gettext "Show all" %>
             </a>
           </div>
         </div>
@@ -139,7 +139,7 @@
             <div class="ml-5 w-0 flex-1">
               <dl>
                 <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                  Verweildauer in Sekunden
+                <%= gettext "Average open rate" %>
                 </dt>
                 <dd class="flex items-baseline">
                   <div class="text-2xl leading-8 font-semibold text-gray-900">
@@ -150,7 +150,7 @@
                       <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                     </svg>
                     <span class="sr-only">
-                      Veränderung um
+                      <%= gettext "Change by" %>
                     </span>
                     -3,20%
                   </div>
@@ -162,7 +162,7 @@
         <div class="bg-gray-50 px-4 py-4 sm:px-6">
           <div class="text-sm leading-5">
             <a href="#" class="font-medium text-yellow-600 hover:text-yellow-500 transition ease-in-out duration-150">
-              Alle ansehen
+              <%= gettext "Show all" %>
             </a>
           </div>
         </div>

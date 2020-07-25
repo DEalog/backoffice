@@ -10,6 +10,11 @@ use Mix.Config
 config :dealog_backoffice,
   ecto_repos: [DealogBackoffice.Repo]
 
+config :dealog_backoffice,
+       DealogBackofficeWeb.Gettext,
+       locales: ~w(de en),
+       default_locale: "de"
+
 # Configures the endpoint
 config :dealog_backoffice, DealogBackofficeWeb.Endpoint,
   url: [host: "localhost"],

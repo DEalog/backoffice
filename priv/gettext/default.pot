@@ -1,0 +1,135 @@
+## This file is a PO Template file.
+##
+## "msgid"s here are often extracted from source code.
+## Add new translations manually only if they're dynamic
+## translations that can't be statically extracted.
+##
+## Run "mix gettext.extract" to bring this file up to
+## date. Leave "msgstr"s empty as changing them here as no
+## effect: edit them in PO (.po) files instead.
+msgid ""
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:80
+msgid "User menu"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:36
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:137
+msgid "All messages"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:48
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:149
+msgid "Approvals"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:30
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:131
+msgid "Dashboard"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:42
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:143
+msgid "My organization"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:59
+msgid "New message"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:111
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:170
+msgid "Logout"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:99
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:164
+msgid "My account"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:105
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:167
+msgid "Settings"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/dashboard_live.html.leex:14
+msgid "Active messages of my organization"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/dashboard_live.html.leex:26
+msgid "Active messages overall"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/dashboard_live.html.leex:38
+msgid "Amount of message in the last 90 days"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/dashboard_live.html.leex:142
+msgid "Average open rate"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/dashboard_live.html.leex:75
+#: lib/dealog_backoffice_web/live/dashboard_live.html.leex:114 lib/dealog_backoffice_web/live/dashboard_live.html.leex:153
+msgid "Change by"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/dashboard_live.html.leex:7
+msgid "Message overview"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/dashboard_live.html.leex:64
+msgid "Messages overall"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/dashboard_live.html.leex:87
+#: lib/dealog_backoffice_web/live/dashboard_live.html.leex:126 lib/dealog_backoffice_web/live/dashboard_live.html.leex:165
+msgid "Show all"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/dashboard_live.html.leex:3
+msgid "The dashboard contains some key figures about the messages."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/dashboard_live.html.leex:50
+msgid "User behavior"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/dashboard_live.html.leex:103
+msgid "Viewed messages"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/approvals_live.html.leex:3
+msgid "All approvals are listed here."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages_live.html.leex:3
+msgid "All messages of this organization are listed here."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/all_messages_live.html.leex:3
+msgid "The messages related to this organization are listed here."
+msgstr ""

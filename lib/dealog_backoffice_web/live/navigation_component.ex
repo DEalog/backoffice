@@ -1,5 +1,5 @@
 defmodule DealogBackofficeWeb.NavigationComponent do
-  use Phoenix.LiveComponent
+  use DealogBackofficeWeb, :live_component
 
   alias DealogBackofficeWeb.Router.Helpers, as: Routes
 
