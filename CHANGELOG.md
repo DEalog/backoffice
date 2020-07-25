@@ -2,6 +2,7 @@
 
 ## 0.1.0
 
+- ADDED Footer stays on bottom
 - CHANGED Attach to IEx session when starting the stack
 - ADDED The footer component is implemented
 - ADDED A navigation component is implemented
