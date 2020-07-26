@@ -4,6 +4,7 @@
 
 This is the initial version setting up the base system with the page structure and initial design.
 
+- `CNG` Change link generation
 - `NEW` My account page was added
 - `NEW` New message page was added
 - `NEW` Changelog page was added

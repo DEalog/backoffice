@@ -23,30 +23,26 @@
           <img class="hidden lg:block h-8 w-auto" src="<%= Routes.static_path(@socket, "/images/dealog_logo.svg") %>" alt="DEalog logo">
         </div>
         <div class="hidden md:ml-6 md:flex">
-          <a 
-            href="<%= Routes.dashboard_path(@socket, :index) %>" 
-            class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out <%= get_style(:dashboard, @active_page) %>"
-          >
-            <%= gettext "Dashboard" %>
-          </a>
-          <a 
-            href="<%= Routes.all_messages_path(@socket, :index) %>" 
-            class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out <%= get_style(:all_messages, @active_page) %>"
-          >
-            <%= gettext "All messages" %>
-          </a>
-          <a 
-            href="<%= Routes.organization_messages_path(@socket, :index) %>"
-            class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out <%= get_style(:organization_messages, @active_page) %>"
-          >
-          <%= gettext "My organization" %>
-          </a>
-          <a
-            href="<%= Routes.approvals_path(@socket, :index) %>"
-            class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out <%= get_style(:approvals, @active_page) %>"
-          >
-            <%= gettext "Approvals" %>
-          </a>
+          <%= 
+            link gettext("Dashboard"),
+              to: Routes.dashboard_path(@socket, :index),
+              class: "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out #{get_style(:dashboard, @active_page)}"
+          %>
+          <%= 
+            link gettext("All messages"),
+              to: Routes.all_messages_path(@socket, :index),
+              class: "ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out #{get_style(:all_messages, @active_page)}"
+          %>
+          <%= 
+            link gettext("My organization"),
+              to: Routes.organization_messages_path(@socket, :index),
+              class: "ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out #{get_style(:organization_messages, @active_page)}"
+          %>
+          <%= 
+            link gettext("Approvals"),
+              to: Routes.approvals_path(@socket, :index),
+              class: "ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out #{get_style(:approvals, @active_page)}"
+          %>
         </div>
       </div>
       <div class="flex items-center">
@@ -106,7 +102,7 @@
                   href="#" 
                   class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" role="menuitem"
                 >
-                  <%= gettext "Settings" %>
+                  <%= gettext("Settings") %>
                 </a>
                 <a 
                   href="#" 
@@ -128,30 +124,26 @@
     class="block md:hidden"
   >
     <div class="pt-2 pb-3">
-      <a 
-        href="<%= Routes.dashboard_path(@socket, :index) %>" 
-        class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition duration-150 ease-in-out sm:pl-5 sm:pr-6 whitespace-no-wrap <%= get_mobile_style(:dashboard, @active_page) %>"
-      >
-        <%= gettext "Dashboard" %>
-      </a>
-      <a 
-        href="<%= Routes.all_messages_path(@socket, :index) %>" 
-        class="mt-1 block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition duration-150 ease-in-out sm:pl-5 sm:pr-6 whitespace-no-wrap <%= get_mobile_style(:all_messages, @active_page) %>"
-      >
-        <%= gettext "All messages" %>
-      </a>
-      <a 
-        href="<%= Routes.organization_messages_path(@socket, :index) %>"
-        class="mt-1 block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition duration-150 ease-in-out sm:pl-5 sm:pr-6 whitespace-no-wrap <%= get_mobile_style(:organization_messages, @active_page) %>"
-      >
-        <%= gettext "My organization" %>
-      </a>
-      <a 
-        href="<%= Routes.approvals_path(@socket, :index) %>"
-        class="mt-1 block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition duration-150 ease-in-out sm:pl-5 sm:pr-6 whitespace-no-wrap <%= get_mobile_style(:approvals, @active_page) %>"
-      >
-        <%= gettext "Approvals" %>
-      </a>
+      <%=
+        link gettext("Dashboard"),
+          to: Routes.dashboard_path(@socket, :index),
+          class: "block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition duration-150 ease-in-out sm:pl-5 sm:pr-6 whitespace-no-wrap #{get_mobile_style(:dashboard, @active_page)}"
+      %>
+      <%= 
+        link gettext("All messages"),
+          to: Routes.all_messages_path(@socket, :index),
+          class: "mt-1 block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition duration-150 ease-in-out sm:pl-5 sm:pr-6 whitespace-no-wrap #{get_mobile_style(:all_messages, @active_page)}"
+      %>
+      <%= 
+        link gettext("My organization"),
+          to: Routes.organization_messages_path(@socket, :index),
+          class: "mt-1 block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition duration-150 ease-in-out sm:pl-5 sm:pr-6 whitespace-no-wrap #{get_mobile_style(:organization_messages, @active_page)}"
+      %>
+      <%= 
+        link gettext("Approvals"),
+          to: Routes.approvals_path(@socket, :index),
+          class: "mt-1 block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition duration-150 ease-in-out sm:pl-5 sm:pr-6 whitespace-no-wrap #{get_mobile_style(:approvals, @active_page)}"
+      %>
     </div>
     <div class="pt-4 pb-3 border-t border-gray-200">
       <div class="flex items-center px-4 sm:px-6">
