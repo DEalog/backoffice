@@ -1,4 +1,4 @@
-defmodule DealogBackofficeWeb.DashboardLiveTest do
+defmodule DealogBackofficeWeb.PageLiveTest do
   use DealogBackofficeWeb.ConnCase
 
   import Phoenix.LiveViewTest

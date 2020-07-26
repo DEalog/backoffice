@@ -4,6 +4,7 @@
 
 This is the initial version setting up the base system with the page structure and initial design.
 
+- `NEW` Dev script supports shortcuts
 - `NEW` Settings page was added
 - `CNG` Change link generation
 - `NEW` My account page was added

@@ -107,28 +107,28 @@ function maybe_show_command_help {
     return
   fi
   case ${command} in
-    "start")
+    "start"|"s")
       print_help_for_start
       ;;
-    "stop")
+    "stop"|"st")
       print_help_for_stop
       ;;
-    "rebuild")
+    "rebuild"|"rb")
       print_help_for_rebuild
       ;;
-    "reset")
+    "reset"|"rs")
       print_help_for_reset
       ;;
-    "update_translations")
+    "translations.update"|"tu")
       print_help_for_update_translations
       ;;
-    "test")
+    "test"|"t")
       print_help_for_test
       ;;
-    "yarn")
+    "yarn"|"y")
       print_help_for_yarn
       ;;
-    "execute")
+    "execute"|"e")
       print_help_for_execute
       ;;
     *) echo "No help found for '${command}'"
@@ -139,6 +139,8 @@ function maybe_show_command_help {
 function print_help_for_start {
   cat << EOF
 # start
+
+shortcut: s
 
 The 'start' command checks if the required tools (Docker, Mutagen) are available.
 If so it will check and create or load the images needed for the application.
@@ -151,6 +153,8 @@ function print_help_for_stop {
   cat << EOF
 # stop
 
+shortcut: st
+
 The 'stop' command will stop the stack. All data and containers will be preserved.
 EOF
 }
@@ -158,6 +162,8 @@ EOF
 function print_help_for_rebuild {
   cat << EOF
 # rebuild
+
+shortcut: rb
 
 The 'rebuild' command will tear down and rebuild the containers.
 The volumes and images will be preserved.
@@ -168,6 +174,8 @@ function print_help_for_reset {
   cat << EOF
 # reset
 
+shortcut: rs
+
 The 'reset' command tears down the application and removes all built images and volumes.
 This is useful to start over.
 EOF
@@ -175,7 +183,9 @@ EOF
 
 function print_help_for_update_translations {
   cat << EOF
-# update_translations
+# translations.update
+
+shortcut: tu
 
 The 'update_translations' command extracts and updates the application translations.
 EOF
@@ -184,6 +194,8 @@ EOF
 function print_help_for_test {
   cat << EOF
 # test [test_file_path]
+
+shortcut: t
 
 The 'test' command runs the test suite.
 To run single tests the path can be passed as an argument.
@@ -194,6 +206,8 @@ function print_help_for_yarn {
   cat << EOF
 # yarn [args]
 
+shortcut: y
+
 The 'yarn' command runs Yarn commands within the web container.
 EOF
 }
@@ -201,6 +215,8 @@ EOF
 function print_help_for_execute {
   cat << EOF
 # execute [container_name] [args]
+
+shortcut: e
 
 The 'execute' command runs arbitrary commands in the given container.
 F.e. you can run './dev execute web "cd assets && yarn add my_dep -D"' to add a javascript library.
@@ -215,29 +231,29 @@ function main {
     "--help")
       show_help
       ;;
-    "start")
+    "start"|"s")
       run_start
       ;;
-    "stop")
+    "stop"|"st")
       run_stop
       ;;
-    "rebuild")
+    "rebuild"|"rb")
       run_rebuild
       ;;
-    "reset")
+    "reset"|"rs")
       run_clean
       run_start
       ;;
-    "update_translations")
+    "translations.update"|"tu")
       run_update_translations
       ;;
-    "test")
+    "test"|"t")
       run_tests ${args}
       ;;
-    "yarn")
+    "yarn"|"y")
       run_yarn ${args}
       ;;
-    "execute")
+    "execute"|"e")
       run_command ${args}
       ;;
     *) print_usage; echo; show_help
