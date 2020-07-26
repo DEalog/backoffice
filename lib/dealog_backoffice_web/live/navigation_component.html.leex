@@ -23,22 +23,22 @@
           <img class="hidden lg:block h-8 w-auto" src="<%= Routes.static_path(@socket, "/images/dealog_logo.svg") %>" alt="DEalog logo">
         </div>
         <div class="hidden md:ml-6 md:flex">
-          <%= 
+          <%=
             link gettext("Dashboard"),
               to: Routes.dashboard_path(@socket, :index),
               class: "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out #{get_style(:dashboard, @active_page)}"
           %>
-          <%= 
+          <%=
             link gettext("All messages"),
               to: Routes.all_messages_path(@socket, :index),
               class: "ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out #{get_style(:all_messages, @active_page)}"
           %>
-          <%= 
+          <%=
             link gettext("My organization"),
               to: Routes.organization_messages_path(@socket, :index),
               class: "ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out #{get_style(:organization_messages, @active_page)}"
           %>
-          <%= 
+          <%=
             link gettext("Approvals"),
               to: Routes.approvals_path(@socket, :index),
               class: "ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out #{get_style(:approvals, @active_page)}"
@@ -48,9 +48,9 @@
       <div class="flex items-center">
         <div class="flex-shrink-0">
           <%=
-            button to: Routes.new_message_path(@socket, :new), 
+            button to: Routes.new_message_path(@socket, :new),
               method: :get,
-              class: "relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-yellow-600 shadow-sm hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150" 
+              class: "relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-yellow-600 shadow-sm hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150"
               do %>
             <svg class="-ml-1 mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
@@ -92,20 +92,20 @@
               class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg"
             >
               <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                <%= 
+                <%=
                   link gettext("My account"),
                   to: Routes.my_account_path(@socket, :index),
                   class: "block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out",
                   role: "menuitem"
                 %>
-                <%= 
+                <%=
                   link gettext("Settings"),
                   to: Routes.settings_path(@socket, :index),
                   class: "block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out",
                   role: "menuitem"
                 %>
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" role="menuitem"
                 >
                   <%= gettext "Logout" %>
@@ -129,17 +129,17 @@
           to: Routes.dashboard_path(@socket, :index),
           class: "block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition duration-150 ease-in-out sm:pl-5 sm:pr-6 whitespace-no-wrap #{get_mobile_style(:dashboard, @active_page)}"
       %>
-      <%= 
+      <%=
         link gettext("All messages"),
           to: Routes.all_messages_path(@socket, :index),
           class: "mt-1 block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition duration-150 ease-in-out sm:pl-5 sm:pr-6 whitespace-no-wrap #{get_mobile_style(:all_messages, @active_page)}"
       %>
-      <%= 
+      <%=
         link gettext("My organization"),
           to: Routes.organization_messages_path(@socket, :index),
           class: "mt-1 block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition duration-150 ease-in-out sm:pl-5 sm:pr-6 whitespace-no-wrap #{get_mobile_style(:organization_messages, @active_page)}"
       %>
-      <%= 
+      <%=
         link gettext("Approvals"),
           to: Routes.approvals_path(@socket, :index),
           class: "mt-1 block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition duration-150 ease-in-out sm:pl-5 sm:pr-6 whitespace-no-wrap #{get_mobile_style(:approvals, @active_page)}"
