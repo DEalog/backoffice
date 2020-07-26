@@ -2,7 +2,6 @@ use Mix.Config
 
 config :dealog_backoffice,
        DealogBackofficeWeb.Gettext,
-       locales: ~w(de en),
        default_locale: "en"
 
 # Configure your database
