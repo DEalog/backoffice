@@ -2,6 +2,7 @@
 
 This is the initial version setting up the base system with the page structure and initial design.
 
+- `NEW` Readme page was added
 - `NEW` Functional tests for pages
 - `NEW` Dev script supports running tests in watch mode
 - `NEW` Dev script supports shortcuts
