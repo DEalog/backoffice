@@ -16,9 +16,7 @@ jobs:
         image: postgres:12.1-alpine
         ports: ["5432:5432"]
         env:
-          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_HOST: localhost
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -42,3 +40,7 @@ jobs:
         run: mix deps.get
       - name: Run tests
         run: mix test
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_HOST: db
