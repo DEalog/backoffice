@@ -4,12 +4,22 @@
 
 This is the initial version setting up the base system.
 
-| **ADDED** | Page placeholders are added and connected for navigation |
-| **ADDED** | Localization is implemented |
-| **ADDED** | Footer stays on bottom |
-| **CHANGED** | Attach to IEx session when starting the stack |
-| **ADDED** | The footer component is implemented |
-| **ADDED** | A navigation component is implemented |
-| **ADDED** | Dashboard dummy as starting page |
-| **ADDED** | Basic layout is added |
-| **ADDED** | Application scaffold is created with LiveView enabled |
+- `NEW` Page placeholders are NEWed and connected for navigation
+- `NEW` Localization is implemented
+- `NEW` Footer stays on bottom
+- `CNG` Attach to IEx session when starting the stack
+- `NEW` The footer component is implemented
+- `NEW` A navigation component is implemented
+- `NEW` Dashboard dummy as starting page
+- `NEW` Basic layout is NEWed
+- `NEW` Application scaffold is created with LiveView enabled
+
+---
+
+## Legend
+
+- `NEW` means a new feature
+- `CHG` means changed behavior
+- `FIX` means a bugfix or fix of a glitch
+- `REM` means a removed feature
+
