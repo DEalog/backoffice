@@ -23,6 +23,7 @@ defmodule DealogBackofficeWeb.Router do
     live("/organization-messages/new", NewMessageLive, :new)
     live("/approvals", ApprovalsLive, :index)
     live("/changelog", ChangelogLive, :index)
+    live("/my-account", MyAccountLive, :index)
   end
 
   # Other scopes may use custom stacks.

@@ -4,6 +4,7 @@
 
 This is the initial version setting up the base system with the page structure and initial design.
 
+- `NEW` My account page was added
 - `NEW` New message page was added
 - `NEW` Changelog page was added
 - `NEW` Approval page was added
@@ -24,7 +25,7 @@ This is the initial version setting up the base system with the page structure a
 ## Legend
 
 - `NEW` means a new feature
-- `CHG` means changed behavior
+- `CNG` means changed behavior
 - `FIX` means a bugfix or fix of a glitch
 - `REM` means a removed feature
 
