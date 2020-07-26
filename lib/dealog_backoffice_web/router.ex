@@ -20,6 +20,7 @@ defmodule DealogBackofficeWeb.Router do
     live("/", DashboardLive, :index)
     live("/all-messages", AllMessagesLive, :index)
     live("/organization-messages", OrganizationMessagesLive, :index)
+    live("/organization-messages/new", NewMessageLive, :new)
     live("/approvals", ApprovalsLive, :index)
     live("/changelog", ChangelogLive, :index)
   end

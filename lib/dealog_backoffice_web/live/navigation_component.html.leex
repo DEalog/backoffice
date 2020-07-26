@@ -51,14 +51,18 @@
       </div>
       <div class="flex items-center">
         <div class="flex-shrink-0">
-          <button type="button" class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-yellow-600 shadow-sm hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
+          <%=
+            button to: Routes.new_message_path(@socket, :new), 
+              method: :get,
+              class: "relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-yellow-600 shadow-sm hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150" 
+              do %>
             <svg class="-ml-1 mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
             </svg>
             <span>
-              <%= gettext "New message" %>
+              <%= gettext("New message") %>
             </span>
-          </button>
+          <% end %>
         </div>
         <div class="hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center">
           <%#
