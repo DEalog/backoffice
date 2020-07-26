@@ -1,5 +1,11 @@
 <section>
-  <article class="prose prose-sm sm:prose lg:prose-lg xl:prose-xl">
+  <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+    <%= gettext "Changelog" %>
+  </h1>
+  <p class="mt-4">
+    <%= gettext "The changelog lists all noteworthy changes to the application. It is only available in english." %>
+  </p>
+  <article class="mt-4 prose prose-sm sm:prose lg:prose-lg xl:prose-xl">
     <%= raw @changelog %>
   </article>
 </section>

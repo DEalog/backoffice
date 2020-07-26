@@ -67,6 +67,11 @@ function run_tests {
   run_command web ${command}
 }
 
+function run_tests_in_watch_mode {
+  local command="mix test.watch $@"
+  run_command web ${command}
+}
+
 function run_yarn {
   local command="cd assets && yarn $@"
   run_command web ${command}
@@ -90,8 +95,9 @@ The following commands are supported:
 ./dev stop                  # Stop the development stack
 ./dev rebuild               # Rebuild the images and restart the development stack
 ./dev reset                 # Reset the stack (including volumes and images)
-./dev update_translations   # Run the (Elixir) tests
+./dev translations.update   # Run the (Elixir) tests
 ./dev test                  # Run the (Elixir) tests
+./dev test.watch            # Run the (Elixir) tests in watch mode
 ./dev yarn                  # Run a Yarn command
 ./dev execute               # Run arbitrary command in a container
 
@@ -124,6 +130,9 @@ function maybe_show_command_help {
       ;;
     "test"|"t")
       print_help_for_test
+      ;;
+    "test.watch"|"tw")
+      print_help_for_test_watch
       ;;
     "yarn"|"y")
       print_help_for_yarn
@@ -202,6 +211,17 @@ To run single tests the path can be passed as an argument.
 EOF
 }
 
+function print_help_for_test_watch {
+  cat << EOF
+# test.watch [test_file_path]
+
+shortcut: tw
+
+The 'test' command runs the test suite in watch mode.
+To run single tests the path can be passed as an argument.
+EOF
+}
+
 function print_help_for_yarn {
   cat << EOF
 # yarn [args]
@@ -249,6 +269,9 @@ function main {
       ;;
     "test"|"t")
       run_tests ${args}
+      ;;
+    "test.watch"|"tw")
+      run_tests_in_watch_mode ${args}
       ;;
     "yarn"|"y")
       run_yarn ${args}

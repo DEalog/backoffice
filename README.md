@@ -25,9 +25,34 @@ mentioned tools are available and accessible then start the stack.
 
 > To get all available commands of the `dev` script run `./dev --help`.
 
+### Testing
+
+To run the tests please use `./dev test` or `./dev test.watch`.
+
+> Functional tests are ran in the `en` locale whereas the default locale for the
+> app is `de`.
+
+### Translations
+
+The DEalog Backoffice strings are all in english language. These are translated
+to German. To quickly get the `po` files updated run `./dev translations.update`.
+After that you can easily fill in the translations. If not sure about the
+wording let it be resolved during the pull request process.
+
+### Collaboration
+
+If you want to collaborate please follow this guide:
+
+- Fork the repository
+- Implement the feature, change or bugfix
+- Add tests where it makes sense
+- Update the [CHANGELOG.md](CHANGELOG.md)
+- Update the translations (see translation section)
+- Create a pull request against the original repository
+
 ## Used technologies
 
-The DEalog Backoffice application uses the following (main) technologies:
+The DEalog Backoffice application uses the following (main) technologies, frameworks and libraries:
 
 - [Elixir](https://elixir-lang.org)
 - [Phoenix Framework](https://phoenixframework.org)

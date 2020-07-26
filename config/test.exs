@@ -1,5 +1,10 @@
 use Mix.Config
 
+config :dealog_backoffice,
+       DealogBackofficeWeb.Gettext,
+       locales: ~w(de en),
+       default_locale: "en"
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
