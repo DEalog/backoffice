@@ -77,6 +77,11 @@ function run_yarn {
   run_command web ${command}
 }
 
+function run_build_production {
+  local command="cd assets && yarn deploy && cd .. && mix phx.digest"
+  run_command web ${command}
+}
+
 function run_command {
   local container_name=${1}
   local command="${@:2}"
@@ -99,6 +104,7 @@ The following commands are supported:
 ./dev test                  # Run the (Elixir) tests
 ./dev test.watch            # Run the (Elixir) tests in watch mode
 ./dev yarn                  # Run a Yarn command
+./dev build.prod            # Run production build for assets
 ./dev execute               # Run arbitrary command in a container
 
 To get information about a single command use ./dev [command] --help
@@ -136,6 +142,9 @@ function maybe_show_command_help {
       ;;
     "yarn"|"y")
       print_help_for_yarn
+      ;;
+    "build.prod"|"bp")
+      print_help_for_build_production
       ;;
     "execute"|"e")
       print_help_for_execute
@@ -232,6 +241,17 @@ The 'yarn' command runs Yarn commands within the web container.
 EOF
 }
 
+function print_help_for_build_production {
+  cat << EOF
+# build.prod
+
+shortcut: bp
+
+The 'build.prod' command runs building the assets in prod mode. This is useful
+for debugging things like CSS purging.
+EOF
+}
+
 function print_help_for_execute {
   cat << EOF
 # execute [container_name] [args]
@@ -275,6 +295,9 @@ function main {
       ;;
     "yarn"|"y")
       run_yarn ${args}
+      ;;
+    "build.prod"|"bp")
+      run_build_production
       ;;
     "execute"|"e")
       run_command ${args}

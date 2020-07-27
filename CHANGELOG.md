@@ -2,6 +2,8 @@
 
 This is the initial version setting up the base system with the page structure and initial design.
 
+- `NEW` Dev script supports building production assets
+- `FIX` Assets in production mode are correctly built
 - `NEW` Readme page was added
 - `NEW` Functional tests for pages
 - `NEW` Dev script supports running tests in watch mode
