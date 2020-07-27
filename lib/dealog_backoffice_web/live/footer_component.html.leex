@@ -14,13 +14,13 @@
     >
       <%= gettext "Changelog" %>
     </a>
-    <div class="ml-2 flex flex-col items-center">
-      <div>
+    <div class="ml-2">
+      <span>
         Version <%= @version %>
-      </div>
-      <div class="text-xs">
-        <%= @revision %>
-      </div>
+      </span>
+      <span class="ml-1 text-xs">
+        (<%= @revision %>)
+      </span>
     </div>
   </div>
 </div>
