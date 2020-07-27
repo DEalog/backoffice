@@ -3,17 +3,15 @@
     &copy; <%= @current_year %> DEalog Team
   </div>
   <div class="flex">
-    <a
-      href="<%= Routes.readme_path(@socket, :index) %>"
-    >
-      <%= gettext "Readme" %>
-    </a>
-    <a
-      href="<%= Routes.changelog_path(@socket, :index) %>"
-      class="ml-2"
-    >
-      <%= gettext "Changelog" %>
-    </a>
+    <%=
+      live_redirect gettext("Readme"),
+        to: Routes.readme_path(@socket, :index)
+    %>
+    <%=
+      live_redirect gettext("Changelog"),
+        to: Routes.changelog_path(@socket, :index),
+        class: "ml-2"
+    %>
     <div class="ml-2">
       <span>
         Version <%= @version %>
