@@ -36,17 +36,17 @@
           <%=
             live_redirect gettext("All messages"),
               to: Routes.all_messages_path(@socket, :index),
-              class: "ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out #{get_style(:all_messages, @active_page, active_style, inactive_style)}"
+              class: "ml-2 xl:ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out #{get_style(:all_messages, @active_page, active_style, inactive_style)}"
           %>
           <%=
             live_redirect gettext("My organization"),
               to: Routes.organization_messages_path(@socket, :index),
-              class: "ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out #{get_style(:organization_messages, @active_page, active_style, inactive_style)}"
+              class: "ml-2 xl:ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out #{get_style(:organization_messages, @active_page, active_style, inactive_style)}"
           %>
           <%=
             live_redirect gettext("Approvals"),
               to: Routes.approvals_path(@socket, :index),
-              class: "ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out #{get_style(:approvals, @active_page, active_style, inactive_style)}"
+              class: "ml-2 xl:ml-8 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out #{get_style(:approvals, @active_page, active_style, inactive_style)}"
           %>
         </div>
       </div>
