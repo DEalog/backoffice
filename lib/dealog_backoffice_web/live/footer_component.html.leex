@@ -1,8 +1,8 @@
 <div class="flex justify-between">
-  <span>
+  <div>
     &copy; <%= @current_year %> DEalog Team
-  </span>
-  <span>
+  </div>
+  <div class="flex">
     <a
       href="<%= Routes.readme_path(@socket, :index) %>"
     >
@@ -14,8 +14,13 @@
     >
       <%= gettext "Changelog" %>
     </a>
-    <span class="ml-2">
-      Version <%= @version %>
-    </span>
-  </span>
+    <div class="ml-2 flex flex-col items-center">
+      <div>
+        Version <%= @version %>
+      </div>
+      <div class="text-xs">
+        <%= @revision %>
+      </div>
+    </div>
+  </div>
 </div>
