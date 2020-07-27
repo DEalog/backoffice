@@ -2,6 +2,7 @@
 
 This is the initial version setting up the base system with the page structure and initial design.
 
+- `NEW` Live loading bar is included
 - `NEW` Dev script supports building production assets
 - `FIX` Assets in production mode are correctly built
 - `NEW` Readme page was added
