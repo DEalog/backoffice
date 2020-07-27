@@ -1,6 +1,7 @@
 # DEalog Backoffice
 
-![Elixir CI](https://github.com/DEalog/backoffice/workflows/Elixir%20CI/badge.svg)
+![Elixir CI](https://github.com/DEalog/backoffice/workflows/Elixir/badge.svg)
+![Deployment](https://github.com/DEalog/backoffice/workflows/Deployment/badge.svg)
 
 The DEalog Backoffice is the authoring part of the DEalog platform, a platform
 for official communication in cases of emergency.
