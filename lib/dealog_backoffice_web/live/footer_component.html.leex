@@ -1,18 +1,24 @@
-<div class="flex justify-between">
-  <div>
-    &copy; <%= @current_year %> DEalog Team
-  </div>
-  <div class="flex">
-    <%=
-      live_redirect gettext("Readme"),
-        to: Routes.readme_path(@socket, :index)
-    %>
-    <%=
-      live_redirect gettext("Changelog"),
-        to: Routes.changelog_path(@socket, :index),
-        class: "ml-2"
-    %>
-    <div class="ml-2">
+<div class="max-w-screen-xl mx-auto py-2 px-4 overflow-hidden sm:px-6 lg:px-8">
+  <nav class="-mx-5 -my-2 flex flex-wrap justify-center">
+    <div class="px-5 py-2">
+      <%=
+        live_redirect gettext("Readme"),
+          to: Routes.readme_path(@socket, :index)
+      %>
+    </div>
+    <div class="px-5 py-2">
+      <%=
+        live_redirect gettext("Changelog"),
+          to: Routes.changelog_path(@socket, :index),
+          class: "ml-2"
+      %>
+    </div>
+  </nav>
+  <div class="mt-2 sm:flex sm:justify-between">
+    <p class="text-center text-sm leading-6 text-gray-400">
+      &copy; <%= @current_year %> DEalog Team
+    </p>
+    <div class="ml-2 text-center text-gray-500">
       <span>
         Version <%= @version %>
       </span>
