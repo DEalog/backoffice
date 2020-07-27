@@ -2,6 +2,7 @@
 
 This is the initial version setting up the base system with the page structure and initial design.
 
+- `FIX` Mobile / profile navigation closes properly now
 - `CNG` Change link generation in footer
 - `NEW` Dev script supports update command for master branch
 - `NEW` Live loading bar is included
