@@ -57,6 +57,11 @@ function run_clean {
   docker-compose down --rmi=all --volumes
 }
 
+function run_update {
+  git fetch --prune
+  git merge --ff origin/master
+}
+
 function run_update_translations {
   run_command web "mix do gettext.extract, gettext.merge priv/gettext --locale de"
   echo "Extracted and updated translation strings. Please translate."
@@ -100,6 +105,7 @@ The following commands are supported:
 ./dev stop                  # Stop the development stack
 ./dev rebuild               # Rebuild the images and restart the development stack
 ./dev reset                 # Reset the stack (including volumes and images)
+./dev update                # Update from master branch
 ./dev translations.update   # Run the (Elixir) tests
 ./dev test                  # Run the (Elixir) tests
 ./dev test.watch            # Run the (Elixir) tests in watch mode
@@ -130,6 +136,9 @@ function maybe_show_command_help {
       ;;
     "reset"|"rs")
       print_help_for_reset
+      ;;
+    "update"|"u")
+      print_help_for_update
       ;;
     "translations.update"|"tu")
       print_help_for_update_translations
@@ -194,8 +203,20 @@ function print_help_for_reset {
 
 shortcut: rs
 
-The 'reset' command tears down the application and removes all built images and volumes.
+The 'reset' command tears down the application and removes all built images and
+volumes.
 This is useful to start over.
+EOF
+}
+
+function print_help_for_update {
+  cat << EOF
+# update
+
+shortcut: u
+
+The 'update' command fetches the latest upstream state and fast-forward merges
+the master branch.
 EOF
 }
 
@@ -283,6 +304,9 @@ function main {
     "reset"|"rs")
       run_clean
       run_start
+      ;;
+    "update"|"u")
+      run_update
       ;;
     "translations.update"|"tu")
       run_update_translations
