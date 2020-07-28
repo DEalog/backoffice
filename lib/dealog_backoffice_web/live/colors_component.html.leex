@@ -1,0 +1,22 @@
+<%= for {name, variants} <- @colors do %>
+  <div class="px-2 max-w-4xl relative mt-4">
+    <h3><%= upcase_first(name) %></h3>
+    <div class="md:-mx-2 md:-mt-5 flex flex-wrap">
+      <%= for {type, variant} <- variants do %>
+        <div class="w-1/2 sm:w-1/3 sm:px-2">
+          <div class="flex items-center mt-5">
+            <%= if name == "single" do %>
+            <div class="h-12 w-12 rounded-lg shadow-inner bg-<%= type %>" style="background-color: <%= variant %>;"></div>
+            <% else %>
+            <div class="h-12 w-12 rounded-lg shadow-inner bg-<%= name %>-<%= type %>" style="background-color: <%= variant %>;"></div>
+            <% end %>
+            <div class="ml-2 text-gray-800 text-xs leading-none pl-1">
+              <div class="font-semibold"><%= upcase_first(type) %></div>
+              <div class="mt-1 font-normal opacity-75"><%= String.upcase(variant) %></div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

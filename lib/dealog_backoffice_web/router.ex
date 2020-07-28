@@ -26,6 +26,7 @@ defmodule DealogBackofficeWeb.Router do
     live("/my-account", MyAccountLive, :index)
     live("/settings", SettingsLive, :index)
     live("/readme", ReadmeLive, :index)
+    live("/design-system", DesignSystemLive, :index)
   end
 
   # Other scopes may use custom stacks.

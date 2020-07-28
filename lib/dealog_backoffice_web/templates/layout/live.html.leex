@@ -5,7 +5,7 @@
       active_page: @active_page
   %>
 </header>
-<main role="main" class="px-4 pt-4 pb-40 sm:pb:24">
+<main role="main" class="px-4 pt-4 pb-48 sm:pb:24">
   <p class="alert alert-info" role="alert"
     phx-click="lv:clear-flash"
     phx-value-key="info"><%= live_flash(@flash, :info) %></p>
@@ -16,7 +16,7 @@
 
   <%= @inner_content %>
 </main>
-<footer class="absolute bottom-0 h-32 sm:h-20 w-full px-4 py-2 mt-2 border-t border-gray-200 bg-white text-sm">
+<footer class="absolute bottom-0 h-40 sm:h-20 w-full px-4 py-2 mt-2 border-t border-gray-200 bg-white text-sm">
   <%=
     live_component @socket, DealogBackofficeWeb.FooterComponent
   %>

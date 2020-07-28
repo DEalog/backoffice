@@ -1,7 +1,7 @@
 yarn deploy
 
-#echo "Dumping Tailwind config"
-#yarn dump
+echo "Dumping Tailwind config"
+yarn dump
 
 cd $phoenix_dir
 

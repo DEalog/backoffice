@@ -11,34 +11,34 @@ msgid ""
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:85
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:84
 msgid "User menu"
 msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages_live.ex:6
 #: lib/dealog_backoffice_web/live/all_messages_live.html.leex:3 lib/dealog_backoffice_web/live/navigation_component.html.leex:37
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:142
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:143
 msgid "All messages"
 msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/approvals_live.ex:6
 #: lib/dealog_backoffice_web/live/approvals_live.html.leex:3 lib/dealog_backoffice_web/live/navigation_component.html.leex:47
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:152
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:153
 msgid "Approvals"
 msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/dashboard_live.ex:6
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:3 lib/dealog_backoffice_web/live/navigation_component.html.leex:32
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:137
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:138
 msgid "Dashboard"
 msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:42
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:147 lib/dealog_backoffice_web/live/organization_messages_live.ex:7
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:148 lib/dealog_backoffice_web/live/organization_messages_live.ex:7
 #: lib/dealog_backoffice_web/live/organization_messages_live.html.leex:3
 msgid "My organization"
 msgstr ""
@@ -51,20 +51,20 @@ msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:116
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:179
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:180
 msgid "Logout"
 msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/my_account_live.ex:6
 #: lib/dealog_backoffice_web/live/my_account_live.html.leex:3 lib/dealog_backoffice_web/live/navigation_component.html.leex:101
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:169
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:170
 msgid "My account"
 msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:107
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:174 lib/dealog_backoffice_web/live/settings_live.ex:6
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:175 lib/dealog_backoffice_web/live/settings_live.ex:6
 #: lib/dealog_backoffice_web/live/settings_live.html.leex:3
 msgid "Settings"
 msgstr ""
@@ -143,7 +143,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/changelog_live.ex:8
-#: lib/dealog_backoffice_web/live/changelog_live.html.leex:3 lib/dealog_backoffice_web/live/footer_component.html.leex:11
+#: lib/dealog_backoffice_web/live/changelog_live.html.leex:3 lib/dealog_backoffice_web/live/footer_component.html.leex:17
 msgid "Changelog"
 msgstr ""
 
@@ -158,7 +158,7 @@ msgid "Here you can change your account."
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/footer_component.html.leex:7
+#: lib/dealog_backoffice_web/live/footer_component.html.leex:5
 #: lib/dealog_backoffice_web/live/readme_live.ex:8
 msgid "Readme"
 msgstr ""
@@ -171,4 +171,72 @@ msgstr ""
 #, elixir-format
 #: lib/dealog_backoffice_web/live/settings_live.html.leex:6
 msgid "The settings of the DEalog Backoffice."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.ex:6
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:3 lib/dealog_backoffice_web/live/footer_component.html.leex:11
+msgid "Design System"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:6
+msgid "The Design System contains components, styles and colors used in the application."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:13
+msgid "This is the color palette available in the application."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:10
+msgid "Colors"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:46
+msgid "Floating text"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:32
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:35 lib/dealog_backoffice_web/live/design_system_live.html.leex:38
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:41
+msgid "Heading"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:29
+msgid "Headings"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:50
+msgid "Link"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:24
+msgid "This is the typography in the application."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:21
+msgid "Typography"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:55
+msgid "bold"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:60
+msgid "italic"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:65
+msgid "normal"
 msgstr ""

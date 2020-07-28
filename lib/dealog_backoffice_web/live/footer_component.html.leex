@@ -8,6 +8,12 @@
     </div>
     <div class="px-5 py-2">
       <%=
+        live_redirect gettext("Design System"),
+          to: Routes.design_system_path(@socket, :index)
+      %>
+    </div>
+    <div class="px-5 py-2">
+      <%=
         live_redirect gettext("Changelog"),
           to: Routes.changelog_path(@socket, :index),
           class: "ml-2"

@@ -1,0 +1,71 @@
+<section>
+  <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+    <%= gettext "Design System" %>
+  </h1>
+  <p class="mt-4">
+    <%= gettext "The Design System contains components, styles and colors used in the application." %>
+  </p>
+  <section>
+    <h2 class="mt-4 mb-2 text-2xl font-semibold leading-5">
+      <%= gettext "Colors" %>
+    </h2>
+    <p>
+      <%= gettext "This is the color palette available in the application." %>
+    </p>
+    <%=
+      live_component @socket, DealogBackofficeWeb.ColorsComponent
+    %>
+  </section>
+  <section>
+    <h2 class="mt-4 mb-2 text-2xl font-semibold leading-5">
+      <%= gettext "Typography" %>
+    </h2>
+    <p>
+      <%= gettext "This is the typography in the application." %>
+    </p>
+    <div class="flex flex-wrap">
+      <div class="mr-24">
+        <h3 class="mt-4 mb-2 text-xl font-semibold leading-5">
+          <%= gettext "Headings" %>
+        </h3>
+        <h1>
+          <%= gettext "Heading" %> 1
+        </h1>
+        <h2>
+          <%= gettext "Heading" %> 2
+        </h2>
+        <h3>
+          <%= gettext "Heading" %> 3
+        </h3>
+        <h4>
+          <%= gettext "Heading" %> 4
+        </h4>
+      </div>
+      <div class="mr-24">
+        <h3 class="mt-4 mb-2 text-xl font-semibold leading-5">
+          <%= gettext "Floating text" %>
+        </h3>
+        <div>
+          <a href="#">
+            <%= gettext "Link" %>
+          </a>
+        </div>
+        <div>
+          <b>
+            <%= gettext "bold" %>
+          </b>
+        </div>
+        <div>
+          <i>
+            <%= gettext "italic" %>
+          </i>
+        </div>
+        <div>
+          <p>
+            <%= gettext "normal" %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
