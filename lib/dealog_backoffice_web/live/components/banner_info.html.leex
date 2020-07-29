@@ -1,0 +1,37 @@
+<div class="dismissible inset-x-0 pb-2 sm:pb-5">
+  <div class="max-w-screen-xl mx-auto px-2 sm:px-6 lg:px-8">
+    <div class="p-2 rounded-lg border border-blue-300 bg-blue-100 sm:p-3">
+      <div class="flex items-center justify-between flex-wrap">
+        <div class="w-0 flex-1 flex items-center">
+          <span class="flex p-2 rounded-lg">
+            <svg class="h-6 w-6 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+            </svg>
+          </span>
+          <p class="ml-3 mr-3 font-medium text-blue-800 truncate">
+            <span class="md:hidden">
+              <%= @short_text %>
+            </span>
+            <span class="hidden md:inline">
+              <%= @long_text %>
+            </span>
+          </p>
+        </div>
+        <div class="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
+          <div class="rounded-md shadow-sm">
+            <a href="<%= @button_url %>" class="flex items-center justify-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-blue-500 bg-white hover:text-blue-600 hover:border hover:border-blue-400 focus:outline-none focus:shadow-outline transition ease-in-out duration-150">
+              <%= @button_text %>
+            </a>
+          </div>
+        </div>
+        <div class="order-2 flex-shrink-0 sm:order-3 sm:ml-2">
+          <button type="button" class="dismiss-control -mr-1 flex p-2 rounded-md hover:bg-blue-200 focus:outline-none focus:bg-blue-200 transition ease-in-out duration-150" aria-label="Dismiss">
+            <svg class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

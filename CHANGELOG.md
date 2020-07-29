@@ -2,6 +2,7 @@
 
 This is the initial version setting up the base system with the page structure and initial design.
 
+- `NEW` Design system is available
 - `CNG` Footer renders better on mobile
 - `FIX` Mobile / profile navigation closes properly now
 - `CNG` Change link generation in footer

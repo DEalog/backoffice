@@ -1,0 +1,272 @@
+<section class="responsive-preview-enabled">
+  <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+    <%= gettext "Design System" %>
+  </h1>
+  <p class="mt-4">
+    <%= gettext "The Design System contains components, styles and colors used in the application." %>
+  </p>
+  <section>
+    <h2 class="mt-4 mb-2 text-2xl font-semibold leading-5">
+      <%= gettext "Colors" %>
+    </h2>
+    <p>
+      <%= gettext "This is the color palette available in the application." %>
+    </p>
+    <%=
+      live_component @socket, DealogBackofficeWeb.ColorsComponent
+    %>
+  </section>
+  <section>
+    <h2 class="mt-4 mb-2 text-2xl font-semibold leading-5">
+      <%= gettext "Typography" %>
+    </h2>
+    <p>
+      <%= gettext "This is the typography in the application." %>
+    </p>
+    <div class="flex flex-wrap">
+      <div class="mr-24">
+        <h3 class="mt-4 mb-2 text-xl font-semibold leading-5">
+          <%= gettext "Headings" %>
+        </h3>
+        <h1>
+          <%= gettext "Heading" %> 1
+        </h1>
+        <h2>
+          <%= gettext "Heading" %> 2
+        </h2>
+        <h3>
+          <%= gettext "Heading" %> 3
+        </h3>
+        <h4>
+          <%= gettext "Heading" %> 4
+        </h4>
+      </div>
+      <div class="mr-24">
+        <h3 class="mt-4 mb-2 text-xl font-semibold leading-5">
+          <%= gettext "Floating text" %>
+        </h3>
+        <div>
+          <a href="#">
+            <%= gettext "Link" %>
+          </a>
+        </div>
+        <div>
+          <b>
+            <%= gettext "bold" %>
+          </b>
+        </div>
+        <div>
+          <i>
+            <%= gettext "italic" %>
+          </i>
+        </div>
+        <div>
+          <p>
+            <%= gettext "normal" %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2 class="mt-4 mb-2 text-2xl font-semibold leading-5">
+      <%= gettext "Components" %>
+    </h2>
+    <p>
+      <%= gettext "The following components are used in the application." %>
+    </p>
+    <div>
+      <h3 class="mt-4 mb-2 text-xl font-semibold leading-5">
+        <a name="banners">
+          <%= gettext "Banners" %>
+        </a>
+      </h3>
+      <div class="-mx-5 sm:mx-0">
+        <div class="mb-4 border border-gray-400 sm:rounded">
+          <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
+            <%= gettext "Info banner with icon and link" %>
+          </div>
+          <div class="responsive-preview w-full h-32 flex">
+            <%=
+              live_component @socket,
+                DealogBackofficeWeb.PreviewComponent,
+                component: DealogBackofficeWeb.BannerInfo,
+                short_text: "Some short message",
+                long_text: "There was something that happened and it's noteworthy.",
+                button_text: "Show more",
+                button_url: "#"
+            %>
+          </div>
+        </div>
+        <div class="mb-4 border border-gray-400 sm:rounded">
+          <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
+            <%= gettext "Error banner" %>
+          </div>
+          <div class="responsive-preview w-full h-32 flex">
+            <%=
+              live_component @socket,
+                DealogBackofficeWeb.PreviewComponent,
+                component: DealogBackofficeWeb.BannerError,
+                heading: "There were errors",
+                errors: [
+                  "The firstname is too short and does not fit to our corporate schema",
+                  "The password is too long"
+                ]
+            %>
+          </div>
+        </div>
+        <div class="mb-4 border border-gray-400 sm:rounded">
+          <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
+            <%= gettext "Dismissible warning banner" %>
+          </div>
+          <div class="responsive-preview w-full h-24 flex">
+            <%=
+              live_component @socket,
+                DealogBackofficeWeb.PreviewComponent,
+                component: DealogBackofficeWeb.BannerWarning,
+                short_text: "A warning happened",
+                long_text: "There is a warning which might have some consequences"
+            %>
+          </div>
+        </div>
+        <div class="mb-4 border border-gray-400 sm:rounded">
+          <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
+            <%= gettext "Dismissible success banner" %>
+          </div>
+          <div class="responsive-preview w-full h-24 flex">
+            <%=
+              live_component @socket,
+                DealogBackofficeWeb.PreviewComponent,
+                component: DealogBackofficeWeb.BannerSuccess,
+                short_text: "Operation was successful",
+                long_text: "Everything went smooth. The operation was performed without hassle."
+            %>
+          </div>
+        </div>
+        <div class="mb-4 border border-gray-400 sm:rounded">
+          <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
+            <%= gettext "Upload area" %>
+          </div>
+          <div class="responsive-preview w-full h-48 flex">
+            <%=
+              live_component @socket,
+                DealogBackofficeWeb.PreviewComponent,
+                component: DealogBackofficeWeb.UploadArea,
+                allowed_file_extensions: ["PNG", "JPG", "GIF"],
+                max_filesize: "10MB"
+            %>
+          </div>
+        </div>
+        <div class="mb-4 border border-gray-400 sm:rounded">
+          <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
+            <%= gettext "Status pills" %>
+          </div>
+          <div class="w-full flex">
+            <div class="p-4">
+              <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 bg-green-600 text-green-200">
+                <%= gettext "Published" %>
+              </span>
+              <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 bg-yellow-500 text-yellow-200">
+                <%= gettext "Draft" %>
+              </span>
+              <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 bg-red-700 text-red-200">
+                <%= gettext "Discarded" %>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="mb-4 border border-gray-400 sm:rounded">
+          <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
+            <%= gettext "Form fields" %>
+          </div>
+          <div class="w-full">
+            <div class="p-4">
+              <label for="label-1" class="block text-sm font-medium leading-5 text-gray-700">
+                <%= gettext "Your Firstname" %>
+              </label>
+              <div class="mt-1 relative rounded-md shadow-sm">
+                <input
+                  id="label-1"
+                  class="form-input block w-full sm:text-sm sm:leading-5"
+                  placeholder="<%= gettext "Insert name here" %>"
+                />
+              </div>
+            </div>
+            <div class="p-4">
+              <label for="label-2" class="block text-sm font-medium leading-5 text-gray-700">
+                <%= gettext "The URL to the website" %>
+              </label>
+              <div class="mt-1 flex rounded-md shadow-sm">
+                <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-100 text-gray-500 sm:text-sm">
+                  http[s]://
+                </span>
+                <input
+                  id="label-2"
+                  class="form-input flex-1 block w-full px-3 py-2 rounded-none rounded-r-md sm:text-sm sm:leading-5"
+                  placeholder="<%= gettext "Insert a valid URL" %>"
+                />
+              </div>
+            </div>
+            <div class="p-4">
+              <textarea class="form-input flex-1 block w-full px-3 py-2 rounded-none rounded-r-md sm:text-sm sm:leading-5" placeholder="<%= gettext "Insert text here" %>" rows="5"></textarea>
+            </div>
+            <div class="p-4">
+              <div class="mt-4 sm:mt-0 sm:col-span-2">
+                <div class="max-w-lg">
+                  <div class="relative flex items-start">
+                    <div class="absolute flex items-center h-5">
+                      <input id="label_1" type="checkbox" class="form-checkbox h-4 w-4 text-yellow-600 transition duration-150 ease-in-out" checked />
+                    </div>
+                    <div class="pl-8 text-sm leading-5">
+                      <label for="label_1" class="font-medium text-gray-700">Enable tracking</label>
+                      <p class="text-gray-500">Enable tracking this entry.</p>
+                    </div>
+                  </div>
+                  <div class="mt-4">
+                    <div class="relative flex items-start">
+                      <div class="absolute flex items-center h-5">
+                        <input id="label_2" type="checkbox" class="form-checkbox h-4 w-4 text-yellow-600 transition duration-150 ease-in-out" />
+                      </div>
+                      <div class="pl-8 text-sm leading-5">
+                        <label for="label_2" class="font-medium text-gray-700">Enable logging</label>
+                        <p class="text-gray-500">Enable logging for this entry.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex items-center">
+                <input id="label_1" name="form-input push_notifications" type="radio" class="form-radio h-4 w-4 text-yellow-600 transition duration-150 ease-in-out" />
+                <label for="label_1" class="ml-3">
+                  <span class="block text-sm leading-5 font-medium text-gray-700">Everything</span>
+                </label>
+              </div>
+              <div class="mt-4 flex items-center">
+                <input id="label_2" name="form-input push_notifications" type="radio" class="form-radio h-4 w-4 text-yellow-600 transition duration-150 ease-in-out" />
+                <label for="label_2" class="ml-3">
+                  <span class="block text-sm leading-5 font-medium text-gray-700">Nothing</span>
+                </label>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-end">
+                <span class="inline-flex rounded-md shadow-sm">
+                  <button type="button" class="py-2 px-4 border border-yellow-300 rounded-md text-sm leading-5 font-medium text-yellow-700 hover:text-yellow-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-yellow active:bg-gray-100 active:text-gray-800 transition duration-150 ease-in-out">
+                    Cancel
+                  </button>
+                </span>
+                <span class="ml-3 inline-flex rounded-md shadow-sm">
+                  <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:shadow-outline-gray active:bg-yellow-700 transition duration-150 ease-in-out">
+                    Save
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
