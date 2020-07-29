@@ -1,0 +1,6 @@
+<div class="first relative py-2 h-full w-full flex">
+  <div class="overlay hidden absolute top-0 left-0 z-10 w-full h-full bg-transparent">&nbsp;</div>
+  <iframe class="min-w-full" src="<%= Routes.live_path(@socket, DealogBackofficeWeb.PreviewLive, assigns) %>"></iframe>
+</div>
+<div class="separator hidden sm:inline"></div>
+<div class="second h-full hidden sm:inline w-0 bg-gray-500"></div>

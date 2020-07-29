@@ -1,4 +1,4 @@
-<section>
+<section class="responsive-preview-enabled">
   <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
     <%= gettext "Design System" %>
   </h1>
@@ -64,6 +64,84 @@
           <p>
             <%= gettext "normal" %>
           </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2 class="mt-4 mb-2 text-2xl font-semibold leading-5">
+      <%= gettext "Components" %>
+    </h2>
+    <p>
+      <%= gettext "The following components are used in the application." %>
+    </p>
+    <div>
+      <h3 class="mt-4 mb-2 text-xl font-semibold leading-5">
+        <a name="banners">
+          <%= gettext "Banners" %>
+        </a>
+      </h3>
+      <div class="-mx-5 sm:mx-0">
+        <div class="mb-4 border border-gray-400 sm:rounded">
+          <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
+            <%= gettext "Info banner with icon and link" %>
+          </div>
+          <div class="responsive-preview w-full h-40 flex">
+            <%= 
+              live_component @socket,
+                DealogBackofficeWeb.PreviewComponent,
+                component: DealogBackofficeWeb.BannerInfo,
+                short_text: "Some short message",
+                long_text: "There was something that happened and it's noteworthy.",
+                button_text: "Show more",
+                button_url: "#" 
+            %>
+          </div>
+        </div>
+        <div class="mb-4 border border-gray-400 sm:rounded">
+          <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
+            <%= gettext "Error banner" %>
+          </div>
+          <div class="responsive-preview w-full h-40 flex">
+            <%= 
+              live_component @socket,
+                DealogBackofficeWeb.PreviewComponent,
+                component: DealogBackofficeWeb.BannerError,
+                heading: "There were errors",
+                errors: [
+                  "The firstname is too short and does not fit to our corporate schema",
+                  "The password is too long"
+                ]
+            %>
+          </div>
+        </div>
+        <div class="mb-4 border border-gray-400 sm:rounded">
+          <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
+            <%= gettext "Dismissible warning banner" %>
+          </div>
+          <div class="responsive-preview w-full h-40 flex">
+            <%= 
+              live_component @socket,
+                DealogBackofficeWeb.PreviewComponent,
+                component: DealogBackofficeWeb.BannerWarning,
+                short_text: "A warning happened",
+                long_text: "There is a warning which might have some consequences"
+            %>
+          </div>
+        </div>
+        <div class="mb-4 border border-gray-400 sm:rounded">
+          <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
+            <%= gettext "Dismissible success banner" %>
+          </div>
+          <div class="responsive-preview w-full h-40 flex">
+            <%= 
+              live_component @socket,
+                DealogBackofficeWeb.PreviewComponent,
+                component: DealogBackofficeWeb.BannerSuccess,
+                short_text: "Operation was successful",
+                long_text: "Everything went smooth. The operation was performed without hassle."
+            %>
+          </div>
         </div>
       </div>
     </div>

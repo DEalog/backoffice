@@ -10,6 +10,15 @@ defmodule DealogBackofficeWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :preview do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, {DealogBackofficeWeb.LayoutView, :preview}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -27,6 +36,12 @@ defmodule DealogBackofficeWeb.Router do
     live("/settings", SettingsLive, :index)
     live("/readme", ReadmeLive, :index)
     live("/design-system", DesignSystemLive, :index)
+  end
+
+  scope "/_preview", DealogBackofficeWeb do
+    pipe_through :preview
+
+    live("/", PreviewLive)
   end
 
   # Other scopes may use custom stacks.

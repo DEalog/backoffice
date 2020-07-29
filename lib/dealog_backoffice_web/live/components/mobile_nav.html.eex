@@ -1,0 +1,55 @@
+<div class="px-2 pt-3 pb-2 sm:px-3">
+  <%=
+    link "Dashboard",
+    to: Routes.page_path(@conn, :index),
+    class: "block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700"
+  %>
+  <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
+    Section A
+  </a>
+  <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
+    Section B
+  </a>
+  <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
+    Section C
+  </a>
+  <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
+    Section D
+  </a>
+</div>
+<div class="pt-4 pb-3 border-t border-gray-700">
+  <div class="mb-3 pb-3 px-2 border-b border-gray-700">
+    <%= 
+      link "Design System",
+      to: Routes.page_path(@conn, :design_system),
+      class: "block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" 
+    %>
+    <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+      <%= 
+        link "Stats",
+        to: Routes.live_dashboard_path(@conn, :home),
+        class: "block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" %>
+    <% end %>
+  </div>
+  <div class="flex items-center px-5 pb-3 border-b border-gray-700">
+    <div class="flex-shrink-0">
+      <img class="h-10 w-10 rounded-full" src="https://eu.ui-avatars.com/api/?name=John+Doe" alt="" />
+    </div>
+    <div class="ml-3">
+      <div class="text-base font-medium leading-none text-white">
+        John Doe
+      </div>
+      <div class="mt-1 text-sm font-medium leading-none text-gray-400">
+        john.doe@example.com
+      </div>
+    </div>
+  </div>
+  <div class="mt-3 px-2" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" role="menuitem">Your Profile
+    </a>
+    <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" role="menuitem">Settings
+    </a>
+    <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" role="menuitem">Sign out
+    </a>
+  </div>
+</div>

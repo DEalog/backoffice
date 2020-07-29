@@ -1,0 +1,30 @@
+<div class="dismissible inset-x-0 pb-2 sm:pb-5">
+  <div class="max-w-screen-xl mx-auto px-2 sm:px-6 lg:px-8">
+    <div class="p-2 rounded-lg bg-yellow-100 border border-yellow-600 sm:p-3">
+      <div class="flex items-center justify-between flex-wrap">
+        <div class="w-0 flex-1 flex items-center">
+          <span class="flex p-2 rounded-lg">
+            <svg class="h-6 w-6 text-yellow-600" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+          </span>
+          <p class="ml-3 mr-3 font-medium text-yellow-700 truncate">
+            <span class="sm:hidden">
+              <%= @short_text %>
+            </span>
+            <span class="hidden sm:inline">
+              <%= @long_text %>
+            </span>
+          </p>
+        </div>
+        <div class="order-2 flex-shrink-0 sm:order-3 sm:ml-2">
+          <button type="button" class="dismiss-control -mr-1 flex p-2 rounded-md hover:bg-yellow-200 focus:outline-none focus:bg-yellow-200 transition ease-in-out duration-150" aria-label="Dismiss">
+            <svg class="h-6 w-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

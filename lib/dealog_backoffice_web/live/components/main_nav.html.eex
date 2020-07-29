@@ -1,0 +1,20 @@
+<div class="ml-10 flex items-baseline">
+  <%=
+    link "Dashboard",
+    to: Routes.page_path(@conn, :index),
+    class: "px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700"
+  %>
+  <a href="#" class="ml-4 px-3 py-2 rounded-md whitespace-no-wrap text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
+    Section A
+  </a>
+  <a href="#" class="ml-4 px-3 py-2 rounded-md whitespace-no-wrap text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
+    Section B
+  </a>
+  <a href="#" class="ml-4 px-3 py-2 rounded-md whitespace-no-wrap text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
+    Section C
+  </a>
+  <a href="#" class="ml-4 px-3 py-2 rounded-md whitespace-no-wrap text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
+    Section D
+  </a>
+</div>
+
