@@ -1,4 +1,10 @@
-## 0.1.0 (under development)
+## 0.2.0 (under development)
+
+This release contains adding new messages for a single organization.
+
+- `NEW` Add and configure event store
+
+## 0.1.0
 
 This is the initial version setting up the base system with the page structure and initial design.
 

@@ -2,6 +2,8 @@
 
 mix deps.get
 
+mix event_store.create
+mix event_store.init
 mix ecto.create
 mix ecto.setup
 

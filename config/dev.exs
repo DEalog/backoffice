@@ -9,6 +9,15 @@ config :dealog_backoffice, DealogBackoffice.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+config :dealog_backoffice, DealogBackoffice.EventStore,
+  serializer: EventStore.JsonSerializer,
+  username: "postgres",
+  password: "postgres",
+  database: "dealog_backoffice_event_store_dev",
+  hostname: "db",
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

@@ -11,9 +11,22 @@ database_url =
     For example: ecto://USER:PASS@HOST/DATABASE
     """
 
+event_store_database_url =
+  System.get_env("EVENT_STORE_DATABASE_URL") ||
+    raise """
+    environment variable DATABASE_URL is missing.
+    For example: ecto://USER:PASS@HOST/DATABASE
+    """
+
 config :dealog_backoffice, DealogBackoffice.Repo,
   # ssl: true,
   url: database_url,
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+
+config :dealog_backoffice, DealogBackoffice.EventStore,
+  serializer: EventStore.JsonSerializer,
+  # ssl: true,
+  url: event_store_database_url,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 secret_key_base =
