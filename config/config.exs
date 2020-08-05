@@ -11,6 +11,14 @@ config :dealog_backoffice,
   ecto_repos: [DealogBackoffice.Repo],
   event_stores: [DealogBackoffice.EventStore]
 
+config :dealog_backoffice, DealogBackoffice.App,
+  event_store: [
+    adapter: Commanded.EventStore.Adapters.EventStore,
+    event_store: DealogBackoffice.EventStore
+  ],
+  pub_sub: :local,
+  registry: :local
+
 config :dealog_backoffice,
        DealogBackofficeWeb.Gettext,
        locales: ~w(de en),

@@ -7,6 +7,7 @@ defmodule DealogBackoffice.Application do
 
   def start(_type, _args) do
     children = [
+      DealogBackoffice.App,
       # Start the Ecto repository
       DealogBackoffice.Repo,
       # Start the Telemetry supervisor
