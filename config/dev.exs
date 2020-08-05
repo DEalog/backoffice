@@ -2,6 +2,7 @@ use Mix.Config
 
 # Configure your database
 config :dealog_backoffice, DealogBackoffice.Repo,
+  migration_timestamps: [type: :utc_datetime_usec],
   username: "postgres",
   password: "postgres",
   database: "dealog_backoffice_dev",

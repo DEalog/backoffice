@@ -19,6 +19,7 @@ event_store_database_url =
     """
 
 config :dealog_backoffice, DealogBackoffice.Repo,
+  migration_timestamps: [type: :utc_datetime_usec],
   # ssl: true,
   url: database_url,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")

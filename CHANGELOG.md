@@ -2,6 +2,7 @@
 
 This release contains adding new messages for a single organization.
 
+- `NEW` Add projecting new messages
 - `NEW` Add creating new messages
 - `NEW` Add and configure event store
 

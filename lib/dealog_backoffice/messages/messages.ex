@@ -4,7 +4,8 @@ defmodule DealogBackoffice.Messages do
   """
 
   alias DealogBackoffice.Messages.Commands.CreateMessage
-  alias DealogBackoffice.App
+  alias DealogBackoffice.Messages.Projections.Message
+  alias DealogBackoffice.{App, Repo}
 
   def create_message(attrs \\ %{}) do
     uuid = Ecto.UUID.generate()
@@ -14,6 +15,15 @@ defmodule DealogBackoffice.Messages do
       |> CreateMessage.new()
       |> CreateMessage.assign_uuid(uuid)
 
-    App.dispatch(create_message)
+    with :ok <- App.dispatch(create_message, consistency: :strong) do
+      get(Message, uuid)
+    end
+  end
+
+  defp get(schema, uuid) do
+    case Repo.get(schema, uuid) do
+      nil -> {:error, :not_found}
+      projection -> {:ok, projection}
+    end
   end
 end

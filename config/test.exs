@@ -10,6 +10,7 @@ config :dealog_backoffice,
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :dealog_backoffice, DealogBackoffice.Repo,
+  migration_timestamps: [type: :utc_datetime_usec],
   username: System.get_env("POSTGRES_USER") || "postgres",
   password: System.get_env("POSTGRES_PASSWORD") || "postgres",
   database:

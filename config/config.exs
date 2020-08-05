@@ -19,6 +19,9 @@ config :dealog_backoffice, DealogBackoffice.App,
   pub_sub: :local,
   registry: :local
 
+config :commanded_ecto_projections,
+  repo: DealogBackoffice.Repo
+
 config :dealog_backoffice,
        DealogBackofficeWeb.Gettext,
        locales: ~w(de en),
