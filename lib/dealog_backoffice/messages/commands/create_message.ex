@@ -12,6 +12,7 @@ defmodule DealogBackoffice.Messages.Commands.CreateMessage do
 
   validates(:title,
     presence: [message: "can't be empty"],
+    length: [min: 4],
     string: true
   )
 

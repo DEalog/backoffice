@@ -8,7 +8,7 @@ defmodule DealogBackoffice.Messages do
   alias DealogBackoffice.{App, Repo}
 
   def create_message(attrs \\ %{}) do
-    uuid = Ecto.UUID.generate()
+    uuid = UUID.uuid4()
 
     create_message =
       attrs

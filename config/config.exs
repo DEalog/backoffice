@@ -22,6 +22,12 @@ config :dealog_backoffice, DealogBackoffice.App,
 config :commanded_ecto_projections,
   repo: DealogBackoffice.Repo
 
+config :vex,
+  sources: [
+    DealogBackoffice.Validators,
+    Vex.Validators
+  ]
+
 config :dealog_backoffice,
        DealogBackofficeWeb.Gettext,
        locales: ~w(de en),

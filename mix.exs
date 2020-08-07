@@ -53,6 +53,7 @@ defmodule DealogBackoffice.MixProject do
       {:commanded_eventstore_adapter, "~> 1.1"},
       {:eventstore, "~> 1.1"},
       {:exconstructor, "~> 1.1"},
+      {:uuid, "~> 1.1"},
       {:vex, "~> 0.6"},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
     ]
