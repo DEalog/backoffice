@@ -11,13 +11,12 @@ defmodule DealogBackoffice.Messages.Commands.CreateMessage do
   validates(:message_id, uuid: true)
 
   validates(:title,
-    presence: [message: "can't be empty"],
-    length: [min: 4],
+    presence: [message: "can't be blank"],
     string: true
   )
 
   validates(:body,
-    presence: [message: "can't be empty"],
+    presence: [message: "can't be blank"],
     string: true
   )
 

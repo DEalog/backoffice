@@ -26,7 +26,7 @@ defmodule DealogBackoffice.Middlewares.Validate do
       |> merge_errors()
 
     pipeline
-    |> respond({:error, :validation_failure, errors})
+    |> respond({:error, {:validation_failure, errors}})
     |> halt()
   end
 

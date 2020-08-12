@@ -7,6 +7,14 @@ defmodule DealogBackoffice.Messages do
   alias DealogBackoffice.Messages.Projections.Message
   alias DealogBackoffice.{App, Repo}
 
+  @doc """
+  Create a new message.
+
+  The payload should contain the title and the body.
+
+  Returns the message when successful
+  Returns an error when invalid
+  """
   def create_message(attrs \\ %{}) do
     uuid = UUID.uuid4()
 
