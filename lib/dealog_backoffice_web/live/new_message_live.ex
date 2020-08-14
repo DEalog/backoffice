@@ -25,7 +25,7 @@ defmodule DealogBackofficeWeb.NewMessageLive do
         {:ok, message} ->
           socket
           |> put_flash(
-            :info,
+            :save_success,
             gettext("Message %{title} created successfully", title: message.title)
           )
           |> push_redirect(to: Routes.organization_messages_path(socket, :index))

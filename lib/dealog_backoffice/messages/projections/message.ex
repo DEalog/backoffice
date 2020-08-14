@@ -7,6 +7,7 @@ defmodule DealogBackoffice.Messages.Projections.Message do
   schema "messages" do
     field :title, :string
     field :body, :string
+    field :status, :string
 
     timestamps()
   end

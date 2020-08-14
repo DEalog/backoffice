@@ -6,13 +6,25 @@
   %>
 </header>
 <main role="main" class="px-4 pt-4 pb-48 sm:pb:24">
-  <p class="alert alert-info" role="alert"
-    phx-click="lv:clear-flash"
-    phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+  <%= if has_success_flash?(@flash) do %>
+    <div class="alert alert-info" role="alert"
+      phx-value-key="info"
+    >
+    <%=
+      live_component @socket, 
+        DealogBackofficeWeb.NotificationSuccess,
+        close_automatically?: true,
+        title: gettext("Successfully saved!"),
+        message: live_flash(@flash, :save_success)
+    %>
+    </div>
+  <% end %>
 
   <p class="alert alert-danger" role="alert"
     phx-click="lv:clear-flash"
-    phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+    phx-value-key="error">
+    <%= live_flash(@flash, :error) %>
+  </p>
 
   <%= @inner_content %>
 </main>

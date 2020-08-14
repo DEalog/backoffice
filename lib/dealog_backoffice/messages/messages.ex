@@ -6,6 +6,7 @@ defmodule DealogBackoffice.Messages do
   alias DealogBackoffice.Messages.Commands.CreateMessage
   alias DealogBackoffice.Messages.Projections.Message
   alias DealogBackoffice.{App, Repo}
+  alias DealogBackoffice.Messages.Queries.ListMessages
 
   @doc """
   Create a new message.
@@ -26,6 +27,10 @@ defmodule DealogBackoffice.Messages do
     with :ok <- App.dispatch(create_message, consistency: :strong) do
       get(Message, uuid)
     end
+  end
+
+  def list_messages do
+    ListMessages.paginate(Repo)
   end
 
   defp get(schema, uuid) do

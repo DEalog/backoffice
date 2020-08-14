@@ -6,6 +6,7 @@ defmodule DealogBackoffice.Repo.Migrations.CreateMessagesProjection do
       add :id, :uuid, primary_key: true
       add :title, :string
       add :body, :text
+      add :status, :string
 
       timestamps()
     end

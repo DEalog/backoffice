@@ -5,4 +5,59 @@
   <p class="mt-4">
     <%= gettext "All messages of this organization are listed here." %>
   </p>
+  <div class="mt-4 flex flex-col">
+    <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+      <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead>
+            <tr>
+              <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                <%= gettext "Title" %>
+              </th>
+              <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                <%= gettext "Author" %>
+              </th>
+              <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                <%= gettext "Metadata" %>
+              </th>
+              <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                <%= gettext "Status" %>
+              </th>
+              <th class="px-6 py-3 bg-gray-50"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= for {message, index} <- Enum.with_index(@messages) do %>
+              <tr class="<%= if rem(index, 2) == 0, do: "bg-gray-100", else: "bg-white" %>">
+                <td class="max-w-xs px-6 py-4 whitespace-pre-wrap text-sm leading-5 text-gray-900">
+                  <%= message.title %>
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                  Max Mustermann
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-600">
+                  <div>
+                    <%= message.updated_at %>
+                  </div>
+                  <div class="font-thin text-xs text-gray-500">
+                    <%= message.id %>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                  <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 bg-red-600 text-red-200">
+                    <%= Gettext.gettext(DealogBackofficeWeb.Gettext, message.status) %>
+                  </span>
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+                  <a href="#" class="text-yellow-600 hover:text-yellow-900">
+                    <%= gettext "Edit" %>
+                  </a>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </section>

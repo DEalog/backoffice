@@ -2,9 +2,10 @@
 
 This release contains adding new messages for a single organization.
 
-- `NEW` Add projecting new messages
-- `NEW` Add creating new messages
-- `NEW` Add and configure event store
+- `NEW` Dismissible and auto hiding UI notifications to provide feedback are added
+- `NEW` New messages are listed in the organization section
+- `NEW` New messages can be created
+- `NEW` Event store is available to record all events within the application
 
 ## 0.1.0
 

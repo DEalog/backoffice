@@ -10,6 +10,9 @@
 msgid ""
 msgstr ""
 
+msgid "draft"
+msgstr "Entwurf"
+
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:84
 msgid "User menu"
@@ -38,7 +41,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:42
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:148 lib/dealog_backoffice_web/live/organization_messages_live.ex:7
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:148 lib/dealog_backoffice_web/live/organization_messages_live.ex:12
 #: lib/dealog_backoffice_web/live/organization_messages_live.html.leex:3
 msgid "My organization"
 msgstr ""
@@ -257,7 +260,7 @@ msgid "Create new message"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/design_system_live.html.leex:173
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:300
 msgid "Discarded"
 msgstr ""
 
@@ -272,7 +275,7 @@ msgid "Dismissible warning banner"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/design_system_live.html.leex:170
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:297
 msgid "Draft"
 msgstr ""
 
@@ -282,7 +285,7 @@ msgid "Error banner"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/design_system_live.html.leex:180
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:191
 msgid "Form fields"
 msgstr ""
 
@@ -292,17 +295,17 @@ msgid "Info banner with icon and link"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/design_system_live.html.leex:206
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:217
 msgid "Insert a valid URL"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/design_system_live.html.leex:191
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:202
 msgid "Insert name here"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/design_system_live.html.leex:211
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:222
 msgid "Insert text here"
 msgstr ""
 
@@ -312,17 +315,17 @@ msgid "Message %{title} created successfully"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/design_system_live.html.leex:167
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:294
 msgid "Published"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/design_system_live.html.leex:162
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:289
 msgid "Status pills"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/design_system_live.html.leex:197
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:208
 msgid "The URL to the website"
 msgstr ""
 
@@ -337,12 +340,12 @@ msgid "Upload a file"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/design_system_live.html.leex:148
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:177
 msgid "Upload area"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/design_system_live.html.leex:185
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:196
 msgid "Your Firstname"
 msgstr ""
 
@@ -366,4 +369,54 @@ msgstr ""
 #, elixir-format
 #: lib/dealog_backoffice_web/live/components/upload_area.html.leex:14
 msgid "up to"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages_live.html.leex:18
+msgid "Author"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages_live.html.leex:53
+msgid "Edit"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages_live.html.leex:21
+msgid "Metadata"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages_live.html.leex:24
+msgid "Status"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages_live.html.leex:15
+msgid "Title"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:155
+msgid "Dismissible success notification"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:171
+msgid "Forms"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:283
+msgid "Misc"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/design_system_live.html.leex:149
+msgid "Notifications"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/layout/live.html.leex:17
+msgid "Successfully saved!"
 msgstr ""

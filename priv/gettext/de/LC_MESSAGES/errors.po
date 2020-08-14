@@ -41,9 +41,6 @@ msgstr "ist nocht mit diesem Eintrag verknüpft"
 msgid "are still associated with this entry"
 msgstr "sind noch mit diesem Eintrag verknüpft"
 
-msgid "and"
-msgstr "und"
-
 msgid "should be %{count} character(s)"
 msgid_plural "should be %{count} character(s)"
 msgstr[0] "sollte %{count} Zeichen lang sein"
@@ -53,11 +50,6 @@ msgid "should have %{count} item(s)"
 msgid_plural "should have %{count} item(s)"
 msgstr[0] "sollte %{count} Eintrag haben"
 msgstr[1] "sollte %{count} Einträge haben"
-
-msgid "must have a length of at least %{min}"
-msgid_plural "must have a length of at least %{min}"
-msgstr[0] "sollte mindestens %{count} Zeichen haben"
-msgstr[1] "sollte mindestens %{count} Zeichen haben"
 
 msgid "should be at least %{count} character(s)"
 msgid_plural "should be at least %{count} character(s)"

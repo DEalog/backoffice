@@ -12,7 +12,8 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     Ecto.Multi.insert(multi, :message, %Message{
       id: created.message_id,
       title: created.title,
-      body: created.body
+      body: created.body,
+      status: "draft"
     })
   end)
 end
