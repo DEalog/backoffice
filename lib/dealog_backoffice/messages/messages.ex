@@ -13,8 +13,8 @@ defmodule DealogBackoffice.Messages do
 
   The payload should contain the title and the body.
 
-  Returns the message when successful
-  Returns an error when invalid
+  Returns the message when successful {:ok, message}
+  Returns an error when invalid {:error, :not_found}
   """
   def create_message(attrs \\ %{}) do
     uuid = UUID.uuid4()
@@ -25,7 +25,7 @@ defmodule DealogBackoffice.Messages do
       |> CreateMessage.assign_uuid(uuid)
 
     with :ok <- App.dispatch(create_message, consistency: :strong) do
-      get(Message, uuid)
+      get(uuid)
     end
   end
 
@@ -33,10 +33,10 @@ defmodule DealogBackoffice.Messages do
     ListMessages.paginate(Repo)
   end
 
-  defp get(schema, uuid) do
-    case Repo.get(schema, uuid) do
+  defp get(uuid) do
+    case Repo.get(Message, uuid) do
       nil -> {:error, :not_found}
-      projection -> {:ok, projection}
+      message -> {:ok, message}
     end
   end
 end

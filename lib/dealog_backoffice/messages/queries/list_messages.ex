@@ -3,6 +3,11 @@ defmodule DealogBackoffice.Messages.Queries.ListMessages do
 
   alias DealogBackoffice.Messages.Projections.Message
 
+  @doc """
+  Returns the list of messsages and the total counts
+
+  {messages, count}
+  """
   def paginate(repo) do
     query = query()
     messages = query |> repo.all()

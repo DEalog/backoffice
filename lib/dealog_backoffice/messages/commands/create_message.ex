@@ -1,7 +1,8 @@
 defmodule DealogBackoffice.Messages.Commands.CreateMessage do
   defstruct message_id: "",
             title: "",
-            body: ""
+            body: "",
+            status: :draft
 
   use ExConstructor
   use Vex.Struct

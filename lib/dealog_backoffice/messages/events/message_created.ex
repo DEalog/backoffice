@@ -3,6 +3,7 @@ defmodule DealogBackoffice.Messages.Events.MessageCreated do
   defstruct [
     :message_id,
     :title,
-    :body
+    :body,
+    :status
   ]
 end

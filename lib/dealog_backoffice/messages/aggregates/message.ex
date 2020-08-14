@@ -1,28 +1,31 @@
 defmodule DealogBackoffice.Messages.Aggregates.Message do
   defstruct [
-    :id,
+    :message_id,
     :title,
-    :body
+    :body,
+    :status
   ]
 
   alias DealogBackoffice.Messages.Aggregates.Message
   alias DealogBackoffice.Messages.Commands.CreateMessage
   alias DealogBackoffice.Messages.Events.MessageCreated
 
-  def execute(%Message{id: nil}, %CreateMessage{} = create) do
+  def execute(%Message{message_id: nil}, %CreateMessage{} = create) do
     %MessageCreated{
       message_id: create.message_id,
       title: create.title,
-      body: create.body
+      body: create.body,
+      status: create.status
     }
   end
 
   def apply(%Message{} = message, %MessageCreated{} = created) do
     %Message{
       message
-      | id: created.message_id,
+      | message_id: created.message_id,
         title: created.title,
-        body: created.title
+        body: created.body,
+        status: created.status
     }
   end
 end
