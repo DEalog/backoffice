@@ -13,7 +13,8 @@ defmodule DealogBackofficeWeb.NotificationSuccess do
         title: assigns.title,
         message: assigns.message,
         close_automatically?: Map.get(assigns, :close_automatically?, false),
-        reopen_after_close?: Map.get(assigns, :reopen_after_close?, false)
+        reopen_after_close?: Map.get(assigns, :reopen_after_close?, false),
+        class: Map.get(assigns, :class, "")
       )
 
     {:ok, socket}

@@ -94,6 +94,7 @@ msgid "must be equal to %{number}"
 msgstr ""
 
 #, elixir-format
+#: lib/dealog_backoffice_web/live/change_message_live.html.leex:22
 #: lib/dealog_backoffice_web/live/new_message_live.html.leex:22
 msgid "There were errors in the form!"
 msgstr ""

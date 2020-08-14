@@ -351,7 +351,8 @@ msgid "Your Firstname"
 msgstr "Ihr Vorname"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/new_message_live.html.leex:11
+#: lib/dealog_backoffice_web/live/change_message_live.html.leex:11
+#: lib/dealog_backoffice_web/live/change_message_live.html.leex:54 lib/dealog_backoffice_web/live/new_message_live.html.leex:11
 #: lib/dealog_backoffice_web/live/new_message_live.html.leex:48
 msgid "body"
 msgstr "Nachrichtentext"
@@ -362,7 +363,8 @@ msgid "or drag and drop"
 msgstr "oder ziehen und ablegen"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/new_message_live.html.leex:11
+#: lib/dealog_backoffice_web/live/change_message_live.html.leex:11
+#: lib/dealog_backoffice_web/live/change_message_live.html.leex:37 lib/dealog_backoffice_web/live/new_message_live.html.leex:11
 #: lib/dealog_backoffice_web/live/new_message_live.html.leex:32
 msgid "title"
 msgstr "Titel"
@@ -397,7 +399,7 @@ msgstr "Status"
 msgid "Title"
 msgstr "Titel"
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:155
 msgid "Dismissible success notification"
 msgstr "Ausblendbare Erfolgsmeldung"
@@ -421,3 +423,19 @@ msgstr "Benachrichtigungen"
 #: lib/dealog_backoffice_web/templates/layout/live.html.leex:17
 msgid "Successfully saved!"
 msgstr "Erfolgreich gespeichert!"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/change_message_live.ex:12
+#: lib/dealog_backoffice_web/live/change_message_live.html.leex:3 lib/dealog_backoffice_web/live/change_message_live.html.leex:71
+msgid "Change message"
+msgstr "Meldung ändern"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/change_message_live.html.leex:6
+msgid "Changing the message will set its status back to draft!"
+msgstr "Das Ändern der Meldung setzt diese auf Entwurf zurück!"
+
+#, elixir-format, fuzzy
+#: lib/dealog_backoffice_web/live/change_message_live.ex:36
+msgid "Message %{title} changed successfully"
+msgstr "Meldung %{title} erfolgreich geändert"

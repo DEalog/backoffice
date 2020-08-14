@@ -15,7 +15,8 @@
         DealogBackofficeWeb.NotificationSuccess,
         close_automatically?: true,
         title: gettext("Successfully saved!"),
-        message: live_flash(@flash, :save_success)
+        message: live_flash(@flash, :save_success),
+        class: "sm:py-20"
     %>
     </div>
   <% end %>

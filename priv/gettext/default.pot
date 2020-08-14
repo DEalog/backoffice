@@ -350,7 +350,8 @@ msgid "Your Firstname"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/new_message_live.html.leex:11
+#: lib/dealog_backoffice_web/live/change_message_live.html.leex:11
+#: lib/dealog_backoffice_web/live/change_message_live.html.leex:54 lib/dealog_backoffice_web/live/new_message_live.html.leex:11
 #: lib/dealog_backoffice_web/live/new_message_live.html.leex:48
 msgid "body"
 msgstr ""
@@ -361,7 +362,8 @@ msgid "or drag and drop"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/new_message_live.html.leex:11
+#: lib/dealog_backoffice_web/live/change_message_live.html.leex:11
+#: lib/dealog_backoffice_web/live/change_message_live.html.leex:37 lib/dealog_backoffice_web/live/new_message_live.html.leex:11
 #: lib/dealog_backoffice_web/live/new_message_live.html.leex:32
 msgid "title"
 msgstr ""
@@ -419,4 +421,20 @@ msgstr ""
 #, elixir-format
 #: lib/dealog_backoffice_web/templates/layout/live.html.leex:17
 msgid "Successfully saved!"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/change_message_live.ex:12
+#: lib/dealog_backoffice_web/live/change_message_live.html.leex:3 lib/dealog_backoffice_web/live/change_message_live.html.leex:71
+msgid "Change message"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/change_message_live.html.leex:6
+msgid "Changing the message will set its status back to draft!"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/change_message_live.ex:36
+msgid "Message %{title} changed successfully"
 msgstr ""

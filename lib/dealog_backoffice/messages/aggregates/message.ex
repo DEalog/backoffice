@@ -7,9 +7,12 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
   ]
 
   alias DealogBackoffice.Messages.Aggregates.Message
-  alias DealogBackoffice.Messages.Commands.CreateMessage
-  alias DealogBackoffice.Messages.Events.MessageCreated
+  alias DealogBackoffice.Messages.Commands.{CreateMessage, ChangeMessage}
+  alias DealogBackoffice.Messages.Events.{MessageCreated, MessageChanged}
 
+  @doc """
+  Create a new message.
+  """
   def execute(%Message{message_id: nil}, %CreateMessage{} = create) do
     %MessageCreated{
       message_id: create.message_id,
@@ -19,6 +22,20 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     }
   end
 
+  @doc """
+  Change an existing message.
+  """
+  def execute(%Message{message_id: message_id}, %ChangeMessage{} = change) do
+    %MessageChanged{
+      message_id: message_id,
+      title: change.title,
+      body: change.body,
+      status: change.status
+    }
+  end
+
+  # State mutators for reconstitution
+
   def apply(%Message{} = message, %MessageCreated{} = created) do
     %Message{
       message
@@ -26,6 +43,16 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
         title: created.title,
         body: created.body,
         status: created.status
+    }
+  end
+
+  def apply(%Message{} = message, %MessageChanged{} = changed) do
+    %Message{
+      message
+      | message_id: changed.message_id,
+        title: changed.title,
+        body: changed.body,
+        status: changed.status
     }
   end
 end

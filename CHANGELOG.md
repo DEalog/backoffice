@@ -2,6 +2,7 @@
 
 This release contains adding new messages for a single organization.
 
+- `NEW` Messages can be changed
 - `NEW` Dev script supports spawning an IEx session
 - `NEW` Dev script supports running arbitrary mix commands
 - `NEW` Dismissible and auto hiding UI notifications to provide feedback are added
