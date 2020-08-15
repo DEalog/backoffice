@@ -1,6 +1,6 @@
 <header>
   <%=
-    live_component @socket, 
+    live_component @socket,
       DealogBackofficeWeb.NavigationComponent,
       active_page: @active_page
   %>
@@ -11,7 +11,7 @@
       phx-value-key="info"
     >
     <%=
-      live_component @socket, 
+      live_component @socket,
         DealogBackofficeWeb.NotificationSuccess,
         close_automatically?: true,
         title: gettext("Successfully saved!"),
