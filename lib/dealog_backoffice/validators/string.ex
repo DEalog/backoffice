@@ -28,6 +28,8 @@ defmodule DealogBackoffice.Validators.String do
   def validate(nil, _options), do: :ok
   def validate("", _options), do: :ok
 
+  def validate(value, true), do: validate(value, [])
+
   def validate(value, options) do
     Vex.Validators.By.validate(
       value,
