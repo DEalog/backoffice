@@ -7,6 +7,11 @@
 # General application configuration
 use Mix.Config
 
+default_locale = "de"
+timezone = "Europe/Berlin"
+date_time_format = "{0D}.{0M}.{YYYY} {h24}:{m}:{s}"
+date_format = "{0D}.{0M}.{YYYY}"
+
 config :dealog_backoffice,
   ecto_repos: [DealogBackoffice.Repo],
   event_stores: [DealogBackoffice.EventStore]
@@ -28,10 +33,15 @@ config :vex,
     Vex.Validators
   ]
 
-config :dealog_backoffice,
-       DealogBackofficeWeb.Gettext,
-       locales: ~w(de en),
-       default_locale: "de"
+config :dealog_backoffice, DealogBackofficeWeb.Gettext,
+  locales: ~w(de en),
+  default_locale: default_locale
+
+config :dealog_backoffice, :i18n,
+  locale: default_locale,
+  timezone: timezone,
+  date_time_format: date_time_format,
+  date_format: date_format
 
 # Configures the endpoint
 config :dealog_backoffice, DealogBackofficeWeb.Endpoint,
@@ -55,6 +65,8 @@ config :commanded,
 
 # Configure tzdata
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
+
+config :iex, default_prompt: "DEalog IEx>>>"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
