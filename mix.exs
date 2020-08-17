@@ -20,7 +20,7 @@ defmodule DealogBackoffice.MixProject do
   def application do
     [
       mod: {DealogBackoffice.Application, []},
-      extra_applications: [:eventstore, :logger, :runtime_tools, :os_mon]
+      extra_applications: [:timex, :eventstore, :logger, :runtime_tools, :os_mon]
     ]
   end
 
@@ -55,6 +55,8 @@ defmodule DealogBackoffice.MixProject do
       {:exconstructor, "~> 1.1"},
       {:elixir_uuid, "~> 1.2"},
       {:vex, "~> 0.6"},
+      {:tzdata, "~> 1.0"},
+      {:timex, "~> 3.0"},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
     ]
   end

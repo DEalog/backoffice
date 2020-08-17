@@ -37,7 +37,12 @@
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-600">
                   <div>
-                    <%= message.updated_at %>
+                    <div>
+                      <%= display_date_time(message.inserted_at) %>
+                    </div>
+                    <div class="text-xs">
+                      <%= display_date_time_relative(message.updated_at) %>
+                    </div>
                   </div>
                   <div class="font-thin text-xs text-gray-500">
                     <%= message.id %>

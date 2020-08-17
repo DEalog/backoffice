@@ -2,6 +2,8 @@
 
 This release contains adding new messages for a single organization.
 
+- `NEW` Projections can be reset more easily
+- `CNG` Mix tasks can be ran independently of "stack" container
 - `NEW` Messages can be changed
 - `NEW` Dev script supports spawning an IEx session
 - `NEW` Dev script supports running arbitrary mix commands
