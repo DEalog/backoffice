@@ -1,8 +1,8 @@
 use Mix.Config
 
-config :dealog_backoffice,
-       DealogBackofficeWeb.Gettext,
-       default_locale: "en"
+config :dealog_backoffice, DealogBackofficeWeb.Gettext, default_locale: "en"
+
+config :dealog_backoffice, :i18n, locale: "en"
 
 # Configure your database
 #

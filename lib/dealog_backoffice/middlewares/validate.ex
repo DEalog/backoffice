@@ -1,4 +1,8 @@
 defmodule DealogBackoffice.Middlewares.Validate do
+  @moduledoc """
+  A `Commanded.Middleware` that runs the defined validations on each command 
+  before dispatch.
+  """
   @behaviour Commanded.Middleware
 
   alias Commanded.Middleware.Pipeline
