@@ -69,7 +69,7 @@ function run_iex {
 
 function run_mix {
   local command="mix $@"
-  run_command web ${command}
+  run_detached_command web ${command}
 }
 
 function run_update_translations {
@@ -101,6 +101,12 @@ function run_command {
   local container_name=${1}
   local command="${@:2}"
   docker-compose exec ${container_name} bash -c "${command}"
+}
+
+function run_detached_command {
+  local container_name=${1}
+  local command="${@:2}"
+  docker-compose run --rm ${container_name} bash -c "${command}"
 }
 
 function print_usage {
