@@ -1,4 +1,9 @@
 defmodule DealogBackoffice.Router do
+  @moduledoc """
+  Router for directing the events to the respective aggregates.
+
+  Further the router registers used middlewares like for validation.
+  """
   use Commanded.Commands.Router
 
   alias DealogBackoffice.Messages.Aggregates.Message
