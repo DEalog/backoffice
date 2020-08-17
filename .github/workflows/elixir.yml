@@ -38,6 +38,8 @@ jobs:
           restore-keys: ${{ runner.os }}-mix-
       - name: Install dependencies
         run: mix deps.get
+      - name: Install event store
+        run: MIX_ENV=test mix do event_store.create, event_store.init
       - name: Run tests
         run: mix test
         env:
