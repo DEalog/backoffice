@@ -24,6 +24,6 @@ jobs:
           SLACK_USERNAME: Deployment Bot
           SLACK_ICON: https://github.com/DEalog/backoffice/raw/master/assets/static/images/dealog_iconlogo.png
           SLACK_TITLE: Deployment to Dev finished
-          SLACK_MESSAGE: Please see https://dealog-backoffice.dev.munichmade.com for the latest version.
+          SLACK_MESSAGE: Please see https://backoffice.dev.dealog.de for the latest version.
           SLACK_FOOTER: DEalog Backoffice deployment
           MSG_MINIMAL: true
