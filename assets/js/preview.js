@@ -1,3 +1,4 @@
+import "alpinejs";
 import controls from "./controls";
 
 // Component preview controls

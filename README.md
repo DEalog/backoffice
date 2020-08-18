@@ -42,7 +42,33 @@ to German. To quickly get the `po` files updated run `./dev translations.update`
 After that you can easily fill in the translations. If not sure about the
 wording let it be resolved during the pull request process.
 
-### Collaboration
+### Replaying projections
+
+The DEalog Backoffice uses the [Commanded](https://commanded.io) library
+providing [CQRS](https://www.martinfowler.com/bliki/CQRS.html) support. To
+replay projections there are the following steps needed (manual for now):
+
+- Read Store database
+  - Delete the replay counter
+    ```
+    DELETE FROM projection_versions
+      WHERE projection_name = 'Messages.Projectors.Message';
+    ```
+  - Empty the projection database
+    ```
+    TRUNCATE TABLE messages
+      RESTART IDENTITY;
+    ```
+- Event Store database
+  - Reset the subscription
+    ```
+    DELETE FROM subscriptions
+      WHERE stream_uuid = '$all'
+      AND subscription_name = 'Messages.Projectors.Message';
+    ```
+- Restart the application
+
+## Collaboration
 
 If you want to collaborate please follow this guide:
 
@@ -59,6 +85,7 @@ The DEalog Backoffice application uses the following (main) technologies, framew
 
 - [Elixir](https://elixir-lang.org)
 - [Phoenix Framework](https://phoenixframework.org)
+- [Commanded](https://commanded.io)
 - [TailwindCSS](https://tailwindcss.com)
 - [Alpine.js](https://github.com/alpinejs/alpine)
 - [Postgres](https://www.postgresql.org)
@@ -67,7 +94,7 @@ The DEalog Backoffice application uses the following (main) technologies, framew
 
 As the DEalog platform transports important information and it is important to
 know what happened when by whom event sourcing is implemented which serves as
-an audit log as well as a reproducible state of data.
+an audit log as well as a reproducible state of projected data.
 
 To get a snappy UI feeling the project leverages
 [Phoenix LiveView](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html).

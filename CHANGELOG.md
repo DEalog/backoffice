@@ -1,4 +1,19 @@
-## 0.1.0 (under development)
+## 0.2.0 (under development)
+
+This release contains adding and changing new messages for a single organization.
+
+- `NEW` Database is setup and provisioned on deployment
+- `NEW` Projections can be reset more easily
+- `CNG` Mix tasks can be ran independently of "stack" container
+- `NEW` Messages can be changed
+- `NEW` Dev script supports spawning an IEx session
+- `NEW` Dev script supports running arbitrary mix commands
+- `NEW` Dismissible and auto hiding UI notifications to provide feedback are added
+- `NEW` New messages are listed in the organization section
+- `NEW` New messages can be created
+- `NEW` Event store is available to record all events within the application
+
+## 0.1.0
 
 This is the initial version setting up the base system with the page structure and initial design.
 

@@ -5,4 +5,68 @@
   <p class="mt-4">
     <%= gettext "Compose a new message." %>
   </p>
+  <%
+    errors = if assigns[:errors], do: @errors, else: %{}
+    # TODO Move this somewhere else. Maybe to the live view.
+    fields_with_labels = [title: gettext("title"), body: gettext("body")]
+  %>
+  <%= f = form_for :message,
+    Routes.new_message_path(@socket, :new),
+    [errors: errors, phx_submit: "create_message"]
+  %>
+    <%= if assigns[:error] do %>
+      <div class="mt-4">
+        <%=
+          live_component @socket,
+            DealogBackofficeWeb.BannerError,
+            heading: dgettext("errors", "There were errors in the form!"),
+            errors: all_errors(errors, fields_with_labels)
+        %>
+      </div>
+    <% end %>
+
+    <div class="mt-8 mx-auto w-full sm:w-2/3 lg:w-1/2">
+      <div>
+        <%=
+          label f,
+            gettext("title")
+        %>
+        <%=
+          text_input f, :title,
+            value: @message["title"],
+            class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :title), do: " border-red-700"}"
+        %>
+        <%=
+          errors_for_field f,
+            :title,
+            class: if has_errors?(f, :title), do: "text-red-700", else: ""
+        %>
+      </div>
+      <div class="mt-2">
+        <%=
+          label f,
+            gettext("body")
+        %>
+        <%=
+          textarea f, :body,
+            value: @message["body"],
+            rows: 10,
+            class: "form-input flex-1 block w-full px-3 py-2 rounded-md sm:text-sm sm:leading-5#{if has_errors?(f, :body), do: " border-red-700"}"
+        %>
+        <%=
+          errors_for_field f,
+            :body,
+            class: if has_errors?(f, :body), do: "text-red-700", else: ""
+        %>
+      </div>
+      <div class="mt-4 flex justify-end">
+        <span class="ml-3 inline-flex rounded-md shadow-sm">
+          <%=
+            submit gettext("Create new message"),
+            class: "inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:shadow-outline-gray active:bg-yellow-700 transition duration-150 ease-in-out"
+          %>
+        </span>
+      </div>
+    </div>
+  </form>
 </section>

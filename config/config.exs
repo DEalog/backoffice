@@ -7,13 +7,41 @@
 # General application configuration
 use Mix.Config
 
-config :dealog_backoffice,
-  ecto_repos: [DealogBackoffice.Repo]
+default_locale = "de"
+timezone = "Europe/Berlin"
+date_time_format = "{0D}.{0M}.{YYYY} {h24}:{m}:{s}"
+date_format = "{0D}.{0M}.{YYYY}"
 
 config :dealog_backoffice,
-       DealogBackofficeWeb.Gettext,
-       locales: ~w(de en),
-       default_locale: "de"
+  ecto_repos: [DealogBackoffice.Repo],
+  event_stores: [DealogBackoffice.EventStore]
+
+config :dealog_backoffice, DealogBackoffice.App,
+  event_store: [
+    adapter: Commanded.EventStore.Adapters.EventStore,
+    event_store: DealogBackoffice.EventStore
+  ],
+  pub_sub: :local,
+  registry: :local
+
+config :commanded_ecto_projections,
+  repo: DealogBackoffice.Repo
+
+config :vex,
+  sources: [
+    DealogBackoffice.Validators,
+    Vex.Validators
+  ]
+
+config :dealog_backoffice, DealogBackofficeWeb.Gettext,
+  locales: ~w(de en),
+  default_locale: default_locale
+
+config :dealog_backoffice, :i18n,
+  locale: default_locale,
+  timezone: timezone,
+  date_time_format: date_time_format,
+  date_format: date_format
 
 # Configures the endpoint
 config :dealog_backoffice, DealogBackofficeWeb.Endpoint,
@@ -30,6 +58,15 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+# Configure event store
+config :commanded,
+  event_store_adapter: Commanded.EventStore.Adapters.EventStore
+
+# Configure tzdata
+config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
+
+config :iex, default_prompt: "DEalog IEx>>>"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

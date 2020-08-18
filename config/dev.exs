@@ -2,9 +2,19 @@ use Mix.Config
 
 # Configure your database
 config :dealog_backoffice, DealogBackoffice.Repo,
+  migration_timestamps: [type: :utc_datetime_usec],
   username: "postgres",
   password: "postgres",
   database: "dealog_backoffice_dev",
+  hostname: "db",
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
+config :dealog_backoffice, DealogBackoffice.EventStore,
+  serializer: EventStore.JsonSerializer,
+  username: "postgres",
+  password: "postgres",
+  database: "dealog_backoffice_event_store_dev",
   hostname: "db",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

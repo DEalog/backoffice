@@ -4,7 +4,7 @@ defmodule DealogBackoffice.MixProject do
   def project do
     [
       app: :dealog_backoffice,
-      version: "0.1.0",
+      version: "0.2.0",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
@@ -20,7 +20,7 @@ defmodule DealogBackoffice.MixProject do
   def application do
     [
       mod: {DealogBackoffice.Application, []},
-      extra_applications: [:logger, :runtime_tools, :os_mon]
+      extra_applications: [:timex, :eventstore, :logger, :runtime_tools, :os_mon]
     ]
   end
 
@@ -45,9 +45,18 @@ defmodule DealogBackoffice.MixProject do
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
+      {:jason, "~> 1.1"},
       {:plug_cowboy, "~> 2.0"},
       {:earmark, "~> 1.4"},
+      {:commanded, "~> 1.1"},
+      {:commanded_ecto_projections, "~> 1.1"},
+      {:commanded_eventstore_adapter, "~> 1.1"},
+      {:eventstore, "~> 1.1"},
+      {:exconstructor, "~> 1.1"},
+      {:elixir_uuid, "~> 1.2"},
+      {:vex, "~> 0.6"},
+      {:tzdata, "~> 1.0"},
+      {:timex, "~> 3.0"},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
     ]
   end

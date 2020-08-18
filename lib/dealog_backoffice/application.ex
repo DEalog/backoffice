@@ -7,6 +7,7 @@ defmodule DealogBackoffice.Application do
 
   def start(_type, _args) do
     children = [
+      DealogBackoffice.App,
       # Start the Ecto repository
       DealogBackoffice.Repo,
       # Start the Telemetry supervisor
@@ -14,9 +15,9 @@ defmodule DealogBackoffice.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: DealogBackoffice.PubSub},
       # Start the Endpoint (http/https)
-      DealogBackofficeWeb.Endpoint
-      # Start a worker by calling: DealogBackoffice.Worker.start_link(arg)
-      # {DealogBackoffice.Worker, arg}
+      DealogBackofficeWeb.Endpoint,
+      # Messages projector
+      DealogBackoffice.Messages.Supervisor
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -62,6 +62,16 @@ function run_update {
   git merge --ff origin/master
 }
 
+function run_iex {
+  local command="iex -S mix $@"
+  run_command web ${command}
+}
+
+function run_mix {
+  local command="mix $@"
+  run_detached_command web ${command}
+}
+
 function run_update_translations {
   run_command web "mix do gettext.extract, gettext.merge priv/gettext --locale de"
   echo "Extracted and updated translation strings. Please translate."
@@ -93,6 +103,12 @@ function run_command {
   docker-compose exec ${container_name} bash -c "${command}"
 }
 
+function run_detached_command {
+  local container_name=${1}
+  local command="${@:2}"
+  docker-compose run --rm ${container_name} bash -c "${command}"
+}
+
 function print_usage {
   echo "Usage: ./dev [command] [args]"
 }
@@ -106,6 +122,8 @@ The following commands are supported:
 ./dev rebuild               # Rebuild the images and restart the development stack
 ./dev reset                 # Reset the stack (including volumes and images)
 ./dev update                # Update from master branch
+./dev iex                   # Spawn IEx session
+./dev mix                   # Run mix commands
 ./dev translations.update   # Run the (Elixir) tests
 ./dev test                  # Run the (Elixir) tests
 ./dev test.watch            # Run the (Elixir) tests in watch mode
@@ -139,6 +157,12 @@ function maybe_show_command_help {
       ;;
     "update"|"u")
       print_help_for_update
+      ;;
+    "iex"|"i")
+      print_help_for_iex
+      ;;
+    "mix"|"m")
+      print_help_for_mix
       ;;
     "translations.update"|"tu")
       print_help_for_update_translations
@@ -217,6 +241,27 @@ shortcut: u
 
 The 'update' command fetches the latest upstream state and fast-forward merges
 the master branch.
+EOF
+}
+
+function print_help_for_iex {
+  cat << EOF
+# iex
+
+shortcut: i
+
+The 'iex' command spawns a new IEx session for the project.
+EOF
+}
+
+function print_help_for_mix {
+  cat << EOF
+# mix
+
+shortcut: m
+
+The 'mix' command can be used to run mix commands, e.g.
+./dev mix run priv/repo.seeds.exs
 EOF
 }
 
@@ -307,6 +352,12 @@ function main {
       ;;
     "update"|"u")
       run_update
+      ;;
+    "iex"|"i")
+      run_iex ${args}
+      ;;
+    "mix"|"m")
+      run_mix ${args}
       ;;
     "translations.update"|"tu")
       run_update_translations

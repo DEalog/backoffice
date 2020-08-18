@@ -9,15 +9,17 @@
       <h3 class="text-sm leading-5 font-medium text-red-800">
         <%= @heading %>
       </h3>
-      <div class="mt-2 text-sm leading-5 text-red-700">
-        <ul class="list-disc pl-5">
-          <%= for {error, index} <- Enum.with_index(@errors) do %>
-            <li class="<%= if index > 0, do: "mt-1" %>">
-              <%= error %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
+      <%= if assigns[:errors] do %>
+        <div class="mt-2 text-sm leading-5 text-red-700">
+          <ul class="list-disc pl-5">
+            <%= for {error, index} <- Enum.with_index(@errors) do %>
+              <li class="<%= if index > 0, do: "mt-1" %>">
+                <%= error %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

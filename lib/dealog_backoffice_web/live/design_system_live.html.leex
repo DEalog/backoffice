@@ -143,6 +143,35 @@
             %>
           </div>
         </div>
+      </div>
+      <h3 class="mt-4 mb-2 text-xl font-semibold leading-5">
+        <a name="notifications">
+          <%= gettext "Notifications" %>
+        </a>
+      </h3>
+      <div>
+        <div class="mb-4 border border-gray-400 sm:rounded">
+          <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
+            <%= gettext "Dismissible success notification" %>
+          </div>
+          <div class="responsive-preview w-full h-40 flex">
+            <%=
+              live_component @socket,
+                DealogBackofficeWeb.PreviewComponent,
+                component: DealogBackofficeWeb.NotificationSuccess,
+                reopen_after_close?: true,
+                title: "Operation was successful",
+                message: "Everything went smooth. The operation was performed without hassle."
+            %>
+          </div>
+        </div>
+      </div>
+      <h3 class="mt-4 mb-2 text-xl font-semibold leading-5">
+        <a name="forms">
+          <%= gettext "Forms" %>
+        </a>
+      </h3>
+      <div>
         <div class="mb-4 border border-gray-400 sm:rounded">
           <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
             <%= gettext "Upload area" %>
@@ -155,24 +184,6 @@
                 allowed_file_extensions: ["PNG", "JPG", "GIF"],
                 max_filesize: "10MB"
             %>
-          </div>
-        </div>
-        <div class="mb-4 border border-gray-400 sm:rounded">
-          <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
-            <%= gettext "Status pills" %>
-          </div>
-          <div class="w-full flex">
-            <div class="p-4">
-              <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 bg-green-600 text-green-200">
-                <%= gettext "Published" %>
-              </span>
-              <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 bg-yellow-500 text-yellow-200">
-                <%= gettext "Draft" %>
-              </span>
-              <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 bg-red-700 text-red-200">
-                <%= gettext "Discarded" %>
-              </span>
-            </div>
           </div>
         </div>
         <div class="mb-4 border border-gray-400 sm:rounded">
@@ -263,6 +274,31 @@
                   </button>
                 </span>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="mt-4 mb-2 text-xl font-semibold leading-5">
+        <a name="misc">
+          <%= gettext "Misc" %>
+        </a>
+      </h3>
+      <div>
+        <div class="mb-4 border border-gray-400 sm:rounded">
+          <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
+            <%= gettext "Status pills" %>
+          </div>
+          <div class="w-full flex">
+            <div class="p-4">
+              <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 bg-green-600 text-green-200">
+                <%= gettext "Published" %>
+              </span>
+              <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 bg-yellow-500 text-yellow-200">
+                <%= gettext "Draft" %>
+              </span>
+              <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 bg-red-700 text-red-200">
+                <%= gettext "Discarded" %>
+              </span>
             </div>
           </div>
         </div>

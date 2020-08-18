@@ -85,3 +85,9 @@ msgstr "muss größer oder gleich %{number} sein"
 
 msgid "must be equal to %{number}"
 msgstr "muss gleich %{number} sein"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/change_message_live.html.leex:22
+#: lib/dealog_backoffice_web/live/new_message_live.html.leex:22
+msgid "There were errors in the form!"
+msgstr "Das Formular enthält Fehler!"
