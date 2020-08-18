@@ -1,7 +1,8 @@
 ## 0.2.0 (under development)
 
-This release contains adding new messages for a single organization.
+This release contains adding and changing new messages for a single organization.
 
+- `NEW` Database is setup and provisioned on deployment
 - `NEW` Projections can be reset more easily
 - `CNG` Mix tasks can be ran independently of "stack" container
 - `NEW` Messages can be changed
