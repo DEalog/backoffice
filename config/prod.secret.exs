@@ -14,7 +14,7 @@ database_url =
 event_store_database_url =
   System.get_env("EVENT_STORE_DATABASE_URL") ||
     raise """
-    environment variable DATABASE_URL is missing.
+    environment variable EVENT_STORE_DATABASE_URL is missing.
     For example: ecto://USER:PASS@HOST/DATABASE
     """
 
