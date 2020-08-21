@@ -4,6 +4,8 @@ This release has a basic approval process for a single organization on board.
 
 ## 0.2.0
 
+- `CNG` Improve my organization table layout
+
 This release contains adding and changing new messages for a single organization.
 
 - `NEW` Database is setup and provisioned on deployment
