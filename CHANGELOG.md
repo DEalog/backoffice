@@ -1,4 +1,4 @@
-## 0.2.0 (under development)
+## 0.2.0
 
 This release contains adding and changing new messages for a single organization.
 
