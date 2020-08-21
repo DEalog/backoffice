@@ -2,10 +2,10 @@
 
 This release has a basic approval process for a single organization on board.
 
-## 0.2.0
-
 - `ADD` Favicons are added
 - `CNG` Improve my organization table layout
+
+## 0.2.0
 
 This release contains adding and changing new messages for a single organization.
 
