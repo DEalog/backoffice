@@ -11,7 +11,7 @@ defmodule DealogBackoffice.Messages do
   @doc """
   Create a new message.
 
-  The payload should contain the title and the body. The initial state is 
+  The payload should contain the title and the body. The initial state is
   always `draft`.
 
   Returns the message when successful {:ok, message}
@@ -39,6 +39,15 @@ defmodule DealogBackoffice.Messages do
   Returns an error tuple when invalid {:error, reason}
   """
   def change_message(%Message{} = message, attrs \\ %{}) do
+    if has_changed?(message, attrs) do
+      apply_change(message, attrs)
+    else
+      {:ok, message}
+    end
+  end
+
+  # Run the actual command to change a message.
+  defp apply_change(message, attrs) do
     change_message =
       attrs
       |> ChangeMessage.new()
@@ -46,6 +55,42 @@ defmodule DealogBackoffice.Messages do
 
     with :ok <- App.dispatch(change_message, consistency: :strong) do
       get(message.id)
+    end
+  end
+
+  @allowed_keys [:title, :body]
+
+  # Check if there has been a content change.
+  defp has_changed?(message, attrs) do
+    attrs =
+      attrs
+      |> filter_by_map_keys(@allowed_keys)
+      |> convert_map_keys()
+
+    diff =
+      message
+      |> Map.from_struct()
+      |> Map.take(Map.keys(attrs))
+      |> MapDiff.diff(attrs)
+
+    case diff do
+      %{changed: :equal} -> false
+      _ -> true
+    end
+  end
+
+  # Filter the input data map to only allow valid entries.
+  defp filter_by_map_keys(map, keys) do
+    Map.take(map, keys ++ Enum.map(keys, &Atom.to_string/1))
+  end
+
+  # Convert the map keys to atoms (if not already) to enable comparision with the struct.
+  defp convert_map_keys(map) do
+    for {key, val} <- map, into: %{} do
+      case key do
+        key when is_binary(key) -> {String.to_atom(key), val}
+        _ -> {key, val}
+      end
     end
   end
 

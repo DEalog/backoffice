@@ -30,8 +30,18 @@ defmodule DealogBackoffice.MessagesTest do
     test "should succeed with valid data" do
       {:ok, %Message{} = message} = Messages.create_message(@valid_data)
       {:ok, %Message{} = updated_message} = Messages.change_message(message, @valid_update_data)
+
+      refute updated_message == message
       assert updated_message.title == @valid_update_data.title
       assert updated_message.body == @valid_update_data.body
+    end
+
+    @tag :integration
+    test "should succeed but not change if input is same as original" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+      {:ok, %Message{} = updated_message} = Messages.change_message(message, @valid_data)
+
+      assert updated_message == message
     end
 
     @tag :integration

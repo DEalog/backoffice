@@ -2,6 +2,7 @@
 
 This release has a basic approval process for a single organization on board.
 
+- `CNG` No change saves do not emit a changed event
 - `ADD` Favicons are added
 - `CNG` Improve my organization table layout
 
