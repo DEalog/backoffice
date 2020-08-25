@@ -11,7 +11,10 @@ msgid ""
 msgstr ""
 
 msgid "draft"
-msgstr "Entwurf"
+msgstr "Draft"
+
+msgid "waiting_for_approval"
+msgstr "Waiting for approval"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:84
@@ -41,14 +44,14 @@ msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:42
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:148 lib/dealog_backoffice_web/live/organization_messages_live.ex:12
-#: lib/dealog_backoffice_web/live/organization_messages_live.html.leex:3
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:148 lib/dealog_backoffice_web/live/organization_messages/index.ex:20
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:3
 msgid "My organization"
 msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:64
-#: lib/dealog_backoffice_web/live/new_message_live.ex:10 lib/dealog_backoffice_web/live/new_message_live.html.leex:3
+#: lib/dealog_backoffice_web/live/organization_messages/message.ex:18
 msgid "New message"
 msgstr ""
 
@@ -135,7 +138,7 @@ msgid "All approvals are listed here."
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages_live.html.leex:6
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:6
 msgid "All messages of this organization are listed here."
 msgstr ""
 
@@ -151,7 +154,7 @@ msgid "Changelog"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/new_message_live.html.leex:6
+#: lib/dealog_backoffice_web/live/organization_messages/message.html.leex:12
 msgid "Compose a new message."
 msgstr ""
 
@@ -255,7 +258,7 @@ msgid "Components"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/new_message_live.html.leex:65
+#: lib/dealog_backoffice_web/live/organization_messages/message.html.leex:11
 msgid "Create new message"
 msgstr ""
 
@@ -310,7 +313,7 @@ msgid "Insert text here"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/new_message_live.ex:29
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:51
 msgid "Message %{title} created successfully"
 msgstr ""
 
@@ -350,9 +353,8 @@ msgid "Your Firstname"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/change_message_live.html.leex:11
-#: lib/dealog_backoffice_web/live/change_message_live.html.leex:54 lib/dealog_backoffice_web/live/new_message_live.html.leex:11
-#: lib/dealog_backoffice_web/live/new_message_live.html.leex:48
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:4
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:50
 msgid "body"
 msgstr ""
 
@@ -362,9 +364,8 @@ msgid "or drag and drop"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/change_message_live.html.leex:11
-#: lib/dealog_backoffice_web/live/change_message_live.html.leex:37 lib/dealog_backoffice_web/live/new_message_live.html.leex:11
-#: lib/dealog_backoffice_web/live/new_message_live.html.leex:32
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:4
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:33
 msgid "title"
 msgstr ""
 
@@ -374,27 +375,27 @@ msgid "up to"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages_live.html.leex:18
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:18
 msgid "Author"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages_live.html.leex:53
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:61
 msgid "Edit"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages_live.html.leex:21
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:21
 msgid "Metadata"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages_live.html.leex:24
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:24
 msgid "Status"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages_live.html.leex:15
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:15
 msgid "Title"
 msgstr ""
 
@@ -424,17 +425,32 @@ msgid "Successfully saved!"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/change_message_live.ex:12
-#: lib/dealog_backoffice_web/live/change_message_live.html.leex:3 lib/dealog_backoffice_web/live/change_message_live.html.leex:71
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:68 lib/dealog_backoffice_web/live/organization_messages/message.ex:28
+#: lib/dealog_backoffice_web/live/organization_messages/message.html.leex:6
 msgid "Change message"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/change_message_live.html.leex:6
+#: lib/dealog_backoffice_web/live/organization_messages/message.html.leex:7
 msgid "Changing the message will set its status back to draft!"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/change_message_live.ex:36
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:36
 msgid "Message %{title} changed successfully"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/message.ex:43
+msgid "Message %{title} failed to be sent for approval"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/message.ex:51
+msgid "Message %{title} successfully sent for approval"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:66
+msgid "Send for approval"
 msgstr ""

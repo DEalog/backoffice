@@ -3,7 +3,7 @@ defmodule DealogBackoffice.Messages do
   The boundary for messages.
   """
 
-  alias DealogBackoffice.Messages.Commands.{CreateMessage, ChangeMessage}
+  alias DealogBackoffice.Messages.Commands.{CreateMessage, ChangeMessage, SendMessageForApproval}
   alias DealogBackoffice.Messages.Projections.Message
   alias DealogBackoffice.Messages.Queries.ListMessages
   alias DealogBackoffice.{App, Repo}
@@ -43,6 +43,39 @@ defmodule DealogBackoffice.Messages do
       apply_change(message, attrs)
     else
       {:ok, message}
+    end
+  end
+
+  @doc """
+  """
+  def send_message_for_approval(%Message{} = message) do
+    send_message =
+      message
+      |> SendMessageForApproval.new()
+      |> SendMessageForApproval.assign_message_id(message)
+      |> SendMessageForApproval.set_status()
+
+    with :ok <- App.dispatch(send_message, consistency: :strong) do
+      get(message.id)
+    end
+  end
+
+  @doc """
+  Get a (paginated) list of messages.
+  """
+  def list_messages do
+    ListMessages.paginate(Repo)
+  end
+
+  @doc """
+  Get a message by its ID.
+  """
+  def get_message(message_id), do: get(message_id)
+
+  defp get(uuid) do
+    case Repo.get(Message, uuid) do
+      nil -> {:error, :not_found}
+      message -> {:ok, message}
     end
   end
 
@@ -91,19 +124,6 @@ defmodule DealogBackoffice.Messages do
         key when is_binary(key) -> {String.to_atom(key), val}
         _ -> {key, val}
       end
-    end
-  end
-
-  def list_messages do
-    ListMessages.paginate(Repo)
-  end
-
-  def get_message(message_id), do: get(message_id)
-
-  defp get(uuid) do
-    case Repo.get(Message, uuid) do
-      nil -> {:error, :not_found}
-      message -> {:ok, message}
     end
   end
 end

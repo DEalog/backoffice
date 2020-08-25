@@ -54,4 +54,14 @@ defmodule DealogBackoffice.MessagesTest do
       assert %{title: _, body: _} = errors
     end
   end
+
+  describe "send message for approval" do
+    test "should succeed" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+      {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
+
+      assert message.status == "draft"
+      assert sent_message.status == "waiting_for_approval"
+    end
+  end
 end

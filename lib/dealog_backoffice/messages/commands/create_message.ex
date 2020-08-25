@@ -21,6 +21,10 @@ defmodule DealogBackoffice.Messages.Commands.CreateMessage do
     string: true
   )
 
+  validates(:status,
+    inclusion: [in: [:draft]]
+  )
+
   def assign_uuid(%CreateMessage{} = message, uuid) do
     %CreateMessage{message | message_id: uuid}
   end

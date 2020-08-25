@@ -41,6 +41,13 @@ defmodule DealogBackofficeWeb.Router do
       as: :organization_messages
     )
 
+    live(
+      "/organization-messages/:id/send_for_approval",
+      OrganizationMessagesLive.Message,
+      :send_for_approval,
+      as: :organization_messages
+    )
+
     live("/approvals", ApprovalsLive, :index)
     live("/changelog", ChangelogLive, :index)
     live("/my-account", MyAccountLive, :index)

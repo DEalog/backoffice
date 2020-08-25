@@ -30,4 +30,27 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Message do
       message: message
     )
   end
+
+  defp apply_action(socket, :send_for_approval, %{"id" => id}) do
+    # TODO Move to change_message function to keep API clean
+    {:ok, original_message} = Messages.get_message(id)
+
+    case Messages.send_message_for_approval(original_message) do
+      {:error, {:validation_failure, _errors}} ->
+        socket
+        |> put_flash(
+          :save_failure,
+          gettext("Message %{title} failed to be sent for approval", title: original_message.title)
+        )
+        |> push_redirect(to: Routes.organization_messages_path(socket, :index))
+
+      {:ok, message} ->
+        socket
+        |> put_flash(
+          :save_success,
+          gettext("Message %{title} successfully sent for approval", title: message.title)
+        )
+        |> push_redirect(to: Routes.organization_messages_path(socket, :index))
+    end
+  end
 end
