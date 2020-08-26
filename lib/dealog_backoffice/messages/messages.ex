@@ -4,8 +4,8 @@ defmodule DealogBackoffice.Messages do
   """
 
   alias DealogBackoffice.Messages.Commands.{CreateMessage, ChangeMessage, SendMessageForApproval}
-  alias DealogBackoffice.Messages.Projections.Message
-  alias DealogBackoffice.Messages.Queries.ListMessages
+  alias DealogBackoffice.Messages.Projections.{Message, MessageForApproval}
+  alias DealogBackoffice.Messages.Queries.{ListMessages, ListMessageApprovals}
   alias DealogBackoffice.{App, Repo}
 
   @doc """
@@ -18,15 +18,15 @@ defmodule DealogBackoffice.Messages do
   Returns an error when invalid or failed {:error, reason}
   """
   def create_message(attrs \\ %{}) do
-    uuid = UUID.uuid4()
+    message_id = UUID.uuid4()
 
     create_message =
       attrs
       |> CreateMessage.new()
-      |> CreateMessage.assign_uuid(uuid)
+      |> CreateMessage.assign_message_id(message_id)
 
     with :ok <- App.dispatch(create_message, consistency: :strong) do
-      get(uuid)
+      get(Message, message_id)
     end
   end
 
@@ -47,6 +47,12 @@ defmodule DealogBackoffice.Messages do
   end
 
   @doc """
+  Send a message for approval.
+
+  The status will change to `waiting_for_approval`.
+
+  Returns the message when successful {:ok, message}
+  Returns an error tuple when invalid {:error, reason}
   """
   def send_message_for_approval(%Message{} = message) do
     send_message =
@@ -55,8 +61,12 @@ defmodule DealogBackoffice.Messages do
       |> SendMessageForApproval.assign_message_id(message)
       |> SendMessageForApproval.set_status()
 
-    with :ok <- App.dispatch(send_message, consistency: :strong) do
-      get(message.id)
+    with "draft" <- message.status,
+         :ok <- App.dispatch(send_message, consistency: :strong) do
+      get(Message, message.id)
+    else
+      _ ->
+        {:error, :invalid_transition}
     end
   end
 
@@ -70,10 +80,19 @@ defmodule DealogBackoffice.Messages do
   @doc """
   Get a message by its ID.
   """
-  def get_message(message_id), do: get(message_id)
+  def get_message(message_id), do: get(Message, message_id)
 
-  defp get(uuid) do
-    case Repo.get(Message, uuid) do
+  @doc """
+  Get a (paginated) list of message approvals.
+  """
+  def list_message_approvals do
+    ListMessageApprovals.paginate(Repo)
+  end
+
+  def get_message_for_approval(message_id), do: get(MessageForApproval, message_id)
+
+  defp get(schema, uuid) do
+    case Repo.get(schema, uuid) do
       nil -> {:error, :not_found}
       message -> {:ok, message}
     end
@@ -87,7 +106,7 @@ defmodule DealogBackoffice.Messages do
       |> ChangeMessage.assign_message_id(message)
 
     with :ok <- App.dispatch(change_message, consistency: :strong) do
-      get(message.id)
+      get(Message, message.id)
     end
   end
 
@@ -100,13 +119,11 @@ defmodule DealogBackoffice.Messages do
       |> filter_by_map_keys(@allowed_keys)
       |> convert_map_keys()
 
-    diff =
-      message
-      |> Map.from_struct()
-      |> Map.take(Map.keys(attrs))
-      |> MapDiff.diff(attrs)
-
-    case diff do
+    message
+    |> Map.from_struct()
+    |> Map.take(Map.keys(attrs))
+    |> MapDiff.diff(attrs)
+    |> case do
       %{changed: :equal} -> false
       _ -> true
     end

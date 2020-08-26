@@ -56,12 +56,18 @@ defmodule DealogBackoffice.MessagesTest do
   end
 
   describe "send message for approval" do
-    test "should succeed" do
+    test "should succeed if in draft" do
       {:ok, %Message{} = message} = Messages.create_message(@valid_data)
       {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
 
       assert message.status == "draft"
       assert sent_message.status == "waiting_for_approval"
+    end
+
+    test "should fail when not in draft" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+      {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
+      {:error, :invalid_transition} = Messages.send_message_for_approval(sent_message)
     end
   end
 end

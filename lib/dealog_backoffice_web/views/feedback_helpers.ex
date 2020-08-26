@@ -9,4 +9,11 @@ defmodule DealogBackofficeWeb.FeedbackHelpers do
   def has_success_flash?(flash) do
     !Enum.empty?(flash) && Map.has_key?(flash, Atom.to_string(:save_success))
   end
+
+  @doc """
+  Checks if a flash message is present and if so it has a `save_error` key.
+  """
+  def has_error_flash?(flash) do
+    !Enum.empty?(flash) && Map.has_key?(flash, Atom.to_string(:save_error))
+  end
 end

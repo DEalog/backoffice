@@ -2,6 +2,9 @@
 
 This release has a basic approval process for a single organization on board.
 
+- `ADD` Messages waiting for approval are listed in the approvals section
+- `ADD` Messages can be sent for approval
+- `ADD` Error messages are displayed as notification
 - `CNG` No change saves do not emit a changed event
 - `ADD` Favicons are added
 - `CNG` Improve my organization table layout

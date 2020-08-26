@@ -22,13 +22,24 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Message do
   end
 
   defp apply_action(socket, :change, %{"id" => id}) do
-    {:ok, message} = Messages.get_message(id)
+    case Messages.get_message(id) do
+      {:ok, %{status: "waiting_for_approval"} = message} ->
+        socket
+        |> put_flash(
+          :save_error,
+          gettext("Message %{title} is in review an cannot be changed",
+            title: message.title
+          )
+        )
+        |> push_redirect(to: Routes.organization_messages_path(socket, :index))
 
-    assign(socket,
-      title: gettext("Change message"),
-      active_page: :change_message,
-      message: message
-    )
+      {:ok, message} ->
+        assign(socket,
+          title: gettext("Change message"),
+          active_page: :change_message,
+          message: message
+        )
+    end
   end
 
   defp apply_action(socket, :send_for_approval, %{"id" => id}) do
@@ -36,11 +47,13 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Message do
     {:ok, original_message} = Messages.get_message(id)
 
     case Messages.send_message_for_approval(original_message) do
-      {:error, {:validation_failure, _errors}} ->
+      {:error, :invalid_transition} ->
         socket
         |> put_flash(
-          :save_failure,
-          gettext("Message %{title} failed to be sent for approval", title: original_message.title)
+          :save_error,
+          gettext("Message %{title} has to be in status draft in order to send for approval",
+            title: original_message.title
+          )
         )
         |> push_redirect(to: Routes.organization_messages_path(socket, :index))
 
