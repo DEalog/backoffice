@@ -30,6 +30,7 @@ config :commanded_ecto_projections,
 config :vex,
   sources: [
     DealogBackoffice.Validators,
+    DealogBackoffice.Messages.Validators,
     Vex.Validators
   ]
 

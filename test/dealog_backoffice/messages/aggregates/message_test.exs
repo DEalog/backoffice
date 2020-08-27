@@ -1,8 +1,8 @@
 defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
   use DealogBackoffice.AggregateCase, aggregate: DealogBackoffice.Messages.Aggregates.Message
 
-  alias DealogBackoffice.Messages.Commands.{CreateMessage, ChangeMessage}
-  alias DealogBackoffice.Messages.Events.{MessageCreated, MessageChanged}
+  alias DealogBackoffice.Messages.Commands.{CreateMessage, ChangeMessage, SendMessageForApproval}
+  alias DealogBackoffice.Messages.Events.{MessageCreated, MessageChanged, MessageSentForApproval}
 
   describe "create message" do
     @tag :unit
@@ -46,6 +46,38 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
           %MessageChanged{
             message_id: message_id,
             status: :draft,
+            title: "A changed title",
+            body: "A changed body"
+          }
+        ]
+      )
+    end
+  end
+
+  describe "send message for approval" do
+    @tag :unit
+    test "should successfully be sent" do
+      message_id = UUID.uuid4()
+
+      assert_events(
+        [
+          %MessageCreated{
+            message_id: message_id,
+            status: :draft,
+            title: "A title",
+            body: "A body"
+          }
+        ],
+        struct(SendMessageForApproval, %{
+          message_id: message_id,
+          title: "A changed title",
+          body: "A changed body",
+          status: :waiting_for_approval
+        }),
+        [
+          %MessageSentForApproval{
+            message_id: message_id,
+            status: :waiting_for_approval,
             title: "A changed title",
             body: "A changed body"
           }

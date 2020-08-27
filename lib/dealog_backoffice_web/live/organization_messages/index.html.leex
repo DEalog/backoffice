@@ -1,0 +1,85 @@
+<section>
+  <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+    <%= gettext "My organization" %>
+  </h1>
+  <p class="mt-4">
+    <%= gettext "All messages of this organization are listed here." %>
+  </p>
+  <div class="mt-4 flex flex-col">
+    <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+      <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead>
+            <tr>
+              <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                <%= gettext "Title" %>
+              </th>
+              <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                <%= gettext "Author" %>
+              </th>
+              <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                <%= gettext "Metadata" %>
+              </th>
+              <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                <%= gettext "Status" %>
+              </th>
+              <th class="px-6 py-3 bg-gray-50"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= for {message, index} <- Enum.with_index(@messages) do %>
+              <tr class="<%= if is_even?(index), do: "bg-gray-100" %>">
+                <td class="max-w-xs px-6 py-4 text-sm leading-5 text-gray-900">
+                  <div>
+                    <%= message.title %>
+                  </div>
+                  <div class="font-thin text-xs text-gray-500">
+                    <%= message.id %>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                  Max Mustermann
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-600">
+                  <div>
+                    <div>
+                      <%= display_date_time(message.inserted_at) %>
+                    </div>
+                    <div class="text-xs">
+                      <%= display_date_time_relative(message.updated_at) %>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                  <%
+                    status_colors = case message.status do
+                      "waiting_for_approval" -> "bg-yellow-600 text-yellow-200"
+                      "draft" -> "bg-gray-600 text-gray-200"
+                    end
+                  %>
+                  <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 <%= status_colors %>">
+                    <%= Gettext.gettext(DealogBackofficeWeb.Gettext, message.status) %>
+                  </span>
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+                  <%= unless message.status == "waiting_for_approval" do %>
+                    <div>
+                      <a href="<%= Routes.organization_messages_path(@socket, :change, message) %>" class="text-yellow-600 hover:text-yellow-900">
+                        <%= gettext "Edit" %>
+                      </a>
+                    </div>
+                    <div>
+                      <a href="<%= Routes.organization_messages_path(@socket, :send_for_approval, message) %>" class="text-yellow-600 hover:text-yellow-900">
+                        <%= gettext "Send for approval" %>
+                      </a>
+                    </div>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

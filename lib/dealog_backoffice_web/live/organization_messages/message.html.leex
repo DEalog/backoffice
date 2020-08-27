@@ -1,0 +1,30 @@
+<section>
+  <% 
+    texts = 
+      if @live_action in [:change] do 
+        %{
+          heading: gettext("Change message"), 
+          hint: gettext("Changing the message will set its status back to draft!")
+        }
+      else
+        %{
+          heading: gettext("Create new message"),
+          hint: gettext("Compose a new message.")
+        }
+      end
+  %>
+  <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+    <%= texts.heading %>
+  </h1>
+  <p class="mt-4">
+    <%= texts.hint %>
+  </p>
+  <%= 
+    live_component @socket, 
+      DealogBackofficeWeb.OrganizationMessagesLive.FormComponent,
+      id: @message.id || :new,
+      action: @live_action,
+      message: @message,
+      return_to: Routes.organization_messages_path(@socket, :index)
+  %>
+</section>

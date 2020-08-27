@@ -1,9 +1,9 @@
 <section>
   <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
-    <%= gettext "My organization" %>
+    <%= gettext "Approvals" %>
   </h1>
   <p class="mt-4">
-    <%= gettext "All messages of this organization are listed here." %>
+    <%= gettext "All messages waiting for approval are listed here." %>
   </p>
   <div class="mt-4 flex flex-col">
     <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -28,9 +28,14 @@
           </thead>
           <tbody>
             <%= for {message, index} <- Enum.with_index(@messages) do %>
-              <tr class="<%= if rem(index, 2) == 0, do: "bg-gray-100", else: "bg-white" %>">
-                <td class="max-w-xs px-6 py-4 whitespace-pre-wrap text-sm leading-5 text-gray-900">
-                  <%= message.title %>
+              <tr class="<%= if is_even?(index), do: "bg-gray-100" %>">
+                <td class="max-w-xs px-6 py-4 text-sm leading-5 text-gray-900">
+                  <div>
+                    <%= message.title %>
+                  </div>
+                  <div class="font-thin text-xs text-gray-500">
+                    <%= message.id %>
+                  </div>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
                   Max Mustermann
@@ -44,19 +49,32 @@
                       <%= display_date_time_relative(message.updated_at) %>
                     </div>
                   </div>
-                  <div class="font-thin text-xs text-gray-500">
-                    <%= message.id %>
-                  </div>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                  <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 bg-red-600 text-red-200">
+                  <%
+                    status_colors = case message.status do
+                      "waiting_for_approval" -> "bg-yellow-600 text-yellow-200"
+                      "approved" -> "bg-green-600 text-green-200"
+                      "rejected" -> "bg-red-600 text-red-200"
+                    end
+                  %>
+                  <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 <%= status_colors %>">
                     <%= Gettext.gettext(DealogBackofficeWeb.Gettext, message.status) %>
                   </span>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                  <a href="<%= Routes.change_message_path(@socket, :change, message) %>" class="text-yellow-600 hover:text-yellow-900">
-                    <%= gettext "Edit" %>
-                  </a>
+                  <%= if message.status == "waiting_for_approval" do %>
+                    <div>
+                      <a href="<%= Routes.approvals_path(@socket, :approve, message) %>" class="text-yellow-600 hover:text-yellow-900">
+                        <%= gettext "Approve" %>
+                      </a>
+                    </div>
+                    <div>
+                      <a href="<%= Routes.approvals_path(@socket, :reject, message) %>" class="text-yellow-600 hover:text-yellow-900">
+                        <%= gettext "Reject" %>
+                      </a>
+                    </div>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

@@ -98,6 +98,7 @@ defmodule DealogBackofficeWeb do
       import DealogBackofficeWeb.ErrorHelpers
       import DealogBackofficeWeb.FeedbackHelpers
       import DealogBackofficeWeb.DateHelpers
+      import DealogBackofficeWeb.HtmlHelpers
       import DealogBackofficeWeb.Gettext
       alias DealogBackofficeWeb.Router.Helpers, as: Routes
     end

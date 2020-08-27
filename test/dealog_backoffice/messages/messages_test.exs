@@ -30,8 +30,18 @@ defmodule DealogBackoffice.MessagesTest do
     test "should succeed with valid data" do
       {:ok, %Message{} = message} = Messages.create_message(@valid_data)
       {:ok, %Message{} = updated_message} = Messages.change_message(message, @valid_update_data)
+
+      refute updated_message == message
       assert updated_message.title == @valid_update_data.title
       assert updated_message.body == @valid_update_data.body
+    end
+
+    @tag :integration
+    test "should succeed but not change if input is same as original" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+      {:ok, %Message{} = updated_message} = Messages.change_message(message, @valid_data)
+
+      assert updated_message == message
     end
 
     @tag :integration
@@ -42,6 +52,22 @@ defmodule DealogBackoffice.MessagesTest do
                Messages.change_message(message, @invalid_update_data)
 
       assert %{title: _, body: _} = errors
+    end
+  end
+
+  describe "send message for approval" do
+    test "should succeed if in draft" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+      {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
+
+      assert message.status == "draft"
+      assert sent_message.status == "waiting_for_approval"
+    end
+
+    test "should fail when not in draft" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+      {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
+      {:error, :invalid_transition} = Messages.send_message_for_approval(sent_message)
     end
   end
 end

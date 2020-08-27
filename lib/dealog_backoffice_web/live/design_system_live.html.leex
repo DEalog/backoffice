@@ -165,6 +165,21 @@
             %>
           </div>
         </div>
+        <div class="mb-4 border border-gray-400 sm:rounded">
+          <div class="px-4 py-3 font-regular text-md border-b border-gray-400 text-gray-800">
+            <%= gettext "Dismissible error notification" %>
+          </div>
+          <div class="responsive-preview w-full h-40 flex">
+            <%=
+              live_component @socket,
+                DealogBackofficeWeb.PreviewComponent,
+                component: DealogBackofficeWeb.NotificationError,
+                reopen_after_close?: true,
+                title: "Operation failed",
+                message: "Everything went south. The operation was not performed without screwing up."
+            %>
+          </div>
+        </div>
       </div>
       <h3 class="mt-4 mb-2 text-xl font-semibold leading-5">
         <a name="forms">

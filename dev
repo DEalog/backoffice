@@ -48,7 +48,6 @@ function run_stop {
 
 function run_rebuild {
   mutagen project terminate
-  run_start
 }
 
 function run_clean {
@@ -348,7 +347,6 @@ function main {
       ;;
     "reset"|"rs")
       run_clean
-      run_start
       ;;
     "update"|"u")
       run_update

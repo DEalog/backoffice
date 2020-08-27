@@ -7,8 +7,8 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
   ]
 
   alias DealogBackoffice.Messages.Aggregates.Message
-  alias DealogBackoffice.Messages.Commands.{CreateMessage, ChangeMessage}
-  alias DealogBackoffice.Messages.Events.{MessageCreated, MessageChanged}
+  alias DealogBackoffice.Messages.Commands.{CreateMessage, ChangeMessage, SendMessageForApproval}
+  alias DealogBackoffice.Messages.Events.{MessageCreated, MessageChanged, MessageSentForApproval}
 
   @doc """
   Create a new message.
@@ -34,6 +34,18 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     }
   end
 
+  @doc """
+  Send an existing message for approval.
+  """
+  def execute(%Message{message_id: message_id}, %SendMessageForApproval{} = send) do
+    %MessageSentForApproval{
+      message_id: message_id,
+      title: send.title,
+      body: send.body,
+      status: send.status
+    }
+  end
+
   # State mutators for reconstitution
 
   def apply(%Message{} = message, %MessageCreated{} = created) do
@@ -53,6 +65,16 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
         title: changed.title,
         body: changed.body,
         status: changed.status
+    }
+  end
+
+  def apply(%Message{} = message, %MessageSentForApproval{} = sent) do
+    %Message{
+      message
+      | message_id: sent.message_id,
+        title: sent.title,
+        body: sent.body,
+        status: sent.status
     }
   end
 end

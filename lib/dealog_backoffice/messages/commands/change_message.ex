@@ -22,6 +22,10 @@ defmodule DealogBackoffice.Messages.Commands.ChangeMessage do
     string: true
   )
 
+  validates(:status,
+    inclusion: [in: [:draft]]
+  )
+
   def assign_message_id(%ChangeMessage{} = message, %Message{id: message_id}) do
     %ChangeMessage{message | message_id: message_id}
   end

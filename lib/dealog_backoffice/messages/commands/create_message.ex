@@ -8,8 +8,12 @@ defmodule DealogBackoffice.Messages.Commands.CreateMessage do
   use Vex.Struct
 
   alias DealogBackoffice.Messages.Commands.CreateMessage
+  alias DealogBackoffice.Messages.Validators.UniqueMessageId
 
-  validates(:message_id, uuid: true)
+  validates(:message_id,
+    uuid: true,
+    by: &UniqueMessageId.validate/2
+  )
 
   validates(:title,
     presence: [message: "can't be blank"],
@@ -21,7 +25,11 @@ defmodule DealogBackoffice.Messages.Commands.CreateMessage do
     string: true
   )
 
-  def assign_uuid(%CreateMessage{} = message, uuid) do
+  validates(:status,
+    inclusion: [in: [:draft]]
+  )
+
+  def assign_message_id(%CreateMessage{} = message, uuid) do
     %CreateMessage{message | message_id: uuid}
   end
 end

@@ -1,7 +1,7 @@
 defmodule DealogBackoffice.Messages.Supervisor do
   use Supervisor
 
-  alias DealogBackoffice.Messages
+  alias DealogBackoffice.Messages.Projectors
 
   def start_link(arg) do
     Supervisor.start_link(__MODULE__, arg, name: __MODULE__)
@@ -9,6 +9,6 @@ defmodule DealogBackoffice.Messages.Supervisor do
 
   @impl true
   def init(_arg) do
-    Supervisor.init([Messages.Projectors.Message], strategy: :one_for_one)
+    Supervisor.init([Projectors.Message, Projectors.MessageApproval], strategy: :one_for_one)
   end
 end

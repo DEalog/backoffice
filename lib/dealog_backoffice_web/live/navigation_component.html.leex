@@ -53,7 +53,7 @@
       <div class="flex items-center">
         <div class="flex-shrink-0">
           <%=
-            live_redirect to: Routes.new_message_path(@socket, :new),
+            live_redirect to: Routes.organization_messages_path(@socket, :new),
               method: :get,
               class: "relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-yellow-600 shadow-sm hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150"
               do %>
