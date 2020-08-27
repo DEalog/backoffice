@@ -71,6 +71,17 @@ defmodule DealogBackoffice.Messages do
   end
 
   @doc """
+  TODO
+  """
+  def approve_message(%Message{} = message) do
+    {:ok, message}
+  end
+
+  def reject_message(%Message{} = message) do
+    {:ok, message}
+  end
+
+  @doc """
   Get a (paginated) list of messages.
   """
   def list_messages do

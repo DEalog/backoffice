@@ -65,12 +65,12 @@
                 <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
                   <%= if message.status == "waiting_for_approval" do %>
                     <div>
-                      <a href="<%= Routes.approvals_path(@socket, :index) %>" class="text-yellow-600 hover:text-yellow-900">
+                      <a href="<%= Routes.approvals_path(@socket, :approve, message) %>" class="text-yellow-600 hover:text-yellow-900">
                         <%= gettext "Approve" %>
                       </a>
                     </div>
                     <div>
-                      <a href="<%= Routes.approvals_path(@socket, :index) %>" class="text-yellow-600 hover:text-yellow-900">
+                      <a href="<%= Routes.approvals_path(@socket, :reject, message) %>" class="text-yellow-600 hover:text-yellow-900">
                         <%= gettext "Reject" %>
                       </a>
                     </div>
