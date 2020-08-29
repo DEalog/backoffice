@@ -1,4 +1,4 @@
-defmodule DealogBackofficeWeb.OrganizationMessagesLiveIndexTest do
+defmodule DealogBackofficeWeb.OrganizationMessagesLive.IndexTest do
   use DealogBackofficeWeb.ConnCase
 
   import Phoenix.LiveViewTest

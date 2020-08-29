@@ -3,7 +3,13 @@ defmodule DealogBackoffice.Messages do
   The boundary for messages.
   """
 
-  alias DealogBackoffice.Messages.Commands.{CreateMessage, ChangeMessage, SendMessageForApproval}
+  alias DealogBackoffice.Messages.Commands.{
+    CreateMessage,
+    ChangeMessage,
+    SendMessageForApproval,
+    RejectMessage
+  }
+
   alias DealogBackoffice.Messages.Projections.{Message, MessageForApproval}
   alias DealogBackoffice.Messages.Queries.{ListMessages, ListMessageApprovals}
   alias DealogBackoffice.{App, Repo}
@@ -71,17 +77,6 @@ defmodule DealogBackoffice.Messages do
   end
 
   @doc """
-  TODO
-  """
-  def approve_message(%Message{} = message) do
-    {:ok, message}
-  end
-
-  def reject_message(%Message{} = message) do
-    {:ok, message}
-  end
-
-  @doc """
   Get a (paginated) list of messages.
   """
   def list_messages do
@@ -100,7 +95,39 @@ defmodule DealogBackoffice.Messages do
     ListMessageApprovals.paginate(Repo)
   end
 
+  @doc """
+  Get a message sent for approval by its ID.
+  """
   def get_message_for_approval(message_id), do: get(MessageForApproval, message_id)
+
+  @doc """
+  TODO
+  """
+  def approve_message(%MessageForApproval{} = message) do
+    {:ok, message}
+  end
+
+  @doc """
+  Reject a message.
+
+  Returns the message as {:ok, %MessageForApproval{}} when transitioned.
+  Returns {:error, :invalid_transition} when transition is not allowed.
+  """
+  def reject_message(%MessageForApproval{} = message) do
+    reject_message =
+      message
+      |> RejectMessage.new()
+      |> RejectMessage.assign_message_id(message)
+      |> RejectMessage.set_status()
+
+    with "waiting_for_approval" <- message.status,
+         :ok <- App.dispatch(reject_message, consistency: :strong) do
+      get(MessageForApproval, message.id)
+    else
+      _ ->
+        {:error, :invalid_transition}
+    end
+  end
 
   defp get(schema, uuid) do
     case Repo.get(schema, uuid) do

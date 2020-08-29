@@ -2,7 +2,7 @@ defmodule DealogBackoffice.MessagesTest do
   use DealogBackoffice.DataCase
 
   alias DealogBackoffice.Messages
-  alias DealogBackoffice.Messages.Projections.Message
+  alias DealogBackoffice.Messages.Projections.{Message, MessageForApproval}
 
   @valid_data %{title: "The title", body: "The body"}
   @invalid_data %{title: nil, body: nil}
@@ -56,18 +56,53 @@ defmodule DealogBackoffice.MessagesTest do
   end
 
   describe "send message for approval" do
+    @tag :integration
     test "should succeed if in draft" do
       {:ok, %Message{} = message} = Messages.create_message(@valid_data)
-      {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
 
+      assert {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
       assert message.status == "draft"
       assert sent_message.status == "waiting_for_approval"
     end
 
+    @tag :integration
     test "should fail when not in draft" do
       {:ok, %Message{} = message} = Messages.create_message(@valid_data)
       {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
-      {:error, :invalid_transition} = Messages.send_message_for_approval(sent_message)
+
+      assert {:error, :invalid_transition} = Messages.send_message_for_approval(sent_message)
+    end
+  end
+
+  describe "reject message" do
+    @tag :integration
+    test "should succeed without reason" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+      Messages.send_message_for_approval(message)
+
+      {:ok, %MessageForApproval{} = message_for_approval} =
+        Messages.get_message_for_approval(message.id)
+
+      assert message_for_approval.status == "waiting_for_approval"
+
+      assert {:ok, %MessageForApproval{} = rejected_message} =
+               Messages.reject_message(message_for_approval)
+
+      assert rejected_message.status == "rejected"
+    end
+
+    @tag :integration
+    test "should fail when not in status waiting for approval" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+      Messages.send_message_for_approval(message)
+
+      {:ok, %MessageForApproval{} = message_for_approval} =
+        Messages.get_message_for_approval(message.id)
+
+      {:ok, %MessageForApproval{} = rejected_message} =
+        Messages.reject_message(message_for_approval)
+
+      assert {:error, :invalid_transition} = Messages.reject_message(rejected_message)
     end
   end
 end

@@ -23,6 +23,7 @@ defmodule DealogBackoffice.DataCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import Commanded.Assertions.EventAssertions
       import DealogBackoffice.DataCase
     end
   end

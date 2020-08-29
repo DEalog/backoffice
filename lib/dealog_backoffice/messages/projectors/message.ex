@@ -4,7 +4,12 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     name: "Messages.Projectors.Message",
     consistency: :strong
 
-  alias DealogBackoffice.Messages.Events.{MessageCreated, MessageChanged, MessageSentForApproval}
+  alias DealogBackoffice.Messages.Events.{
+    MessageCreated,
+    MessageChanged,
+    MessageSentForApproval,
+    MessageRejected
+  }
 
   alias DealogBackoffice.Messages.Projections.Message
 
@@ -22,21 +27,21 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     )
   end)
 
-  project(%MessageChanged{} = changed, fn multi ->
+  project(%MessageChanged{} = changed, metadata, fn multi ->
     update_message(multi, changed.message_id,
       title: changed.title,
       body: changed.body,
       status: changed.status,
-      updated_at: NaiveDateTime.utc_now()
+      updated_at: metadata.created_at
     )
   end)
 
-  project(%MessageSentForApproval{} = sent_for_approval, fn multi ->
+  project(%MessageSentForApproval{} = sent_for_approval, metadata, fn multi ->
     update_message(multi, sent_for_approval.message_id,
       title: sent_for_approval.title,
       body: sent_for_approval.body,
       status: sent_for_approval.status,
-      updated_at: NaiveDateTime.utc_now()
+      updated_at: metadata.created_at
     )
   end)
 
