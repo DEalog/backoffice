@@ -45,6 +45,13 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     )
   end)
 
+  project(%MessageRejected{} = rejected, metadata, fn multi ->
+    update_message(multi, rejected.message_id,
+      status: rejected.status,
+      updated_at: metadata.created_at
+    )
+  end)
+
   defp update_message(multi, message_id, changes) do
     Ecto.Multi.update_all(multi, :message, query(message_id), set: changes)
   end
