@@ -17,6 +17,9 @@ msgstr "Entwurf"
 msgid "waiting_for_approval"
 msgstr "Warten auf Freigabe"
 
+msgid "rejected"
+msgstr "Zurückgewiesen"
+
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:84
 msgid "User menu"
@@ -309,7 +312,7 @@ msgid "Insert text here"
 msgstr "Text hier eingeben"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:51
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:30
 msgid "Message %{title} created successfully"
 msgstr "Meldung %{title} erfolgreich erstellt"
 
@@ -377,7 +380,7 @@ msgid "Author"
 msgstr "Autor"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:68
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:70
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -431,7 +434,7 @@ msgid "Changing the message will set its status back to draft!"
 msgstr "Das Ändern der Meldung setzt diese auf Entwurf zurück!"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:36
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:51
 msgid "Message %{title} changed successfully"
 msgstr "Meldung %{title} erfolgreich geändert"
 
@@ -441,7 +444,7 @@ msgid "Message %{title} successfully sent for approval"
 msgstr "Meldung %{title} erfolgreich zur Freigabe geschickt"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:73
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:75
 msgid "Send for approval"
 msgstr "Zur Freigabe schicken"
 
@@ -458,7 +461,7 @@ msgstr "Freigeben"
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/index.html.leex:74
 msgid "Reject"
-msgstr "Ablehnen"
+msgstr "Zurückweisen"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:170
@@ -489,3 +492,34 @@ msgstr "Meldung speichern"
 #: lib/dealog_backoffice_web/templates/layout/live.html.leex:31
 msgid "There was an error!"
 msgstr "Ein Fehler ist aufgetreten!"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/message.html.leex:7
+msgid "Add a note of why the message is rejected. This message will be shown to the editor."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:33
+msgid "Message %{title} rejected"
+msgstr "Meldung %{title} erfolgreich erstellt"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/message.html.leex:4
+msgid "Message rejection"
+msgstr "Meldungszurückweisung"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:4
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:32
+msgid "Reason"
+msgstr "Grund"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/message.ex:24
+msgid "Reject message"
+msgstr "Meldung zurückweisen"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:49
+msgid "Send reason"
+msgstr "Grund senden"
