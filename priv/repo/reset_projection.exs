@@ -1,29 +1,49 @@
-IO.puts("This script will reset the projection for messages")
+IO.puts("This script will reset the projections.")
 
-if Mix.env() == :dev do
-  alias DealogBackoffice.{Repo, EventStore}
+alias DealogBackoffice.{Repo, EventStore}
 
-  truncate_query = "TRUNCATE TABLE messages RESTART IDENTITY;"
+truncate_projection_table = fn table ->
+  truncate_query = "TRUNCATE TABLE #{table} RESTART IDENTITY;"
   Ecto.Adapters.SQL.query!(Repo, truncate_query)
+  IO.puts("✓ Truncated table #{table}")
+end
 
-  IO.puts("✓ Truncated table messages")
-
+delete_projection_versions = fn name ->
   delete_projection_version_query = """
     DELETE FROM projection_versions
-      WHERE projection_name = 'Messages.Projectors.Message';
+      WHERE projection_name = '#{name}';
   """
 
   Ecto.Adapters.SQL.query!(Repo, delete_projection_version_query)
 
-  IO.puts("✓ Removed projection version")
+  IO.puts("✓ Removed projection version for #{name}")
+end
 
-  :ok = EventStore.delete_subscription("$all", "Messages.Projectors.Message")
+delete_subscription = fn name ->
+  :ok = EventStore.delete_subscription("$all", name)
+  IO.puts("✓ Removed projection subscription for #{name}")
+end
 
-  IO.puts("✓ Removed projection subscription")
+if Mix.env() == :dev do
+  projections = [
+    %{table: "messages", name: "Messages.Projectors.Message"},
+    %{table: "message_approvals", name: "Messages.Projectors.MessageApproval"}
+  ]
+
+  Enum.each(projections, fn %{table: table, name: name} ->
+    truncate_projection_table.(table)
+    delete_projection_versions.(name)
+    delete_subscription.(name)
+  end)
 
   IO.puts("""
-    Best is to restart the application (stack).
-    Altertively you can run the following in the main IEx shell:
+
+  ****************************************************************************
+  * Successfully wiped all projections.                                      *
+  ****************************************************************************
+
+  Best is to restart the application (stack).
+  Alternatively you can run the following in the main IEx shell:
 
   [pid] =
   Enum.filter(
@@ -33,4 +53,6 @@ if Mix.env() == :dev do
 
   Process.exit(pid, :kill)
   """)
+else
+  IO.puts("This script is only meant for development.")
 end
