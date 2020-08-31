@@ -101,13 +101,6 @@ defmodule DealogBackoffice.Messages do
   def get_message_for_approval(message_id), do: get(MessageForApproval, message_id)
 
   @doc """
-  TODO
-  """
-  def approve_message(%MessageForApproval{} = message) do
-    {:ok, message}
-  end
-
-  @doc """
   Reject a message.
 
   In addition to the implicit change of `status` an optional `reason` can be 
