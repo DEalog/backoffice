@@ -16,6 +16,9 @@ msgstr "Draft"
 msgid "waiting_for_approval"
 msgstr "Waiting for approval"
 
+msgid "rejected"
+msgstr "Rejected"
+
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:84
 msgid "User menu"
@@ -308,7 +311,7 @@ msgid "Insert text here"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:51
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:30
 msgid "Message %{title} created successfully"
 msgstr ""
 
@@ -376,7 +379,7 @@ msgid "Author"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:68
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:70
 msgid "Edit"
 msgstr ""
 
@@ -430,7 +433,7 @@ msgid "Changing the message will set its status back to draft!"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:36
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:51
 msgid "Message %{title} changed successfully"
 msgstr ""
 
@@ -440,7 +443,7 @@ msgid "Message %{title} successfully sent for approval"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:73
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:75
 msgid "Send for approval"
 msgstr ""
 
@@ -487,4 +490,35 @@ msgstr ""
 #, elixir-format
 #: lib/dealog_backoffice_web/templates/layout/live.html.leex:31
 msgid "There was an error!"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/message.html.leex:7
+msgid "Add a note of why the message is rejected. This message will be shown to the editor."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:30
+msgid "Message %{title} rejected"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/message.html.leex:4
+msgid "Message rejection"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:4
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:32
+msgid "Reason"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/message.ex:24
+msgid "Reject message"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:49
+msgid "Send reason"
 msgstr ""

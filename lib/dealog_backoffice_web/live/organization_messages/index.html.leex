@@ -55,6 +55,8 @@
                     status_colors = case message.status do
                       "waiting_for_approval" -> "bg-yellow-600 text-yellow-200"
                       "draft" -> "bg-gray-600 text-gray-200"
+                      "rejected" -> "bg-red-600 text-red-200"
+                      _ -> "bg-black text-white"
                     end
                   %>
                   <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 <%= status_colors %>">

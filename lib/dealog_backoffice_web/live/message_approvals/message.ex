@@ -1,6 +1,6 @@
 defmodule DealogBackofficeWeb.MessageApprovalsLive.Message do
   @moduledoc """
-  LiveView for message handling with message approvals.
+  LiveView for message handling with message approvals or rejections.
   """
 
   use DealogBackofficeWeb, :live_view
@@ -17,31 +17,15 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.Message do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :approve, %{"id" => id}) do
-    {:ok, message} = Messages.get_message(id)
-
-    case Messages.approve_message(message) do
-      {:ok, _} ->
-        socket
-        |> put_flash(
-          :save_success,
-          gettext("Message %{title} successfully approved", title: message.title)
-        )
-        |> push_redirect(to: Routes.approvals_path(socket, :index))
-    end
-  end
-
   defp apply_action(socket, :reject, %{"id" => id}) do
-    {:ok, message} = Messages.get_message(id)
-
-    case Messages.reject_message(message) do
+    case Messages.get_message_for_approval(id) do
       {:ok, message} ->
-        socket
-        |> put_flash(
-          :save_success,
-          gettext("Message %{title} successfully rejected", title: message.title)
+        assign(socket,
+          title: gettext("Reject message"),
+          active_page: :approvals,
+          message: message,
+          reason: nil
         )
-        |> push_redirect(to: Routes.approvals_path(socket, :index))
     end
   end
 end

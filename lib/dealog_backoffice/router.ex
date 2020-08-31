@@ -7,7 +7,13 @@ defmodule DealogBackoffice.Router do
   use Commanded.Commands.Router
 
   alias DealogBackoffice.Messages.Aggregates.Message
-  alias DealogBackoffice.Messages.Commands.{CreateMessage, ChangeMessage, SendMessageForApproval}
+
+  alias DealogBackoffice.Messages.Commands.{
+    CreateMessage,
+    ChangeMessage,
+    SendMessageForApproval,
+    RejectMessage
+  }
 
   alias DealogBackoffice.Middlewares.Validate
 
@@ -15,5 +21,5 @@ defmodule DealogBackoffice.Router do
 
   identify(Message, by: :message_id, prefix: "message-")
 
-  dispatch([CreateMessage, ChangeMessage, SendMessageForApproval], to: Message)
+  dispatch([CreateMessage, ChangeMessage, SendMessageForApproval, RejectMessage], to: Message)
 end

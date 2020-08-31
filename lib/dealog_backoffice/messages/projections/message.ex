@@ -8,6 +8,7 @@ defmodule DealogBackoffice.Messages.Projections.Message do
     field :title, :string
     field :body, :string
     field :status, :string
+    field :rejection_reason, :string
 
     timestamps()
   end

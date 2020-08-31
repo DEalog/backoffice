@@ -18,6 +18,21 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.FormComponent do
     {:noreply, save_message(socket, socket.assigns.action, message_params)}
   end
 
+  defp save_message(socket, :new, message_params) do
+    case Messages.create_message(message_params) do
+      {:error, {:validation_failure, errors}} ->
+        assign(socket, error: true, errors: errors, message: convert(message_params))
+
+      {:ok, message} ->
+        socket
+        |> put_flash(
+          :save_success,
+          gettext("Message %{title} created successfully", title: message.title)
+        )
+        |> push_redirect(to: socket.assigns.return_to)
+    end
+  end
+
   defp save_message(socket, :change, message_params) do
     # TODO Move to change_message function to keep API clean
     {:ok, original_message} =
@@ -34,21 +49,6 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.FormComponent do
         |> put_flash(
           :save_success,
           gettext("Message %{title} changed successfully", title: message.title)
-        )
-        |> push_redirect(to: socket.assigns.return_to)
-    end
-  end
-
-  defp save_message(socket, :new, message_params) do
-    case Messages.create_message(message_params) do
-      {:error, {:validation_failure, errors}} ->
-        assign(socket, error: true, errors: errors, message: convert(message_params))
-
-      {:ok, message} ->
-        socket
-        |> put_flash(
-          :save_success,
-          gettext("Message %{title} created successfully", title: message.title)
         )
         |> push_redirect(to: socket.assigns.return_to)
     end
