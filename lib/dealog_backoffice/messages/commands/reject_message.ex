@@ -1,6 +1,7 @@
 defmodule DealogBackoffice.Messages.Commands.RejectMessage do
   defstruct message_id: "",
-            status: :rejected
+            status: :rejected,
+            reason: nil
 
   use ExConstructor
   use Vex.Struct
@@ -20,6 +21,12 @@ defmodule DealogBackoffice.Messages.Commands.RejectMessage do
 
   def set_status(%RejectMessage{} = message) do
     %RejectMessage{message | status: :rejected}
+  end
+
+  def maybe_set_reason(%RejectMessage{} = message, ""), do: message
+
+  def maybe_set_reason(%RejectMessage{} = message, reason) do
+    %RejectMessage{message | reason: reason}
   end
 end
 

@@ -48,6 +48,7 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
   project(%MessageRejected{} = rejected, metadata, fn multi ->
     update_message(multi, rejected.message_id,
       status: rejected.status,
+      rejection_reason: rejected.reason,
       updated_at: metadata.created_at
     )
   end)

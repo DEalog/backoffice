@@ -496,10 +496,10 @@ msgstr "Ein Fehler ist aufgetreten!"
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/message.html.leex:7
 msgid "Add a note of why the message is rejected. This message will be shown to the editor."
-msgstr ""
+msgstr "Bitte einen Hinweis, warum die Meldung zurückgewiesen wurde. Dieser wird der bearbeitenden Person angezeigt werden."
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:33
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:30
 msgid "Message %{title} rejected"
 msgstr "Meldung %{title} erfolgreich erstellt"
 

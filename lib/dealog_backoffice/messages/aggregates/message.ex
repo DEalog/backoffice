@@ -3,7 +3,8 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     :message_id,
     :title,
     :body,
-    :status
+    :status,
+    :rejection_reasons
   ]
 
   alias DealogBackoffice.Messages.Aggregates.Message
@@ -64,7 +65,8 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
   def execute(%Message{message_id: message_id}, %RejectMessage{} = reject) do
     %MessageRejected{
       message_id: message_id,
-      status: reject.status
+      status: reject.status,
+      reason: reject.reason
     }
   end
 
@@ -104,7 +106,8 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     %Message{
       message
       | message_id: rejected.message_id,
-        status: rejected.status
+        status: rejected.status,
+        rejection_reasons: message.rejection_reasons || [] ++ [rejected.reason]
     }
   end
 end

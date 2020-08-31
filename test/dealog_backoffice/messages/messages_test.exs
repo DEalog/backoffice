@@ -76,7 +76,7 @@ defmodule DealogBackoffice.MessagesTest do
 
   describe "reject message" do
     @tag :integration
-    test "should succeed without reason" do
+    test "should succeed without giving a reason" do
       {:ok, %Message{} = message} = Messages.create_message(@valid_data)
       Messages.send_message_for_approval(message)
 
@@ -89,6 +89,23 @@ defmodule DealogBackoffice.MessagesTest do
                Messages.reject_message(message_for_approval)
 
       assert rejected_message.status == "rejected"
+    end
+
+    @tag :integration
+    test "should succeed with a reason attached" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+      Messages.send_message_for_approval(message)
+
+      {:ok, %MessageForApproval{} = message_for_approval} =
+        Messages.get_message_for_approval(message.id)
+
+      assert message_for_approval.status == "waiting_for_approval"
+
+      assert {:ok, %MessageForApproval{} = rejected_message} =
+               Messages.reject_message(message_for_approval, "A reason")
+
+      assert rejected_message.status == "rejected"
+      assert rejected_message.reason == "A reason"
     end
 
     @tag :integration

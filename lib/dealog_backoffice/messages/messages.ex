@@ -110,15 +110,19 @@ defmodule DealogBackoffice.Messages do
   @doc """
   Reject a message.
 
+  In addition to the implicit change of `status` an optional `reason` can be 
+  passed.
+
   Returns the message as {:ok, %MessageForApproval{}} when transitioned.
   Returns {:error, :invalid_transition} when transition is not allowed.
   """
-  def reject_message(%MessageForApproval{} = message) do
+  def reject_message(%MessageForApproval{} = message, reason \\ "") do
     reject_message =
       message
       |> RejectMessage.new()
       |> RejectMessage.assign_message_id(message)
       |> RejectMessage.set_status()
+      |> RejectMessage.maybe_set_reason(reason)
 
     with "waiting_for_approval" <- message.status,
          :ok <- App.dispatch(reject_message, consistency: :strong) do

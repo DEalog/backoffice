@@ -19,13 +19,10 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.FormComponent do
     {:noreply, save_message(socket, socket.assigns.action, message_params)}
   end
 
-  defp save_message(socket, :reject, message_params) do
-    {:ok, message} =
-      message_params
-      |> Map.get("id")
-      |> Messages.get_message_for_approval()
+  defp save_message(socket, :reject, %{"id" => id, "reason" => reason}) do
+    {:ok, message} = Messages.get_message_for_approval(id)
 
-    case Messages.reject_message(message) do
+    case Messages.reject_message(message, reason) do
       {:ok, message} ->
         socket
         |> put_flash(

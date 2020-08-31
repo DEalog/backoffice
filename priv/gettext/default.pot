@@ -498,7 +498,7 @@ msgid "Add a note of why the message is rejected. This message will be shown to 
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:33
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:30
 msgid "Message %{title} rejected"
 msgstr ""
 
