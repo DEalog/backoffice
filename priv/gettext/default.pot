@@ -19,6 +19,9 @@ msgstr "Waiting for approval"
 msgid "rejected"
 msgstr "Rejected"
 
+msgid "new_message"
+msgstr "New message"
+
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:84
 msgid "User menu"
@@ -54,7 +57,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:64
-#: lib/dealog_backoffice_web/live/organization_messages/message.ex:18
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:18
 msgid "New message"
 msgstr ""
 
@@ -152,7 +155,7 @@ msgid "Changelog"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/message.html.leex:12
+#: lib/dealog_backoffice_web/live/organization_messages/edit.html.leex:12
 msgid "Compose a new message."
 msgstr ""
 
@@ -256,7 +259,7 @@ msgid "Components"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/message.html.leex:11
+#: lib/dealog_backoffice_web/live/organization_messages/edit.html.leex:11
 msgid "Create new message"
 msgstr ""
 
@@ -379,7 +382,7 @@ msgid "Author"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:70
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:183
 msgid "Edit"
 msgstr ""
 
@@ -391,7 +394,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/index.html.leex:24
-#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:24
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:24 lib/dealog_backoffice_web/live/organization_messages/show.html.leex:92
 msgid "Status"
 msgstr ""
 
@@ -422,13 +425,13 @@ msgid "Notifications"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/message.ex:38
-#: lib/dealog_backoffice_web/live/organization_messages/message.html.leex:6
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:38
+#: lib/dealog_backoffice_web/live/organization_messages/edit.html.leex:6
 msgid "Change message"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/message.html.leex:7
+#: lib/dealog_backoffice_web/live/organization_messages/edit.html.leex:7
 msgid "Changing the message will set its status back to draft!"
 msgstr ""
 
@@ -438,12 +441,12 @@ msgid "Message %{title} changed successfully"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/message.ex:64
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:64
 msgid "Message %{title} successfully sent for approval"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:75
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:192
 msgid "Send for approval"
 msgstr ""
 
@@ -468,12 +471,12 @@ msgid "Dismissible error notification"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/message.ex:54
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:54
 msgid "Message %{title} has to be in status draft in order to send for approval"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/message.ex:30
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:30
 msgid "Message %{title} is in review an cannot be changed"
 msgstr ""
 
@@ -521,4 +524,71 @@ msgstr ""
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:49
 msgid "Send reason"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:175
+msgid "Back to overview"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:35
+msgid "Body"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:76
+msgid "Created at"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:28
+msgid "Date of message"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:84
+msgid "Last changed at"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.ex:29
+msgid "Message %{id} could not be found"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:68
+msgid "Message ID"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:102
+msgid "Message history"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:54
+msgid "Message information"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/layout/live.html.leex:45
+msgid "Message not found!"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:20
+msgid "Message status"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:116
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:129 lib/dealog_backoffice_web/live/organization_messages/show.html.leex:142
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:156
+msgid "by"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:54
+msgid "last changed"
 msgstr ""
