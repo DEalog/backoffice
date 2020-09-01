@@ -1,4 +1,4 @@
-defmodule DealogBackofficeWeb.OrganizationMessagesLive.Message do
+defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
   use DealogBackofficeWeb, :live_view
 
   alias DealogBackoffice.Messages

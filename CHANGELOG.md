@@ -2,6 +2,7 @@
 
 This release has a basic approval process for a single organization on board.
 
+- `ADD` Message details can be viewed
 - `ADD` Rejected message can have a reason
 - `ADD` Messages waiting for approval can be rejected
 - `ADD` Dev script has a task to reset the task database

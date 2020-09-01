@@ -32,16 +32,18 @@ defmodule DealogBackofficeWeb.Router do
     scope "/organization-messages" do
       live("/", OrganizationMessagesLive.Index, :index, as: :organization_messages)
 
-      live("/new", OrganizationMessagesLive.Message, :new, as: :organization_messages)
+      live("/new", OrganizationMessagesLive.Edit, :new, as: :organization_messages)
 
-      live("/:id/change", OrganizationMessagesLive.Message, :change, as: :organization_messages)
+      live("/:id/change", OrganizationMessagesLive.Edit, :change, as: :organization_messages)
 
       live(
         "/:id/send_for_approval",
-        OrganizationMessagesLive.Message,
+        OrganizationMessagesLive.Edit,
         :send_for_approval,
         as: :organization_messages
       )
+
+      live("/:id", OrganizationMessagesLive.Show, :show, as: :organization_messages)
     end
 
     scope "/approvals" do
