@@ -1,9 +1,9 @@
 <section>
-  <% 
-    texts = 
-      if @live_action in [:change] do 
+  <%
+    texts =
+      if @live_action in [:change] do
         %{
-          heading: gettext("Change message"), 
+          heading: gettext("Change message"),
           hint: gettext("Changing the message will set its status back to draft!")
         }
       else
@@ -19,8 +19,8 @@
   <p class="mt-4">
     <%= texts.hint %>
   </p>
-  <%= 
-    live_component @socket, 
+  <%=
+    live_component @socket,
       DealogBackofficeWeb.OrganizationMessagesLive.FormComponent,
       id: @message.id || :new,
       action: @live_action,

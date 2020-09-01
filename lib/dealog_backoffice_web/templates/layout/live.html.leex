@@ -34,6 +34,20 @@
     %>
     </div>
   <% end %>
+
+  <%= if has_not_found_error_flash?(@flash) do %>
+    <div class="alert alert-error" role="alert"
+      phx-value-key="info"
+    >
+    <%=
+      live_component @socket,
+        DealogBackofficeWeb.NotificationError,
+        title: gettext("Message not found!"),
+        message: live_flash(@flash, :not_found_error),
+        class: "sm:py-20"
+    %>
+    </div>
+  <% end %>
   <%= @inner_content %>
 </main>
 <footer class="absolute bottom-0 h-40 sm:h-20 w-full px-4 py-2 mt-2 border-t border-gray-200 bg-white text-sm">
