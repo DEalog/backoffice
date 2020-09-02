@@ -200,7 +200,7 @@
               </a>
             </div>
           <% end %>
-          <%= unless @message.status == "waiting_for_approval" do %>
+          <%= if @message.status in ["draft"] do %>
             <div>
               <a
                 href="<%= Routes.organization_messages_path(@socket, :send_for_approval, @message) %>"

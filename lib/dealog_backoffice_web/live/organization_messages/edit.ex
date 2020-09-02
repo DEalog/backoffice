@@ -65,7 +65,7 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
           :save_success,
           gettext("Message %{title} successfully sent for approval", title: message.title)
         )
-        |> push_redirect(to: Routes.organization_messages_path(socket, :index))
+        |> push_redirect(to: Routes.organization_messages_path(socket, :show, message.id))
     end
   end
 end
