@@ -17,6 +17,9 @@ msgstr "Entwurf"
 msgid "waiting_for_approval"
 msgstr "Warten auf Freigabe"
 
+msgid "approved"
+msgstr "Freigegeben"
+
 msgid "rejected"
 msgstr "Zurückgewiesen"
 
@@ -458,7 +461,7 @@ msgid "All messages waiting for approval are listed here."
 msgstr "Alle Meldungen, die auf Freigabe warten, sind hier aufgelistet."
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:198
+#: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:207
 msgid "Reject"
 msgstr "Zurückweisen"
 
@@ -493,33 +496,32 @@ msgid "There was an error!"
 msgstr "Ein Fehler ist aufgetreten!"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:7
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:26
 msgid "Add a note of why the message is rejected. This message will be shown to the editor."
 msgstr "Bitte einen Hinweis, warum die Meldung zurückgewiesen wurde. Dieser wird der bearbeitenden Person angezeigt werden."
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:30
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:44
 msgid "Message %{title} rejected"
 msgstr "Meldung %{title} erfolgreich erstellt"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:4
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:23
 msgid "Message rejection"
 msgstr "Meldungszurückweisung"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:4
-#: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:32
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:36
 msgid "Reason"
 msgstr "Grund"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:24
+#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:36
 msgid "Reject message"
 msgstr "Meldung zurückweisen"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:49
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:37
 msgid "Send reason"
 msgstr "Grund senden"
 
@@ -598,6 +600,41 @@ msgid "by"
 msgstr "von"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:64
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:65
 msgid "last changed"
 msgstr "zuletzt geändert"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:198
+msgid "Approve"
+msgstr "Freigeben"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:24
+msgid "Approve message"
+msgstr "Meldung freigeben"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:7
+msgid "If a note is added it will be displayed to the person publishing the message."
+msgstr "Wenn eine Notiz hinzugefügt wird, wird diese der Person, welche die Meldung veröffentlicht, angezeigt."
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:30
+msgid "Message %{title} approved"
+msgstr "Meldung %{title} erfolgreich freigegeben"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:4
+msgid "Message approval"
+msgstr "Meldungsfreigabe"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:17
+msgid "Note"
+msgstr "Notiz"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:18
+msgid "Send note"
+msgstr "Notiz anhängen"

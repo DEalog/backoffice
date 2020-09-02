@@ -16,6 +16,9 @@ msgstr "Draft"
 msgid "waiting_for_approval"
 msgstr "Waiting for approval"
 
+msgid "approved"
+msgstr "Approved"
+
 msgid "rejected"
 msgstr "Rejected"
 
@@ -457,7 +460,7 @@ msgid "All messages waiting for approval are listed here."
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:198
+#: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:207
 msgid "Reject"
 msgstr ""
 
@@ -492,33 +495,32 @@ msgid "There was an error!"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:7
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:26
 msgid "Add a note of why the message is rejected. This message will be shown to the editor."
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:30
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:44
 msgid "Message %{title} rejected"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:4
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:23
 msgid "Message rejection"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:4
-#: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:32
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:36
 msgid "Reason"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:24
+#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:36
 msgid "Reject message"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:49
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:37
 msgid "Send reason"
 msgstr ""
 
@@ -597,6 +599,41 @@ msgid "by"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:64
+#: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:65
 msgid "last changed"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:198
+msgid "Approve"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:24
+msgid "Approve message"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:7
+msgid "If a note is added it will be displayed to the person publishing the message."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:30
+msgid "Message %{title} approved"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:4
+msgid "Message approval"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:17
+msgid "Note"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:18
+msgid "Send note"
 msgstr ""
