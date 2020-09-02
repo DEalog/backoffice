@@ -15,10 +15,10 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.FormComponent do
 
   @impl true
   def handle_event("save_message", %{"message" => message_params}, socket) do
-    {:noreply, save_message(socket, socket.assigns.action, message_params)}
+    {:noreply, apply_action(socket, socket.assigns.action, message_params)}
   end
 
-  defp save_message(socket, :new, message_params) do
+  defp apply_action(socket, :new, message_params) do
     case Messages.create_message(message_params) do
       {:error, {:validation_failure, errors}} ->
         assign(socket, error: true, errors: errors, message: convert(message_params))
@@ -33,7 +33,7 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.FormComponent do
     end
   end
 
-  defp save_message(socket, :change, message_params) do
+  defp apply_action(socket, :change, message_params) do
     # TODO Move to change_message function to keep API clean
     {:ok, original_message} =
       message_params

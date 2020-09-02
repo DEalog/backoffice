@@ -16,10 +16,10 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.FormComponent do
 
   @impl true
   def handle_event("save", %{"message" => message_params}, socket) do
-    {:noreply, save_message(socket, socket.assigns.action, message_params)}
+    {:noreply, apply_action(socket, socket.assigns.action, message_params)}
   end
 
-  defp save_message(socket, :approve, %{"id" => id, "text" => note}) do
+  defp apply_action(socket, :approve, %{"id" => id, "text" => note}) do
     {:ok, message} = Messages.get_message_for_approval(id)
 
     case Messages.approve_message(message, note) do
@@ -33,7 +33,7 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.FormComponent do
     end
   end
 
-  defp save_message(socket, :reject, %{"id" => id, "text" => reason}) do
+  defp apply_action(socket, :reject, %{"id" => id, "text" => reason}) do
     {:ok, message} = Messages.get_message_for_approval(id)
 
     case Messages.reject_message(message, reason) do
