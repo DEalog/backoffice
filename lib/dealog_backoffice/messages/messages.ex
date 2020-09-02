@@ -7,6 +7,7 @@ defmodule DealogBackoffice.Messages do
     CreateMessage,
     ChangeMessage,
     SendMessageForApproval,
+    ApproveMessage,
     RejectMessage
   }
 
@@ -101,10 +102,42 @@ defmodule DealogBackoffice.Messages do
   def get_message_for_approval(message_id), do: get(MessageForApproval, message_id)
 
   @doc """
+  Approve a message.
+
+  In addition to the implicit change of `status` an optional `note` can be 
+  passed. The new status is `approved`.
+
+  This action can only be performed if the message is in status 
+  `waiting_for_approval`.
+
+  Returns the message as {:ok, %MessageForApproval{}} when transitioned.
+  Returns {:error, :invalid_transition} when transition is not allowed.
+  """
+  def approve_message(%MessageForApproval{} = message, note \\ "") do
+    approve_message =
+      message
+      |> ApproveMessage.new()
+      |> ApproveMessage.assign_message_id(message)
+      |> ApproveMessage.set_status()
+      |> ApproveMessage.maybe_set_note(note)
+
+    with "waiting_for_approval" <- message.status,
+         :ok <- App.dispatch(approve_message, consistency: :strong) do
+      get(MessageForApproval, message.id)
+    else
+      _ ->
+        {:error, :invalid_transition}
+    end
+  end
+
+  @doc """
   Reject a message.
 
   In addition to the implicit change of `status` an optional `reason` can be 
-  passed.
+  passed. The new status is `rejected`.
+
+  This action can only be performed if the message is in status 
+  `waiting_for_approval`.
 
   Returns the message as {:ok, %MessageForApproval{}} when transitioned.
   Returns {:error, :invalid_transition} when transition is not allowed.

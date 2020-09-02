@@ -2,9 +2,12 @@
 
 This release has a basic approval process for a single organization on board.
 
+- `CNG` Redirects of actions on message refer to the detail view of that message
+- `ADD` Approved messages can have a note attached to them
+- `ADD` Messages waiting for approval can be approved
 - `ADD` Message details can be viewed for approvals
 - `ADD` Message details can be viewed for my organization
-- `ADD` Rejected message can have a reason
+- `ADD` Rejected messages can have a reason
 - `ADD` Messages waiting for approval can be rejected
 - `ADD` Dev script has a task to reset the task database
 - `ADD` Messages waiting for approval are listed in the approvals section

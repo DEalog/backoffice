@@ -3,6 +3,7 @@
   status_colors = case @message.status do
     "waiting_for_approval" -> "text-yellow-800 bg-yellow-200"
     "draft" -> "bg-gray-600 text-gray-200"
+    "approved" -> "bg-green-600 text-green-200"
     "rejected" -> "bg-red-600 text-red-200"
     _ -> "bg-black text-white"
   end
@@ -190,6 +191,15 @@
               <%= gettext "Back to overview" %>
             </a>
           </div>
+          <%= if @message.status == "waiting_for_approval" do %>
+            <div>
+              <a
+                href="<%= Routes.approvals_path(@socket, :approve, @message) %>"
+                class="mt-1 group w-full flex items-center px-2 py-2 text-sm leading-5 font-medium rounded-md bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
+                <%= gettext "Approve" %>
+              </a>
+            </div>
+          <% end %>
           <%= if @message.status == "waiting_for_approval" do %>
             <div>
               <a

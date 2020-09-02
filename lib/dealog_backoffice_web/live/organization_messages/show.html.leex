@@ -3,6 +3,7 @@
   status_colors = case @message.status do
     "waiting_for_approval" -> "text-yellow-800 bg-yellow-200"
     "draft" -> "bg-gray-600 text-gray-200"
+    "approved" -> "bg-green-600 text-green-200"
     "rejected" -> "bg-red-600 text-red-200"
     _ -> "bg-black text-white"
   end
@@ -199,7 +200,7 @@
               </a>
             </div>
           <% end %>
-          <%= unless @message.status == "waiting_for_approval" do %>
+          <%= if @message.status in ["draft"] do %>
             <div>
               <a
                 href="<%= Routes.organization_messages_path(@socket, :send_for_approval, @message) %>"

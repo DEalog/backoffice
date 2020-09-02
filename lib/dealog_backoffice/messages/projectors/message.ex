@@ -8,6 +8,7 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     MessageCreated,
     MessageChanged,
     MessageSentForApproval,
+    MessageApproved,
     MessageRejected
   }
 
@@ -41,6 +42,13 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
       title: sent_for_approval.title,
       body: sent_for_approval.body,
       status: sent_for_approval.status,
+      updated_at: metadata.created_at
+    )
+  end)
+
+  project(%MessageApproved{} = approved, metadata, fn multi ->
+    update_message(multi, approved.message_id,
+      status: approved.status,
       updated_at: metadata.created_at
     )
   end)

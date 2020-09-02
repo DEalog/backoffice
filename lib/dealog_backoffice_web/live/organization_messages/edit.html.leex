@@ -25,6 +25,6 @@
       id: @message.id || :new,
       action: @live_action,
       message: @message,
-      return_to: Routes.organization_messages_path(@socket, :index)
+      return_to: Routes.organization_messages_path(@socket, :show, @message.id || "")
   %>
 </section>
