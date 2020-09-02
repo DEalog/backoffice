@@ -1,4 +1,4 @@
-defmodule DealogBackofficeWeb.MessageApprovalsLive.Message do
+defmodule DealogBackofficeWeb.MessageApprovalsLive.Edit do
   @moduledoc """
   LiveView for message handling with message approvals or rejections.
   """
