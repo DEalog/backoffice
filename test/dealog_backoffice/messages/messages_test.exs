@@ -74,6 +74,55 @@ defmodule DealogBackoffice.MessagesTest do
     end
   end
 
+  describe "approve message" do
+    @tag :integration
+    test "should succeed without adding a note" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+      Messages.send_message_for_approval(message)
+
+      {:ok, %MessageForApproval{} = message_for_approval} =
+        Messages.get_message_for_approval(message.id)
+
+      assert message_for_approval.status == "waiting_for_approval"
+
+      assert {:ok, %MessageForApproval{} = approved_message} =
+               Messages.approve_message(message_for_approval)
+
+      assert approved_message.status == "approved"
+    end
+
+    @tag :integration
+    test "should succeed with a note attached" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+      Messages.send_message_for_approval(message)
+
+      {:ok, %MessageForApproval{} = message_for_approval} =
+        Messages.get_message_for_approval(message.id)
+
+      assert message_for_approval.status == "waiting_for_approval"
+
+      assert {:ok, %MessageForApproval{} = approved_message} =
+               Messages.approve_message(message_for_approval, "A note")
+
+      assert approved_message.status == "approved"
+      assert approved_message.note == "A note"
+    end
+
+    @tag :integration
+    test "should fail when not in status waiting for approval" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+      Messages.send_message_for_approval(message)
+
+      {:ok, %MessageForApproval{} = message_for_approval} =
+        Messages.get_message_for_approval(message.id)
+
+      {:ok, %MessageForApproval{} = approved_message} =
+        Messages.approve_message(message_for_approval)
+
+      assert {:error, :invalid_transition} = Messages.approve_message(approved_message)
+    end
+  end
+
   describe "reject message" do
     @tag :integration
     test "should succeed without giving a reason" do

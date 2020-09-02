@@ -193,6 +193,15 @@
           <%= if @message.status == "waiting_for_approval" do %>
             <div>
               <a
+                href="<%= Routes.approvals_path(@socket, :approve, @message) %>"
+                class="mt-1 group w-full flex items-center px-2 py-2 text-sm leading-5 font-medium rounded-md bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
+                <%= gettext "Approve" %>
+              </a>
+            </div>
+          <% end %>
+          <%= if @message.status == "waiting_for_approval" do %>
+            <div>
+              <a
                 href="<%= Routes.approvals_path(@socket, :reject, @message) %>"
                 class="mt-1 group w-full flex items-center px-2 py-2 text-sm leading-5 font-medium rounded-md bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
                 <%= gettext "Reject" %>

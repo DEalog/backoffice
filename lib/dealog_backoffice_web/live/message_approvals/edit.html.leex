@@ -1,19 +1,40 @@
 <section>
-  <%= if @live_action == :reject do %>
-  <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
-    <%= gettext "Message rejection" %>
-  </h1>
-  <p class="mt-4">
-    <%= gettext "Add a note of why the message is rejected. This message will be shown to the editor." %>
-  </p>
+  <%= if @live_action == :approve do %>
+    <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+      <%= gettext "Message approval" %>
+    </h1>
+    <p class="mt-4">
+      <%= gettext "If a note is added it will be displayed to the person publishing the message." %>
+    </p>
+    <%=
+      live_component @socket,
+        DealogBackofficeWeb.MessageApprovalsLive.FormComponent,
+        id: @message.id,
+        action: @live_action,
+        message: @message,
+        text: @note,
+        return_to: Routes.approvals_path(@socket, :index),
+        label_text_field: gettext("Note"),
+        label_submit_button: gettext("Send note")
+    %>
   <% end %>
-  <%=
-    live_component @socket,
-      DealogBackofficeWeb.MessageApprovalsLive.FormComponent,
-      id: @message.id,
-      action: @live_action,
-      message: @message,
-      reason: @reason,
-      return_to: Routes.approvals_path(@socket, :index)
-  %>
+  <%= if @live_action == :reject do %>
+    <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+      <%= gettext "Message rejection" %>
+    </h1>
+    <p class="mt-4">
+      <%= gettext "Add a note of why the message is rejected. This message will be shown to the editor." %>
+    </p>
+    <%=
+      live_component @socket,
+        DealogBackofficeWeb.MessageApprovalsLive.FormComponent,
+        id: @message.id,
+        action: @live_action,
+        message: @message,
+        text: @reason,
+        return_to: Routes.approvals_path(@socket, :index),
+        label_text_field: gettext("Reason"),
+        label_submit_button: gettext("Send reason")
+    %>
+  <% end %>
 </section>

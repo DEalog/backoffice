@@ -17,6 +17,18 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.Edit do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
+  defp apply_action(socket, :approve, %{"id" => id}) do
+    case Messages.get_message_for_approval(id) do
+      {:ok, message} ->
+        assign(socket,
+          title: gettext("Approve message"),
+          active_page: :approvals,
+          message: message,
+          note: nil
+        )
+    end
+  end
+
   defp apply_action(socket, :reject, %{"id" => id}) do
     case Messages.get_message_for_approval(id) do
       {:ok, message} ->

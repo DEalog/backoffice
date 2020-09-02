@@ -32,6 +32,7 @@
                   "waiting_for_approval" -> "text-yellow-800 bg-yellow-200"
                   "approved" -> "bg-green-600 text-green-200"
                   "rejected" -> "bg-red-600 text-red-200"
+                  _ -> "bg-black text-white"
                 end
               %>
               <tr class="<%= if is_even?(index), do: "bg-gray-100" %>">

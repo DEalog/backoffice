@@ -1,9 +1,45 @@
-defmodule DealogBackofficeWeb.MessageApprovalsLive.MessageTest do
+defmodule DealogBackofficeWeb.MessageApprovalsLive.EditTest do
   use DealogBackofficeWeb.ConnCase
 
   import Phoenix.LiveViewTest
 
   alias DealogBackoffice.Messages
+
+  describe "Approve message" do
+    setup [:prepare_message_for_approval]
+
+    test "should render form", %{conn: conn, message_for_approval: message_for_approval} do
+      {:ok, view, _} = live(conn, "/approvals/#{message_for_approval.id}/approve")
+      rendered = render(view)
+      assert rendered =~ "Note"
+      assert rendered =~ "Message approval"
+    end
+
+    #    test "should approve a message", %{conn: conn, message_for_approval: message_for_approval} do
+    #      {:ok, view, _} = live(conn, "/approvals/#{message_for_approval.id}/approve")
+    #
+    #      result =
+    #        view
+    #        |> element("form")
+    #        |> render_submit(%{message: %{note: ""}})
+    #
+    #      assert {_, {:live_redirect, %{to: "/approvals"}}} = result
+    #    end
+    #
+    #    test "should approve a message with a note", %{
+    #      conn: conn,
+    #      message_for_approval: message_for_approval
+    #    } do
+    #      {:ok, view, _} = live(conn, "/approvals/#{message_for_approval.id}/approve")
+    #
+    #      result =
+    #        view
+    #        |> element("form")
+    #        |> render_submit(%{message: %{note: "A note"}})
+    #
+    #      assert {_, {:live_redirect, %{to: "/approvals"}}} = result
+    #    end
+  end
 
   describe "Reject message" do
     setup [:prepare_message_for_approval]

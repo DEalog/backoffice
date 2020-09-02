@@ -4,22 +4,36 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.FormComponent do
   alias DealogBackoffice.Messages
 
   @impl true
-  def update(%{message: message, reason: reason} = assigns, socket) do
+  def update(%{message: message, text: text} = assigns, socket) do
     socket =
       socket
       |> assign(assigns)
       |> assign(message: message)
-      |> assign(reason: reason)
+      |> assign(text: text)
 
     {:ok, socket}
   end
 
   @impl true
-  def handle_event("save_reason", %{"message" => message_params}, socket) do
+  def handle_event("save", %{"message" => message_params}, socket) do
     {:noreply, save_message(socket, socket.assigns.action, message_params)}
   end
 
-  defp save_message(socket, :reject, %{"id" => id, "reason" => reason}) do
+  defp save_message(socket, :approve, %{"id" => id, "text" => note}) do
+    {:ok, message} = Messages.get_message_for_approval(id)
+
+    case Messages.approve_message(message, note) do
+      {:ok, message} ->
+        socket
+        |> put_flash(
+          :save_success,
+          gettext("Message %{title} approved", title: message.title)
+        )
+        |> push_redirect(to: socket.assigns.return_to)
+    end
+  end
+
+  defp save_message(socket, :reject, %{"id" => id, "text" => reason}) do
     {:ok, message} = Messages.get_message_for_approval(id)
 
     case Messages.reject_message(message, reason) do

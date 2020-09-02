@@ -4,6 +4,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     :title,
     :body,
     :status,
+    :approval_notes,
     :rejection_reasons
   ]
 
@@ -13,6 +14,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     CreateMessage,
     ChangeMessage,
     SendMessageForApproval,
+    ApproveMessage,
     RejectMessage
   }
 
@@ -20,6 +22,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     MessageCreated,
     MessageChanged,
     MessageSentForApproval,
+    MessageApproved,
     MessageRejected
   }
 
@@ -56,6 +59,17 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       title: send.title,
       body: send.body,
       status: send.status
+    }
+  end
+
+  @doc """
+  Approve an existing message.
+  """
+  def execute(%Message{message_id: message_id}, %ApproveMessage{} = approve) do
+    %MessageApproved{
+      message_id: message_id,
+      status: approve.status,
+      note: approve.note
     }
   end
 
@@ -99,6 +113,15 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
         title: sent.title,
         body: sent.body,
         status: sent.status
+    }
+  end
+
+  def apply(%Message{} = message, %MessageApproved{} = approved) do
+    %Message{
+      message
+      | message_id: approved.message_id,
+        status: approved.status,
+        approval_notes: message.approval_notes || [] ++ [approved.note]
     }
   end
 

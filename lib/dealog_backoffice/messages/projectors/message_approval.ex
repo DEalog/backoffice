@@ -4,7 +4,12 @@ defmodule DealogBackoffice.Messages.Projectors.MessageApproval do
     name: "Messages.Projectors.MessageApproval",
     consistency: :strong
 
-  alias DealogBackoffice.Messages.Events.{MessageSentForApproval, MessageRejected}
+  alias DealogBackoffice.Messages.Events.{
+    MessageSentForApproval,
+    MessageApproved,
+    MessageRejected
+  }
+
   alias DealogBackoffice.Messages.Projections.MessageForApproval
   alias DealogBackoffice.Messages
 
@@ -21,6 +26,14 @@ defmodule DealogBackoffice.Messages.Projectors.MessageApproval do
       {:error, _} ->
         create_message_approval(multi, sent, metadata)
     end
+  end)
+
+  project(%MessageApproved{} = approved, metadata, fn multi ->
+    update_message_approval(multi, approved.message_id,
+      status: approved.status,
+      note: approved.note,
+      updated_at: metadata.created_at
+    )
   end)
 
   project(%MessageRejected{} = rejected, metadata, fn multi ->
