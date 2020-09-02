@@ -28,7 +28,8 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.EditTest do
         |> element("form")
         |> render_submit(%{message: %{title: "A title", body: "A body"}})
 
-      assert {_, {:live_redirect, %{to: "/organization-messages"}}} = result
+      assert {_, {:live_redirect, %{to: redirect_path}}} = result
+      assert redirect_path =~ "/organization-messages"
     end
   end
 
@@ -51,7 +52,8 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.EditTest do
         |> element("form")
         |> render_submit(%{message: %{title: "A changed title", body: "A change body"}})
 
-      assert {_, {:live_redirect, %{to: "/organization-messages"}}} = result
+      assert {_, {:live_redirect, %{to: redirect_path}}} = result
+      assert redirect_path == "/organization-messages/#{message.id}"
     end
   end
 

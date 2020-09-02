@@ -31,7 +31,7 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
             title: message.title
           )
         )
-        |> push_redirect(to: Routes.organization_messages_path(socket, :index))
+        |> push_redirect(to: Routes.organization_messages_path(socket, :show, message.id))
 
       {:ok, message} ->
         assign(socket,
@@ -55,7 +55,9 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
             title: original_message.title
           )
         )
-        |> push_redirect(to: Routes.organization_messages_path(socket, :index))
+        |> push_redirect(
+          to: Routes.organization_messages_path(socket, :show, original_message.id)
+        )
 
       {:ok, message} ->
         socket

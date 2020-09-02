@@ -13,7 +13,7 @@
         action: @live_action,
         message: @message,
         text: @note,
-        return_to: Routes.approvals_path(@socket, :index),
+        return_to: Routes.approvals_path(@socket, :show, @message),
         label_text_field: gettext("Note"),
         label_submit_button: gettext("Send note")
     %>
@@ -32,7 +32,7 @@
         action: @live_action,
         message: @message,
         text: @reason,
-        return_to: Routes.approvals_path(@socket, :index),
+        return_to: Routes.approvals_path(@socket, :show, @message),
         label_text_field: gettext("Reason"),
         label_submit_button: gettext("Send reason")
     %>

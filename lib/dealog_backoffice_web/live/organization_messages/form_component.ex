@@ -29,7 +29,7 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.FormComponent do
           :save_success,
           gettext("Message %{title} created successfully", title: message.title)
         )
-        |> push_redirect(to: socket.assigns.return_to)
+        |> push_redirect(to: socket.assigns.return_to <> message.id)
     end
   end
 

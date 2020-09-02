@@ -15,30 +15,32 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.EditTest do
       assert rendered =~ "Message approval"
     end
 
-    #    test "should approve a message", %{conn: conn, message_for_approval: message_for_approval} do
-    #      {:ok, view, _} = live(conn, "/approvals/#{message_for_approval.id}/approve")
-    #
-    #      result =
-    #        view
-    #        |> element("form")
-    #        |> render_submit(%{message: %{note: ""}})
-    #
-    #      assert {_, {:live_redirect, %{to: "/approvals"}}} = result
-    #    end
-    #
-    #    test "should approve a message with a note", %{
-    #      conn: conn,
-    #      message_for_approval: message_for_approval
-    #    } do
-    #      {:ok, view, _} = live(conn, "/approvals/#{message_for_approval.id}/approve")
-    #
-    #      result =
-    #        view
-    #        |> element("form")
-    #        |> render_submit(%{message: %{note: "A note"}})
-    #
-    #      assert {_, {:live_redirect, %{to: "/approvals"}}} = result
-    #    end
+    test "should approve a message", %{conn: conn, message_for_approval: message_for_approval} do
+      {:ok, view, _} = live(conn, "/approvals/#{message_for_approval.id}/approve")
+
+      result =
+        view
+        |> element("form")
+        |> render_submit(%{message: %{note: ""}})
+
+      assert {_, {:live_redirect, %{to: redirect_path}}} = result
+      assert redirect_path == "/approvals/#{message_for_approval.id}"
+    end
+
+    test "should approve a message with a note", %{
+      conn: conn,
+      message_for_approval: message_for_approval
+    } do
+      {:ok, view, _} = live(conn, "/approvals/#{message_for_approval.id}/approve")
+
+      result =
+        view
+        |> element("form")
+        |> render_submit(%{message: %{note: "A note"}})
+
+      assert {_, {:live_redirect, %{to: redirect_path}}} = result
+      assert redirect_path == "/approvals/#{message_for_approval.id}"
+    end
   end
 
   describe "Reject message" do
@@ -59,7 +61,8 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.EditTest do
         |> element("form")
         |> render_submit(%{message: %{reason: ""}})
 
-      assert {_, {:live_redirect, %{to: "/approvals"}}} = result
+      assert {_, {:live_redirect, %{to: redirect_path}}} = result
+      assert redirect_path == "/approvals/#{message_for_approval.id}"
     end
 
     test "should reject a message with a reason", %{
@@ -73,7 +76,8 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.EditTest do
         |> element("form")
         |> render_submit(%{message: %{reason: "A reason"}})
 
-      assert {_, {:live_redirect, %{to: "/approvals"}}} = result
+      assert {_, {:live_redirect, %{to: redirect_path}}} = result
+      assert redirect_path == "/approvals/#{message_for_approval.id}"
     end
   end
 
