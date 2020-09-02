@@ -48,8 +48,9 @@ defmodule DealogBackofficeWeb.Router do
 
     scope "/approvals" do
       live("/", MessageApprovalsLive.Index, :index, as: :approvals)
-      live "/:id/approve", MessageApprovalsLive.Message, :approve, as: :approvals
-      live "/:id/reject", MessageApprovalsLive.Message, :reject, as: :approvals
+      live "/:id/approve", MessageApprovalsLive.Edit, :approve, as: :approvals
+      live "/:id/reject", MessageApprovalsLive.Edit, :reject, as: :approvals
+      live("/:id", MessageApprovalsLive.Show, :show, as: :approvals)
     end
 
     live("/changelog", ChangelogLive, :index)
