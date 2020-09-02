@@ -2,6 +2,7 @@
 
 This release has a basic approval process for a single organization on board.
 
+- `CNG` Redirects of actions on message refer to the detail view of that message
 - `ADD` Messages waiting for approval can be approved
 - `ADD` Message details can be viewed for approvals
 - `ADD` Message details can be viewed for my organization

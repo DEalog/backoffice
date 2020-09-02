@@ -15,7 +15,7 @@
         text: @note,
         return_to: Routes.approvals_path(@socket, :show, @message),
         label_text_field: gettext("Note"),
-        label_submit_button: gettext("Send note")
+        label_submit_button: gettext("Attach note and approve")
     %>
   <% end %>
   <%= if @live_action == :reject do %>
@@ -34,7 +34,7 @@
         text: @reason,
         return_to: Routes.approvals_path(@socket, :show, @message),
         label_text_field: gettext("Reason"),
-        label_submit_button: gettext("Send reason")
+        label_submit_button: gettext("Attach reason and reject")
     %>
   <% end %>
 </section>
