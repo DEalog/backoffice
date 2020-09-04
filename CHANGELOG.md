@@ -1,4 +1,4 @@
-## 0.3.0 (in development)
+## 0.3.0
 
 This release has a basic approval process for a single organization on board.
 
