@@ -29,10 +29,10 @@
             <%= for {message, index} <- Enum.with_index(@messages) do %>
               <%
                 status_colors = case message.status do
-                  "waiting_for_approval" -> "text-yellow-800 bg-yellow-200"
-                  "draft" -> "bg-gray-600 text-gray-200"
-                  "rejected" -> "bg-red-600 text-red-200"
-                  "approved" -> "bg-green-600 text-green-200"
+                  :waiting_for_approval -> "text-yellow-800 bg-yellow-200"
+                  :draft -> "bg-gray-600 text-gray-200"
+                  :rejected -> "bg-red-600 text-red-200"
+                  :approved -> "bg-green-600 text-green-200"
                   _ -> "bg-black text-white"
                 end
               %>
@@ -53,7 +53,7 @@
                 </td>
                 <td class="px-6 py-4 text-center whitespace-no-wrap text-sm leading-5 text-gray-500">
                   <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 <%= status_colors %>">
-                    <%= Gettext.gettext(DealogBackofficeWeb.Gettext, message.status) %>
+                    <%= Gettext.gettext(DealogBackofficeWeb.Gettext, Atom.to_string(message.status)) %>
                   </span>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-600">
