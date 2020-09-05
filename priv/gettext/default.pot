@@ -638,3 +638,18 @@ msgstr ""
 #: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:37
 msgid "Attach reason and reject"
 msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:217
+msgid "Delete message"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:78
+msgid "Message %{id} could not be deleted"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:88
+msgid "Message %{title} successfully deleted"
+msgstr ""

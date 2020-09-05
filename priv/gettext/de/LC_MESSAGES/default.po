@@ -577,7 +577,7 @@ msgstr "Meldungsinformationen"
 #, elixir-format
 #: lib/dealog_backoffice_web/templates/layout/live.html.leex:45
 msgid "Message not found!"
-msgstr "Meldung nich gefunden!"
+msgstr "Meldung nicht gefunden!"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:21
@@ -639,3 +639,18 @@ msgstr "Notiz anhängen und freigeben"
 #: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:37
 msgid "Attach reason and reject"
 msgstr "Grund speichern und zurückweisen"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:217
+msgid "Delete message"
+msgstr "Meldung löschen"
+
+#, elixir-format, fuzzy
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:78
+msgid "Message %{id} could not be deleted"
+msgstr "Meldung %{id} konnte nicht gelöscht werden"
+
+#, elixir-format, fuzzy
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:88
+msgid "Message %{title} successfully deleted"
+msgstr "Meldung %{title} erfolgreich gelöscht"
