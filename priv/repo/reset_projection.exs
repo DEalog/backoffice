@@ -27,6 +27,7 @@ end
 if Mix.env() == :dev do
   projections = [
     %{table: "messages", name: "Messages.Projectors.Message"},
+    %{table: "deleted_messages", name: "Messages.Projectors.DeletedMessage"},
     %{table: "message_approvals", name: "Messages.Projectors.MessageApproval"}
   ]
 
