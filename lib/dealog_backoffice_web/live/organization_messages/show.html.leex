@@ -209,6 +209,15 @@
               </a>
             </div>
           <% end %>
+          <%= if @message.status in ["draft"] do %>
+            <div>
+              <a
+                href="<%= Routes.organization_messages_path(@socket, :delete, @message) %>"
+                class="mt-1 group w-full flex items-center px-2 py-2 text-sm leading-5 font-medium rounded-md bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
+                <%= gettext "Delete message" %>
+              </a>
+            </div>
+          <% end %>
         </nav>
       </div>
     </div>

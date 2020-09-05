@@ -43,6 +43,7 @@ defmodule DealogBackofficeWeb.Router do
         as: :organization_messages
       )
 
+      live("/:id/delete", OrganizationMessagesLive.Edit, :delete, as: :organization_messages)
       live("/:id", OrganizationMessagesLive.Show, :show, as: :organization_messages)
     end
 

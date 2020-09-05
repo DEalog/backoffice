@@ -7,11 +7,12 @@ defmodule DealogBackoffice.Messages do
     CreateMessage,
     ChangeMessage,
     SendMessageForApproval,
+    DeleteMessage,
     ApproveMessage,
     RejectMessage
   }
 
-  alias DealogBackoffice.Messages.Projections.{Message, MessageForApproval}
+  alias DealogBackoffice.Messages.Projections.{Message, MessageForApproval, DeletedMessage}
   alias DealogBackoffice.Messages.Queries.{ListMessages, ListMessageApprovals}
   alias DealogBackoffice.{App, Repo}
 
@@ -68,12 +69,29 @@ defmodule DealogBackoffice.Messages do
       |> SendMessageForApproval.assign_message_id(message)
       |> SendMessageForApproval.set_status()
 
-    with "draft" <- message.status,
-         :ok <- App.dispatch(send_message, consistency: :strong) do
+    with :ok <- App.dispatch(send_message, consistency: :strong) do
       get(Message, message.id)
     else
       _ ->
         {:error, :invalid_transition}
+    end
+  end
+
+  @doc """
+  Delete a message by its ID.
+
+  This will change the status of the message to `deleted`.
+
+  Returns {:ok, %DeleteMessage{}} when successfull
+  Returns {:error, :invalid_transition} when not allowed
+  """
+  def delete_message(message_id) do
+    case get_message(message_id) do
+      {:ok, message} ->
+        do_delete_message(message)
+
+      {:error, reason} ->
+        {:error, reason}
     end
   end
 
@@ -104,10 +122,10 @@ defmodule DealogBackoffice.Messages do
   @doc """
   Approve a message.
 
-  In addition to the implicit change of `status` an optional `note` can be 
+  In addition to the implicit change of `status` an optional `note` can be
   passed. The new status is `approved`.
 
-  This action can only be performed if the message is in status 
+  This action can only be performed if the message is in status
   `waiting_for_approval`.
 
   Returns the message as {:ok, %MessageForApproval{}} when transitioned.
@@ -121,8 +139,7 @@ defmodule DealogBackoffice.Messages do
       |> ApproveMessage.set_status()
       |> ApproveMessage.maybe_set_note(note)
 
-    with "waiting_for_approval" <- message.status,
-         :ok <- App.dispatch(approve_message, consistency: :strong) do
+    with :ok <- App.dispatch(approve_message, consistency: :strong) do
       get(MessageForApproval, message.id)
     else
       _ ->
@@ -133,10 +150,10 @@ defmodule DealogBackoffice.Messages do
   @doc """
   Reject a message.
 
-  In addition to the implicit change of `status` an optional `reason` can be 
+  In addition to the implicit change of `status` an optional `reason` can be
   passed. The new status is `rejected`.
 
-  This action can only be performed if the message is in status 
+  This action can only be performed if the message is in status
   `waiting_for_approval`.
 
   Returns the message as {:ok, %MessageForApproval{}} when transitioned.
@@ -150,8 +167,7 @@ defmodule DealogBackoffice.Messages do
       |> RejectMessage.set_status()
       |> RejectMessage.maybe_set_reason(reason)
 
-    with "waiting_for_approval" <- message.status,
-         :ok <- App.dispatch(reject_message, consistency: :strong) do
+    with :ok <- App.dispatch(reject_message, consistency: :strong) do
       get(MessageForApproval, message.id)
     else
       _ ->
@@ -209,6 +225,21 @@ defmodule DealogBackoffice.Messages do
         key when is_binary(key) -> {String.to_atom(key), val}
         _ -> {key, val}
       end
+    end
+  end
+
+  defp do_delete_message(message) do
+    delete_message =
+      message
+      |> DeleteMessage.new()
+      |> DeleteMessage.assign_message_id(message)
+      |> DeleteMessage.set_status()
+
+    with :ok <- App.dispatch(delete_message, consistency: :strong) do
+      get(DeletedMessage, message.id)
+    else
+      _ ->
+        {:error, :invalid_transition}
     end
   end
 end

@@ -2,7 +2,7 @@ defmodule DealogBackoffice.MessagesTest do
   use DealogBackoffice.DataCase
 
   alias DealogBackoffice.Messages
-  alias DealogBackoffice.Messages.Projections.{Message, MessageForApproval}
+  alias DealogBackoffice.Messages.Projections.{Message, MessageForApproval, DeletedMessage}
 
   @valid_data %{title: "The title", body: "The body"}
   @invalid_data %{title: nil, body: nil}
@@ -57,7 +57,7 @@ defmodule DealogBackoffice.MessagesTest do
 
   describe "send message for approval" do
     @tag :integration
-    test "should succeed if in draft" do
+    test "should succeed if in status draft" do
       {:ok, %Message{} = message} = Messages.create_message(@valid_data)
 
       assert {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
@@ -71,6 +71,26 @@ defmodule DealogBackoffice.MessagesTest do
       {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
 
       assert {:error, :invalid_transition} = Messages.send_message_for_approval(sent_message)
+    end
+  end
+
+  describe "delete message" do
+    @tag :integration
+    test "should succeed if in status draft" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+
+      assert message.status == "draft"
+      assert {:ok, %DeletedMessage{} = deleted_message} = Messages.delete_message(message.id)
+      assert {:error, :not_found} = Messages.get_message(message.id)
+      assert deleted_message.status == "deleted"
+    end
+
+    @tag :integration
+    test "should fail when not in draft" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+      {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
+
+      assert {:error, :invalid_transition} = Messages.delete_message(sent_message.id)
     end
   end
 

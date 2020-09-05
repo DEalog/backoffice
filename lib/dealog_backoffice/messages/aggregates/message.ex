@@ -14,6 +14,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     CreateMessage,
     ChangeMessage,
     SendMessageForApproval,
+    DeleteMessage,
     ApproveMessage,
     RejectMessage
   }
@@ -22,6 +23,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     MessageCreated,
     MessageChanged,
     MessageSentForApproval,
+    MessageDeleted,
     MessageApproved,
     MessageRejected
   }
@@ -53,7 +55,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
   @doc """
   Send an existing message for approval.
   """
-  def execute(%Message{message_id: message_id}, %SendMessageForApproval{} = send) do
+  def execute(%Message{message_id: message_id, status: :draft}, %SendMessageForApproval{} = send) do
     %MessageSentForApproval{
       message_id: message_id,
       title: send.title,
@@ -62,10 +64,27 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     }
   end
 
+  def execute(%Message{}, %SendMessageForApproval{}), do: {:error, :invalid_state}
+
+  @doc """
+  Delete an existing message.
+  """
+  def execute(%Message{message_id: message_id, status: :draft}, %DeleteMessage{} = delete) do
+    %MessageDeleted{
+      message_id: message_id,
+      status: delete.status
+    }
+  end
+
+  def execute(%Message{}, %DeleteMessage{}), do: {:error, :invalid_state}
+
   @doc """
   Approve an existing message.
   """
-  def execute(%Message{message_id: message_id}, %ApproveMessage{} = approve) do
+  def execute(
+        %Message{message_id: message_id, status: :waiting_for_approval},
+        %ApproveMessage{} = approve
+      ) do
     %MessageApproved{
       message_id: message_id,
       status: approve.status,
@@ -73,16 +92,23 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     }
   end
 
+  def execute(%Message{}, %ApproveMessage{}), do: {:error, :invalid_state}
+
   @doc """
   Reject an existing message.
   """
-  def execute(%Message{message_id: message_id}, %RejectMessage{} = reject) do
+  def execute(
+        %Message{message_id: message_id, status: :waiting_for_approval},
+        %RejectMessage{} = reject
+      ) do
     %MessageRejected{
       message_id: message_id,
       status: reject.status,
       reason: reject.reason
     }
   end
+
+  def execute(%Message{}, %RejectMessage{}), do: {:error, :invalid_state}
 
   # State mutators for reconstitution
 
@@ -113,6 +139,16 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
         title: sent.title,
         body: sent.body,
         status: sent.status
+    }
+  end
+
+  def apply(%Message{} = message, %MessageDeleted{} = deleted) do
+    %Message{
+      message
+      | message_id: deleted.message_id,
+        title: deleted.title,
+        body: deleted.body,
+        status: deleted.status
     }
   end
 

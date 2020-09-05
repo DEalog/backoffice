@@ -33,7 +33,7 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.EditTest do
     end
   end
 
-  describe "Change existing message" do
+  describe "Change an existing message" do
     setup [:create_message]
 
     test "should render form", %{conn: conn, message: message} do
@@ -54,6 +54,17 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.EditTest do
 
       assert {_, {:live_redirect, %{to: redirect_path}}} = result
       assert redirect_path == "/organization-messages/#{message.id}"
+    end
+  end
+
+  describe "Delete an existing message" do
+    setup [:create_message]
+
+    test "should delete a message", %{conn: conn, message: message} do
+      assert {:error, {:live_redirect, %{to: redirect_path}}} =
+               live(conn, "/organization-messages/#{message.id}/delete")
+
+      assert redirect_path == "/organization-messages"
     end
   end
 

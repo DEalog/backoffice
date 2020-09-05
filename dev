@@ -131,6 +131,7 @@ The following commands are supported:
 ./dev translations.update   # Run the (Elixir) tests
 ./dev test                  # Run the (Elixir) tests
 ./dev test.watch            # Run the (Elixir) tests in watch mode
+./dev test.env.reset        # Reset the (Elixir) test environment
 ./dev yarn                  # Run a Yarn command
 ./dev build.prod            # Run production build for assets
 ./dev execute               # Run arbitrary command in a container

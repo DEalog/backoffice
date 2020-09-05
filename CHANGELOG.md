@@ -1,3 +1,7 @@
+## Unreleased
+
+- `ADD` Messages can be deleted
+
 ## 0.3.0
 
 This release has a basic approval process for a single organization on board.
