@@ -168,7 +168,7 @@ defmodule DealogBackoffice.Messages do
       |> RejectMessage.maybe_set_reason(reason)
 
     with :ok <- App.dispatch(reject_message, consistency: :strong) do
-      get(MessageForApproval, message.id)
+      get(Message, message.id)
     else
       _ ->
         {:error, :invalid_transition}

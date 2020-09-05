@@ -154,8 +154,7 @@ defmodule DealogBackoffice.MessagesTest do
 
       assert message_for_approval.status == :waiting_for_approval
 
-      assert {:ok, %MessageForApproval{} = rejected_message} =
-               Messages.reject_message(message_for_approval)
+      assert {:ok, %Message{} = rejected_message} = Messages.reject_message(message_for_approval)
 
       assert rejected_message.status == :rejected
     end
@@ -170,25 +169,11 @@ defmodule DealogBackoffice.MessagesTest do
 
       assert message_for_approval.status == :waiting_for_approval
 
-      assert {:ok, %MessageForApproval{} = rejected_message} =
+      assert {:ok, %Message{} = rejected_message} =
                Messages.reject_message(message_for_approval, "A reason")
 
       assert rejected_message.status == :rejected
-      assert rejected_message.reason == "A reason"
-    end
-
-    @tag :integration
-    test "should fail when not in status waiting for approval" do
-      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
-      Messages.send_message_for_approval(message)
-
-      {:ok, %MessageForApproval{} = message_for_approval} =
-        Messages.get_message_for_approval(message.id)
-
-      {:ok, %MessageForApproval{} = rejected_message} =
-        Messages.reject_message(message_for_approval)
-
-      assert {:error, :invalid_transition} = Messages.reject_message(rejected_message)
+      assert rejected_message.rejection_reason == "A reason"
     end
   end
 end

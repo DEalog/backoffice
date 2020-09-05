@@ -77,6 +77,7 @@ function run_update_translations {
 }
 
 function run_tests {
+  run_test_env_reset
   local command="mix test $@"
   run_detached_command web ${command}
 }
@@ -87,6 +88,7 @@ function run_test_env_reset {
 }
 
 function run_tests_in_watch_mode {
+  run_test_env_reset
   local command="mix test.watch $@"
   run_detached_command web ${command}
 }
