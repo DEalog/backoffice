@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `CNG` Improve message listings
 - `ADD` Messages can be deleted
 
 ## 0.3.0
