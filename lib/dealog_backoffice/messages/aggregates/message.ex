@@ -69,9 +69,14 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
   @doc """
   Delete an existing message.
   """
-  def execute(%Message{message_id: message_id, status: :draft}, %DeleteMessage{} = delete) do
+  def execute(
+        %Message{message_id: message_id, status: :draft} = message,
+        %DeleteMessage{} = delete
+      ) do
     %MessageDeleted{
       message_id: message_id,
+      title: message.title,
+      body: message.body,
       status: delete.status
     }
   end

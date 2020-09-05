@@ -151,6 +151,8 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
         [
           %MessageDeleted{
             message_id: message_id,
+            title: "A title",
+            body: "A body",
             status: :deleted
           }
         ]
@@ -335,6 +337,7 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
         ]
       )
     end
+
     test "should be rejected when not in state waiting_for_approval" do
       message_id = UUID.uuid4()
 
@@ -345,7 +348,7 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             status: :draft,
             title: "A title",
             body: "A body"
-          },
+          }
         ],
         struct(RejectMessage, %{
           message_id: message_id

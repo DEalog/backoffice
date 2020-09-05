@@ -36,12 +36,8 @@ defmodule DealogBackoffice.Messages.Projectors.MessageApproval do
     )
   end)
 
-  project(%MessageRejected{} = rejected, metadata, fn multi ->
-    update_message_approval(multi, rejected.message_id,
-      status: rejected.status,
-      reason: rejected.reason,
-      updated_at: metadata.created_at
-    )
+  project(%MessageRejected{} = rejected, _metadata, fn multi ->
+    Ecto.Multi.delete_all(multi, :remove_rejected_message, query(rejected.message_id))
   end)
 
   defp update_message_approval(multi, message_id, changes) do
