@@ -2,7 +2,7 @@ defmodule DealogBackoffice.MessagesTest do
   use DealogBackoffice.DataCase
 
   alias DealogBackoffice.Messages
-  alias DealogBackoffice.Messages.Projections.{Message, MessageForApproval}
+  alias DealogBackoffice.Messages.Projections.{Message, MessageForApproval, DeletedMessage}
 
   @valid_data %{title: "The title", body: "The body"}
   @invalid_data %{title: nil, body: nil}
@@ -57,12 +57,12 @@ defmodule DealogBackoffice.MessagesTest do
 
   describe "send message for approval" do
     @tag :integration
-    test "should succeed if in draft" do
+    test "should succeed if in status draft" do
       {:ok, %Message{} = message} = Messages.create_message(@valid_data)
 
       assert {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
-      assert message.status == "draft"
-      assert sent_message.status == "waiting_for_approval"
+      assert message.status == :draft
+      assert sent_message.status == :waiting_for_approval
     end
 
     @tag :integration
@@ -71,6 +71,26 @@ defmodule DealogBackoffice.MessagesTest do
       {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
 
       assert {:error, :invalid_transition} = Messages.send_message_for_approval(sent_message)
+    end
+  end
+
+  describe "delete message" do
+    @tag :integration
+    test "should succeed if in status draft" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+
+      assert message.status == :draft
+      assert {:ok, %DeletedMessage{} = deleted_message} = Messages.delete_message(message.id)
+      assert {:error, :not_found} = Messages.get_message(message.id)
+      assert deleted_message.status == :deleted
+    end
+
+    @tag :integration
+    test "should fail when not in draft" do
+      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+      {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
+
+      assert {:error, :invalid_transition} = Messages.delete_message(sent_message.id)
     end
   end
 
@@ -83,12 +103,12 @@ defmodule DealogBackoffice.MessagesTest do
       {:ok, %MessageForApproval{} = message_for_approval} =
         Messages.get_message_for_approval(message.id)
 
-      assert message_for_approval.status == "waiting_for_approval"
+      assert message_for_approval.status == :waiting_for_approval
 
       assert {:ok, %MessageForApproval{} = approved_message} =
                Messages.approve_message(message_for_approval)
 
-      assert approved_message.status == "approved"
+      assert approved_message.status == :approved
     end
 
     @tag :integration
@@ -99,12 +119,12 @@ defmodule DealogBackoffice.MessagesTest do
       {:ok, %MessageForApproval{} = message_for_approval} =
         Messages.get_message_for_approval(message.id)
 
-      assert message_for_approval.status == "waiting_for_approval"
+      assert message_for_approval.status == :waiting_for_approval
 
       assert {:ok, %MessageForApproval{} = approved_message} =
                Messages.approve_message(message_for_approval, "A note")
 
-      assert approved_message.status == "approved"
+      assert approved_message.status == :approved
       assert approved_message.note == "A note"
     end
 
@@ -132,12 +152,11 @@ defmodule DealogBackoffice.MessagesTest do
       {:ok, %MessageForApproval{} = message_for_approval} =
         Messages.get_message_for_approval(message.id)
 
-      assert message_for_approval.status == "waiting_for_approval"
+      assert message_for_approval.status == :waiting_for_approval
 
-      assert {:ok, %MessageForApproval{} = rejected_message} =
-               Messages.reject_message(message_for_approval)
+      assert {:ok, %Message{} = rejected_message} = Messages.reject_message(message_for_approval)
 
-      assert rejected_message.status == "rejected"
+      assert rejected_message.status == :rejected
     end
 
     @tag :integration
@@ -148,27 +167,13 @@ defmodule DealogBackoffice.MessagesTest do
       {:ok, %MessageForApproval{} = message_for_approval} =
         Messages.get_message_for_approval(message.id)
 
-      assert message_for_approval.status == "waiting_for_approval"
+      assert message_for_approval.status == :waiting_for_approval
 
-      assert {:ok, %MessageForApproval{} = rejected_message} =
+      assert {:ok, %Message{} = rejected_message} =
                Messages.reject_message(message_for_approval, "A reason")
 
-      assert rejected_message.status == "rejected"
-      assert rejected_message.reason == "A reason"
-    end
-
-    @tag :integration
-    test "should fail when not in status waiting for approval" do
-      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
-      Messages.send_message_for_approval(message)
-
-      {:ok, %MessageForApproval{} = message_for_approval} =
-        Messages.get_message_for_approval(message.id)
-
-      {:ok, %MessageForApproval{} = rejected_message} =
-        Messages.reject_message(message_for_approval)
-
-      assert {:error, :invalid_transition} = Messages.reject_message(rejected_message)
+      assert rejected_message.status == :rejected
+      assert rejected_message.rejection_reason == "A reason"
     end
   end
 end

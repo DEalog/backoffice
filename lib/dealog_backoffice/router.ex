@@ -12,6 +12,7 @@ defmodule DealogBackoffice.Router do
     CreateMessage,
     ChangeMessage,
     SendMessageForApproval,
+    DeleteMessage,
     ApproveMessage,
     RejectMessage
   }
@@ -22,5 +23,15 @@ defmodule DealogBackoffice.Router do
 
   identify(Message, by: :message_id, prefix: "message-")
 
-  dispatch([CreateMessage, ChangeMessage, SendMessageForApproval, ApproveMessage, RejectMessage], to: Message)
+  dispatch(
+    [
+      CreateMessage,
+      ChangeMessage,
+      SendMessageForApproval,
+      DeleteMessage,
+      ApproveMessage,
+      RejectMessage
+    ],
+    to: Message
+  )
 end

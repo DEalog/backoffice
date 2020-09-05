@@ -5,6 +5,7 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
     CreateMessage,
     ChangeMessage,
     SendMessageForApproval,
+    DeleteMessage,
     ApproveMessage,
     RejectMessage
   }
@@ -13,6 +14,7 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
     MessageCreated,
     MessageChanged,
     MessageSentForApproval,
+    MessageDeleted,
     MessageApproved,
     MessageRejected
   }
@@ -97,11 +99,97 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
         ]
       )
     end
+
+    @tag :unit
+    test "should fail when not in draft state" do
+      message_id = UUID.uuid4()
+
+      assert_error(
+        [
+          %MessageCreated{
+            message_id: message_id,
+            status: :draft,
+            title: "A title",
+            body: "A body"
+          },
+          %MessageSentForApproval{
+            message_id: message_id,
+            status: :waiting_for_approval,
+            title: "A title",
+            body: "A body"
+          }
+        ],
+        struct(SendMessageForApproval, %{
+          message_id: message_id,
+          title: "A title",
+          body: "A body",
+          status: :waiting_for_approval
+        }),
+        {:error, :invalid_state}
+      )
+    end
+  end
+
+  describe "delete message" do
+    @tag :unit
+    test "should be successfully deleted" do
+      message_id = UUID.uuid4()
+
+      assert_events(
+        [
+          %MessageCreated{
+            message_id: message_id,
+            status: :draft,
+            title: "A title",
+            body: "A body"
+          }
+        ],
+        struct(DeleteMessage, %{
+          message_id: message_id,
+          status: :deleted
+        }),
+        [
+          %MessageDeleted{
+            message_id: message_id,
+            title: "A title",
+            body: "A body",
+            status: :deleted
+          }
+        ]
+      )
+    end
+
+    @tag :unit
+    test "should be blocked when not in draft" do
+      message_id = UUID.uuid4()
+
+      assert_error(
+        [
+          %MessageCreated{
+            message_id: message_id,
+            status: :draft,
+            title: "A title",
+            body: "A body"
+          },
+          %MessageSentForApproval{
+            message_id: message_id,
+            status: :sent_for_approval,
+            title: "A title",
+            body: "A body"
+          }
+        ],
+        struct(DeleteMessage, %{
+          message_id: message_id,
+          status: :deleted
+        }),
+        {:error, :invalid_state}
+      )
+    end
   end
 
   describe "approve message" do
     @tag :unit
-    test "should successfully be rejected without note" do
+    test "should successfully be approved without note" do
       message_id = UUID.uuid4()
 
       assert_events(
@@ -161,6 +249,26 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             note: "A note"
           }
         ]
+      )
+    end
+
+    @tag :unit
+    test "should be rejected when not in state waiting_for_approval" do
+      message_id = UUID.uuid4()
+
+      assert_error(
+        [
+          %MessageCreated{
+            message_id: message_id,
+            status: :draft,
+            title: "A title",
+            body: "A body"
+          }
+        ],
+        struct(ApproveMessage, %{
+          message_id: message_id
+        }),
+        {:error, :invalid_state}
       )
     end
   end
@@ -227,6 +335,25 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             reason: "A reason"
           }
         ]
+      )
+    end
+
+    test "should be rejected when not in state waiting_for_approval" do
+      message_id = UUID.uuid4()
+
+      assert_error(
+        [
+          %MessageCreated{
+            message_id: message_id,
+            status: :draft,
+            title: "A title",
+            body: "A body"
+          }
+        ],
+        struct(RejectMessage, %{
+          message_id: message_id
+        }),
+        {:error, :invalid_state}
       )
     end
   end

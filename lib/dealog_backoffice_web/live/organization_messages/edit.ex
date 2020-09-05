@@ -68,4 +68,26 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
         |> push_redirect(to: Routes.organization_messages_path(socket, :show, message.id))
     end
   end
+
+  defp apply_action(socket, :delete, %{"id" => id}) do
+    case Messages.delete_message(id) do
+      {:error, :invalid_transition} ->
+        socket
+        |> put_flash(
+          :save_error,
+          gettext("Message %{id} could not be deleted",
+            id: id
+          )
+        )
+        |> push_redirect(to: Routes.organization_messages_path(socket, :show, id))
+
+      {:ok, message} ->
+        socket
+        |> put_flash(
+          :save_success,
+          gettext("Message %{title} successfully deleted", title: message.title)
+        )
+        |> push_redirect(to: Routes.organization_messages_path(socket, :index))
+    end
+  end
 end

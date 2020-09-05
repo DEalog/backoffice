@@ -29,9 +29,9 @@
             <%= for {message, index} <- Enum.with_index(@messages) do %>
               <%
                 status_colors = case message.status do
-                  "waiting_for_approval" -> "text-yellow-800 bg-yellow-200"
-                  "approved" -> "bg-green-600 text-green-200"
-                  "rejected" -> "bg-red-600 text-red-200"
+                  :waiting_for_approval -> "text-yellow-800 bg-yellow-200"
+                  :approved -> "bg-green-600 text-green-200"
+                  :rejected -> "bg-red-600 text-red-200"
                   _ -> "bg-black text-white"
                 end
               %>
@@ -44,14 +44,14 @@
                     <svg class="flex-shrink-0 w-4 h-4 fill-current" viewBox="0 0 20 20" fill="currentColor">
                       <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
                     </svg>
-                    <div class="ml-1">
+                    <div class="ml-1 truncate">
                       <%= message.title %>
                     </div>
                   </a>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-center text-sm leading-5 text-gray-500">
                   <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 <%= status_colors %>">
-                    <%= Gettext.gettext(DealogBackofficeWeb.Gettext, message.status) %>
+                    <%= Gettext.gettext(DealogBackofficeWeb.Gettext, Atom.to_string(message.status)) %>
                   </span>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-600">

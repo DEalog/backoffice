@@ -22,7 +22,7 @@ defmodule DealogBackoffice.AggregateCase do
 
         actual_events = List.wrap(events)
 
-        assert is_nil(error)
+        assert is_nil(error), "An unexpected error did occur: #{inspect(error)}"
         assert expected_events == actual_events
       end
 
@@ -36,7 +36,7 @@ defmodule DealogBackoffice.AggregateCase do
           |> evolve(initial_events)
           |> execute(commands)
 
-        assert error == expected_error
+        assert error == expected_error, "Expected error did not occur"
       end
 
       # Apply one or more events to an aggregate

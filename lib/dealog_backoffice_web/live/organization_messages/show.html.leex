@@ -1,10 +1,10 @@
 <%
   external_status_colors = "bg-green-200 text-green-600"
   status_colors = case @message.status do
-    "waiting_for_approval" -> "text-yellow-800 bg-yellow-200"
-    "draft" -> "bg-gray-600 text-gray-200"
-    "approved" -> "bg-green-600 text-green-200"
-    "rejected" -> "bg-red-600 text-red-200"
+    :waiting_for_approval -> "text-yellow-800 bg-yellow-200"
+    :draft -> "bg-gray-600 text-gray-200"
+    :approved -> "bg-green-600 text-green-200"
+    :rejected -> "bg-red-600 text-red-200"
     _ -> "bg-black text-white"
   end
 %>
@@ -109,7 +109,7 @@
               </dt>
               <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
                 <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 <%= status_colors %>">
-                  <%= Gettext.gettext(DealogBackofficeWeb.Gettext, @message.status) %>
+                  <%= Gettext.gettext(DealogBackofficeWeb.Gettext, Atom.to_string(@message.status)) %>
                 </span>
               </dd>
             </div>
@@ -191,7 +191,7 @@
               <%= gettext "Back to overview" %>
             </a>
           </div>
-          <%= unless @message.status == "waiting_for_approval" do %>
+          <%= unless @message.status == :waiting_for_approval do %>
             <div>
               <a
                 href="<%= Routes.organization_messages_path(@socket, :change, @message) %>"
@@ -200,12 +200,21 @@
               </a>
             </div>
           <% end %>
-          <%= if @message.status in ["draft"] do %>
+          <%= if @message.status in [:draft] do %>
             <div>
               <a
                 href="<%= Routes.organization_messages_path(@socket, :send_for_approval, @message) %>"
                 class="mt-1 group w-full flex items-center px-2 py-2 text-sm leading-5 font-medium rounded-md bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
                 <%= gettext "Send for approval" %>
+              </a>
+            </div>
+          <% end %>
+          <%= if @message.status in [:draft] do %>
+            <div>
+              <a
+                href="<%= Routes.organization_messages_path(@socket, :delete, @message) %>"
+                class="mt-1 group w-full flex items-center px-2 py-2 text-sm leading-5 font-medium rounded-md bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
+                <%= gettext "Delete message" %>
               </a>
             </div>
           <% end %>

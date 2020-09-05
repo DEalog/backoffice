@@ -8,6 +8,7 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     MessageCreated,
     MessageChanged,
     MessageSentForApproval,
+    MessageDeleted,
     MessageApproved,
     MessageRejected
   }
@@ -44,6 +45,10 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
       status: sent_for_approval.status,
       updated_at: metadata.created_at
     )
+  end)
+
+  project(%MessageDeleted{} = deleted, fn multi ->
+    Ecto.Multi.delete_all(multi, :delete_message, query(deleted.message_id))
   end)
 
   project(%MessageApproved{} = approved, metadata, fn multi ->

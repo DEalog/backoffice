@@ -1,3 +1,9 @@
+## Unreleased
+
+- `CNG` Rejected messages are removed from the approval section
+- `CNG` Improve message listings
+- `ADD` Messages can be deleted
+
 ## 0.3.0
 
 This release has a basic approval process for a single organization on board.
