@@ -15,5 +15,9 @@ defmodule DealogBackoffice.Messages.Events.MessageRejected do
         _ -> event
       end
     end
+
+    def upcast(%MessageRejected{status: "rejected"} = event, _metadata) do
+      %MessageRejected{event | status: :rejected}
+    end
   end
 end
