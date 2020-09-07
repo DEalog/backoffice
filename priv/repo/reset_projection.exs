@@ -1,30 +1,41 @@
+defmodule DealogBackoffice.ResetProjections do
+  alias DealogBackoffice.{Repo, EventStore}
+
+  def truncate_projection_table(table) do
+    truncate_query = "TRUNCATE TABLE #{table} RESTART IDENTITY;"
+    Ecto.Adapters.SQL.query!(Repo, truncate_query)
+    IO.puts("✓ Truncated table #{table}")
+  end
+
+  def delete_projection_versions(name) do
+    delete_projection_version_query = """
+      DELETE FROM projection_versions
+        WHERE projection_name = '#{name}';
+    """
+
+    Ecto.Adapters.SQL.query!(Repo, delete_projection_version_query)
+
+    IO.puts("✓ Removed projection version for #{name}")
+  end
+
+  def delete_subscription(name) do
+    :ok = EventStore.delete_subscription("$all", name)
+    IO.puts("✓ Removed projection subscription for #{name}")
+  end
+end
+
+alias DealogBackoffice.ResetProjections
+
 IO.puts("This script will reset the projections.")
 
-alias DealogBackoffice.{Repo, EventStore}
+should_run =
+  case System.argv() do
+    ["--run"] -> true
+    ["--run", _] -> true
+    _ -> false
+  end
 
-truncate_projection_table = fn table ->
-  truncate_query = "TRUNCATE TABLE #{table} RESTART IDENTITY;"
-  Ecto.Adapters.SQL.query!(Repo, truncate_query)
-  IO.puts("✓ Truncated table #{table}")
-end
-
-delete_projection_versions = fn name ->
-  delete_projection_version_query = """
-    DELETE FROM projection_versions
-      WHERE projection_name = '#{name}';
-  """
-
-  Ecto.Adapters.SQL.query!(Repo, delete_projection_version_query)
-
-  IO.puts("✓ Removed projection version for #{name}")
-end
-
-delete_subscription = fn name ->
-  :ok = EventStore.delete_subscription("$all", name)
-  IO.puts("✓ Removed projection subscription for #{name}")
-end
-
-if Mix.env() == :dev do
+if Mix.env() == :dev or should_run do
   projections = [
     %{table: "messages", name: "Messages.Projectors.Message"},
     %{table: "deleted_messages", name: "Messages.Projectors.DeletedMessage"},
@@ -32,9 +43,9 @@ if Mix.env() == :dev do
   ]
 
   Enum.each(projections, fn %{table: table, name: name} ->
-    truncate_projection_table.(table)
-    delete_projection_versions.(name)
-    delete_subscription.(name)
+    ResetProjections.truncate_projection_table(table)
+    ResetProjections.delete_projection_versions(name)
+    ResetProjections.delete_subscription(name)
   end)
 
   IO.puts("""
