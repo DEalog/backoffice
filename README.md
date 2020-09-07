@@ -46,27 +46,12 @@ wording let it be resolved during the pull request process.
 
 The DEalog Backoffice uses the [Commanded](https://commanded.io) library
 providing [CQRS](https://www.martinfowler.com/bliki/CQRS.html) support. To
-replay projections there are the following steps needed (manual for now):
+replay projections use the following script:
 
-- Read Store database
-  - Delete the replay counter
-    ```
-    DELETE FROM projection_versions
-      WHERE projection_name = 'Messages.Projectors.Message';
-    ```
-  - Empty the projection database
-    ```
-    TRUNCATE TABLE messages
-      RESTART IDENTITY;
-    ```
-- Event Store database
-  - Reset the subscription
-    ```
-    DELETE FROM subscriptions
-      WHERE stream_uuid = '$all'
-      AND subscription_name = 'Messages.Projectors.Message';
-    ```
-- Restart the application
+`./dev mix run priv/repo/reset_projection.exs`
+
+On the remote machine you can use this script as well but have to add the
+`--run` option.
 
 ## Collaboration
 
@@ -81,7 +66,8 @@ If you want to collaborate please follow this guide:
 
 ## Used technologies
 
-The DEalog Backoffice application uses the following (main) technologies, frameworks and libraries:
+The DEalog Backoffice application uses the following (main) technologies,
+frameworks and libraries:
 
 - [Elixir](https://elixir-lang.org)
 - [Phoenix Framework](https://phoenixframework.org)
