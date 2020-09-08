@@ -9,7 +9,13 @@ defmodule DealogBackoffice.Messages.Supervisor do
 
   @impl true
   def init(_arg) do
-    Supervisor.init([Projectors.Message, Projectors.MessageApproval, Projectors.DeletedMessage],
+    Supervisor.init(
+      [
+        Projectors.Message,
+        Projectors.MessageApproval,
+        Projectors.DeletedMessage,
+        Projectors.PublishedMessage
+      ],
       strategy: :one_for_one
     )
   end

@@ -9,10 +9,17 @@ defmodule DealogBackoffice.Messages do
     SendMessageForApproval,
     DeleteMessage,
     ApproveMessage,
-    RejectMessage
+    RejectMessage,
+    PublishMessage
   }
 
-  alias DealogBackoffice.Messages.Projections.{Message, MessageForApproval, DeletedMessage}
+  alias DealogBackoffice.Messages.Projections.{
+    Message,
+    MessageForApproval,
+    DeletedMessage,
+    PublishedMessage
+  }
+
   alias DealogBackoffice.Messages.Queries.{ListMessages, ListMessageApprovals}
   alias DealogBackoffice.{App, Repo}
 
@@ -169,6 +176,29 @@ defmodule DealogBackoffice.Messages do
 
     with :ok <- App.dispatch(reject_message, consistency: :strong) do
       get(Message, message.id)
+    else
+      _ ->
+        {:error, :invalid_transition}
+    end
+  end
+
+  @doc """
+  Publish a message.
+
+  This action can only be applied when the message is in status `approved`.
+
+  Returns the published message as {:ok, %PublishedMessage{}} when successful.
+  Returns {:error, :invalid_transition} when transition is not allowed.
+  """
+  def publish_message(%MessageForApproval{} = message) do
+    publish_message =
+      message
+      |> PublishMessage.new()
+      |> PublishMessage.assign_message_id(message)
+      |> PublishMessage.set_status()
+
+    with :ok <- App.dispatch(publish_message, consistency: :strong) do
+      get(PublishedMessage, message.id)
     else
       _ ->
         {:error, :invalid_transition}

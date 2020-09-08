@@ -117,6 +117,9 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
 
   def execute(%Message{}, %RejectMessage{}), do: {:error, :invalid_state}
 
+  @doc """
+  Publish an approved message.
+  """
   def execute(
         %Message{message_id: message_id, status: :approved} = message,
         %PublishMessage{} = publish

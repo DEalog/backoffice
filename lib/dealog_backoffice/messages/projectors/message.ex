@@ -10,7 +10,8 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     MessageSentForApproval,
     MessageDeleted,
     MessageApproved,
-    MessageRejected
+    MessageRejected,
+    MessagePublished
   }
 
   alias DealogBackoffice.Messages.Projections.Message
@@ -62,6 +63,13 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     update_message(multi, rejected.message_id,
       status: rejected.status,
       rejection_reason: rejected.reason,
+      updated_at: metadata.created_at
+    )
+  end)
+
+  project(%MessagePublished{} = published, metadata, fn multi ->
+    update_message(multi, published.message_id,
+      status: published.status,
       updated_at: metadata.created_at
     )
   end)

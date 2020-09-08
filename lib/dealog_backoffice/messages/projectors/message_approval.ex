@@ -7,7 +7,8 @@ defmodule DealogBackoffice.Messages.Projectors.MessageApproval do
   alias DealogBackoffice.Messages.Events.{
     MessageSentForApproval,
     MessageApproved,
-    MessageRejected
+    MessageRejected,
+    MessagePublished
   }
 
   alias DealogBackoffice.Messages.Projections.MessageForApproval
@@ -38,6 +39,13 @@ defmodule DealogBackoffice.Messages.Projectors.MessageApproval do
 
   project(%MessageRejected{} = rejected, _metadata, fn multi ->
     Ecto.Multi.delete_all(multi, :remove_rejected_message, query(rejected.message_id))
+  end)
+
+  project(%MessagePublished{} = published, metadata, fn multi ->
+    update_message_approval(multi, published.message_id,
+      status: published.status,
+      updated_at: metadata.created_at
+    )
   end)
 
   defp update_message_approval(multi, message_id, changes) do

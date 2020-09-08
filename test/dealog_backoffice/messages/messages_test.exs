@@ -2,7 +2,13 @@ defmodule DealogBackoffice.MessagesTest do
   use DealogBackoffice.DataCase
 
   alias DealogBackoffice.Messages
-  alias DealogBackoffice.Messages.Projections.{Message, MessageForApproval, DeletedMessage}
+
+  alias DealogBackoffice.Messages.Projections.{
+    Message,
+    MessageForApproval,
+    DeletedMessage,
+    PublishedMessage
+  }
 
   @valid_data %{title: "The title", body: "The body"}
   @invalid_data %{title: nil, body: nil}
@@ -174,6 +180,23 @@ defmodule DealogBackoffice.MessagesTest do
 
       assert rejected_message.status == :rejected
       assert rejected_message.rejection_reason == "A reason"
+    end
+  end
+
+  describe "publish message" do
+    @tag :integration
+    test "should succeed" do
+      with {:ok, message} = Messages.create_message(@valid_data),
+           {:ok, _} = Messages.send_message_for_approval(message),
+           {:ok, message_for_approval} = Messages.get_message_for_approval(message.id),
+           {:ok, approved_message} = Messages.approve_message(message_for_approval) do
+        assert {:ok, %PublishedMessage{} = published_message} =
+                 Messages.publish_message(approved_message)
+
+        assert published_message.title == @valid_data.title
+        assert published_message.body == @valid_data.body
+        assert published_message.status == :published
+      end
     end
   end
 end
