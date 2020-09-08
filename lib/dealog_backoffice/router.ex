@@ -14,7 +14,8 @@ defmodule DealogBackoffice.Router do
     SendMessageForApproval,
     DeleteMessage,
     ApproveMessage,
-    RejectMessage
+    RejectMessage,
+    PublishMessage
   }
 
   alias DealogBackoffice.Middlewares.Validate
@@ -30,7 +31,8 @@ defmodule DealogBackoffice.Router do
       SendMessageForApproval,
       DeleteMessage,
       ApproveMessage,
-      RejectMessage
+      RejectMessage,
+      PublishMessage
     ],
     to: Message
   )

@@ -7,7 +7,8 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
     SendMessageForApproval,
     DeleteMessage,
     ApproveMessage,
-    RejectMessage
+    RejectMessage,
+    PublishMessage
   }
 
   alias DealogBackoffice.Messages.Events.{
@@ -16,7 +17,8 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
     MessageSentForApproval,
     MessageDeleted,
     MessageApproved,
-    MessageRejected
+    MessageRejected,
+    MessagePublished
   }
 
   describe "create message" do
@@ -351,6 +353,65 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
           }
         ],
         struct(RejectMessage, %{
+          message_id: message_id
+        }),
+        {:error, :invalid_state}
+      )
+    end
+  end
+
+  describe "publish message" do
+    @tag :unit
+    test "should successfully be published when approved" do
+      message_id = UUID.uuid4()
+
+      assert_events(
+        [
+          %MessageCreated{
+            message_id: message_id,
+            status: :draft,
+            title: "A title",
+            body: "A body"
+          },
+          %MessageSentForApproval{
+            message_id: message_id,
+            status: :waiting_for_approval,
+            title: "A title",
+            body: "A body"
+          },
+          %MessageApproved{
+            message_id: message_id,
+            status: :approved
+          }
+        ],
+        struct(PublishMessage, %{
+          message_id: message_id
+        }),
+        [
+          %MessagePublished{
+            message_id: message_id,
+            status: :published,
+            title: "A title",
+            body: "A body"
+          }
+        ]
+      )
+    end
+
+    @tag :unit
+    test "should be rejected when not in state approved" do
+      message_id = UUID.uuid4()
+
+      assert_error(
+        [
+          %MessageCreated{
+            message_id: message_id,
+            status: :draft,
+            title: "A title",
+            body: "A body"
+          }
+        ],
+        struct(PublishMessage, %{
           message_id: message_id
         }),
         {:error, :invalid_state}
