@@ -23,6 +23,7 @@ defmodule DealogBackofficeWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import DealogBackofficeWeb.ConnCase
+      import DealogBackofficeWeb.LiveViewTestHelpers
 
       alias DealogBackofficeWeb.Router.Helpers, as: Routes
 
