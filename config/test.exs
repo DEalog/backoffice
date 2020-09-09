@@ -29,6 +29,10 @@ config :dealog_backoffice, DealogBackoffice.EventStore,
   hostname: System.get_env("POSTGRES_HOST") || "db",
   pool: Ecto.Adapters.SQL.Sandbox
 
+# Basically deactivate Kafka integration for test
+config :kafka_ex,
+  disable_default_worker: true
+
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :dealog_backoffice, DealogBackofficeWeb.Endpoint,

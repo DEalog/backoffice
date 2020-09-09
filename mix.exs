@@ -44,6 +44,7 @@ defmodule DealogBackoffice.MixProject do
       {:floki, ">= 0.0.0", only: :test},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.1"},
+      {:kafka_ex, "~> 0.11"},
       {:map_diff, "~> 1.3"},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
       {:phoenix, "~> 1.5.3"},
