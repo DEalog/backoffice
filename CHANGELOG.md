@@ -1,5 +1,7 @@
 ## Unreleased
 
+- `ADD` Messages that are approved can be published
+- `CNG` Projection reset script can be run in prod as well (with a security flag)
 - `CNG` Rejected messages are removed from the approval section
 - `CNG` Improve message listings
 - `ADD` Messages can be deleted
