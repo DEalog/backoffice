@@ -64,6 +64,63 @@ If you want to collaborate please follow this guide:
 - Update the translations (see translation section)
 - Create a pull request against the original repository
 
+## Building a release
+
+The DEalog Backoffice can be deployed as a Docker container. The following
+steps are needed to have a deployable version.
+
+### Building the image
+
+To build the image run
+
+```
+docker build -t dealog/backoffice:latest .
+```
+
+This will prepare and build the image that then can be used to spawn a
+running container.
+
+The following environment variables need to be set (and respective service need
+to be reachable):
+
+- `DATABASE_URL`: The content / projection database. (f.e.: `ecto://postgres:postgres@db/bo_db_prod`)
+- `EVENT_STORE_DATABASE_URL`: The database for the event store. (e.g. `ecto://postgres:postgres@db/bo_es_db_prod`)
+- `SECRET_KEY_BASE`: The Phoenix secret. (generate via `mix phx.gen.secret`)
+- `HOSTNAME`: The hostname needed for WebSockets. (f.e. `localhost`)
+
+> To test this locally it is recommended to start up a PostgreSQL instance being
+> accessible from the Backoffice Docker container and use a `.env` file for the
+> variables mentioned above.
+
+### Setup the event store
+
+To initialize the event store the following command needs to be run:
+
+```
+docker run --network my_network --env-file=./.env dealog/backoffice:latest bin/testing eval "DealogBackoffice.Release.init_event_store()"
+```
+
+> Note: `my_network` should contain the network the PostgreSQL instance is
+> reachable from.
+
+### Running migrations
+
+```
+docker run --network my_network --env-file=./.env dealog/backoffice:latest bin/testing eval "DealogBackoffice.Release.migrate()"
+```
+
+> Note: `my_network` should contain the network the PostgreSQL instance is
+> reachable from.
+
+### Start the container
+
+```
+docker run -p 5000:5000 --network my_network --env-file=./.env dealog/backoffice:latest
+```
+
+If everything works the DEalog Backoffice is reachable via
+`http://localhost:5000` (when run locally)
+
 ## Used technologies
 
 The DEalog Backoffice application uses the following (main) technologies,
