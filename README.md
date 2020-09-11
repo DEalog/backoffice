@@ -118,8 +118,8 @@ docker run --network my_network --env-file=./.env dealog/backoffice:latest bin/t
 docker run -p 5000:5000 --network my_network --env-file=./.env dealog/backoffice:latest
 ```
 
-If everything works the DEalog Backoffice is reachable via
-`http://localhost:5000` (when run locally)
+When started on locahost the DEalog Backoffice is reachable via
+`http://localhost:5000`.
 
 ## Used technologies
 
