@@ -67,6 +67,10 @@ defmodule DealogBackofficeWeb.Router do
     live("/", PreviewLive)
   end
 
+  scope "/health", DealogBackofficeWeb do
+    get "/", HealthController, :check
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", DealogBackofficeWeb do
   #   pipe_through :api

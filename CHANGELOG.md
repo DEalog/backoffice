@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `ADD` A health endpoint is added for monitoring
 - `ADD` Application can be deployed via mix release on Docker
 - `CNG` Rejected messages are removed from the approval section
 - `CNG` Improve message listings
