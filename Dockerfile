@@ -26,6 +26,8 @@ RUN mix deps.get
 RUN mix deps.compile
 
 # build assets
+COPY priv priv
+COPY lib lib
 COPY assets assets
 RUN cd assets\
       && npm i -g yarn\
@@ -36,8 +38,6 @@ RUN mix phx.digest
 
 
 # build project
-COPY priv priv
-COPY lib lib
 RUN mix compile
 
 # build release
