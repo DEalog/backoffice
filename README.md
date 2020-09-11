@@ -97,7 +97,7 @@ to be reachable):
 To initialize the event store the following command needs to be run:
 
 ```
-docker run --network my_network --env-file=./.env dealog/backoffice:latest bin/testing eval "DealogBackoffice.Release.init_event_store()"
+docker run --network my_network --env-file=./.env dealog/backoffice:latest bin/backoffice eval "DealogBackoffice.Release.init_event_store()"
 ```
 
 > Note: `my_network` should contain the network the PostgreSQL instance is
@@ -106,7 +106,7 @@ docker run --network my_network --env-file=./.env dealog/backoffice:latest bin/t
 ### Running migrations
 
 ```
-docker run --network my_network --env-file=./.env dealog/backoffice:latest bin/testing eval "DealogBackoffice.Release.migrate()"
+docker run --network my_network --env-file=./.env dealog/backoffice:latest bin/backoffice eval "DealogBackoffice.Release.migrate()"
 ```
 
 > Note: `my_network` should contain the network the PostgreSQL instance is
@@ -115,7 +115,7 @@ docker run --network my_network --env-file=./.env dealog/backoffice:latest bin/t
 ### Start the container
 
 ```
-docker run -p 5000:5000 --network my_network --env-file=./.env dealog/backoffice:latest
+docker run -p 5000:4000 --network my_network --env-file=./.env dealog/backoffice:latest
 ```
 
 When started on locahost the DEalog Backoffice is reachable via

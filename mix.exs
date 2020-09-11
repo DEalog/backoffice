@@ -12,7 +12,7 @@ defmodule DealogBackoffice.MixProject do
       aliases: aliases(),
       deps: deps(),
       releases: [
-        testing: [
+        backoffice: [
           include_executables_for: [:unix],
           steps: [:assemble, :tar]
         ]

@@ -45,8 +45,8 @@ COPY CHANGELOG.md /app/CHANGELOG.md
 
 USER nobody:nobody
 
-COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/testing ./
+COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/backoffice ./
 
 ENV HOME=/app
 
-CMD ["bin/testing", "start"]
+CMD ["bin/backoffice", "start"]
