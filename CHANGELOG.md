@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `ADD` Application can be deployed via mix release on Docker
 - `CNG` Rejected messages are removed from the approval section
 - `CNG` Improve message listings
 - `ADD` Messages can be deleted
