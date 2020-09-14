@@ -92,7 +92,7 @@ to be reachable):
 > accessible from the Backoffice Docker container and use a `.env` file for the
 > variables mentioned above.
 
-### Deployement all in one
+### Deployment all in one
 
 For now there is a command script under `rel/run.sh` running all the setup
 and migration commands on container start to ease the initial deployment.
