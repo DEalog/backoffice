@@ -92,6 +92,20 @@ to be reachable):
 > accessible from the Backoffice Docker container and use a `.env` file for the
 > variables mentioned above.
 
+### Deployement all in one
+
+For now there is a command script under `rel/run.sh` running all the setup
+and migration commands on container start to ease the initial deployment.
+
+For this to work start the container like this:
+
+```
+docker run -it -p 5000:4000 --network my_network --env-file=./.env dealog/backoffice:latest
+```
+
+> Note: You need to pass the `-it` flag to capture a `ctrl-c` interupt. If not
+> passed you'd need to kill the running container.
+
 ### Setup the event store
 
 To initialize the event store the following command needs to be run:

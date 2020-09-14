@@ -42,6 +42,7 @@ WORKDIR /app
 RUN chown nobody:nobody /app
 
 COPY CHANGELOG.md /app/CHANGELOG.md
+COPY rel/run.sh /app
 
 USER nobody:nobody
 
@@ -49,4 +50,4 @@ COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/backoffice ./
 
 ENV HOME=/app
 
-CMD ["bin/backoffice", "start"]
+CMD ["./run.sh"]
