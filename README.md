@@ -1,6 +1,7 @@
 # DEalog Backoffice
 
 ![Elixir CI](https://github.com/DEalog/backoffice/workflows/Elixir/badge.svg)
+![Build](https://github.com/DEalog/backoffice/workflows/Build/badge.svg)
 ![Deployment](https://github.com/DEalog/backoffice/workflows/Deployment/badge.svg)
 
 The DEalog Backoffice is the authoring part of the DEalog platform, a platform
@@ -63,6 +64,89 @@ If you want to collaborate please follow this guide:
 - Update the [CHANGELOG.md](CHANGELOG.md)
 - Update the translations (see translation section)
 - Create a pull request against the original repository
+
+## Building a release
+
+The DEalog Backoffice can be deployed as a Docker container. The following
+steps are needed to have a deployable version.
+
+### Building the image
+
+To build the image run
+
+```
+docker build -t dealog/backoffice:latest .
+```
+
+This will prepare and build the image that then can be used to spawn a
+running container.
+
+The following environment variables need to be set (and respective service need
+to be reachable):
+
+- `DATABASE_URL`: The content / projection database. (f.e.: `ecto://postgres:postgres@db/bo_db_prod`)
+- `EVENT_STORE_DATABASE_URL`: The database for the event store. (e.g. `ecto://postgres:postgres@db/bo_es_db_prod`)
+- `SECRET_KEY_BASE`: The Phoenix secret. (generate via `mix phx.gen.secret`)
+- `HOSTNAME`: The hostname needed for WebSockets. (f.e. `localhost`)
+
+> To test this locally it is recommended to start up a PostgreSQL instance being
+> accessible from the Backoffice Docker container and use a `.env` file for the
+> variables mentioned above.
+
+### Deployment all in one
+
+For now there is a command script under `rel/run.sh` running all the setup
+and migration commands on container start to ease the initial deployment.
+
+For this to work start the container like this:
+
+```
+docker run -it -p 5000:4000 --network my_network --env-file=./.env dealog/backoffice:latest
+```
+
+> Note: You need to pass the `-it` flag to capture a `ctrl-c` interupt. If not
+> passed you'd need to kill the running container.
+
+### Setup the event store
+
+To initialize the event store the following command needs to be run:
+
+```
+docker run --network my_network --env-file=./.env dealog/backoffice:latest bin/backoffice eval "DealogBackoffice.Release.init_event_store()"
+```
+
+> Note: `my_network` should contain the network the PostgreSQL instance is
+> reachable from.
+
+### Running migrations
+
+```
+docker run --network my_network --env-file=./.env dealog/backoffice:latest bin/backoffice eval "DealogBackoffice.Release.migrate()"
+```
+
+> Note: `my_network` should contain the network the PostgreSQL instance is
+> reachable from.
+
+### Start the container
+
+```
+docker run -p 5000:4000 --network my_network --env-file=./.env dealog/backoffice:latest
+```
+
+When started on locahost the DEalog Backoffice is reachable via
+`http://localhost:5000`.
+
+## Preview deployment
+
+In order to deploy a branch for review there is a script available. The script
+creates a Dokku application and deploys the current branch.
+
+Currently this is a manual task.
+
+To deploy run: `./preview_deploy` on the respective branch.
+To cleanup run: `./preview_deploy --cleanup` on the branch.
+
+> You need to have access to the Dev server instance to deploy.
 
 ## Used technologies
 

@@ -2,6 +2,11 @@
 
 - `ADD` Messages that are approved can be published
 - `CNG` Projection reset script can be run in prod as well (with a security flag)
+- `FIX` Tag name for master build
+- `FIX` Fix GH Action output for deployment
+- `ADD` Manual preview deployments are available
+- `ADD` A health endpoint is added for monitoring
+- `ADD` Application can be deployed via mix release on Docker
 - `CNG` Rejected messages are removed from the approval section
 - `CNG` Improve message listings
 - `ADD` Messages can be deleted

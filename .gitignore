@@ -35,3 +35,7 @@ npm-debug.log
 
 # Mutagen lock file
 mutagen.yml.lock
+
+# Local env vars
+.env
+.preview_env
