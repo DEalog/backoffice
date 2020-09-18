@@ -1,0 +1,199 @@
+#!/usr/bin/env bash
+
+# Config
+if [ -z ${DOKKU_CMD+x} ] || [ -z ${DOMAIN+x} ] || [ -z ${PHX_SECRET+x} ] || [ -z ${EMAIL_ADDR+x} ]; then
+  if [ ! -f ".preview_env" ]; then
+    cat << HINT
+You need to provide the following environment variables:
+
+- DOKKU_CMD   The Dokku (remote) command, e.g. ssh dokku-host
+- DOMAIN      The domain, e.g. dev.host (will become PREVIEW_NAME.dev.host)
+- PHX_SECRET  A Phoenix secret, best generate via `./dev mix phx.gen.secret`
+- EMAIL_ADDR  The email address for Let's Encrypt
+
+You can override the following variables:
+- APP_PREFIX
+
+For convenience you can copy the template and replace the variable values.
+cp preview_env.dist .preview_env
+HINT
+    exit 1
+  fi
+  source .preview_env
+fi
+
+# Mandatory
+
+DOKKU_CMD=${DOKKU_CMD:="ssh your-host"}
+APP_CONFIG=("HOSTNAME:###app_name###.${DOMAIN}" "SECRET_KEY_BASE:${PHX_SECRET}")
+EMAIL_ADDR=${EMAIL_ADDR:="your@email.com"}
+
+# Optional
+
+APP_PREFIX=${APP_PREFIX:="dbo"}
+DATABASES=("projection:DATABASE_URL" "event_store:EVENT_STORE_DATABASE_URL")
+
+# Functions
+
+function get_deployment_name {
+  local branch_name=$(echo $(git rev-parse --abbrev-ref HEAD) | sed 's/[^[:alnum:]]/-/g' | tr '[:upper:]' '[:lower:]')
+  echo "${1}-${branch_name}"
+}
+
+function list_apps {
+  ${DOKKU_CMD} apps:list
+}
+
+function ensure_app {
+  local app_name=${1}
+  does_app_exist ${app_name}
+  exists=$?
+  if [ "${exists}" -eq 0 ]; then
+    echo "Deployment ${app_name} already created."
+  else
+    echo "Deployment ${app_name} will be created."
+    create_app ${app_name}
+  fi
+}
+
+function does_app_exist {
+  ${DOKKU_CMD} apps:exists ${1} >/dev/null 2>&1
+}
+
+function create_app {
+  ${DOKKU_CMD} apps:create ${1}
+}
+
+function set_config {
+  local app_name=${1}
+  local key=${2}
+  local value=${3}
+
+  ${DOKKU_CMD} config:set --no-restart ${app_name} ${key}=${value} >/dev/null 2>&1
+}
+
+function ensure_database {
+  local app_name=${1}
+  local db_name=${2}
+  local db_alias=${3}
+  does_database_exist ${db_name}
+  exists=$?
+  if [ "${exists}" -eq 0 ]; then
+    echo "Database ${db_name} already created."
+  else
+    echo "Database ${db_name} will be created."
+    create_database ${app_name} ${db_name} ${db_alias}
+  fi
+}
+
+function does_database_exist {
+  ${DOKKU_CMD} postgres:exists ${1} >/dev/null 2>&1
+}
+
+function create_database {
+  local app_name=${1}
+  local db_name=${2}
+  local db_alias=${3}
+
+  echo "Creating database ${db_name} for ${app_name} aliased via ${db_alias}"
+
+  ${DOKKU_CMD} postgres:create ${db_name} >/dev/null 2>&1
+  ${DOKKU_CMD} postgres:link ${db_name} ${app_name} -a ${db_alias} >/dev/null 2>&1
+}
+
+function setup_git {
+  local app_name=${app_name}
+  git remote | grep ${app_name}
+  local exists=$?
+  if [ "${exists}" -eq 0 ]; then
+    echo "Remote ${app_name} already added."
+  else
+    echo "Remote ${app_name} will be added."
+    git remote add ${app_name} munich-made-01-dokku:${app_name}
+  fi
+}
+
+function deploy_application {
+  local app_name=${1}
+  local branch=${2}
+
+  git push ${app_name} ${branch}:master
+}
+
+function enable_ssl {
+  local app_name=${1}
+  local email_address=${2}
+  ${DOKKU_CMD} config:set --no-restart ${app_name} DOKKU_LETSENCRYPT_EMAIL=${email_address} >/dev/null 2>&1
+  ${DOKKU_CMD} letsencrypt ${app_name}
+}
+
+function deploy {
+  local short_sha=$(git rev-parse --short HEAD)
+  local branch_name=$(git rev-parse --abbrev-ref HEAD)
+  local app_name=$(get_deployment_name ${APP_PREFIX})
+
+  echo "Running preview deployment named ${app_name} on commit ${short_sha}"
+
+  list_apps
+  ensure_app ${app_name}
+  for config in "${APP_CONFIG[@]}"; do
+    local key="${config%%:*}"
+    local value="${config##*:}"
+    case ${key} in
+      "HOSTNAME")
+        value=$(echo ${value} | sed -e "s/###app_name###/${app_name}/")
+        ;;
+    esac
+    set_config ${app_name} ${key} ${value}
+  done
+
+  for database in "${DATABASES[@]}"; do
+    local db_prefix="${database%%:*}"
+    local db_name=$(get_deployment_name "${APP_PREFIX}-${db_prefix}")
+    local db_alias="${database##*:}"
+    ensure_database ${app_name} ${db_name} ${db_alias}
+  done
+  setup_git ${app_name}
+  deploy_application ${app_name} ${branch_name}
+  enable_ssl ${app_name} ${EMAIL_ADDR}
+  cat << HELP
+*******************************************************************************
+*
+* Deployment finished.
+*
+* The backoffice is reachable via https://${app_name}.${DOMAIN}
+* Please do not forget to cleanup when done via ${0} --cleanup
+*
+*******************************************************************************
+HELP
+}
+
+function undeploy {
+  local app_name=$(get_deployment_name ${APP_PREFIX})
+  echo "Destroying ${app_name}"
+  ${DOKKU_CMD} apps:destroy ${app_name} --force
+  for database in "${DATABASES[@]}"; do
+    local db_prefix="${database%%:*}"
+    local db_name=$(get_deployment_name "${APP_PREFIX}-${db_prefix}")
+    echo "Destroying database ${db_name}"
+    ${DOKKU_CMD} postgres:destroy ${db_name} --force
+  done
+  echo "Removing remote from Git"
+  git remote remove ${app_name}
+  ${DOKKU_CMD} apps:list
+  ${DOKKU_CMD} postgres:list
+  echo "Deployment '${app_name}' has been successfully removed."
+}
+
+function main {
+  local cleanup=${1}
+  if [ "${cleanup}" == "--cleanup" ]; then
+    echo "Cleaning up preview deployment"
+    undeploy
+  else
+    echo "Deploying preview"
+    deploy
+  fi
+}
+
+main $@

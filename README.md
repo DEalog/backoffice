@@ -135,6 +135,18 @@ docker run -p 5000:4000 --network my_network --env-file=./.env dealog/backoffice
 When started on locahost the DEalog Backoffice is reachable via
 `http://localhost:5000`.
 
+## Preview deployment
+
+In order to deploy a branch for review there is a script available. The script
+creates a Dokku application and deploys the current branch.
+
+Currently this is a manual task.
+
+To deploy run: `./preview_deploy` on the respective branch.
+To cleanup run: `./preview_deploy --cleanup` on the branch.
+
+> You need to have access to the Dev server instance to deploy.
+
 ## Used technologies
 
 The DEalog Backoffice application uses the following (main) technologies,
