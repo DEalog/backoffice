@@ -25,7 +25,6 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build, tag, and push PR image to Amazon ECR
-        if: !contains(github.head_ref , 'master') && !contains(github.ref, 'master')
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: backoffice
@@ -33,12 +32,13 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        if: "! contains(github.head_ref , 'master') && ! contains(github.ref, 'master')"
 
       - name: Build, tag, and push master image to Amazon ECR
-        if: contains(github.head_ref, 'master') && (github.ref, 'master')
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: backoffice
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:master .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
+        if: contains(github.head_ref, 'master') && (github.ref, 'master')
