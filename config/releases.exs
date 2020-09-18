@@ -25,6 +25,8 @@ config :dealog_backoffice, DealogBackoffice.EventStore,
   url: event_store_database_url,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
+IO.puts("#####PROJECTORS#####: #{System.get_env("PROJECTORS")}")
+
 config :dealog_backoffice, :projection,
   projectors: String.to_existing_atom(System.get_env("PROJECTORS")) || :all
 
