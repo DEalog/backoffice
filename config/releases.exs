@@ -26,7 +26,7 @@ config :dealog_backoffice, DealogBackoffice.EventStore,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 config :dealog_backoffice, :projection,
-  projectors: String.to_atom(System.get_env("PROJECTORS")) || :all
+  projectors: String.to_existing_atom(System.get_env("PROJECTORS")) || :all
 
 secret_key_base =
   System.get_env("SECRET_KEY_BASE") ||
