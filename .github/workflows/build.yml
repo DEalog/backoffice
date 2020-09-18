@@ -26,7 +26,6 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: backoffice
-          IMAGE_TAG: ${{ github.head_ref || "master" }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/} .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/}
