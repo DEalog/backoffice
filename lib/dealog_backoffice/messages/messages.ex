@@ -205,6 +205,13 @@ defmodule DealogBackoffice.Messages do
     end
   end
 
+  @doc """
+  Get a published messsage by its ID.
+  """
+  def get_published_message(id) do
+    get(PublishedMessage, id)
+  end
+
   defp get(schema, uuid) do
     case Repo.get(schema, uuid) do
       nil -> {:error, :not_found}

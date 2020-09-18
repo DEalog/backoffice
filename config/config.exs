@@ -27,6 +27,17 @@ config :dealog_backoffice, DealogBackoffice.App,
 config :commanded_ecto_projections,
   repo: DealogBackoffice.Repo
 
+# The projectors can be defined here.
+#
+# This is mainly to keep deployment ability as the infrastructure needs to
+# provide additional services and in the test env the remote projections are
+# not started to keep it more simple.
+#
+# Implemented sets of projectors are 
+# - `:local` for local projectors
+# - `:all` to also include remote projectors like Kafka
+config :dealog_backoffice, :projection, projectors: :local
+
 config :vex,
   sources: [
     DealogBackoffice.Validators,

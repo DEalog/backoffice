@@ -27,6 +27,8 @@ config :kafka_ex,
     {"kafka", 9092}
   ]
 
+config :dealog_backoffice, :projection, projectors: :all
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

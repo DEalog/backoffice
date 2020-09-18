@@ -88,6 +88,7 @@ to be reachable):
 - `EVENT_STORE_DATABASE_URL`: The database for the event store. (e.g. `ecto://postgres:postgres@db/bo_es_db_prod`)
 - `SECRET_KEY_BASE`: The Phoenix secret. (generate via `mix phx.gen.secret`)
 - `HOSTNAME`: The hostname needed for WebSockets. (f.e. `localhost`)
+- `PROJECTORS` (optional): The projectors that should be active. Can either be `all` (default) or `local`.
 
 > To test this locally it is recommended to start up a PostgreSQL instance being
 > accessible from the Backoffice Docker container and use a `.env` file for the

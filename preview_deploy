@@ -13,6 +13,7 @@ You need to provide the following environment variables:
 
 You can override the following variables:
 - APP_PREFIX
+- PROJECTORS
 
 For convenience you can copy the template and replace the variable values.
 cp preview_env.dist .preview_env
@@ -31,6 +32,7 @@ EMAIL_ADDR=${EMAIL_ADDR:="your@email.com"}
 # Optional
 
 APP_PREFIX=${APP_PREFIX:="dbo"}
+PROJECTORS=${PROJECTORS:="local"}
 DATABASES=("projection:DATABASE_URL" "event_store:EVENT_STORE_DATABASE_URL")
 
 # Functions

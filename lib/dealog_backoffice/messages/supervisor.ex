@@ -10,13 +10,33 @@ defmodule DealogBackoffice.Messages.Supervisor do
   @impl true
   def init(_arg) do
     Supervisor.init(
-      [
-        Projectors.Message,
-        Projectors.MessageApproval,
-        Projectors.DeletedMessage,
-        Projectors.PublishedMessage
-      ],
+      projectors(),
       strategy: :one_for_one
     )
+  end
+
+  @local_projectors [
+    Projectors.Message,
+    Projectors.MessageApproval,
+    Projectors.DeletedMessage,
+    Projectors.PublishedMessage
+  ]
+
+  @addional_projectors [
+    Projectors.MessageService
+  ]
+
+  defp projectors do
+    case get_projector_config() do
+      :all ->
+        @local_projectors ++ @addional_projectors
+
+      :local ->
+        @local_projectors
+    end
+  end
+
+  defp get_projector_config do
+    Application.get_env(:dealog_backoffice, :projection)[:projectors]
   end
 end
