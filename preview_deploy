@@ -39,8 +39,11 @@ EMAIL_ADDR=${EMAIL_ADDR:="your@email.com"}
 # Functions
 
 function get_deployment_name {
-  local branch_name=$(echo $(git rev-parse --abbrev-ref HEAD) | sed 's/[^[:alnum:]]/-/g' | tr '[:upper:]' '[:lower:]')
-  echo "${1}-${branch_name}"
+  local prefix=${1}
+  local custom_branch=${2}
+  local branch=${custom_branch:=$(git rev-parse --abbrev-ref HEAD)}
+  local name=$(echo ${branch} | sed 's/[^[:alnum:]]/-/g' | tr '[:upper:]' '[:lower:]')
+  echo "${prefix}-${name}"
 }
 
 function list_apps {
@@ -172,12 +175,13 @@ HELP
 }
 
 function undeploy {
-  local app_name=$(get_deployment_name ${APP_PREFIX})
+  local branch=${1}
+  local app_name=$(get_deployment_name ${APP_PREFIX} ${branch})
   echo "Destroying ${app_name}"
   ${DOKKU_CMD} apps:destroy ${app_name} --force
   for database in "${DATABASES[@]}"; do
     local db_prefix="${database%%:*}"
-    local db_name=$(get_deployment_name "${APP_PREFIX}-${db_prefix}")
+    local db_name=$(get_deployment_name "${APP_PREFIX}-${db_prefix}" ${branch})
     echo "Destroying database ${db_name}"
     ${DOKKU_CMD} postgres:destroy ${db_name} --force
   done
@@ -191,8 +195,9 @@ function undeploy {
 function main {
   local cleanup=${1}
   if [ "${cleanup}" == "--cleanup" ]; then
+    local branch=${2}
     echo "Cleaning up preview deployment"
-    undeploy
+    undeploy ${branch}
   else
     echo "Deploying preview"
     deploy

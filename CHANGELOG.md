@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `ADD` Preview deployment cleanup supports custom branches
 - `ADD` Published messages get distributed to Kafka if enabled
 - `ADD` Messages that are approved can be published
 - `CNG` Projection reset script can be run in prod as well (with a security flag)

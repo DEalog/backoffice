@@ -145,7 +145,9 @@ creates a Dokku application and deploys the current branch.
 Currently this is a manual task.
 
 To deploy run: `./preview_deploy` on the respective branch.
-To cleanup run: `./preview_deploy --cleanup` on the branch.
+To cleanup run: `./preview_deploy --cleanup` on the branch. Additionally you
+can pass a sanitized branch name as second argument to remove a different
+deployment.
 
 > You need to have access to the Dev server instance to deploy.
 
