@@ -23,17 +23,18 @@ HINT
   source .preview_env
 fi
 
-# Mandatory
-
-DOKKU_CMD=${DOKKU_CMD:="ssh your-host"}
-APP_CONFIG=("HOSTNAME:###app_name###.${DOMAIN}" "SECRET_KEY_BASE:${PHX_SECRET}")
-EMAIL_ADDR=${EMAIL_ADDR:="your@email.com"}
-
 # Optional
 
 APP_PREFIX=${APP_PREFIX:="dbo"}
 PROJECTORS=${PROJECTORS:="local"}
 DATABASES=("projection:DATABASE_URL" "event_store:EVENT_STORE_DATABASE_URL")
+
+# Mandatory
+
+DOKKU_CMD=${DOKKU_CMD:="ssh your-host"}
+APP_CONFIG=("HOSTNAME:###app_name###.${DOMAIN}" "SECRET_KEY_BASE:${PHX_SECRET}" "PROJECTORS:${PROJECTORS}")
+EMAIL_ADDR=${EMAIL_ADDR:="your@email.com"}
+
 
 # Functions
 
