@@ -1,5 +1,7 @@
 ## Unreleased
 
+- `FIX` Tag name for master build
+- `FIX` Fix GH Action output for deployment
 - `ADD` Manual preview deployments are available
 - `ADD` A health endpoint is added for monitoring
 - `ADD` Application can be deployed via mix release on Docker
