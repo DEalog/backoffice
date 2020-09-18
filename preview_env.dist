@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+#
+# This is a template with the config needed for the preview deployments.
+# Copy this to .preview_env to get into effect and adapt the values.
+#
+# For more options see the ./preview_deploy script
+#
+
+export DOKKU_CMD="ssh your-host"
+export DOMAIN="your-domain"
+export PHX_SECRET="a_generated_secret"
+export EMAIL_ADDR="your@email.com"
