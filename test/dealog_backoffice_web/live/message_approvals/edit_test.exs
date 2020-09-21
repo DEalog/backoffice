@@ -115,7 +115,7 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.EditTest do
       assert {:error, {:live_redirect, %{flash: flash_token, to: redirect_path}}} =
                live(conn, "/approvals/#{message_for_approval.id}/publish")
 
-      assert redirect_path == "/approvals/#{message_for_approval.id}"
+      assert redirect_path == "/approvals"
       assert %{"save_success" => _} = get_flash_from_token(@endpoint, flash_token)
     end
   end
