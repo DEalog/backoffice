@@ -21,19 +21,21 @@ jobs:
       - name: Restore dependencies cache
         uses: actions/cache@v2
         with:
-          path: |
-            deps
-            _build
+          path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-
       - name: Install dependencies
         run: mix deps.get
       - name: Compile application
         run: mix compile
+      - name: Upload compiled files
+        uses: actions/upload-artifact@v2
+        with:
+          name: compiled
+          path: _build
   test:
     name: Run unit and functional Elixir tests
     runs-on: ubuntu-latest
-    needs: build
     services:
       db:
         image: postgres:12.1-alpine
@@ -55,11 +57,13 @@ jobs:
       - name: Restore dependencies cache
         uses: actions/cache@v2
         with:
-          path: |
-            deps
-            _build
+          path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-
+      - name: Download compiled files from build
+        uses: actions/download-artifact@v2
+        with:
+          name: compiled
       - name: Install dependencies
         run: mix deps.get
       - name: Setup event store
