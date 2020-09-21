@@ -27,32 +27,27 @@ defmodule DealogBackofficeWeb.Router do
     pipe_through :browser
 
     live("/", DashboardLive, :index)
-    live("/all-messages", AllMessagesLive, :index)
 
-    scope "/organization-messages" do
-      live("/", OrganizationMessagesLive.Index, :index, as: :organization_messages)
-
-      live("/new", OrganizationMessagesLive.Edit, :new, as: :organization_messages)
-
-      live("/:id/change", OrganizationMessagesLive.Edit, :change, as: :organization_messages)
-
-      live(
-        "/:id/send_for_approval",
-        OrganizationMessagesLive.Edit,
-        :send_for_approval,
-        as: :organization_messages
-      )
-
-      live("/:id/delete", OrganizationMessagesLive.Edit, :delete, as: :organization_messages)
-      live("/:id", OrganizationMessagesLive.Show, :show, as: :organization_messages)
+    scope "/all-messages", AllMessagesLive do
+      live("/", Index, :index, as: :all_messages)
+      live("/:id", Show, :show, as: :all_messages)
     end
 
-    scope "/approvals" do
-      live("/", MessageApprovalsLive.Index, :index, as: :approvals)
-      live("/:id", MessageApprovalsLive.Show, :show, as: :approvals)
-      live "/:id/approve", MessageApprovalsLive.Edit, :approve, as: :approvals
-      live "/:id/reject", MessageApprovalsLive.Edit, :reject, as: :approvals
-      live "/:id/publish", MessageApprovalsLive.Edit, :publish, as: :approvals
+    scope "/organization-messages", OrganizationMessagesLive do
+      live("/", Index, :index, as: :organization_messages)
+      live("/new", Edit, :new, as: :organization_messages)
+      live("/:id/change", Edit, :change, as: :organization_messages)
+      live("/:id/send_for_approval", Edit, :send_for_approval, as: :organization_messages)
+      live("/:id/delete", Edit, :delete, as: :organization_messages)
+      live("/:id", Show, :show, as: :organization_messages)
+    end
+
+    scope "/approvals", MessageApprovalsLive do
+      live("/", Index, :index, as: :approvals)
+      live("/:id", Show, :show, as: :approvals)
+      live "/:id/approve", Edit, :approve, as: :approvals
+      live "/:id/reject", Edit, :reject, as: :approvals
+      live "/:id/publish", Edit, :publish, as: :approvals
     end
 
     live("/changelog", ChangelogLive, :index)

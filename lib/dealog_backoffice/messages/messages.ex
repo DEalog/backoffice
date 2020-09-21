@@ -20,7 +20,12 @@ defmodule DealogBackoffice.Messages do
     PublishedMessage
   }
 
-  alias DealogBackoffice.Messages.Queries.{ListMessages, ListMessageApprovals}
+  alias DealogBackoffice.Messages.Queries.{
+    ListMessages,
+    ListMessageApprovals,
+    ListPublishedMessages
+  }
+
   alias DealogBackoffice.{App, Repo}
 
   @doc """
@@ -180,6 +185,13 @@ defmodule DealogBackoffice.Messages do
       _ ->
         {:error, :invalid_transition}
     end
+  end
+
+  @doc """
+  Get a (paginated) list of published messages.
+  """
+  def list_published_messages do
+    ListPublishedMessages.paginate(Repo)
   end
 
   @doc """

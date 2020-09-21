@@ -1,4 +1,4 @@
-defmodule DealogBackofficeWeb.MessageApprovalsLive.Show do
+defmodule DealogBackofficeWeb.AllMessagesLive.Show do
   use DealogBackofficeWeb, :live_view
 
   alias DealogBackoffice.Messages
@@ -14,11 +14,11 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.Show do
   end
 
   defp apply_action(socket, :show, %{"id" => id}) do
-    case Messages.get_message_for_approval(id) do
+    case Messages.get_published_message(id) do
       {:ok, message} ->
         assign(socket,
           title: message.title,
-          active_page: :approvals,
+          active_page: :all_messages,
           message: message
         )
 
@@ -30,7 +30,7 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.Show do
             id: id
           )
         )
-        |> push_redirect(to: Routes.approvals_path(socket, :index))
+        |> push_redirect(to: Routes.all_messages_path(socket, :index))
     end
   end
 
