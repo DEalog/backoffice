@@ -6,7 +6,8 @@ on:
       - master
 
 jobs:
-  build:
+  deploy:
+    name: "Dev deployment"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1

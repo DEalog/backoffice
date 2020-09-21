@@ -8,20 +8,8 @@ on:
 
 jobs:
   build:
-    name: Build and test
+    name: Compile
     runs-on: ubuntu-latest
-
-    services:
-      db:
-        image: postgres:12.1-alpine
-        ports: ["5432:5432"]
-        env:
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
 
     steps:
       - uses: actions/checkout@v2
@@ -38,6 +26,21 @@ jobs:
           restore-keys: ${{ runner.os }}-mix-
       - name: Install dependencies
         run: mix deps.get
+  test:
+    name: Run unit and functional Elixir tests
+    needs: build
+    services:
+      db:
+        image: postgres:12.1-alpine
+        ports: ["5432:5432"]
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
       - name: Setup event store
         run: MIX_ENV=test mix do event_store.create, event_store.init
         env:
