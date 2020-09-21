@@ -33,6 +33,7 @@ jobs:
   test:
     name: Run unit and functional Elixir tests
     runs-on: ubuntu-latest
+    needs: build
     services:
       db:
         image: postgres:12.1-alpine
