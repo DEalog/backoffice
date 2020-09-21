@@ -19,6 +19,16 @@ config :dealog_backoffice, DealogBackoffice.EventStore,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+config :kafka_ex,
+  kafka_version: "kayrock",
+  client_id: "dealog_backoffice_kafka",
+  disable_default_worker: true,
+  brokers: [
+    {"kafka", 9092}
+  ]
+
+config :dealog_backoffice, :projection, projectors: :all
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

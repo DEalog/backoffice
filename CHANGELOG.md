@@ -1,5 +1,11 @@
 ## Unreleased
 
+- `ADD` Published message details can be viewed
+- `ADD` Published messages are shown in the all messages list
+- `ADD` Preview deployment cleanup supports custom branches
+- `ADD` Published messages get distributed to Kafka if enabled
+- `ADD` Messages that are approved can be published
+- `CNG` Projection reset script can be run in prod as well (with a security flag)
 - `FIX` Tag name for master build
 - `FIX` Fix GH Action output for deployment
 - `ADD` Manual preview deployments are available

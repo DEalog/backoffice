@@ -1,4 +1,4 @@
-name: Build
+name: Docker build
 
 on:
   push:
@@ -24,7 +24,11 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, tag, and push PR image to Amazon ECR
+      - name: Build Docker image
+        run: |
+          docker build .
+
+      - name: Tag and push PR image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: backoffice
@@ -34,7 +38,7 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         if: "! contains(github.ref, 'master')"
 
-      - name: Build, tag, and push master image to Amazon ECR
+      - name: Tag and push master image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: backoffice

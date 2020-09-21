@@ -1,9 +1,9 @@
 <section>
   <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
-    <%= gettext "My organization" %>
+    <%= gettext "All messages" %>
   </h1>
   <p class="mt-4">
-    <%= gettext "All messages of this organization are listed here." %>
+    <%= gettext "The messages related to this organization are listed here." %>
   </p>
   <div class="mt-4 flex flex-col">
     <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -29,30 +29,25 @@
             <%= for {message, index} <- Enum.with_index(@messages) do %>
               <%
                 status_colors = case message.status do
-                  :waiting_for_approval -> "text-yellow-800 bg-yellow-200"
-                  :draft -> "bg-gray-600 text-gray-200"
-                  :rejected -> "bg-red-600 text-red-200"
-                  :approved -> "bg-green-600 text-green-200"
                   :published -> "bg-purple-600 text-purple-200"
                   _ -> "bg-black text-white"
                 end
               %>
               <tr class="<%= if is_even?(index), do: "bg-gray-100" %>">
                 <td class="max-w-xs px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                  <a name="<%= message.id %>"></a>
                   <a
                     class="flex items-center text-gray-600 hover:text-gray-900"
-                    href="<%= Routes.organization_messages_path(@socket, :show, message) %>"
+                    href="<%= Routes.all_messages_path(@socket, :show, message) %>"
                   >
                     <svg class="flex-shrink-0 w-4 h-4 fill-current" viewBox="0 0 20 20" fill="currentColor">
                       <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
                     </svg>
-                    <span class="ml-1 truncate">
+                    <div class="ml-1 truncate">
                       <%= message.title %>
-                    </span>
+                    </div>
                   </a>
                 </td>
-                <td class="px-6 py-4 text-center whitespace-no-wrap text-sm leading-5 text-gray-500">
+                <td class="px-6 py-4 whitespace-no-wrap text-center text-sm leading-5 text-gray-500">
                   <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 <%= status_colors %>">
                     <%= Gettext.gettext(DealogBackofficeWeb.Gettext, Atom.to_string(message.status)) %>
                   </span>
@@ -63,7 +58,7 @@
                       <%= display_date_time(message.inserted_at) %>
                     </div>
                     <div class="text-xs">
-                        <%= gettext "last changed" %> <%= display_date_time_relative(message.updated_at) %>
+                      <%= gettext "last changed" %> <%= display_date_time_relative(message.updated_at) %>
                     </div>
                   </div>
                 </td>

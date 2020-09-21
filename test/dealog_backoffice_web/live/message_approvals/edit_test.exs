@@ -81,6 +81,45 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.EditTest do
     end
   end
 
+  describe "Publish message" do
+    setup [:prepare_message_for_approval]
+
+    test "should redirect to index if message cannot be found", %{conn: conn} do
+      missing_id = "140a7443-ac44-4343-86af-ec23a0f36017"
+
+      assert {:error, {:live_redirect, %{flash: flash_token, to: "/approvals"}}} =
+               live(conn, "/approvals/#{missing_id}/publish")
+
+      assert %{"not_found_error" => _} = get_flash_from_token(@endpoint, flash_token)
+    end
+
+    test "should redirect to message details if message cannot be transitioned", %{
+      conn: conn,
+      message_for_approval: message_for_approval
+    } do
+      assert {:error, {:live_redirect, %{flash: flash_token, to: redirect_path}}} =
+               live(conn, "/approvals/#{message_for_approval.id}/publish")
+
+      assert redirect_path == "/approvals/#{message_for_approval.id}"
+      assert %{"save_error" => _} = get_flash_from_token(@endpoint, flash_token)
+    end
+
+    test "should publish a message", %{conn: conn, message_for_approval: message_for_approval} do
+      {:ok, view, _} = live(conn, "/approvals/#{message_for_approval.id}/approve")
+
+      view
+      |> element("form")
+      |> render_submit(%{message: %{note: "A note"}})
+
+      # TODO How can we assert the flash with this approach? It's the same result as above so ambiguous.
+      assert {:error, {:live_redirect, %{flash: flash_token, to: redirect_path}}} =
+               live(conn, "/approvals/#{message_for_approval.id}/publish")
+
+      assert redirect_path == "/approvals"
+      assert %{"save_success" => _} = get_flash_from_token(@endpoint, flash_token)
+    end
+  end
+
   @valid_attrs %{
     title: "The title",
     body: "The body"
