@@ -76,7 +76,7 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.Edit do
           :save_success,
           gettext("Message %{title} successfully published", title: message.title)
         )
-        |> push_redirect(to: Routes.approvals_path(socket, :show, message.id))
+        |> push_redirect(to: Routes.approvals_path(socket, :index))
     end
   end
 end
