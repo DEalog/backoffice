@@ -28,6 +28,16 @@ config :dealog_backoffice, DealogBackoffice.EventStore,
 config :dealog_backoffice, :projection,
   projectors: String.to_existing_atom(System.get_env("PROJECTORS")) || :all
 
+kafka_hosts =
+  System.get_env("KAFKA_HOSTS") ||
+    raise """
+        environment variable KAFKA_HOSTS is missing.
+        For example: localhost:9092,localhost:9093,localhost:9094
+    """
+
+config :kafka_ex,
+  brokers: kafka_hosts
+
 secret_key_base =
   System.get_env("SECRET_KEY_BASE") ||
     raise """

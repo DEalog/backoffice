@@ -11,11 +11,7 @@ config :dealog_backoffice, DealogBackoffice.EventStore, serializer: EventStore.J
 config :kafka_ex,
   kafka_version: "kayrock",
   client_id: "dealog_backoffice_kafka",
-  disable_default_worker: true,
-  brokers: [
-    # TODO This needs to move to releases.exs
-    {"kafka", 9092}
-  ]
+  disable_default_worker: true
 
 # Do not print debug messages in production
 config :logger, level: :info

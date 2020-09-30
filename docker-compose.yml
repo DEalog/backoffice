@@ -36,6 +36,9 @@ services:
         target: /var/lib/postgresql/data
         volume:
           nocopy: true
+    networks:
+      - default
+      - dealog_dev
 volumes:
   postgres-data:
   build:
