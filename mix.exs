@@ -42,6 +42,7 @@ defmodule DealogBackoffice.MixProject do
       {:commanded, "~> 1.1"},
       {:commanded_ecto_projections, "~> 1.1"},
       {:commanded_eventstore_adapter, "~> 1.1"},
+      {:csv, "~> 2.3"},
       {:earmark, "~> 1.4"},
       {:ecto_sql, "~> 3.4"},
       {:elixir_uuid, "~> 1.2"},
