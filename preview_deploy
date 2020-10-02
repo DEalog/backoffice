@@ -10,6 +10,7 @@ You need to provide the following environment variables:
 - DOMAIN      The domain, e.g. dev.host (will become PREVIEW_NAME.dev.host)
 - PHX_SECRET  A Phoenix secret, best generate via `./dev mix phx.gen.secret`
 - EMAIL_ADDR  The email address for Let's Encrypt
+- KAFKA_HOSTS The Kafka hosts (f.e. localhost:9092)
 
 You can override the following variables:
 - APP_PREFIX
@@ -32,9 +33,8 @@ DATABASES=("projection:DATABASE_URL" "event_store:EVENT_STORE_DATABASE_URL")
 # Mandatory
 
 DOKKU_CMD=${DOKKU_CMD:="ssh your-host"}
-APP_CONFIG=("HOSTNAME:###app_name###.${DOMAIN}" "SECRET_KEY_BASE:${PHX_SECRET}" "PROJECTORS:${PROJECTORS}")
+APP_CONFIG=("HOSTNAME:###app_name###.${DOMAIN}" "SECRET_KEY_BASE:${PHX_SECRET}" "PROJECTORS:${PROJECTORS}" "KAFKA_HOSTS:${KAFKA_HOSTS}")
 EMAIL_ADDR=${EMAIL_ADDR:="your@email.com"}
-
 
 # Functions
 

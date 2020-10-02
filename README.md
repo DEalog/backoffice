@@ -89,6 +89,7 @@ to be reachable):
 - `SECRET_KEY_BASE`: The Phoenix secret. (generate via `mix phx.gen.secret`)
 - `HOSTNAME`: The hostname needed for WebSockets. (f.e. `localhost`)
 - `PROJECTORS` (optional): The projectors that should be active. Can either be `all` (default) or `local`.
+- `KAFKA_HOSTS`: The Kafka host(s). (e.g. `localhost:9092`); Can be an empty string if `local` is used.
 
 > To test this locally it is recommended to start up a PostgreSQL instance being
 > accessible from the Backoffice Docker container and use a `.env` file for the

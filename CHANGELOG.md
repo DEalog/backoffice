@@ -1,6 +1,7 @@
 ## Unreleased
 
 - `ADD` Administrative areas can be imported
+- `FIX` The Kafka host can be configured via an env var
 - `ADD` Published message details can be viewed
 - `ADD` Published messages are shown in the all messages list
 - `ADD` Preview deployment cleanup supports custom branches
