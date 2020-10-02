@@ -22,15 +22,15 @@ defmodule DealogBackofficeWeb.ErrorHelpers do
   Check if the given form field has errors.
   """
   def has_errors?(form, field) do
-    Map.has_key?(form.errors, field)
+    Map.has_key?(Map.from_struct(form).errors, field)
   end
 
   @doc """
   Generate the error message(s) for a specific field.
   """
   def errors_for_field(form, field, opts \\ []) do
-    if Map.has_key?(form.errors, field) do
-      content_tag(:span, translate(Map.get(form.errors, field)),
+    if Map.has_key?(Map.from_struct(form).errors, field) do
+      content_tag(:span, translate(Map.get(Map.from_struct(form).errors, field)),
         class: Keyword.get(opts, :class, ""),
         phx_feedback_for: input_id(form, field)
       )
