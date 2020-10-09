@@ -17,7 +17,6 @@ jobs:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           PROJECT: dealog-backoffice
           HOST: dealog-backoffice.dev.munichmade.com
-          BRANCH: main
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@master
         env:
