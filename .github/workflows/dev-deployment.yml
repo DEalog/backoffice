@@ -12,11 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Dokku deploy
-        uses: vitalyliber/dokku-github-action@v4.0
+        uses: vitalyliber/dokku-github-action@v6.1
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           PROJECT: dealog-backoffice
           HOST: dealog-backoffice.dev.munichmade.com
+          BRANCH: main
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@master
         env:
@@ -24,6 +25,6 @@ jobs:
           SLACK_USERNAME: Deployment Bot
           SLACK_ICON: https://github.com/DEalog/backoffice/raw/master/assets/static/images/dealog_iconlogo.png
           SLACK_TITLE: Deployment to Dev finished 🚀
-          SLACK_MESSAGE: Please see https://dealog-backoffice.dev.munichmade.com for the latest version. Deployed `${{ github.sha }}` via `${{ github.head_ref }}`.
+          SLACK_MESSAGE: Please see https://dealog-backoffice.dev.munichmade.com for the latest version. Deployed `${{ github.sha }}`.
           SLACK_FOOTER: DEalog Backoffice dev deployment
           MSG_MINIMAL: true

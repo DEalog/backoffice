@@ -58,7 +58,7 @@ function run_clean {
 
 function run_update {
   git fetch --prune
-  git merge --ff origin/master
+  git merge --ff origin/main
 }
 
 function run_iex {
@@ -127,7 +127,7 @@ The following commands are supported:
 ./dev stop                  # Stop the development stack
 ./dev rebuild               # Rebuild the images and restart the development stack
 ./dev reset                 # Reset the stack (including volumes and images)
-./dev update                # Update from master branch
+./dev update                # Update from main branch
 ./dev iex                   # Spawn IEx session
 ./dev mix                   # Run mix commands
 ./dev translations.update   # Run the (Elixir) tests
@@ -250,7 +250,7 @@ function print_help_for_update {
 shortcut: u
 
 The 'update' command fetches the latest upstream state and fast-forward merges
-the master branch.
+the main branch.
 EOF
 }
 
