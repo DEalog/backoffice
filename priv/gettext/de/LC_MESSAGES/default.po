@@ -490,7 +490,7 @@ msgid "Successfully performed action!"
 msgstr "Aktion erfolgreich durchgeführt!"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:68
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:73
 msgid "Save message"
 msgstr "Meldung speichern"
 
@@ -676,3 +676,9 @@ msgstr "Meldung %{title} erfolgreich veröffentlicht"
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:218
 msgid "Publish"
 msgstr "Veröffentlichen"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:49
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:67
+msgid "Cancel"
+msgstr "Abbrechen"
