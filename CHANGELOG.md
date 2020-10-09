@@ -1,6 +1,8 @@
 ## Unreleased
 
 - `ADD` Forms have cancel buttons
+- `CNG` Deployments are update to use the new default branch `main`
+- `CNG` Adapt dev script for new default branch `main`
 - `CNG` Import of administrative areas is running on container start (until there is support for one-off tasks)
 - `ADD` Administrative areas can be imported
 - `FIX` The Kafka host can be configured via an env var

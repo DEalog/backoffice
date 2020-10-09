@@ -2,9 +2,9 @@ name: Docker build
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   build:
@@ -36,13 +36,13 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        if: "! contains(github.ref, 'master')"
+        if: "! contains(github.ref, 'main')"
 
-      - name: Tag and push master image to Amazon ECR
+      - name: Tag and push main image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: backoffice
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:master .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:master
-        if: contains(github.head_ref, 'master') || contains(github.ref, 'master')
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:main .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:main
+        if: contains(github.head_ref, 'main') || contains(github.ref, 'main')
