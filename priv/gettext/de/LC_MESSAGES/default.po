@@ -881,3 +881,8 @@ msgstr "E-Mail Adresse wurde erfolgreich geändert."
 #: lib/dealog_backoffice_web/controllers/user_confirmation_controller.ex:22
 msgid "If the provided email address is in the system and it has not been confirmed yet, you will receive an email with instructions shortly."
 msgstr "Wenn die angegebene E-Mail Adresse im System vorhanden und noch nicht bestätigt ist, wird eine E-Mail mit Anweisungen in Kürze zugestellt."
+
+#, elixir-format
+#: lib/dealog_backoffice_web/controllers/user_session_controller.ex:29
+msgid "Logged out successfully."
+msgstr "Erfolgreich abgemeldet."
