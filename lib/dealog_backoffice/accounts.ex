@@ -1,9 +1,12 @@
 defmodule DealogBackoffice.Accounts do
   @moduledoc """
   The Accounts context.
+
+  This handles everything regarding user authentication.
   """
 
   import Ecto.Query, warn: false
+
   alias DealogBackoffice.Repo
   alias DealogBackoffice.Accounts.{User, UserToken, UserNotifier}
 
