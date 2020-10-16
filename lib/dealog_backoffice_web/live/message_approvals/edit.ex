@@ -8,8 +8,8 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.Edit do
   alias DealogBackoffice.Messages
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(_params, session, socket) do
+    {:ok, assign_defaults(socket, session)}
   end
 
   @impl true
@@ -21,6 +21,7 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.Edit do
     case Messages.get_message_for_approval(id) do
       {:ok, message} ->
         assign(socket,
+          page_title: gettext("Approve message %{title}", title: message.title),
           title: gettext("Approve message"),
           active_page: :approvals,
           message: message,
@@ -33,6 +34,7 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.Edit do
     case Messages.get_message_for_approval(id) do
       {:ok, message} ->
         assign(socket,
+          page_title: gettext("Reject message %{title}", title: message.title),
           title: gettext("Reject message"),
           active_page: :approvals,
           message: message,

@@ -676,3 +676,48 @@ msgstr "Meldung %{title} erfolgreich veröffentlicht"
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:218
 msgid "Publish"
 msgstr "Veröffentlichen"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_session/new.html.eex:37
+msgid "Email address"
+msgstr "E-Mail Adresse"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_session/new.html.eex:84
+msgid "Forgot your password?"
+msgstr "Passwort vergessen?"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/controllers/user_session_controller.ex:18
+msgid "Invalid email or password"
+msgstr "Ungültige E-Mail oder Passwort"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_session/new.html.eex:54
+msgid "Password"
+msgstr "Passwort"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_session/new.html.eex:103
+msgid "Register for a new account"
+msgstr "Ein neues Benutzerkonto registrieren"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_session/new.html.eex:77
+msgid "Remember me"
+msgstr "Eingeloggt bleiben"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_session/new.html.eex:94
+msgid "Sign in"
+msgstr "Anmelden"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_session/new.html.eex:5
+msgid "Sign in to your account"
+msgstr "Melden Sie sich an Ihrem Benutzerkonto an"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/controllers/user_auth.ex:136
+msgid "You must log in to access this page."
+msgstr "Sie müssen angemeldet sein, um diese Seite laden zu können."

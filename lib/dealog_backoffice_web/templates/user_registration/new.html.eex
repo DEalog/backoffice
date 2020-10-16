@@ -1,0 +1,97 @@
+<div class="px-4 py-16 overflow-hidden bg-white sm:px-6 lg:px-8 lg:py-24">
+  <div class="relative max-w-xl mx-auto">
+    <div class="text-center">
+      <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 leading-9 sm:text-4xl sm:leading-10">
+        <%= gettext "Register for a new account" %>
+      </h2>
+      <p class="mt-4 text-lg text-gray-500 leading-6">
+        <%= gettext "This page does only exist for the demo. On the real application registering is invite only." %>
+      </p>
+    </div>
+    <div>
+      <%= if @changeset.action do %>
+        <div class="mt-8" role="alert"
+          phx-value-key="info"
+        >
+          <div class="p-4 rounded-md bg-red-50">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <!-- Heroicon name: x-circle -->
+                <svg class="w-5 h-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-red-800 leading-5">
+                  <%= gettext "There are form errors. Please check below." %>
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="mt-8">
+      <%= f = form_for @changeset, Routes.user_registration_path(@conn, :create) %>
+        <div>
+          <%=
+            label f,
+              :email,
+              gettext("Email address"),
+              class: "block text-sm font-medium text-gray-700 leading-5"
+          %>
+          <div class="relative mt-1 rounded-md shadow-sm">
+            <%=
+              email_input f,
+                :email,
+                required: true,
+                class: "block w-full px-4 py-3 form-input transition ease-in-out duration-150"
+            %>
+            <%=
+              error_tag f,
+                :email
+            %>
+          </div>
+        </div>
+        <div class="mt-4">
+          <%=
+            label f,
+              :password,
+              gettext("Password"),
+              class: "block text-sm font-medium text-gray-700 leading-5#{if has_errors?(f, :password), do: " text-red-500"}"
+          %>
+          <div class="relative mt-1 rounded-md shadow-sm">
+            <%=
+              password_input f,
+                :password,
+                required: true,
+                class: "block w-full px-4 py-3 form-input transition ease-in-out duration-150#{if has_errors?(f, :password), do: " border-red-500"}"
+            %>
+          </div>
+          <div class="text-sm text-red-500">
+            <%=
+              error_tag f,
+                :password
+            %>
+          </div>
+        </div>
+        <div class="mt-4">
+          <span class="inline-flex w-full rounded-md shadow-sm">
+            <%=
+              submit gettext("Register"),
+                class: "inline-flex items-center justify-center w-full px-6 py-3 text-base font-medium text-white bg-yellow-400 border border-transparent leading-6 rounded-md hover:bg-yellow-300 focus:outline-none focus:border-yellow-500 focus:shadow-outline-yellow active:bg-yellow-500 transition ease-in-out duration-150"
+            %>
+          </span>
+        </div>
+      </form>
+    </div>
+    <div class="text-right">
+      <%=
+        link gettext("Sign in"),
+          to: Routes.user_session_path(@conn, :new),
+          class: "font-medium text-yellow-400 hover:text-yellow-300 focus:outline-none focus:underline transition ease-in-out duration-150"
+      %>
+    </div>
+  </div>
+</div>
+

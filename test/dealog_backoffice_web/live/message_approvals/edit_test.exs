@@ -5,6 +5,8 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.EditTest do
 
   alias DealogBackoffice.Messages
 
+  setup :register_and_log_in_user
+
   describe "Approve message" do
     setup [:prepare_message_for_approval]
 

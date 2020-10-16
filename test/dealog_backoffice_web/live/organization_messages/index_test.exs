@@ -3,6 +3,8 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.IndexTest do
 
   import Phoenix.LiveViewTest
 
+  setup :register_and_log_in_user
+
   test "disconnected and connected render", %{conn: conn} do
     {:ok, page_live, disconnected_html} = live(conn, "/organization-messages")
     assert disconnected_html =~ "My organization"

@@ -1,0 +1,165 @@
+<section class="w-full mx-auto">
+  <h1 class="text-2xl font-bold text-gray-900 leading-7 sm:text-3xl sm:leading-9 sm:truncate">
+    <%= gettext "My account" %>
+  </h1>
+  <p class="mt-4">
+    <%= gettext "Here you can change your account." %>
+  </p>
+  <section class="mt-8">
+    <div class="xl:flex">
+      <div>
+        <h2 class="text-xl font-bold text-gray-900 leading-7 sm:text-2xl sm:leading-9 sm:truncate">
+          <%= gettext "Change email address" %>
+        </h2>
+
+        <%= f = form_for @email_changeset, "#", phx_submit: :update_email %>
+          <div class="max-w-3xl px-4 py-8 sm:px-10">
+            <div class="sm:flex sm:items-start sm:space-x-2">
+              <div class="w-full">
+                <%=
+                  label f,
+                    :email,
+                    gettext("Email address"),
+                    class: "block text-sm font-medium text-gray-700 leading-5#{if has_errors?(f, :email), do: " text-red-500"}"
+                %>
+                <div class="relative mt-1 rounded-md shadow-sm">
+                  <%=
+                    email_input f,
+                      :email,
+                      required: true,
+                      class: "block w-full px-4 py-3 form-input transition ease-in-out duration-150#{if has_errors?(f, :email), do: " border-red-500"}"
+                  %>
+                </div>
+                <div class="text-sm text-red-500">
+                  <%=
+                    error_tag f,
+                      :email
+                  %>
+                </div>
+              </div>
+              <div class="w-full">
+                <%=
+                  label f,
+                    :current_password,
+                    gettext("Password"),
+                    for: "current_password_for_email",
+                    class: "block text-sm font-medium text-gray-700 leading-5#{if has_errors?(f, :current_password), do: " text-red-500"}"
+                %>
+                <div class="relative mt-1 rounded-md shadow-sm">
+                  <%=
+                    password_input f,
+                      :current_password,
+                      required: true,
+                      name: "current_password",
+                      id: "current_password_for_email",
+                      class: "block w-full px-4 py-3 form-input transition ease-in-out duration-150#{if has_errors?(f, :current_password), do: " border-red-500"}"
+                  %>
+                </div>
+                <div class="text-sm text-red-500">
+                  <%=
+                    error_tag f,
+                      :current_password
+                  %>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-end mt-4">
+              <%=
+                submit gettext("Change email address"),
+                  class: "flex justify-center w-full sm:w-48 px-4 py-2 text-sm font-medium text-white bg-yellow-400 border border-transparent rounded-md hover:bg-yellow-300 focus:outline-none focus:border-yellow-500 focus:shadow-outline-yellow active:bg-yellow-500 transition duration-150 ease-in-out"
+              %>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div id="change-password" phx-hook="Relogin">
+        <h2 class="text-xl font-bold text-gray-900 leading-7 sm:text-2xl sm:leading-9 sm:truncate">
+          <%= gettext "Change password" %>
+        </h2>
+
+        <%= f = form_for @password_changeset, "#", phx_submit: :update_password %>
+          <div class="max-w-3xl px-4 py-8 sm:px-10">
+            <div class="sm:flex sm:items-start sm:space-x-2">
+              <div class="w-full">
+                <%=
+                  label f,
+                    :password,
+                    gettext("New password"),
+                    class: "block text-sm font-medium text-gray-700 leading-5#{if has_errors?(f, :password), do: " text-red-500"}"
+    %>
+                <div class="relative mt-1 rounded-md shadow-sm">
+                  <%=
+                    password_input f,
+                      :password,
+                      required: true,
+                      class: "block w-full px-4 py-3 form-input transition ease-in-out duration-150#{if has_errors?(f, :password), do: " border-red-500"}"
+                  %>
+                </div>
+                <div class="text-sm text-red-500">
+                  <%=
+                    error_tag f,
+                    :password
+                  %>
+                </div>
+              </div>
+              <div class="w-full">
+                <%=
+                  label f,
+                    :password_confirmation,
+                    gettext("Confirm new password"),
+                    class: "block text-sm font-medium text-gray-700 leading-5#{if has_errors?(f, :password_confirmation), do: " text-red-500"}"
+    %>
+                <div class="relative mt-1 rounded-md shadow-sm">
+                  <%=
+                    password_input f,
+                      :password_confirmation,
+                      required: true,
+                      class: "block w-full px-4 py-3 form-input transition ease-in-out duration-150#{if has_errors?(f, :password_confirmation), do: " border-red-500"}"
+                  %>
+                </div>
+                <div class="text-sm text-red-500">
+                  <%=
+                    error_tag f,
+                    :password_confirmation
+                  %>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="w-full">
+                <%=
+                  label f,
+                    :current_password,
+                    gettext("Current password"),
+                    class: "block text-sm font-medium text-gray-700 leading-5#{if has_errors?(f, :current_password), do: " text-red-500"}"
+    %>
+                <div class="relative mt-1 rounded-md shadow-sm">
+                  <%=
+                    password_input f,
+                      :current_password,
+                      required: true,
+                      name: "current_password",
+                      id: "current_password_for_password",
+                      class: "block w-full px-4 py-3 form-input transition ease-in-out duration-150#{if has_errors?(f, :current_password), do: " border-red-500"}"
+                  %>
+                </div>
+                <div class="text-sm text-red-500">
+                  <%=
+                    error_tag f,
+                    :current_password
+                  %>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-end mt-4">
+              <%=
+                submit gettext("Change password"),
+                  class: "flex justify-center w-full sm:w-48 px-4 py-2 text-sm font-medium text-white bg-yellow-400 border border-transparent rounded-md hover:bg-yellow-300 focus:outline-none focus:border-yellow-500 focus:shadow-outline-yellow active:bg-yellow-500 transition duration-150 ease-in-out"
+              %>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</section>

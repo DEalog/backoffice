@@ -4,8 +4,8 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Show do
   alias DealogBackoffice.Messages
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(_params, session, socket) do
+    {:ok, assign_defaults(socket, session)}
   end
 
   @impl true
@@ -17,6 +17,7 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Show do
     case Messages.get_message(id) do
       {:ok, message} ->
         assign(socket,
+          page_title: message.title,
           title: message.title,
           active_page: :organization_messages,
           message: message
