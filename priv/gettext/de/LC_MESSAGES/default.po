@@ -490,7 +490,7 @@ msgid "Successfully performed action!"
 msgstr "Aktion erfolgreich durchgeführt!"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:68
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:73
 msgid "Save message"
 msgstr "Meldung speichern"
 
@@ -721,3 +721,9 @@ msgstr "Melden Sie sich an Ihrem Benutzerkonto an"
 #: lib/dealog_backoffice_web/controllers/user_auth.ex:136
 msgid "You must log in to access this page."
 msgstr "Sie müssen angemeldet sein, um diese Seite laden zu können."
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:49
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:67
+msgid "Cancel"
+msgstr "Abbrechen"

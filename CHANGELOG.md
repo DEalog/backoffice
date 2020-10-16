@@ -4,7 +4,14 @@
 - `ADD` Users can change their email address
 - `ADD` Users can change their password
 - `ADD` Users can authenticate
-- `ADD` Users can register (Demo only)
+- `ADD` Users can register
+
+## 0.4.0
+
+This release covers message publishing for a single organization.
+
+- `ADD` Forms have cancel buttons
+  > > > > > > > main
 - `CNG` Deployments are update to use the new default branch `main`
 - `CNG` Adapt dev script for new default branch `main`
 - `CNG` Import of administrative areas is running on container start (until there is support for one-off tasks)
@@ -101,4 +108,3 @@ This is the initial version setting up the base system with the page structure a
 - `CNG` means changed behavior
 - `FIX` means a bugfix or fix of a glitch
 - `REM` means a removed feature
-
