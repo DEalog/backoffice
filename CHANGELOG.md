@@ -1,4 +1,6 @@
-## Unreleased
+## 0.4.0
+
+This release covers message publishing for a single organization.
 
 - `ADD` Forms have cancel buttons
 - `CNG` Deployments are update to use the new default branch `main`
