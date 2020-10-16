@@ -61,7 +61,6 @@ defmodule DealogBackoffice.MixProject do
       {:phoenix_live_dashboard, "~> 0.2.9"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.14.0"},
-      {:phx_gen_auth, "~> 0.5", only: [:dev], runtime: false},
       {:plug_cowboy, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
       {:telemetry_metrics, "~> 0.4"},
