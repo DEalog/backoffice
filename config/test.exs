@@ -1,5 +1,8 @@
 use Mix.Config
 
+# Only in tests, remove the complexity from the password hashing algorithm
+config :bcrypt_elixir, :log_rounds, 1
+
 config :dealog_backoffice, DealogBackofficeWeb.Gettext, default_locale: "en"
 
 config :dealog_backoffice, :i18n, locale: "en"
