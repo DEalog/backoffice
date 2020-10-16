@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `CNG` Update dependencies
 - `ADD` Authentication is implemented for all content pages
 - `ADD` Users can change their email address
 - `ADD` Users can change their password
