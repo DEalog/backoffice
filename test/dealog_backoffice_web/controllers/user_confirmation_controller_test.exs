@@ -26,7 +26,7 @@ defmodule DealogBackofficeWeb.UserConfirmationControllerTest do
         })
 
       assert redirected_to(conn) == "/users/log_in"
-      assert get_flash(conn, :info) =~ "If your email is in our system"
+      assert get_flash(conn, :info) =~ "If the provided email address is in the system"
       assert Repo.get_by!(Accounts.UserToken, user_id: user.id).context == "confirm"
     end
 
@@ -39,7 +39,7 @@ defmodule DealogBackofficeWeb.UserConfirmationControllerTest do
         })
 
       assert redirected_to(conn) == "/users/log_in"
-      assert get_flash(conn, :info) =~ "If your email is in our system"
+      assert get_flash(conn, :info) =~ "If the provided email address is in the system"
       refute Repo.get_by(Accounts.UserToken, user_id: user.id)
     end
 
@@ -50,7 +50,7 @@ defmodule DealogBackofficeWeb.UserConfirmationControllerTest do
         })
 
       assert redirected_to(conn) == "/users/log_in"
-      assert get_flash(conn, :info) =~ "If your email is in our system"
+      assert get_flash(conn, :info) =~ "If the provided email address is in the system"
       assert Repo.all(Accounts.UserToken) == []
     end
   end

@@ -20,7 +20,7 @@ defmodule DealogBackofficeWeb.UserConfirmationController do
     |> put_flash(
       :info,
       gettext(
-        "If your email is in our system and it has not been confirmed yet, you will receive an email with instructions shortly."
+        "If the provided email address is in the system and it has not been confirmed yet, you will receive an email with instructions shortly."
       )
     )
     |> redirect(to: Routes.user_session_path(conn, :new))
