@@ -1,5 +1,10 @@
 ## Unreleased
 
+- `ADD` Authentication is implemented for all content pages
+- `ADD` Users can change their email address
+- `ADD` Users can change their password
+- `ADD` Users can authenticate
+- `ADD` Users can register (Demo only)
 - `CNG` Deployments are update to use the new default branch `main`
 - `CNG` Adapt dev script for new default branch `main`
 - `CNG` Import of administrative areas is running on container start (until there is support for one-off tasks)
