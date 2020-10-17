@@ -42,5 +42,8 @@ config :dealog_backoffice, DealogBackofficeWeb.Endpoint,
   http: [port: 4002],
   server: false
 
+# Swoosh mailing
+config :dealog_backoffice, DealogBackoffice.Accounts.Mailer, adapter: Swoosh.Adapters.Test
+
 # Print only warnings and errors during test
 config :logger, level: :warn

@@ -90,6 +90,10 @@ to be reachable):
 - `HOSTNAME`: The hostname needed for WebSockets. (f.e. `localhost`)
 - `PROJECTORS` (optional): The projectors that should be active. Can either be `all` (default) or `local`.
 - `KAFKA_HOSTS`: The Kafka host(s). (e.g. `localhost:9092`); Can be an empty string if `local` is used.
+- `SMTP_RELAY`: The SMTP relay address. (f.e. `mail.domain.tld`)
+- `SMTP_PORT`: The SMTP server port. (e.g. `587`)
+- `SMTP_USERNAME`: The username for the SMTP server.
+- `SMTP_PASSWORD`: The password for the SMTP server.
 
 > To test this locally it is recommended to start up a PostgreSQL instance being
 > accessible from the Backoffice Docker container and use a `.env` file for the
@@ -172,3 +176,5 @@ an audit log as well as a reproducible state of projected data.
 
 To get a snappy UI feeling the project leverages
 [Phoenix LiveView](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html).
+
+Mailing is done via the great [Swoosh](https://hexdocs.pm/swoosh/Swoosh.html) library.

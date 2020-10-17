@@ -79,11 +79,14 @@ config :dealog_backoffice, DealogBackofficeWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
+      ~r"priv/translations/(mail|web)/.*(po)$",
       ~r"lib/dealog_backoffice_web/(live|views)/.*(ex)$",
       ~r"lib/dealog_backoffice_web/templates/.*(eex)$"
     ]
   ]
+
+# Swoosh mailing
+config :dealog_backoffice, DealogBackoffice.Accounts.Mailer, adapter: Swoosh.Adapters.Local
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

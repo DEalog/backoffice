@@ -26,7 +26,15 @@ defmodule DealogBackoffice.MixProject do
   def application do
     [
       mod: {DealogBackoffice.Application, []},
-      extra_applications: [:timex, :eventstore, :logger, :runtime_tools, :os_mon]
+      extra_applications: [
+        :timex,
+        :eventstore,
+        :logger,
+        :runtime_tools,
+        :os_mon,
+        :swoosh,
+        :gen_smtp
+      ]
     ]
   end
 
@@ -50,6 +58,7 @@ defmodule DealogBackoffice.MixProject do
       {:eventstore, "~> 1.1"},
       {:exconstructor, "~> 1.1"},
       {:floki, ">= 0.0.0", only: :test},
+      {:gen_smtp, "~> 0.13"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.1"},
       {:kafka_ex, "~> 0.11"},
@@ -63,6 +72,7 @@ defmodule DealogBackoffice.MixProject do
       {:phoenix_live_view, "~> 0.14.0"},
       {:plug_cowboy, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
+      {:swoosh, "~> 1.0"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
       {:timex, "~> 3.0"},

@@ -33,7 +33,7 @@ config :commanded_ecto_projections,
 # provide additional services and in the test env the remote projections are
 # not started to keep it more simple.
 #
-# Implemented sets of projectors are 
+# Implemented sets of projectors are
 # - `:local` for local projectors
 # - `:all` to also include remote projectors like Kafka
 config :dealog_backoffice, :projection, projectors: :local
@@ -46,6 +46,10 @@ config :vex,
   ]
 
 config :dealog_backoffice, DealogBackofficeWeb.Gettext,
+  locales: ~w(de en),
+  default_locale: default_locale
+
+config :dealog_backoffice, DealogBackoffice.Gettext,
   locales: ~w(de en),
   default_locale: default_locale
 

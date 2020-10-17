@@ -21,11 +21,21 @@ msgid "Hi %{email},\n\nYou can confirm your account by visiting the URL below:\n
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice/accounts/user_notifier.ex:46
+#: lib/dealog_backoffice/accounts/user_notifier.ex:48
 msgid "Reset your DEalog password"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice/accounts/user_notifier.ex:61
+#: lib/dealog_backoffice/accounts/user_notifier.ex:71
 msgid "Update your DEalog email address"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice/accounts/user_notifier.ex:72
+msgid "Hi %{user.email},\n\nYou can change your email by visiting the URL below:\n\n%{url}\n\nIf you didn't request this change, please ignore this.\n"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice/accounts/user_notifier.ex:49
+msgid "Hi %{user.email},\n\nYou can reset your password by visiting the URL below:\n\n%{url}\n\nIf you didn't request this change, please ignore this.\n"
 msgstr ""

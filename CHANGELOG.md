@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `ADD` Mail support for registration, password reset, email change is available
 - `CNG` Update dependencies
 - `ADD` Authentication is implemented for all content pages
 - `ADD` Users can change their email address

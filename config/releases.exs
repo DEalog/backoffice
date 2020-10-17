@@ -53,3 +53,39 @@ config :dealog_backoffice, DealogBackofficeWeb.Endpoint,
   secret_key_base: secret_key_base
 
 config :dealog_backoffice, DealogBackofficeWeb.Endpoint, server: true
+
+smtp_relay =
+  System.get_env("SMTP_RELAY") ||
+    raise """
+        environment variable SMTP_RELAY is missing.
+        For example: mail.domain.tld
+    """
+
+smtp_port =
+  System.get_env("SMTP_PORT") ||
+    raise """
+        environment variable SMTP_PORT is missing.
+        For example: 587
+    """
+
+smtp_username =
+  System.get_env("SMTP_USERNAME") ||
+    raise """
+        environment variable SMTP_USERNAME is missing.
+        For example: mail@domain.tld
+    """
+
+smtp_password =
+  System.get_env("SMTP_PASSWORD") ||
+    raise """
+        environment variable SMTP_PASSWORD is missing.
+        For example: s3c3tP4ssw0Rd
+    """
+
+# Swoosh mailing
+config :dealog_backoffice, DealogBackoffice.Accounts.Mailer,
+  adapter: Swoosh.Adapters.SMTP,
+  relay: smtp_relay,
+  port: smtp_port,
+  username: smtp_username,
+  password: smtp_password

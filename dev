@@ -72,7 +72,7 @@ function run_mix {
 }
 
 function run_update_translations {
-  run_command web "mix do gettext.extract, gettext.merge priv/gettext --locale de"
+  run_command web "mix do gettext.extract, gettext.merge priv/translations/web --locale de, gettext.merge priv/translations/mail --locale de"
   echo "Extracted and updated translation strings. Please translate."
 }
 
