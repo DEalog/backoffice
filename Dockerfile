@@ -1,19 +1,19 @@
 FROM alpine:3.9
 
 ARG HOME=/app
-ENV HOME ${HOME}
+ENV HOME=${HOME}
 
 RUN set -xe \
     && apk add --no-cache \
         openssl \
         ncurses-libs
 
-WORKDIR /${HOME}
+WORKDIR ${HOME}
 
-RUN chown nobody:nobody /${HOME}
+RUN chown nobody:nobody ${HOME}
 
-COPY ./CHANGELOG.md /${HOME}/CHANGELOG.md
-COPY ./rel/run.sh /${HOME}
+COPY ./CHANGELOG.md ${HOME}/CHANGELOG.md
+COPY ./rel/run.sh ${HOME}
 COPY --chown=nobody:nobody ./_build/prod/rel/backoffice ./
 
 USER nobody:nobody
