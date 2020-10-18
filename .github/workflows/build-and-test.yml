@@ -1,36 +1,80 @@
-name: Elixir
+name: Build
 
 on:
   push:
-    branches: [main]
+    branches:
+      - master
+      - DEV-100_deployment-on-aws
   pull_request:
-    branches: [main]
+    branches:
+      - master
 
 jobs:
   build:
-    name: Compile
     runs-on: ubuntu-latest
+    name: Build Elixir project
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Elixir
+
+      - name: Use Elixir
         uses: actions/setup-elixir@v1
         with:
-          elixir-version: "1.10.4" # Define the elixir version [required]
-          otp-version: "23.0.2" # Define the OTP version [required]
+          elixir-version: "1.10.4"
+          otp-version: "23.0.2"
+
       - name: Restore dependencies cache
         uses: actions/cache@v2
         with:
           path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-
+
       - name: Install dependencies
         run: mix deps.get
+
       - name: Compile application
         run: mix compile
+        env:
+          MIX_ENV: prod
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
+      - name: Use cached node_modules
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: ./assets/node_modules
+          key: nodeModules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            nodeModules-
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          cd ./assets
+          yarn install
+          yarn deploy
+          yarn dump
+      
+      - name: Create artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: backoffice
+          path: |
+            ./_build/prod/rel/backoffice
+            ./CHANGELOG.md
+            ./rel/run.sh
+  
   test:
-    name: Run unit and functional Elixir tests
     runs-on: ubuntu-latest
+    name: Test Elixir project
+
+    needs: [ "build" ]
+
     services:
       db:
         image: postgres:12.1-alpine
@@ -42,29 +86,36 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up Elixir
         uses: actions/setup-elixir@v1
         with:
-          elixir-version: "1.10.4" # Define the elixir version [required]
-          otp-version: "23.0.2" # Define the OTP version [required]
+          elixir-version: "1.10.4"
+          otp-version: "23.0.2"
+
       - name: Restore dependencies cache
         uses: actions/cache@v2
         with:
           path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-
-      - name: Install dependencies
-        run: mix deps.get
+
       - name: Compile application
-        run: MIX_ENV=test mix compile
-      - name: Setup event store
-        run: MIX_ENV=test mix do event_store.create, event_store.init
+        run: mix compile
         env:
+          MIX_ENV: test
+
+      - name: Setup event store
+        run: mix do event_store.create, event_store.init
+        env:
+          MIX_ENV: test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_HOST: localhost
+
       - name: Run tests
         run: mix test
         env:
