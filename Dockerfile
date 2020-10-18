@@ -12,9 +12,9 @@ WORKDIR /${HOME}
 
 RUN chown nobody:nobody /${HOME}
 
-COPY CHANGELOG.md /${HOME}/CHANGELOG.md
-COPY rel/run.sh /${HOME}
-COPY --chown=nobody:nobody /${HOME}/_build/prod/rel/backoffice ./
+COPY ./CHANGELOG.md /${HOME}/CHANGELOG.md
+COPY ./rel/run.sh /${HOME}
+COPY --chown=nobody:nobody ./_build/prod/rel/backoffice ./
 
 USER nobody:nobody
 
