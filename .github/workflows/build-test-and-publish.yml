@@ -23,6 +23,28 @@ jobs:
         with:
           fallback-prefix: "1.0.0-SNAPSHOT-"
 
+      - name: Use cached node_modules
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: ./assets/node_modules
+          key: nodeModules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            nodeModules-
+      
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          cd ./assets
+          yarn install
+          yarn deploy
+          yarn dump
+
       - name: Cache local Elixir cache
         uses: actions/cache@v2
         with:
@@ -36,35 +58,20 @@ jobs:
           elixir-version: "1.10.4"
           otp-version: "23.0.2"
 
-      - name: Install dependencies
-        run: mix deps.get
-
-      - name: Compile application
-        run: mix compile
+      - name: Install and compile dependencies
+        run: mix do deps.get, deps.compile
         env:
           MIX_ENV: prod
 
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14'
+      - name: Digests and compresses static files
+        run: mix phx.digest
+        env:
+          MIX_ENV: prod
 
-      - name: Use cached node_modules
-        id: cache
-        uses: actions/cache@v1
-        with:
-          path: ./assets/node_modules
-          key: nodeModules-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            nodeModules-
-
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          cd ./assets
-          yarn install
-          yarn deploy
-          yarn dump
+      - name: Compile and release application
+        run: mix do compile, release
+        env:
+          MIX_ENV: prod
       
       - name: Create artifact
         uses: actions/upload-artifact@v2
@@ -73,9 +80,9 @@ jobs:
           path: |
             ./_build/prod/rel/backoffice
             ./CHANGELOG.md
+            ./Dockerfile
             ./rel/run.sh
             ./version.txt
-            ./Dockerfile
   
   test:
     runs-on: ubuntu-latest
