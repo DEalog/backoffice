@@ -1,53 +1,21 @@
-FROM elixir:1.10.4-alpine AS build
+FROM alpine:3.9
 
-# install build dependencies
-RUN apk add --no-cache build-base npm git python
+ARG HOME=/app
+ENV HOME ${HOME}
 
-# prepare build dir
-WORKDIR /app
+RUN set -xe \
+    && apk add --no-cache \
+        openssl \
+        ncurses-libs
 
-# install hex + rebar
-RUN mix local.hex --force && \
-    mix local.rebar --force
+WORKDIR /${HOME}
 
-# set build ENV
-ENV MIX_ENV=prod
+RUN chown nobody:nobody /${HOME}
 
-# install mix dependencies
-COPY mix.exs mix.lock ./
-COPY config config
-RUN mix do deps.get, deps.compile
-
-# build assets
-COPY assets/package.json assets/yarn.lock ./assets/
-RUN npm install -g yarn && cd assets && yarn install
-
-COPY priv priv
-COPY assets assets
-COPY lib lib
-
-RUN cd assets && yarn deploy && yarn dump
-RUN mix phx.digest
-
-# compile and build release
-COPY rel rel
-RUN mix do compile, release
-
-# prepare release image
-FROM alpine:3.9 AS app
-RUN apk add --no-cache openssl ncurses-libs
-
-WORKDIR /app
-
-RUN chown nobody:nobody /app
-
-COPY CHANGELOG.md /app/CHANGELOG.md
-COPY rel/run.sh /app
+COPY CHANGELOG.md /${HOME}/CHANGELOG.md
+COPY rel/run.sh /${HOME}
+COPY --chown=nobody:nobody /${HOME}/_build/prod/rel/backoffice ./
 
 USER nobody:nobody
-
-COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/backoffice ./
-
-ENV HOME=/app
 
 CMD ["./run.sh"]
