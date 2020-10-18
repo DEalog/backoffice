@@ -17,18 +17,24 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Elixir
-        uses: actions/setup-elixir@v1
+      - name: Set version number
+        id: version
+        uses: DEalog/version-action@v0.1.0
         with:
-          elixir-version: "1.10.4"
-          otp-version: "23.0.2"
+          fallback-prefix: "1.0.0-SNAPSHOT-"
 
-      - name: Restore dependencies cache
+      - name: Cache local Elixir cache
         uses: actions/cache@v2
         with:
           path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-
+
+      - name: Use Elixir
+        uses: actions/setup-elixir@v1
+        with:
+          elixir-version: "1.10.4"
+          otp-version: "23.0.2"
 
       - name: Install dependencies
         run: mix deps.get
@@ -68,12 +74,14 @@ jobs:
             ./_build/prod/rel/backoffice
             ./CHANGELOG.md
             ./rel/run.sh
+            ./version.txt
+            ./Dockerfile
   
   test:
     runs-on: ubuntu-latest
     name: Test Elixir project
 
-    needs: [ "build" ]
+    needs: [ build ]
 
     services:
       db:
@@ -126,7 +134,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     name: Dockerize and publish
-    needs: build
+    needs: [ build, test ]
 
     steps:
     - name: Fetch artifact
