@@ -14,5 +14,5 @@ config :kafka_ex,
   disable_default_worker: true
 
 # Do not print debug messages in production
-config :logger, level: :debug
+config :logger, level: :info
 
