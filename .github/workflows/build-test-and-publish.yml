@@ -24,13 +24,13 @@ jobs:
           fallback-prefix: "1.0.0-SNAPSHOT-"
 
       - name: Use cached node_modules
-        id: cache
-        uses: actions/cache@v1
+        id: node_cache
+        uses: actions/cache@v2
         with:
           path: ./assets/node_modules
-          key: nodeModules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            nodeModules-
+            ${{ runner.os }}-node-
       
       - name: Use Node.js
         uses: actions/setup-node@v1
@@ -38,7 +38,7 @@ jobs:
           node-version: '14'
 
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.node_cache.outputs.cache-hit != 'true'
         run: |
           cd ./assets
           yarn install
@@ -46,11 +46,13 @@ jobs:
           yarn dump
 
       - name: Cache local Elixir dependencies
+        id: mix_cache
         uses: actions/cache@v2
         with:
           path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: ${{ runner.os }}-mix-
+          restore-keys: |
+            ${{ runner.os }}-mix-
 
       - name: Use Elixir
         uses: actions/setup-elixir@v1
@@ -59,6 +61,7 @@ jobs:
           otp-version: "23.0.2"
 
       - name: Install and compile dependencies
+        if: steps.mix_cache.outputs.cache-hit != 'true'
         run: mix do deps.get, deps.compile
         env:
           MIX_ENV: prod
@@ -110,14 +113,17 @@ jobs:
           otp-version: "23.0.2"
 
       - name: Restore dependencies cache
+        id: elixir_cache
         uses: actions/cache@v2
         with:
           path: deps
-          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: ${{ runner.os }}-mix-
+          key: ${{ runner.os }}-mix-test-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-mix-test-
 
-      - name: Compile application
-        run: mix compile
+      - name: Install and compile dependencies
+        if: steps.elixir_cache.outputs.cache-hit != 'true'
+        run: mix do deps.get, deps.compile
         env:
           MIX_ENV: test
 
