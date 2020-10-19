@@ -4,6 +4,7 @@ use Mix.Config
 config :bcrypt_elixir, :log_rounds, 1
 
 config :dealog_backoffice, DealogBackofficeWeb.Gettext, default_locale: "en"
+config :dealog_backoffice, DealogBackoffice.Gettext, default_locale: "en"
 
 config :dealog_backoffice, :i18n, locale: "en"
 

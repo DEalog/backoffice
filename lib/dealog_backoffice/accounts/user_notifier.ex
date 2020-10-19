@@ -6,14 +6,16 @@ defmodule DealogBackoffice.Accounts.UserNotifier do
     require Logger
     Logger.debug(body)
 
-    new()
-    |> to(to)
-    |> from({"DEalog System", "system@dealog.de"})
-    |> subject(subject)
-    |> text_body(body)
-    |> DealogBackoffice.Accounts.Mailer.deliver()
+    mail =
+      new()
+      |> to(to)
+      |> from({"DEalog System", "system@dealog.de"})
+      |> subject(subject)
+      |> text_body(body)
 
-    {:ok, %{to: to, body: body}}
+    DealogBackoffice.Accounts.Mailer.deliver(mail)
+
+    {:ok, mail}
   end
 
   @doc """

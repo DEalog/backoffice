@@ -1,8 +1,9 @@
 defmodule DealogBackoffice.AccountsTest do
   use DealogBackoffice.DataCase
 
-  alias DealogBackoffice.Accounts
   import DealogBackoffice.AccountsFixtures
+
+  alias DealogBackoffice.Accounts
   alias DealogBackoffice.Accounts.{User, UserToken}
 
   describe "get_user_by_email/1" do
