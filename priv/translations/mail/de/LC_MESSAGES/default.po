@@ -39,4 +39,4 @@ msgstr "Hallo %{email},\n\ndurch Klicken des folgenden Links wird die Änderung 
 #, elixir-format, fuzzy
 #: lib/dealog_backoffice/accounts/user_notifier.ex:49
 msgid "Hi %{user.email},\n\nYou can reset your password by visiting the URL below:\n\n%{url}\n\nIf you didn't request this change, please ignore this.\n"
-msgstr "Hallo %{email},\n\ndurch Klicken des folgenden Links wird das Password zurückgesetzt:\n\n%{url}\n\nWenn diese Änderung nicht angefordert wurde, kann diese E-Mail Nachricht ignoriert werden.\n"
+msgstr "Hallo %{email},\n\ndurch Klicken des folgenden Links wird das Passwort zurückgesetzt:\n\n%{url}\n\nWenn diese Änderung nicht angefordert wurde, kann diese E-Mail Nachricht ignoriert werden.\n"

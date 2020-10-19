@@ -760,7 +760,7 @@ msgstr "E-Mail Adresse ändern"
 #: lib/dealog_backoffice_web/live/my_account/index.html.leex:77
 #: lib/dealog_backoffice_web/live/my_account/index.html.leex:156
 msgid "Change password"
-msgstr "Password ändern"
+msgstr "Passwort ändern"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/my_account/index.ex:57
@@ -812,7 +812,7 @@ msgstr "Neues Passwort"
 #, elixir-format
 #: lib/dealog_backoffice_web/templates/user_reset_password/edit.html.eex:59
 msgid "Password confirmation"
-msgstr "Password Bestätigung"
+msgstr "Passwort Bestätigung"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/controllers/user_reset_password_controller.ex:41
