@@ -88,8 +88,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Test Elixir project
 
-    needs: [ build ]
-
     services:
       db:
         image: postgres:12.1-alpine
