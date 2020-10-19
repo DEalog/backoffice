@@ -16,11 +16,6 @@ msgid "Confirm your DEalog account"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice/accounts/user_notifier.ex:26
-msgid "Hi %{email},\n\nYou can confirm your account by visiting the URL below:\n\n%{url}\n\nIf you didn't create an account, please ignore this.\n"
-msgstr ""
-
-#, elixir-format
 #: lib/dealog_backoffice/accounts/user_notifier.ex:48
 msgid "Reset your DEalog password"
 msgstr ""
@@ -32,10 +27,15 @@ msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice/accounts/user_notifier.ex:72
-msgid "Hi %{user.email},\n\nYou can change your email by visiting the URL below:\n\n%{url}\n\nIf you didn't request this change, please ignore this.\n"
+msgid "Hi %{email},\n\nyou can change your email address by visiting the URL below:\n\n%{url}\n\nIf you didn't request this change, please ignore this.\n"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice/accounts/user_notifier.ex:26
+msgid "Hi %{email},\n\nyou can confirm your account by visiting the URL below:\n\n%{url}\n\nIf you didn't create an account, please ignore this.\n"
 msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice/accounts/user_notifier.ex:49
-msgid "Hi %{user.email},\n\nYou can reset your password by visiting the URL below:\n\n%{url}\n\nIf you didn't request this change, please ignore this.\n"
+msgid "Hi %{email},\n\nyou can reset your password by visiting the URL below:\n\n%{url}\n\nIf you didn't request this change, please ignore this.\n"
 msgstr ""

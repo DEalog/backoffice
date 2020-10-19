@@ -27,7 +27,7 @@ defmodule DealogBackoffice.Accounts.UserNotifier do
         """
         Hi %{email},
 
-        You can confirm your account by visiting the URL below:
+        you can confirm your account by visiting the URL below:
 
         %{url}
 
@@ -48,9 +48,9 @@ defmodule DealogBackoffice.Accounts.UserNotifier do
       gettext("Reset your DEalog password"),
       gettext(
         """
-        Hi %{user.email},
+        Hi %{email},
 
-        You can reset your password by visiting the URL below:
+        you can reset your password by visiting the URL below:
 
         %{url}
 
@@ -71,9 +71,9 @@ defmodule DealogBackoffice.Accounts.UserNotifier do
       gettext("Update your DEalog email address"),
       gettext(
         """
-        Hi %{user.email},
+        Hi %{email},
 
-        You can change your email address by visiting the URL below:
+        you can change your email address by visiting the URL below:
 
         %{url}
 

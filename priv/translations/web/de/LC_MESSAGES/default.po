@@ -37,27 +37,27 @@ msgstr "Benutzermenü"
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/index.ex:20
 #: lib/dealog_backoffice_web/live/all_messages/index.html.leex:3 lib/dealog_backoffice_web/live/navigation_component.html.leex:37
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:146
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:151
 msgid "All messages"
 msgstr "Alle Meldungen"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/index.ex:20
 #: lib/dealog_backoffice_web/live/message_approvals/index.html.leex:3 lib/dealog_backoffice_web/live/navigation_component.html.leex:47
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:156
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:161
 msgid "Approvals"
 msgstr "Freigaben"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/dashboard_live.ex:9
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:3 lib/dealog_backoffice_web/live/navigation_component.html.leex:32
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:141
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:146
 msgid "Dashboard"
 msgstr "Übersicht"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:42
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:151 lib/dealog_backoffice_web/live/organization_messages/index.ex:20
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:156 lib/dealog_backoffice_web/live/organization_messages/index.ex:20
 #: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:3
 msgid "My organization"
 msgstr "Meine Organisation"
@@ -69,21 +69,21 @@ msgid "New message"
 msgstr "Neue Meldung"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:116
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:183
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:121
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:188
 msgid "Logout"
 msgstr "Abmelden"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/my_account/index.ex:21
-#: lib/dealog_backoffice_web/live/my_account/index.html.leex:3 lib/dealog_backoffice_web/live/navigation_component.html.leex:104
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:173
+#: lib/dealog_backoffice_web/live/my_account/index.html.leex:3 lib/dealog_backoffice_web/live/navigation_component.html.leex:109
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:178
 msgid "My account"
 msgstr "Mein Benutzerkonto"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:110
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:178 lib/dealog_backoffice_web/live/settings_live.ex:9
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:115
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:183 lib/dealog_backoffice_web/live/settings_live.ex:9
 #: lib/dealog_backoffice_web/live/settings_live.html.leex:3
 msgid "Settings"
 msgstr "Einstellungen"
@@ -799,8 +799,8 @@ msgid "If the provided email address is in the system, instructions are sent to 
 msgstr "Wenn die angebene E-Mail Adresse im System vorhanden ist, wurden Anweisungen zum Zurücksetzen des Passworts an diese gesendet."
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:101
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:167
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:102
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:172
 msgid "Logged in as"
 msgstr "Angemeldet als"
 
