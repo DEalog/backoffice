@@ -5,7 +5,7 @@ on:
   workflow_run:
     workflows: [ "Build" ]
     branches:
-      - master
+      - main
       - DEV-100_deployment-on-aws
     types:
       - completed
@@ -31,7 +31,7 @@ jobs:
         echo ::set-env name=IMAGE_TAG::$(cat ./backoffice/version.txt)
     
     - name: Set production env
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/main'
       run: echo ::set-env name=CLUSTER_NAME::dealog
     
     - name: Configure AWS credentials

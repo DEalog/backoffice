@@ -3,11 +3,11 @@ name: Build
 on:
   push:
     branches:
-      - master
+      - main
       - DEV-100_deployment-on-aws
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
