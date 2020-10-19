@@ -45,7 +45,7 @@ jobs:
           yarn deploy
           yarn dump
 
-      - name: Cache local Elixir cache
+      - name: Cache local Elixir dependencies
         uses: actions/cache@v2
         with:
           path: deps
