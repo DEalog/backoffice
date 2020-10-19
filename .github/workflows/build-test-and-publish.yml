@@ -23,29 +23,7 @@ jobs:
         with:
           fallback-prefix: "1.0.0-SNAPSHOT-"
 
-      - name: Use cached node_modules
-        id: node_cache
-        uses: actions/cache@v2
-        with:
-          path: ./assets/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
-        if: steps.node_cache.outputs.cache-hit != 'true'
-        run: |
-          cd ./assets
-          yarn install
-          yarn deploy
-          yarn dump
-
-      - name: Cache local Elixir dependencies
+      - name: Use cached deps
         id: mix_cache
         uses: actions/cache@v2
         with:
@@ -60,11 +38,33 @@ jobs:
           elixir-version: "1.10.4"
           otp-version: "23.0.2"
 
-      - name: Install and compile dependencies
+      - name: Install and compile Elixir dependencies
         if: steps.mix_cache.outputs.cache-hit != 'true'
         run: mix do deps.get, deps.compile
         env:
           MIX_ENV: prod
+
+      - name: Use cached node_modules
+        id: node_cache
+        uses: actions/cache@v2
+        with:
+          path: ./assets/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
+      - name: Install Node.js dependencies
+        if: steps.node_cache.outputs.cache-hit != 'true'
+        run: |
+          cd ./assets
+          yarn install
+          yarn deploy
+          yarn dump
 
       - name: Digests and compresses static files
         run: mix phx.digest
