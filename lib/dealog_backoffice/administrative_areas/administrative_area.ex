@@ -3,25 +3,24 @@ defmodule DealogBackoffice.AdministrativeAreas.AdministrativeArea do
 
   import Ecto.Changeset
 
-  @primary_key {:ags, :string, autogenerate: false}
+  @primary_key {:ars, :string, autogenerate: false}
   @timestamps_opts [type: :utc_datetime_usec]
 
   schema "administrative_areas" do
-    field :parent_ags, :string
+    field :parent_ars, :string
     field :name, :string
     field :type_label, :string
     field :type, :string
+    field :imported_at, :naive_datetime_usec
 
-    has_many :children, __MODULE__, foreign_key: :parent_ags, references: :ags
-
-    timestamps()
+    has_many :children, __MODULE__, foreign_key: :parent_ars, references: :ars
   end
 
   @doc false
   def changeset(area, params) do
     area
-    |> cast(params, [:ags, :parent_ags, :name, :type_label, :type])
-    |> validate_required([:ags, :name, :type_label, :type])
-    |> unique_constraint(:ags)
+    |> cast(params, [:ars, :parent_ars, :name, :type_label, :type, :imported_at])
+    |> validate_required([:ars, :name, :type_label, :type])
+    |> unique_constraint(:ars)
   end
 end

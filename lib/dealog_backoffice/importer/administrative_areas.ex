@@ -9,6 +9,8 @@ defmodule DealogBackoffice.Importer.AdministrativeAreas do
   Load administrative areas from files within path.
   """
   def import_all_from(path) do
+    Repo.delete_all("administrative_areas")
+
     count =
       collect_import_files(path)
       |> Enum.reduce(0, fn file, total ->
@@ -27,21 +29,20 @@ defmodule DealogBackoffice.Importer.AdministrativeAreas do
 
   defp import_file(path, file_name) do
     full_path = Path.join(path, file_name)
-    ags = Path.rootname(file_name)
-    IO.puts("\tProcessing AGS #{ags}")
+    ars = Path.rootname(file_name)
+    IO.puts("\tProcessing ARS #{ars}")
 
     entries =
       File.stream!(full_path)
       |> CSV.decode!(strip_fields: true, headers: true)
       |> Enum.map(
         &%{
-          ags: &1["ags"],
+          ars: &1["ars"],
           type_label: &1["bez"],
           type: &1["type"],
           name: &1["gen"],
-          parent_ags: &1["parent_ags"],
-          inserted_at: NaiveDateTime.utc_now(),
-          updated_at: NaiveDateTime.utc_now()
+          parent_ars: &1["parent_ars"],
+          imported_at: NaiveDateTime.utc_now()
         }
       )
 

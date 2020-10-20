@@ -1,5 +1,6 @@
 defmodule DealogBackoffice.Accounts.UserToken do
   use Ecto.Schema
+
   import Ecto.Query
 
   @hash_algorithm :sha256
@@ -14,6 +15,7 @@ defmodule DealogBackoffice.Accounts.UserToken do
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
+
   schema "users_tokens" do
     field :token, :binary
     field :context, :string
