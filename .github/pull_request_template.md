@@ -8,4 +8,4 @@ Relates to DEV-XXX
 - [ ] Add tests
 - [ ] Update translations
 - [ ] Update changelog
-- [ ] Check AWS environment variables
+- [ ] Check environment variables for dev deployment
