@@ -3,16 +3,23 @@ defmodule DealogBackoffice.AdministrativeAreasTest do
 
   alias DealogBackoffice.AdministrativeAreas
 
-  @valid_attrs %{ags: "123", name: "An area", type_label: "A type", type: "type", parent_ags: nil}
+  @valid_attrs %{
+    ars: "123",
+    name: "An area",
+    type_label: "A type",
+    type: "type",
+    parent_ars: nil,
+    imported_at: NaiveDateTime.utc_now()
+  }
 
   describe "adding an administrative area" do
     test "succeeds with valid data" do
       assert {:ok, inserted_area} = AdministrativeAreas.create(@valid_attrs)
-      assert inserted_area.ags == "123"
+      assert inserted_area.ars == "123"
       assert inserted_area.name == "An area"
       assert inserted_area.type_label == "A type"
       assert inserted_area.type == "type"
-      assert inserted_area.parent_ags == nil
+      assert inserted_area.parent_ars == nil
     end
 
     test "fails when data is invalid" do
@@ -28,11 +35,11 @@ defmodule DealogBackoffice.AdministrativeAreasTest do
     test "returns list when available" do
       area = create_administrative_area()
       assert [inserted_area] = AdministrativeAreas.list()
-      assert inserted_area.ags == area.ags
+      assert inserted_area.ars == area.ars
       assert inserted_area.name == area.name
       assert inserted_area.type_label == area.type_label
       assert inserted_area.type == area.type
-      assert inserted_area.parent_ags == area.parent_ags
+      assert inserted_area.parent_ars == area.parent_ars
     end
   end
 
@@ -44,11 +51,11 @@ defmodule DealogBackoffice.AdministrativeAreasTest do
     test "returns list when areas are available" do
       area = create_administrative_area()
       assert [inserted_area] = AdministrativeAreas.list_hierarchical_by("123")
-      assert inserted_area.ags == area.ags
+      assert inserted_area.ars == area.ars
       assert inserted_area.name == area.name
       assert inserted_area.type_label == area.type_label
       assert inserted_area.type == area.type
-      assert inserted_area.parent_ags == area.parent_ags
+      assert inserted_area.parent_ars == area.parent_ars
     end
 
     test "returns an empty list when areas are available but not matching" do
@@ -56,16 +63,16 @@ defmodule DealogBackoffice.AdministrativeAreasTest do
       assert [] == AdministrativeAreas.list_hierarchical_by("0")
     end
 
-    test "returns a list with child ags" do
+    test "returns a list with child ARS" do
       parent_area = create_administrative_area()
-      child_area = create_administrative_area(%{@valid_attrs | ags: "1231", parent_ags: "123"})
-      create_administrative_area(%{@valid_attrs | ags: "1241", parent_ags: "124"})
+      child_area = create_administrative_area(%{@valid_attrs | ars: "1231", parent_ars: "123"})
+      create_administrative_area(%{@valid_attrs | ars: "1241", parent_ars: "124"})
 
       assert [inserted_parent_area, inserted_child_area] =
                AdministrativeAreas.list_hierarchical_by("123")
 
-      assert inserted_parent_area.ags == parent_area.ags
-      assert inserted_child_area.ags == child_area.ags
+      assert inserted_parent_area.ars == parent_area.ars
+      assert inserted_child_area.ars == child_area.ars
     end
   end
 
