@@ -43,6 +43,19 @@ defmodule DealogBackofficeWeb.ConnCase do
   end
 
   @doc """
+  Setup helper that registers users.
+
+      setup :register_user
+
+  It stores an updated connection in the test context.
+  """
+  def register_user(%{conn: conn}) do
+    user = DealogBackoffice.AccountsFixtures.user_fixture()
+
+    %{conn: log_in_user(conn, user), user: user}
+  end
+
+  @doc """
   Setup helper that registers, confirms and logs in users.
 
       setup :register_and_log_in_user
