@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `CNG` Structure of administrative areas is changed to ARS (from AGS)
 - `ADD` Mail support for registration, password reset, email change is available
 - `CNG` Update dependencies
 - `ADD` Authentication is implemented for all content pages
