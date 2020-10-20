@@ -1,6 +1,10 @@
 use Mix.Config
 
+# Only in tests, remove the complexity from the password hashing algorithm
+config :bcrypt_elixir, :log_rounds, 1
+
 config :dealog_backoffice, DealogBackofficeWeb.Gettext, default_locale: "en"
+config :dealog_backoffice, DealogBackoffice.Gettext, default_locale: "en"
 
 config :dealog_backoffice, :i18n, locale: "en"
 
@@ -38,6 +42,9 @@ config :kafka_ex,
 config :dealog_backoffice, DealogBackofficeWeb.Endpoint,
   http: [port: 4002],
   server: false
+
+# Swoosh mailing
+config :dealog_backoffice, DealogBackoffice.Accounts.Mailer, adapter: Swoosh.Adapters.Test
 
 # Print only warnings and errors during test
 config :logger, level: :warn

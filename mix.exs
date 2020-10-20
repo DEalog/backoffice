@@ -26,7 +26,15 @@ defmodule DealogBackoffice.MixProject do
   def application do
     [
       mod: {DealogBackoffice.Application, []},
-      extra_applications: [:timex, :eventstore, :logger, :runtime_tools, :os_mon]
+      extra_applications: [
+        :timex,
+        :eventstore,
+        :logger,
+        :runtime_tools,
+        :os_mon,
+        :swoosh,
+        :gen_smtp
+      ]
     ]
   end
 
@@ -39,6 +47,7 @@ defmodule DealogBackoffice.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bcrypt_elixir, "~> 2.0"},
       {:commanded, "~> 1.1"},
       {:commanded_ecto_projections, "~> 1.1"},
       {:commanded_eventstore_adapter, "~> 1.1"},
@@ -49,6 +58,7 @@ defmodule DealogBackoffice.MixProject do
       {:eventstore, "~> 1.1"},
       {:exconstructor, "~> 1.1"},
       {:floki, ">= 0.0.0", only: :test},
+      {:gen_smtp, "~> 0.13"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.1"},
       {:kafka_ex, "~> 0.11"},
@@ -57,11 +67,12 @@ defmodule DealogBackoffice.MixProject do
       {:phoenix, "~> 1.5.3"},
       {:phoenix_ecto, "~> 4.1"},
       {:phoenix_html, "~> 2.11"},
-      {:phoenix_live_dashboard, "~> 0.2.0"},
+      {:phoenix_live_dashboard, "~> 0.2.9"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.13.0"},
+      {:phoenix_live_view, "~> 0.14.0"},
       {:plug_cowboy, "~> 2.0"},
       {:postgrex, ">= 0.0.0"},
+      {:swoosh, "~> 1.0"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
       {:timex, "~> 3.0"},

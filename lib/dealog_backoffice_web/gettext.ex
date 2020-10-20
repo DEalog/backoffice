@@ -20,5 +20,5 @@ defmodule DealogBackofficeWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :dealog_backoffice
+  use Gettext, otp_app: :dealog_backoffice, priv: "priv/translations/web"
 end

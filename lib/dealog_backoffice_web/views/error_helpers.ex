@@ -22,7 +22,13 @@ defmodule DealogBackofficeWeb.ErrorHelpers do
   Check if the given form field has errors.
   """
   def has_errors?(form, field) do
-    Map.has_key?(Map.from_struct(form).errors, field)
+    # TODO Consolidate form error processing
+    case Map.from_struct(form).errors do
+      # The default Phoenix way
+      errors when is_list(errors) -> Keyword.has_key?(errors, field)
+      # The custom form implementation for DEalog
+      errors when is_map(errors) -> Map.has_key?(errors, field)
+    end
   end
 
   @doc """

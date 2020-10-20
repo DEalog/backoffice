@@ -95,11 +95,13 @@ defmodule DealogBackofficeWeb do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
+      import DealogBackofficeWeb.DateHelpers
       import DealogBackofficeWeb.ErrorHelpers
       import DealogBackofficeWeb.FeedbackHelpers
-      import DealogBackofficeWeb.DateHelpers
-      import DealogBackofficeWeb.HtmlHelpers
       import DealogBackofficeWeb.Gettext
+      import DealogBackofficeWeb.HtmlHelpers
+      import DealogBackofficeWeb.LiveHelpers
+
       alias DealogBackofficeWeb.Router.Helpers, as: Routes
     end
   end

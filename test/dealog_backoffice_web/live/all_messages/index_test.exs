@@ -5,6 +5,8 @@ defmodule DealogBackofficeWeb.AllMessagesLive.IndexTest do
 
   alias DealogBackoffice.Messages
 
+  setup :register_and_log_in_user
+
   describe "empty list" do
     test "disconnected and connected render", %{conn: conn} do
       {:ok, page_live, disconnected_html} = live(conn, "/all-messages")

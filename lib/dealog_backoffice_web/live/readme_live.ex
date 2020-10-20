@@ -2,9 +2,11 @@ defmodule DealogBackofficeWeb.ReadmeLive do
   use DealogBackofficeWeb, :live_view
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params, session, socket) do
     socket =
-      assign(socket,
+      socket
+      |> assign_defaults(session)
+      |> assign(
         page_title: gettext("Readme"),
         active_page: :readme,
         readme: readme()

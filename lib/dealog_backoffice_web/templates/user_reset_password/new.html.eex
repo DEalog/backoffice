@@ -1,0 +1,53 @@
+<div class="px-4 py-16 overflow-hidden bg-white sm:px-6 lg:px-8 lg:py-24">
+  <div class="relative max-w-xl mx-auto">
+    <div class="text-center">
+      <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 leading-9 sm:text-4xl sm:leading-10">
+        <%= gettext "Forgot your password?" %>
+      </h2>
+    </div>
+    <div class="mt-8">
+      <%= f = form_for :user, Routes.user_reset_password_path(@conn, :create) %>
+        <div>
+          <%=
+            label f,
+              :email,
+              gettext("Email address"),
+              class: "block text-sm font-medium text-gray-700 leading-5"
+          %>
+          <div class="relative mt-1 rounded-md shadow-sm">
+            <%=
+              email_input f,
+                :email,
+                required: true,
+                class: "block w-full px-4 py-3 form-input transition ease-in-out duration-150"
+            %>
+            <%=
+              error_tag f,
+                :email
+            %>
+          </div>
+        </div>
+        <div class="mt-4">
+          <span class="inline-flex w-full rounded-md shadow-sm">
+            <%=
+              submit gettext("Send reset instructions"),
+                class: "inline-flex items-center justify-center w-full px-6 py-3 text-base font-medium text-white bg-yellow-400 border border-transparent leading-6 rounded-md hover:bg-yellow-300 focus:outline-none focus:border-yellow-500 focus:shadow-outline-yellow active:bg-yellow-500 transition ease-in-out duration-150"
+            %>
+          </span>
+        </div>
+      </form>
+    </div>
+    <div class="flex justify-between">
+      <%=
+        link gettext("Register for a new account"),
+          to: Routes.user_registration_path(@conn, :new),
+          class: "font-medium text-yellow-400 hover:text-yellow-300 focus:outline-none focus:underline transition ease-in-out duration-150"
+      %>
+      <%=
+        link gettext("Sign in"),
+          to: Routes.user_session_path(@conn, :new),
+          class: "font-medium text-yellow-400 hover:text-yellow-300 focus:outline-none focus:underline transition ease-in-out duration-150"
+      %>
+    </div>
+  </div>
+</div>

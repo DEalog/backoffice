@@ -1,16 +1,20 @@
 #!/usr/bin/env bash
 
 # Config
-if [ -z ${DOKKU_CMD+x} ] || [ -z ${DOMAIN+x} ] || [ -z ${PHX_SECRET+x} ] || [ -z ${EMAIL_ADDR+x} ]; then
+if [ -z ${DOKKU_CMD+x} ] || [ -z ${DOMAIN+x} ] || [ -z ${PHX_SECRET+x} ] || [ -z ${EMAIL_ADDR+x} ] || [ -z ${SMTP_RELAY+x} ] || [ -z ${SMTP_PORT+x} ] || [ -z ${SMTP_USERNAME+x} ] || [ -z ${SMTP_PASSWORD+x} ]; then
   if [ ! -f ".preview_env" ]; then
     cat << HINT
 You need to provide the following environment variables:
 
-- DOKKU_CMD   The Dokku (remote) command, e.g. ssh dokku-host
-- DOMAIN      The domain, e.g. dev.host (will become PREVIEW_NAME.dev.host)
-- PHX_SECRET  A Phoenix secret, best generate via `./dev mix phx.gen.secret`
-- EMAIL_ADDR  The email address for Let's Encrypt
-- KAFKA_HOSTS The Kafka hosts (f.e. localhost:9092)
+- DOKKU_CMD     The Dokku (remote) command, e.g. ssh dokku-host
+- DOMAIN        The domain, e.g. dev.host (will become PREVIEW_NAME.dev.host)
+- PHX_SECRET    A Phoenix secret, best generate via `./dev mix phx.gen.secret`
+- EMAIL_ADDR    The email address for Let's Encrypt
+- KAFKA_HOSTS   The Kafka hosts (f.e. localhost:9092)
+- SMTP_RELAY    The SMTP server host
+- SMTP_PORT     The SMTP server port
+- SMTP_USERNAME The SMTP user
+- SMTP_PASSWORD The SMTP password
 
 You can override the following variables:
 - APP_PREFIX
@@ -33,7 +37,7 @@ DATABASES=("projection:DATABASE_URL" "event_store:EVENT_STORE_DATABASE_URL")
 # Mandatory
 
 DOKKU_CMD=${DOKKU_CMD:="ssh your-host"}
-APP_CONFIG=("HOSTNAME:###app_name###.${DOMAIN}" "SECRET_KEY_BASE:${PHX_SECRET}" "PROJECTORS:${PROJECTORS}" "KAFKA_HOSTS:${KAFKA_HOSTS}")
+APP_CONFIG=("HOSTNAME:###app_name###.${DOMAIN}" "SECRET_KEY_BASE:${PHX_SECRET}" "PROJECTORS:${PROJECTORS}" "KAFKA_HOSTS:${KAFKA_HOSTS}" "SMTP_RELAY:${SMTP_RELAY}" "SMTP_PORT:${SMTP_PORT}" "SMTP_USERNAME:${SMTP_USERNAME}" "SMTP_PASSWORD:${SMTP_PASSWORD}")
 EMAIL_ADDR=${EMAIL_ADDR:="your@email.com"}
 
 # Functions
@@ -124,6 +128,10 @@ function deploy_application {
   local branch=${2}
 
   git push ${app_name} ${branch}:master
+
+  if [ "$?" -gt 0 ]; then
+    exit 1
+  fi
 }
 
 function enable_ssl {

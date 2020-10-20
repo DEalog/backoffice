@@ -2,7 +2,8 @@
   <%=
     live_component @socket,
       DealogBackofficeWeb.NavigationComponent,
-      active_page: @active_page
+      active_page: @active_page,
+      current_user: @current_user
   %>
 </header>
 <main role="main" class="px-4 pt-4 pb-48 sm:pb:24">
@@ -21,9 +22,38 @@
     </div>
   <% end %>
 
+  <%= if has_info_flash?(@flash) do %>
+    <div class="alert alert-info" role="alert"
+      phx-value-key="info"
+    >
+    <%=
+      live_component @socket,
+        DealogBackofficeWeb.NotificationSuccess,
+        close_automatically?: true,
+        title: gettext("Successfully performed action!"),
+        message: live_flash(@flash, :info),
+        class: "sm:py-20"
+    %>
+    </div>
+  <% end %>
+
+  <%= if has_generic_error_flash?(@flash) do %>
+    <div class="alert alert-error" role="alert"
+      phx-value-key="error"
+    >
+    <%=
+      live_component @socket,
+        DealogBackofficeWeb.NotificationError,
+        title: gettext("There was an error!"),
+        message: live_flash(@flash, :error),
+        class: "sm:py-20"
+    %>
+    </div>
+  <% end %>
+
   <%= if has_error_flash?(@flash) do %>
     <div class="alert alert-error" role="alert"
-      phx-value-key="info"
+      phx-value-key="error"
     >
     <%=
       live_component @socket,
@@ -37,7 +67,7 @@
 
   <%= if has_not_found_error_flash?(@flash) do %>
     <div class="alert alert-error" role="alert"
-      phx-value-key="info"
+      phx-value-key="error"
     >
     <%=
       live_component @socket,
@@ -50,7 +80,7 @@
   <% end %>
   <%= @inner_content %>
 </main>
-<footer class="absolute bottom-0 h-40 sm:h-20 w-full px-4 py-2 mt-2 border-t border-gray-200 bg-white text-sm">
+<footer class="absolute bottom-0 w-full h-40 px-4 py-2 mt-2 text-sm bg-white border-t border-gray-200 sm:h-20">
   <%=
     live_component @socket, DealogBackofficeWeb.FooterComponent
   %>

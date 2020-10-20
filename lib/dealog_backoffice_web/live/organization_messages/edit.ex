@@ -4,8 +4,8 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
   alias DealogBackoffice.Messages
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(_params, session, socket) do
+    {:ok, assign_defaults(socket, session)}
   end
 
   @impl true
@@ -15,8 +15,9 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
 
   defp apply_action(socket, :new, _params) do
     assign(socket,
+      page_title: gettext("Create new message"),
       title: gettext("New message"),
-      active_page: :new_message,
+      active_page: :organization_messages,
       message: %{id: nil, title: nil, body: nil}
     )
   end
@@ -35,8 +36,9 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
 
       {:ok, message} ->
         assign(socket,
+          page_title: gettext("Edit message %{title}", title: message.title),
           title: gettext("Change message"),
-          active_page: :change_message,
+          active_page: :organization_messages,
           message: message
         )
     end

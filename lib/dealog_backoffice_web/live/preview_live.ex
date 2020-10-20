@@ -2,7 +2,7 @@ defmodule DealogBackofficeWeb.PreviewLive do
   use DealogBackofficeWeb, :preview_live_view
 
   @impl true
-  def mount(params, _session, socket) do
+  def mount(params, session, socket) do
     params =
       for {key, val} <- params,
           into: %{},
@@ -15,7 +15,11 @@ defmodule DealogBackofficeWeb.PreviewLive do
       |> Map.put(:active_page, "")
       |> Map.to_list()
 
-    socket = assign(socket, params)
+    socket =
+      socket
+      |> assign_defaults(session)
+      |> assign(params)
+
     {:ok, socket}
   end
 end

@@ -1,4 +1,4 @@
-defmodule DocTest do
+defmodule DealogBackoffice.DocTest do
   use ExUnit.Case, async: true
 
   doctest DealogBackoffice.Validators.String

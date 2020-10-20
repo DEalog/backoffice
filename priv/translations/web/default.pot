@@ -1,194 +1,193 @@
-## "msgid"s in this file come from POT (.pot) files.
+## This file is a PO Template file.
 ##
-## Do not add, change, or remove "msgid"s manually here as
-## they're tied to the ones in the corresponding POT file
-## (with the same domain).
+## "msgid"s here are often extracted from source code.
+## Add new translations manually only if they're dynamic
+## translations that can't be statically extracted.
 ##
-## Use "mix gettext.extract --merge" or "mix gettext.merge"
-## to merge POT files into PO files.
+## Run "mix gettext.extract" to bring this file up to
+## date. Leave "msgstr"s empty as changing them here as no
+## effect: edit them in PO (.po) files instead.
 msgid ""
 msgstr ""
-"Language: de\n"
-"Plural-Forms: nplurals=2\n"
 
 msgid "draft"
-msgstr "Entwurf"
+msgstr "Draft"
 
 msgid "waiting_for_approval"
-msgstr "Warten auf Freigabe"
+msgstr "Waiting for approval"
 
 msgid "approved"
-msgstr "Freigegeben"
+msgstr "Approved"
 
 msgid "rejected"
-msgstr "Zurückgewiesen"
+msgstr "Rejected"
 
 msgid "new_message"
-msgstr "Neue Meldung"
+msgstr "New message"
 
 msgid "published"
-msgstr "Veröffentlicht"
+msgstr "Published"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:84
 msgid "User menu"
-msgstr "Benutzermenü"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/index.ex:20
 #: lib/dealog_backoffice_web/live/all_messages/index.html.leex:3 lib/dealog_backoffice_web/live/navigation_component.html.leex:37
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:143
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:151
 msgid "All messages"
-msgstr "Alle Meldungen"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/index.ex:20
 #: lib/dealog_backoffice_web/live/message_approvals/index.html.leex:3 lib/dealog_backoffice_web/live/navigation_component.html.leex:47
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:153
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:161
 msgid "Approvals"
-msgstr "Freigaben"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/dashboard_live.ex:6
+#: lib/dealog_backoffice_web/live/dashboard_live.ex:9
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:3 lib/dealog_backoffice_web/live/navigation_component.html.leex:32
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:138
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:146
 msgid "Dashboard"
-msgstr "Übersicht"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:42
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:148 lib/dealog_backoffice_web/live/organization_messages/index.ex:20
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:156 lib/dealog_backoffice_web/live/organization_messages/index.ex:20
 #: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:3
 msgid "My organization"
-msgstr "Meine Organisation"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:64
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:18
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:19
 msgid "New message"
-msgstr "Neue Meldung"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:116
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:180
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:121
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:188
 msgid "Logout"
-msgstr "Abmelden"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/my_account_live.ex:6
-#: lib/dealog_backoffice_web/live/my_account_live.html.leex:3 lib/dealog_backoffice_web/live/navigation_component.html.leex:101
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:170
+#: lib/dealog_backoffice_web/live/my_account/index.ex:21
+#: lib/dealog_backoffice_web/live/my_account/index.html.leex:3 lib/dealog_backoffice_web/live/navigation_component.html.leex:109
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:178
 msgid "My account"
-msgstr "Mein Benutzerkonto"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:107
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:175 lib/dealog_backoffice_web/live/settings_live.ex:6
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:115
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:183 lib/dealog_backoffice_web/live/settings_live.ex:9
 #: lib/dealog_backoffice_web/live/settings_live.html.leex:3
 msgid "Settings"
-msgstr "Einstellungen"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:17
 msgid "Active messages of my organization"
-msgstr "Aktive Meldungen meiner Organisation"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:29
 msgid "Active messages overall"
-msgstr "Aktive Meldungen gesamt"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:41
 msgid "Amount of message in the last 90 days"
-msgstr "Anzahl Meldungen der letzten 90 Tage"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:145
 msgid "Average open rate"
-msgstr "Durchnittliche Öffnungsrate"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:78
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:117 lib/dealog_backoffice_web/live/dashboard_live.html.leex:156
 msgid "Change by"
-msgstr "Veränderung um"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:10
 msgid "Message overview"
-msgstr "Meldungsübersicht"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:67
 msgid "Messages overall"
-msgstr "Meldungen gesamt"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:90
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:129 lib/dealog_backoffice_web/live/dashboard_live.html.leex:168
 msgid "Show all"
-msgstr "Alle anzeigen"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:6
 msgid "The dashboard contains some key figures about the messages."
-msgstr "Die Übersicht enthält einige Kennzahlen über die Meldungen."
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:53
 msgid "User behavior"
-msgstr "Nutzerverhalten"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/dashboard_live.html.leex:106
 msgid "Viewed messages"
-msgstr "Angesehene Meldungen"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:6
 msgid "All messages of this organization are listed here."
-msgstr "Alle Meldungen dieser Organisation sind hier aufgelistet."
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/index.html.leex:6
 msgid "The messages related to this organization are listed here."
-msgstr "Meldungen, die mit dieser Organisation in Zusammenhang stehen, sind hier aufgelistet."
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/changelog_live.ex:8
+#: lib/dealog_backoffice_web/live/changelog_live.ex:10
 #: lib/dealog_backoffice_web/live/changelog_live.html.leex:3 lib/dealog_backoffice_web/live/footer_component.html.leex:17
 msgid "Changelog"
-msgstr "Änderungshistorie"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/organization_messages/edit.html.leex:12
 msgid "Compose a new message."
-msgstr "Verfassen einer neuen Meldung."
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/my_account_live.html.leex:6
+#: lib/dealog_backoffice_web/live/my_account/index.html.leex:6
 msgid "Here you can change your account."
-msgstr "Hier kann das Benutzerkonto angepasst werden."
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/footer_component.html.leex:5
-#: lib/dealog_backoffice_web/live/readme_live.ex:8
+#: lib/dealog_backoffice_web/live/readme_live.ex:10
 msgid "Readme"
-msgstr "Projektübersicht"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/changelog_live.html.leex:6
 msgid "The changelog lists all noteworthy changes to the application. It is only available in english."
-msgstr "Die Änderungshistorie beinhaltet alle erwähnenswerten Änderungen an der Applikation. Diese ist nur in Englisch verfügbar."
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/settings_live.html.leex:6
 msgid "The settings of the DEalog Backoffice."
-msgstr "Die Einstellungen des DEalog Backoffice"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/design_system_live.ex:6
+#: lib/dealog_backoffice_web/live/design_system_live.ex:9
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:3 lib/dealog_backoffice_web/live/footer_component.html.leex:11
 msgid "Design System"
 msgstr ""
@@ -196,59 +195,59 @@ msgstr ""
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:6
 msgid "The Design System contains components, styles and colors used in the application."
-msgstr "Das Design System zeigt die Darstellung von Komponenten, Farben und Look-and-feel der Applikation."
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:13
 msgid "This is the color palette available in the application."
-msgstr "Hier ist die Farbpalette, welche in der Applikation verwendet wird."
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:10
 msgid "Colors"
-msgstr "Farbpalette"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:46
 msgid "Floating text"
-msgstr "Fließtext"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:32
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:35 lib/dealog_backoffice_web/live/design_system_live.html.leex:38
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:41
 msgid "Heading"
-msgstr "Überschrift"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:29
 msgid "Headings"
-msgstr "Überschriften"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:50
 msgid "Link"
-msgstr "Verlinkung"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:24
 msgid "This is the typography in the application."
-msgstr "Hier ist die Typografie der Applikation"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:21
 msgid "Typography"
-msgstr "Typografie"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:55
 msgid "bold"
-msgstr "fett"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:60
 msgid "italic"
-msgstr "kursiv"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:65
@@ -258,146 +257,147 @@ msgstr ""
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:81
 msgid "Banners"
-msgstr "Banner"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:73
 msgid "Components"
-msgstr "Komponenten"
+msgstr ""
 
 #, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:18
 #: lib/dealog_backoffice_web/live/organization_messages/edit.html.leex:11
 msgid "Create new message"
-msgstr "Neue Meldung erstellen"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:315
 msgid "Discarded"
-msgstr "Verworfen"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:134
 msgid "Dismissible success banner"
-msgstr "Ausblendbare Erfolgsmeldung"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:120
 msgid "Dismissible warning banner"
-msgstr "Ausblendbare Warnungsmeldung"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:312
 msgid "Draft"
-msgstr "Entwurf"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:103
 msgid "Error banner"
-msgstr "Fehlermeldung"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:206
 msgid "Form fields"
-msgstr "Formularfelder"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:87
 msgid "Info banner with icon and link"
-msgstr "Informationsmeldung mit Icon und Link"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:232
 msgid "Insert a valid URL"
-msgstr "Bitte eine gültige URL eingeben"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:217
 msgid "Insert name here"
-msgstr "Name hier eingeben"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:237
 msgid "Insert text here"
-msgstr "Text hier eingeben"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:30
 msgid "Message %{title} created successfully"
-msgstr "Meldung %{title} erfolgreich erstellt"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:309
 msgid "Published"
-msgstr "Veröffentlicht"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:304
 msgid "Status pills"
-msgstr "Status Indikatoren"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:223
 msgid "The URL to the website"
-msgstr "Die URL zu der Webseite"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:76
 msgid "The following components are used in the application."
-msgstr "Die folgenden Komponenten werden in der Applikation verwendet."
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/components/upload_area.html.leex:9
 msgid "Upload a file"
-msgstr "Eine Datei hochladen"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:192
 msgid "Upload area"
-msgstr "Upload Bereich"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:211
 msgid "Your Firstname"
-msgstr "Ihr Vorname"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:4
 #: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:50
 msgid "body"
-msgstr "Meldungstext"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/components/upload_area.html.leex:11
 msgid "or drag and drop"
-msgstr "oder ziehen und ablegen"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:4
 #: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:33
 msgid "title"
-msgstr "Titel"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/components/upload_area.html.leex:14
 msgid "up to"
-msgstr "bis zu"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/index.html.leex:24
 #: lib/dealog_backoffice_web/live/message_approvals/index.html.leex:24 lib/dealog_backoffice_web/live/organization_messages/index.html.leex:24
 msgid "Author"
-msgstr "Autor"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:200
 msgid "Edit"
-msgstr "Bearbeiten"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/index.html.leex:21
 #: lib/dealog_backoffice_web/live/message_approvals/index.html.leex:21 lib/dealog_backoffice_web/live/organization_messages/index.html.leex:21
 msgid "Metadata"
-msgstr "Metadaten"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/index.html.leex:18
@@ -405,190 +405,192 @@ msgstr "Metadaten"
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:109 lib/dealog_backoffice_web/live/organization_messages/index.html.leex:18
 #: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:109
 msgid "Status"
-msgstr "Status"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/index.html.leex:15
 #: lib/dealog_backoffice_web/live/message_approvals/index.html.leex:15 lib/dealog_backoffice_web/live/organization_messages/index.html.leex:15
 msgid "Title"
-msgstr "Titel"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:155
 msgid "Dismissible success notification"
-msgstr "Ausblendbare Erfolgsmeldung"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:186
 msgid "Forms"
-msgstr "Formulare"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:298
 msgid "Misc"
-msgstr "Verschiedenes"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:149
 msgid "Notifications"
-msgstr "Benachrichtigungen"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:38
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:40
 #: lib/dealog_backoffice_web/live/organization_messages/edit.html.leex:6
 msgid "Change message"
-msgstr "Meldung ändern"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/organization_messages/edit.html.leex:7
 msgid "Changing the message will set its status back to draft!"
-msgstr "Das Ändern der Meldung setzt diese auf Entwurf zurück!"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:51
 msgid "Message %{title} changed successfully"
-msgstr "Meldung %{title} erfolgreich geändert"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:66
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:68
 msgid "Message %{title} successfully sent for approval"
-msgstr "Meldung %{title} erfolgreich zur Freigabe geschickt"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:209
 msgid "Send for approval"
-msgstr "Zur Freigabe schicken"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/index.html.leex:6
 msgid "All messages waiting for approval are listed here."
-msgstr "Alle Meldungen, die auf Freigabe warten, sind hier aufgelistet."
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:209
 msgid "Reject"
-msgstr "Zurückweisen"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/design_system_live.html.leex:170
 msgid "Dismissible error notification"
-msgstr "Ausblendbare Erfolgsmeldung"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:54
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:56
 msgid "Message %{title} has to be in status draft in order to send for approval"
-msgstr "Die Meldung %{title} muss sich im Zustand Entwurf befinden, um zur Freigabe geschickt werden zu können"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:30
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:31
 msgid "Message %{title} is in review an cannot be changed"
-msgstr "Die Meldung %{title} ist in Prüfung und kann momentan nicht geändert werden"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/templates/layout/live.html.leex:17
+#: lib/dealog_backoffice_web/templates/layout/live.html.leex:18
+#: lib/dealog_backoffice_web/templates/layout/live.html.leex:33
 msgid "Successfully performed action!"
-msgstr "Aktion erfolgreich durchgeführt!"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:73
 msgid "Save message"
-msgstr "Meldung speichern"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/templates/layout/live.html.leex:31
+#: lib/dealog_backoffice_web/templates/layout/live.html.leex:47
+#: lib/dealog_backoffice_web/templates/layout/live.html.leex:61
 msgid "There was an error!"
-msgstr "Ein Fehler ist aufgetreten!"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:26
 msgid "Add a note of why the message is rejected. This message will be shown to the editor."
-msgstr "Bitte einen Hinweis, warum die Meldung zurückgewiesen wurde. Dieser wird der bearbeitenden Person angezeigt werden."
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:44
 msgid "Message %{title} rejected"
-msgstr "Meldung %{title} erfolgreich erstellt"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:23
 msgid "Message rejection"
-msgstr "Meldungszurückweisung"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:36
 msgid "Reason"
-msgstr "Grund"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:36
+#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:38
 msgid "Reject message"
-msgstr "Meldung zurückweisen"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/show.html.leex:188
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:192 lib/dealog_backoffice_web/live/organization_messages/show.html.leex:192
 msgid "Back to overview"
-msgstr "Zurück zur Übersicht"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/show.html.leex:33
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:37 lib/dealog_backoffice_web/live/organization_messages/show.html.leex:37
 msgid "Body"
-msgstr "Meldungstext"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/show.html.leex:89
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:93 lib/dealog_backoffice_web/live/organization_messages/show.html.leex:93
 msgid "Created at"
-msgstr "Erstellt um"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/show.html.leex:26
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:30 lib/dealog_backoffice_web/live/organization_messages/show.html.leex:30
 msgid "Date of message"
-msgstr "Datum der Meldung"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/show.html.leex:97
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:101 lib/dealog_backoffice_web/live/organization_messages/show.html.leex:101
 msgid "Last changed at"
-msgstr "Zuletzt geändert um"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/all_messages/show.ex:29
-#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:53 lib/dealog_backoffice_web/live/message_approvals/show.ex:29
-#: lib/dealog_backoffice_web/live/organization_messages/show.ex:29
+#: lib/dealog_backoffice_web/live/all_messages/show.ex:30
+#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:55 lib/dealog_backoffice_web/live/message_approvals/show.ex:30
+#: lib/dealog_backoffice_web/live/organization_messages/show.ex:30
 msgid "Message %{id} could not be found"
-msgstr "Meldung %{id} konnte nicht gefunden werden"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/show.html.leex:81
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:85 lib/dealog_backoffice_web/live/organization_messages/show.html.leex:85
 msgid "Message ID"
-msgstr "Meldungsnummer"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/show.html.leex:115
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:119 lib/dealog_backoffice_web/live/organization_messages/show.html.leex:119
 msgid "Message history"
-msgstr "Meldungshistorie"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/show.html.leex:55
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:59 lib/dealog_backoffice_web/live/organization_messages/show.html.leex:59
 msgid "Message information"
-msgstr "Meldungsinformationen"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/templates/layout/live.html.leex:45
+#: lib/dealog_backoffice_web/templates/layout/live.html.leex:75
 msgid "Message not found!"
-msgstr "Meldung nicht gefunden!"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/show.html.leex:18
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:22 lib/dealog_backoffice_web/live/organization_messages/show.html.leex:22
 msgid "Message status"
-msgstr "Meldungsstatus"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/show.html.leex:129
@@ -599,86 +601,287 @@ msgstr "Meldungsstatus"
 #: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:146 lib/dealog_backoffice_web/live/organization_messages/show.html.leex:159
 #: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:173
 msgid "by"
-msgstr "von"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/index.html.leex:61
 #: lib/dealog_backoffice_web/live/message_approvals/index.html.leex:64 lib/dealog_backoffice_web/live/organization_messages/index.html.leex:66
 msgid "last changed"
-msgstr "zuletzt geändert"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:200
 msgid "Approve"
-msgstr "Freigeben"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:24
+#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:25
 msgid "Approve message"
-msgstr "Meldung freigeben"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:7
 msgid "If a note is added it will be displayed to the person publishing the message."
-msgstr "Wenn eine Notiz hinzugefügt wird, wird diese der Person, welche die Meldung veröffentlicht, angezeigt."
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:30
 msgid "Message %{title} approved"
-msgstr "Meldung %{title} erfolgreich freigegeben"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:4
 msgid "Message approval"
-msgstr "Meldungsfreigabe"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:17
 msgid "Note"
-msgstr "Notiz"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:18
 msgid "Attach note and approve"
-msgstr "Notiz anhängen und freigeben"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/edit.html.leex:37
 msgid "Attach reason and reject"
-msgstr "Grund speichern und zurückweisen"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:218
 msgid "Delete message"
-msgstr "Meldung löschen"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:78
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:80
 msgid "Message %{id} could not be deleted"
-msgstr "Meldung %{id} konnte nicht gelöscht werden"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:88
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:90
 msgid "Message %{title} successfully deleted"
-msgstr "Meldung %{title} erfolgreich gelöscht"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:67
+#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:69
 msgid "Message %{title} has to be in status approved in order to be published"
-msgstr "Die Meldung %{title} muss sich im Zustand freigegeben befinden, um veröffentlicht werden zu können"
+msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:77
+#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:79
 msgid "Message %{title} successfully published"
-msgstr "Meldung %{title} erfolgreich veröffentlicht"
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:218
 msgid "Publish"
-msgstr "Veröffentlichen"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/my_account/index.html.leex:22
+#: lib/dealog_backoffice_web/templates/user_confirmation/new.html.eex:14 lib/dealog_backoffice_web/templates/user_registration/new.html.eex:40
+#: lib/dealog_backoffice_web/templates/user_reset_password/new.html.eex:14 lib/dealog_backoffice_web/templates/user_session/new.html.eex:54
+msgid "Email address"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_reset_password/new.html.eex:5
+#: lib/dealog_backoffice_web/templates/user_session/new.html.eex:101
+msgid "Forgot your password?"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/controllers/user_session_controller.ex:22
+msgid "Invalid email or password"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/my_account/index.html.leex:44
+#: lib/dealog_backoffice_web/templates/user_registration/new.html.eex:60 lib/dealog_backoffice_web/templates/user_reset_password/edit.html.eex:37
+#: lib/dealog_backoffice_web/templates/user_session/new.html.eex:71
+msgid "Password"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_confirmation/new.html.eex:38
+#: lib/dealog_backoffice_web/templates/user_registration/new.html.eex:5 lib/dealog_backoffice_web/templates/user_reset_password/edit.html.eex:89
+#: lib/dealog_backoffice_web/templates/user_reset_password/new.html.eex:42 lib/dealog_backoffice_web/templates/user_session/new.html.eex:120
+msgid "Register for a new account"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_session/new.html.eex:94
+msgid "Remember me"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_confirmation/new.html.eex:43
+#: lib/dealog_backoffice_web/templates/user_registration/new.html.eex:90 lib/dealog_backoffice_web/templates/user_reset_password/edit.html.eex:94
+#: lib/dealog_backoffice_web/templates/user_reset_password/new.html.eex:47 lib/dealog_backoffice_web/templates/user_session/new.html.eex:111
+msgid "Sign in"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_session/new.html.eex:5
+msgid "Sign in to your account"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/controllers/user_auth.ex:142
+msgid "You must log in to access this page."
+msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:49
 #: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:67
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/controllers/user_confirmation_controller.ex:35
+msgid "Account confirmed successfully."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:24
+msgid "Approve message %{title}"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/my_account/index.html.leex:12
+#: lib/dealog_backoffice_web/live/my_account/index.html.leex:68
+msgid "Change email address"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/my_account/index.html.leex:77
+#: lib/dealog_backoffice_web/live/my_account/index.html.leex:156
+msgid "Change password"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/my_account/index.ex:57
+#: lib/dealog_backoffice_web/live/my_account/index.ex:87
+msgid "Check errors in the form fields below."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/my_account/index.html.leex:109
+msgid "Confirm new password"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/controllers/user_confirmation_controller.ex:40
+msgid "Confirmation link is invalid or it has expired."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/my_account/index.html.leex:133
+msgid "Current password"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:39
+msgid "Edit message %{title}"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/my_account/index.ex:48
+msgid "Email address was successfully changed. Please check your email account for a confirmation email and click the link."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/controllers/user_reset_password_controller.ex:24
+msgid "If the provided email address is in the system, instructions are sent to reset the password shortly."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:102
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:172
+msgid "Logged in as"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/my_account/index.html.leex:87
+msgid "New password"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_reset_password/edit.html.eex:59
+msgid "Password confirmation"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/controllers/user_reset_password_controller.ex:41
+msgid "Password reset successfully. Please login."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/my_account/index.ex:77
+msgid "Password was successfully updated."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_registration/new.html.eex:81
+msgid "Register"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:37
+msgid "Reject message %{title}"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_confirmation/new.html.eex:5
+#: lib/dealog_backoffice_web/templates/user_confirmation/new.html.eex:29
+msgid "Resend confirmation instructions"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_reset_password/edit.html.eex:5
+#: lib/dealog_backoffice_web/templates/user_reset_password/edit.html.eex:80
+msgid "Reset password"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_reset_password/new.html.eex:33
+msgid "Send reset instructions"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_registration/new.html.eex:26
+#: lib/dealog_backoffice_web/templates/user_reset_password/edit.html.eex:23
+msgid "There are form errors. Please check below."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_registration/new.html.eex:8
+msgid "This page does only exist for the demo. On the real application registering is invite only."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/controllers/user_registration_controller.ex:24
+msgid "User created successfully. Please check your email mailbox for a confirmation link to finish the registration."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/controllers/user_settings_controller.ex:15
+msgid "Email address change link is invalid or it has expired."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/controllers/user_settings_controller.ex:10
+msgid "Email address changed successfully."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/controllers/user_confirmation_controller.ex:22
+msgid "If the provided email address is in the system and it has not been confirmed yet, you will receive an email with instructions shortly."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/controllers/user_session_controller.ex:29
+msgid "Logged out successfully."
+msgstr ""

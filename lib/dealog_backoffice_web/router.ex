@@ -1,6 +1,8 @@
 defmodule DealogBackofficeWeb.Router do
   use DealogBackofficeWeb, :router
 
+  import DealogBackofficeWeb.UserAuth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,6 +10,7 @@ defmodule DealogBackofficeWeb.Router do
     plug :put_root_layout, {DealogBackofficeWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_user
   end
 
   pipeline :preview do
@@ -17,14 +20,39 @@ defmodule DealogBackofficeWeb.Router do
     plug :put_root_layout, {DealogBackofficeWeb.LayoutView, :preview}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_user
   end
 
-  pipeline :api do
+  pipeline :user_api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+    plug :fetch_current_user
+  end
+
+  ## Authentication routes
+
+  scope "/", DealogBackofficeWeb do
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
+
+    get "/users/register", UserRegistrationController, :new
+    post "/users/register", UserRegistrationController, :create
+
+    get "/users/log_in", UserSessionController, :new
+    post "/users/log_in", UserSessionController, :create
+
+    get "/users/reset_password", UserResetPasswordController, :new
+    post "/users/reset_password", UserResetPasswordController, :create
+    get "/users/reset_password/:token", UserResetPasswordController, :edit
+    put "/users/reset_password/:token", UserResetPasswordController, :update
   end
 
   scope "/", DealogBackofficeWeb do
-    pipe_through :browser
+    pipe_through [:browser, :require_authenticated_user]
+
+    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
 
     live("/", DashboardLive, :index)
 
@@ -50,15 +78,33 @@ defmodule DealogBackofficeWeb.Router do
       live "/:id/publish", Edit, :publish, as: :approvals
     end
 
+    scope "/my-account", MyAccountLive do
+      live("/", Index, :index, as: :my_account)
+    end
+
     live("/changelog", ChangelogLive, :index)
-    live("/my-account", MyAccountLive, :index)
     live("/settings", SettingsLive, :index)
     live("/readme", ReadmeLive, :index)
     live("/design-system", DesignSystemLive, :index)
   end
 
+  scope "/", DealogBackofficeWeb do
+    pipe_through [:user_api]
+
+    post "/api/users/relogin", UserApiController, :relogin_after_password_change
+  end
+
+  scope "/", DealogBackofficeWeb do
+    pipe_through [:browser]
+
+    delete "/users/log_out", UserSessionController, :delete
+    get "/users/confirm", UserConfirmationController, :new
+    post "/users/confirm", UserConfirmationController, :create
+    get "/users/confirm/:token", UserConfirmationController, :confirm
+  end
+
   scope "/_preview", DealogBackofficeWeb do
-    pipe_through :preview
+    pipe_through [:preview, :require_authenticated_user]
 
     live("/", PreviewLive)
   end
