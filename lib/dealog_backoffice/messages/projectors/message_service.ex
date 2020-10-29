@@ -29,8 +29,7 @@ defmodule DealogBackoffice.Messages.Projectors.MessageService do
         identifier: event.message_id,
         headline: event.title,
         description: event.body,
-        geocode:
-          "POLYGON ((11.795583 51.385388, 11.813135 51.398215, 11.827426 51.396073, 11.823821 51.391842, 11.795583 51.385388))",
+        ars: "059580004004",
         published_at: NaiveDateTime.to_iso8601(metadata.created_at)
       }
       |> Jason.encode!()
