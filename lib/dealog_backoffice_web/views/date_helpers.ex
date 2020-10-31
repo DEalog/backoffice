@@ -3,6 +3,10 @@ defmodule DealogBackofficeWeb.DateHelpers do
   Helpers for displaying dates.
   """
 
+  def display_date_time(%NaiveDateTime{} = date_time) do
+    display_date_time(DateTime.from_naive!(date_time, "Etc/UTC"))
+  end
+
   def display_date_time(%DateTime{} = date_time) do
     DateTime.shift_zone!(date_time, read_config(:timezone), Tzdata.TimeZoneDatabase)
     |> format_date_time()

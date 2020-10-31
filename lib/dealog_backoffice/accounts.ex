@@ -13,6 +13,13 @@ defmodule DealogBackoffice.Accounts do
   ## Database getters
 
   @doc """
+  List users.
+  """
+  def list do
+    Repo.all(User)
+  end
+
+  @doc """
   Gets a user by email.
 
   ## Examples

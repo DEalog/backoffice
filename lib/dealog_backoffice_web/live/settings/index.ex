@@ -17,7 +17,8 @@ defmodule DealogBackofficeWeb.SettingsLive.Index do
     assign(
       socket,
       page_title: gettext("Settings"),
-      active_page: :settings
+      active_page: :settings,
+      users: Accounts.list()
     )
   end
 end

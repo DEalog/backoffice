@@ -94,4 +94,10 @@ defmodule DealogBackofficeWeb.ConnCase do
     |> Phoenix.ConnTest.init_test_session(%{})
     |> Plug.Conn.put_session(:user_token, token)
   end
+
+  def get_user_from_session(conn) do
+    conn
+    |> Plug.Conn.get_session(:user_token)
+    |> DealogBackoffice.Accounts.get_user_by_session_token()
+  end
 end

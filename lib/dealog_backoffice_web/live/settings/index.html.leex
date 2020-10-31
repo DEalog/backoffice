@@ -1,8 +1,97 @@
 <section>
-  <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+  <h1 class="text-2xl font-bold text-gray-900 leading-7 sm:text-3xl sm:leading-9 sm:truncate">
     <%= gettext "Settings" %>
   </h1>
   <p class="mt-4">
     <%= gettext "The settings of the DEalog Backoffice." %>
   </p>
+  <section>
+    <div class="mt-4">
+      <h2 class="text-xl font-extrabold tracking-tight text-gray-900 leading-9 sm:text-2xl sm:leading-10">
+        <%= gettext "Users" %>
+      </h2>
+      <p>
+        <%= gettext "Users that are registered and confirmed their registration need to get onboarded here." %>
+      </p>
+    </div>
+    <div class="flex flex-col mt-2">
+      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead>
+                <tr>
+                  <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-gray-50 leading-4">
+                    <%= gettext "Email address" %>
+                  </th>
+                  <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-gray-50 leading-4">
+                    <%= gettext "Registered at" %>
+                  </th>
+                  <th class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase bg-gray-50 leading-4">
+                    <%= gettext "Status" %>
+                  </th>
+                  <th class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase bg-gray-50 leading-4">
+                    <%= gettext "Role" %>
+                  </th>
+                  <th class="px-6 py-3 bg-gray-50"></th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <%= for user <- @users do %>
+                  <tr class="<%= if user.email == @current_user.email, do: "bg-gray-100" %>">
+                    <td class="px-6 py-4 whitespace-no-wrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 w-10 h-10">
+                          <img class="w-10 h-10 border-2 border-gray-300 rounded-full" src="https://avatars.dicebear.com/api/identicon/<%= :crypto.hash(:md5, user.email) |> Base.encode16(case: :lower) %>.svg" alt="<%= user.email %>">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900 leading-5">
+                            Maxime Mustermann
+                          </div>
+                          <div class="text-sm text-gray-500 leading-5">
+                            <%= user.email %>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-no-wrap">
+                      <div class="text-sm text-gray-900 leading-5">
+                        <%= display_date_time(user.inserted_at) %>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-center whitespace-no-wrap">
+                      <%= if user.confirmed_at do %>
+                        <span class="inline-flex px-2 text-xs font-semibold text-green-800 bg-green-100 rounded-full leading-5">
+                          <%= gettext "Confirmed" %>
+                        </span>
+                      <% else %>
+                        <span class="inline-flex px-2 text-xs font-semibold text-red-800 bg-red-100 rounded-full leading-5">
+                          <%= gettext "Unconfirmed" %>
+                        </span>
+                      <% end %>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-center text-gray-500 whitespace-no-wrap leading-5">
+                      Admin
+                    </td>
+                    <td class="px-6 py-4 text-sm font-medium text-right whitespace-no-wrap leading-5">
+                      <div>
+                        <a href="#" class="text-indigo-600 hover:text-indigo-900">
+                          <%= gettext "Lock" %>
+                        </a>
+                      </div>
+                      <div class="mt-2">
+                        <a href="#" class="text-indigo-600 hover:text-indigo-900">
+                          <%= gettext "Onboard" %>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </section>
