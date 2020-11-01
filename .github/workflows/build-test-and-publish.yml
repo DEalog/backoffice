@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - DEV-100_deployment-on-aws
   pull_request:
     branches:
       - main
@@ -26,12 +25,12 @@ jobs:
         with:
           fallback-prefix: "1.0.0-SNAPSHOT-"
 
-      - name: Use cached deps
+      - name: Cache Elixir dependencies
         id: mix_cache
         uses: actions/cache@v2
         with:
           path: deps
-          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
           restore-keys: |
             ${{ runner.os }}-mix-
 
@@ -44,6 +43,36 @@ jobs:
       - name: Install and compile Elixir dependencies
         if: steps.mix_cache.outputs.cache-hit != 'true'
         run: mix do deps.get, deps.compile
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache Node.js dependencies
+        id: yarn-cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
+      - name: Install Node.js dependencies (from cache)
+        run: (cd ./assets && yarn install)
+
+      - name: Run webpack
+        run: (cd ./assets && yarn deploy)
+
+      - name: Dump tailwindcss config
+        run: (cd ./assets && yarn dump)
+
+      - name: Digests and compresses static files
+        run: mix phx.digest
 
       - name: Compile and release application
         run: mix do compile, release
@@ -53,137 +82,12 @@ jobs:
         with:
           name: backoffice
           path: |
-            ./_build/prod/rel/backoffice/
+            ./_build/prod/rel/backoffice
             ./CHANGELOG.md
             ./Dockerfile
             ./rel/run.sh
             ./version.txt
           if-no-files-found: error
-
-  build-theme:
-    runs-on: ubuntu-latest
-    name: Build tailwindcss theme
-
-    needs: [ build ]
-
-    env:
-      MIX_ENV: prod
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set version number
-        id: version
-        uses: DEalog/version-action@v0.1.0
-        with:
-          fallback-prefix: "1.0.0-SNAPSHOT-"
-
-      - name: Use cached deps
-        id: mix_cache
-        uses: actions/cache@v2
-        with:
-          path: deps
-          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-mix-
-
-      - name: Use Elixir
-        uses: actions/setup-elixir@v1
-        if: steps.mix_cache.outputs.cache-hit != 'true'
-        with:
-          elixir-version: "1.10.4"
-          otp-version: "23.0.2"
-
-      - name: Install and compile Elixir dependencies
-        if: steps.mix_cache.outputs.cache-hit != 'true'
-        run: mix do deps.get, deps.compile
-
-      - name: Use cached node_modules
-        id: node_cache
-        uses: actions/cache@v2
-        with:
-          path: ./assets/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14'
-
-      - name: Install Node.js dependencies
-        if: steps.node_cache.outputs.cache-hit != 'true'
-        run: |
-          cd ./assets
-          yarn install
-
-      - name: Run webpack
-        run: |
-          cd ./assets
-          yarn deploy
-
-      - name: Dump tailwindcss config
-        run: |
-          cd ./assets
-          yarn dump
-      
-      - name: Create artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: backoffice-theme
-          path: |
-            ./priv/static/
-          if-no-files-found: error
-  
-  compress:
-    runs-on: ubuntu-latest
-    name: Compress theme and assets
-
-    needs: [ build-theme ]
-
-    env:
-      MIX_ENV: prod
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Fetch artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: backoffice-theme
-
-      - name: Use cached deps
-        id: mix_cache
-        uses: actions/cache@v2
-        with:
-          path: deps
-          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-mix-
-
-      - name: Use Elixir
-        uses: actions/setup-elixir@v1
-        with:
-          elixir-version: "1.10.4"
-          otp-version: "23.0.2"
-
-      - name: Install and compile Elixir dependencies
-        if: steps.mix_cache.outputs.cache-hit != 'true'
-        run: mix do deps.get, deps.compile
-
-      - name: Digests and compresses static files
-        run: |
-          mix phx.digest
-      
-      - name: Create artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: backoffice-compressed
-          path: |
-            ./priv/static/          
-          if-no-files-found: error
-
   
   test:
     runs-on: ubuntu-latest
@@ -208,23 +112,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Elixir
+      - name: Cache Elixir dependencies
+        id: mix_cache
+        uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+          restore-keys: |
+            ${{ runner.os }}-mix-
+
+      - name: Use Elixir
         uses: actions/setup-elixir@v1
         with:
           elixir-version: "1.10.4"
           otp-version: "23.0.2"
 
-      - name: Restore dependencies cache
-        id: elixir_cache
-        uses: actions/cache@v2
-        with:
-          path: deps
-          key: ${{ runner.os }}-mix-test-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-mix-test-
-
-      - name: Install and compile dependencies
-        if: steps.elixir_cache.outputs.cache-hit != 'true'
+      - name: Install and compile Elixir dependencies
+        if: steps.mix_cache.outputs.cache-hit != 'true'
         run: mix do deps.get, deps.compile
 
       - name: Setup event store
@@ -236,18 +140,13 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     name: Dockerize and publish
-    needs: [ build, test, build-theme, compress ]
+    needs: [ build ]
 
     steps:
       - name: Fetch artifact
         uses: actions/download-artifact@v2
         with:
           name: backoffice
-      
-      - name: Fetch artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: backoffice-compressed
 
       - name: Set env
         run: |
@@ -287,4 +186,3 @@ jobs:
           path: |
             ./full_image_name.txt
           if-no-files-found: error
-

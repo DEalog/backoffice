@@ -6,7 +6,6 @@ on:
     workflows: [ Build ]
     branches:
       - main
-      - DEV-100_deployment-on-aws
     types:
       - completed
 

@@ -72,10 +72,10 @@ steps are needed to have a deployable version.
 
 ### Building the image
 
-To build the image run
+To build the image run:
 
 ```
-docker build -t dealog/backoffice:latest .
+docker build -t dealog/backoffice:latest -f Dockerfile.dev .
 ```
 
 This will prepare and build the image that then can be used to spawn a
