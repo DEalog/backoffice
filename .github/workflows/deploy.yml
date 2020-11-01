@@ -1,0 +1,59 @@
+
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: [ Build ]
+    branches:
+      - main
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy to Amazon ECS
+
+    steps:
+    - name: Download build artifacts
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: ${{ github.event.workflow_run.workflow_id }}
+
+    - name: Set env
+      run: |
+        echo ::set-env name=AWS_REGION::eu-central-1
+        echo ::set-env name=CLUSTER_NAME::dealog-dev
+        echo ::set-env name=SERVICE_NAME::backoffice
+        echo ::set-env name=CONTAINER_NAME::backoffice
+        echo ::set-env name=FULL_IMAGE_NAME::$(cat ./dockerized-backoffice/full_image_name.txt)
+        echo ::set-env name=IMAGE_TAG::$(cat ./backoffice/version.txt)
+    
+    - name: Set production env
+      if: github.ref == 'refs/heads/main'
+      run: echo ::set-env name=CLUSTER_NAME::dealog-dev
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+      
+    - name: Download task definition
+      run: aws ecs describe-task-definition --task-definition ${{ env.SERVICE_NAME }} --query taskDefinition > task-definition.json
+
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: ./task-definition.json
+        container-name: ${{ env.CONTAINER_NAME }}
+        image: ${{ env.FULL_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ./task-definition.json
+        service: ${{ env.SERVICE_NAME }}
+        cluster: ${{ env.CLUSTER_NAME }}
+        wait-for-service-stability: true

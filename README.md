@@ -72,7 +72,7 @@ steps are needed to have a deployable version.
 
 ### Building the image
 
-To build the image run
+To build the image run:
 
 ```
 docker build -t dealog/backoffice:latest .
