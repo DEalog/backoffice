@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `ADD` Setup GH Actions to deploy application to AWS
 - `CNG` Send ARS instead of a geocode to Kafka
 - `CNG` Structure of administrative areas is changed to ARS (from AGS)
 - `ADD` Mail support for registration, password reset, email change is available
