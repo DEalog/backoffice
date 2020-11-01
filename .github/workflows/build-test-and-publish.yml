@@ -84,7 +84,7 @@ jobs:
           path: |
             ./_build/prod/rel/backoffice
             ./CHANGELOG.md
-            ./Dockerfile
+            ./.github/Dockerfile
             ./rel/run.sh
             ./version.txt
           if-no-files-found: error
@@ -174,7 +174,7 @@ jobs:
           image_name: ${{ env.IMAGE_REPO }}
           image_tag: ${{ env.VERSION }}
           registry: ${{ steps.login-ecr.outputs.registry }}
-          dockerfile: ./Dockerfile
+          dockerfile: ./.github/Dockerfile
       
       - name: Store docker image name
         run: echo ${{ steps.docker-build.outputs.FULL_IMAGE_NAME }} >> ./full_image_name.txt
