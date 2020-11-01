@@ -31,7 +31,7 @@ jobs:
     
     - name: Set production env
       if: github.ref == 'refs/heads/main'
-      run: echo ::set-env name=CLUSTER_NAME::dealog
+      run: echo ::set-env name=CLUSTER_NAME::dealog-dev
     
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
