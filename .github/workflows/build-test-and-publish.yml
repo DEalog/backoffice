@@ -1,0 +1,188 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build Elixir project
+
+    env:
+      MIX_ENV: prod
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set version number
+        id: version
+        uses: DEalog/version-action@v0.1.0
+        with:
+          fallback-prefix: "1.0.0-SNAPSHOT-"
+
+      - name: Cache Elixir dependencies
+        id: mix_cache
+        uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+          restore-keys: |
+            ${{ runner.os }}-mix-
+
+      - name: Use Elixir
+        uses: actions/setup-elixir@v1
+        with:
+          elixir-version: "1.10.4"
+          otp-version: "23.0.2"
+
+      - name: Install and compile Elixir dependencies
+        if: steps.mix_cache.outputs.cache-hit != 'true'
+        run: mix do deps.get, deps.compile
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache Node.js dependencies
+        id: yarn-cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
+      - name: Install Node.js dependencies (from cache)
+        run: (cd ./assets && yarn install)
+
+      - name: Run webpack
+        run: (cd ./assets && yarn deploy)
+
+      - name: Dump tailwindcss config
+        run: (cd ./assets && yarn dump)
+
+      - name: Digests and compresses static files
+        run: mix phx.digest
+
+      - name: Compile and release application
+        run: mix do compile, release
+      
+      - name: Create artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: backoffice
+          path: |
+            ./_build/prod/rel/backoffice
+            ./CHANGELOG.md
+            ./.github/Dockerfile
+            ./rel/run.sh
+            ./version.txt
+          if-no-files-found: error
+  
+  test:
+    runs-on: ubuntu-latest
+    name: Test Elixir project
+
+    env:
+      MIX_ENV: test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: localhost
+
+    services:
+      db:
+        image: postgres:12.1-alpine
+        ports: [ "5432:5432" ]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache Elixir dependencies
+        id: mix_cache
+        uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+          restore-keys: |
+            ${{ runner.os }}-mix-
+
+      - name: Use Elixir
+        uses: actions/setup-elixir@v1
+        with:
+          elixir-version: "1.10.4"
+          otp-version: "23.0.2"
+
+      - name: Install and compile Elixir dependencies
+        if: steps.mix_cache.outputs.cache-hit != 'true'
+        run: mix do deps.get, deps.compile
+
+      - name: Setup event store
+        run: mix do event_store.create, event_store.init
+
+      - name: Run tests
+        run: mix test
+
+  publish:
+    runs-on: ubuntu-latest
+    name: Dockerize and publish
+    needs: [ build ]
+
+    steps:
+      - name: Fetch artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: backoffice
+
+      - name: Set env
+        run: |
+          echo ::set-env name=VERSION::$(cat ./version.txt)
+          echo ::set-env name=IMAGE_REPO::backoffice
+          echo ::set-env name=AWS_REGION::eu-central-1
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and push Docker image
+        id: docker-build
+        uses: whoan/docker-build-with-cache-action@v5
+        with:
+          username: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          password: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+          image_name: ${{ env.IMAGE_REPO }}
+          image_tag: ${{ env.VERSION }}
+          registry: ${{ steps.login-ecr.outputs.registry }}
+          dockerfile: ./.github/Dockerfile
+      
+      - name: Store docker image name
+        run: echo ${{ steps.docker-build.outputs.FULL_IMAGE_NAME }} >> ./full_image_name.txt
+
+      - name: Create artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dockerized-backoffice
+          path: |
+            ./full_image_name.txt
+          if-no-files-found: error
