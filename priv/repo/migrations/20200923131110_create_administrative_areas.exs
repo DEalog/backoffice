@@ -9,7 +9,6 @@ defmodule DealogBackoffice.Repo.Migrations.CreateAdministrativeAreas do
       add :type_label, :string
       add :type, :string
 
-
       timestamps()
     end
   end
