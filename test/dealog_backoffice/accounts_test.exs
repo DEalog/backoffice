@@ -5,6 +5,7 @@ defmodule DealogBackoffice.AccountsTest do
 
   alias DealogBackoffice.Accounts
   alias DealogBackoffice.Accounts.{User, UserToken}
+  alias DealogBackoffice.Accounts.Projections.Account
 
   describe "list/0" do
     test "does return an empty list when no user is registered" do
@@ -488,6 +489,26 @@ defmodule DealogBackoffice.AccountsTest do
   describe "inspect/2" do
     test "does not include password" do
       refute inspect(%User{password: "123456"}) =~ "password: \"123456\""
+    end
+  end
+
+  @valid_account_data %{first_name: "John", last_name: "Doe"}
+  @invalid_account_data %{first_name: nil, last_name: nil}
+
+  describe "create_account/1" do
+    @tag :integration
+    test "should succeed with valid data" do
+      assert {:ok, %Account{} = account} = Accounts.create_account(@valid_account_data)
+      assert account.first_name == @valid_account_data.first_name
+      assert account.last_name == @valid_account_data.last_name
+    end
+
+    @tag :integration
+    test "should fail when data is invalid" do
+      assert {:error, {:validation_failure, errors}} =
+               Accounts.create_account(@invalid_account_data)
+
+      assert %{first_name: _, last_name: _} = errors
     end
   end
 end

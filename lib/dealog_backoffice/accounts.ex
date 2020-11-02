@@ -7,8 +7,10 @@ defmodule DealogBackoffice.Accounts do
 
   import Ecto.Query, warn: false
 
-  alias DealogBackoffice.Repo
+  alias DealogBackoffice.{App, Repo}
   alias DealogBackoffice.Accounts.{User, UserToken, UserNotifier}
+  alias DealogBackoffice.Accounts.Commands.CreateAccount
+  alias DealogBackoffice.Accounts.Projections.Account
 
   ## Database getters
 
@@ -354,6 +356,32 @@ defmodule DealogBackoffice.Accounts do
     |> case do
       {:ok, %{user: user}} -> {:ok, user}
       {:error, :user, changeset, _} -> {:error, changeset}
+    end
+  end
+
+  # Account
+
+  def create_account(attrs \\ %{}) do
+    account_id = UUID.uuid4()
+
+    create_account =
+      attrs
+      |> CreateAccount.new()
+      |> CreateAccount.assign_account_id(account_id)
+
+    with :ok <- App.dispatch(create_account, consistency: :strong) do
+      get(Account, account_id)
+    end
+  end
+
+  def get_account(id) do
+    get(Account, id)
+  end
+
+  defp get(schema, uuid) do
+    case Repo.get(schema, uuid) do
+      nil -> {:error, :not_found}
+      entity -> {:ok, entity}
     end
   end
 end

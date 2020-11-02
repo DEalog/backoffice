@@ -22,4 +22,3 @@ defmodule DealogBackoffice.Messages.Commands.PublishMessage do
     %PublishMessage{message | status: :published}
   end
 end
-

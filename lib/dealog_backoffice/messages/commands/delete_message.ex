@@ -22,4 +22,3 @@ defmodule DealogBackoffice.Messages.Commands.DeleteMessage do
     %DeleteMessage{message | status: :deleted}
   end
 end
-

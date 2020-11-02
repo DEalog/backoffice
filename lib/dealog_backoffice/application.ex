@@ -17,7 +17,9 @@ defmodule DealogBackoffice.Application do
       # Start the Endpoint (http/https)
       DealogBackofficeWeb.Endpoint,
       # Messages projector
-      DealogBackoffice.Messages.Supervisor
+      DealogBackoffice.Messages.Supervisor,
+      # Accounts projector
+      DealogBackoffice.Accounts.Supervisor
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
