@@ -15,7 +15,8 @@ defmodule DealogBackoffice.Accounts.Aggregates.AccountTest do
           %AccountCreated{
             account_id: account_id,
             first_name: "John",
-            last_name: "Doe"
+            last_name: "Doe",
+            user_id: ""
           }
         ]
       )

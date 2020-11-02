@@ -71,6 +71,20 @@ defmodule DealogBackoffice.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  @doc """
+  Gets a single user.
+
+  ## Examples
+
+      iex> get_user(123)
+      {:ok, %User{}}
+
+      iex> get_user(456)
+      {:error, :not_found}
+
+  """
+  def get_user(id), do: get(User, id)
+
   ## User registration
 
   @doc """

@@ -3,6 +3,7 @@ defmodule DealogBackoffice.Accounts.Projections.Account do
 
   @primary_key {:id, :binary_id, autogenerate: false}
   @timestamps_opts [type: :utc_datetime_usec]
+  @foreign_key_type :binary_id
 
   schema "accounts" do
     field :first_name, :string

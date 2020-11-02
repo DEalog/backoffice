@@ -3,6 +3,7 @@ defmodule DealogBackoffice.Accounts.Events.AccountCreated do
   defstruct [
     :account_id,
     :first_name,
-    :last_name
+    :last_name,
+    :user_id
   ]
 end

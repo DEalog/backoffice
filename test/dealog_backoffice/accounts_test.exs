@@ -492,21 +492,22 @@ defmodule DealogBackoffice.AccountsTest do
     end
   end
 
-  @valid_account_data %{first_name: "John", last_name: "Doe"}
-  @invalid_account_data %{first_name: nil, last_name: nil}
-
   describe "create_account/1" do
     @tag :integration
     test "should succeed with valid data" do
-      assert {:ok, %Account{} = account} = Accounts.create_account(@valid_account_data)
-      assert account.first_name == @valid_account_data.first_name
-      assert account.last_name == @valid_account_data.last_name
+      user = user_fixture()
+      data = %{first_name: "John", last_name: "Doe", user_id: user.id}
+
+      assert {:ok, %Account{} = account} = Accounts.create_account(data)
+      assert account.first_name == "John"
+      assert account.last_name == "Doe"
+      assert account.user_id == user.id
     end
 
     @tag :integration
     test "should fail when data is invalid" do
-      assert {:error, {:validation_failure, errors}} =
-               Accounts.create_account(@invalid_account_data)
+      data = %{first_name: nil, last_name: nil, user_id: UUID.uuid4()}
+      assert {:error, {:validation_failure, errors}} = Accounts.create_account(data)
 
       assert %{first_name: _, last_name: _} = errors
     end

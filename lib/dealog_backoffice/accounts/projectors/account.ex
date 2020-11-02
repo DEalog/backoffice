@@ -15,6 +15,7 @@ defmodule DealogBackoffice.Accounts.Projectors.Account do
         id: created.account_id,
         first_name: created.first_name,
         last_name: created.last_name,
+        user_id: created.user_id,
         inserted_at: metadata.created_at
       }
     )
