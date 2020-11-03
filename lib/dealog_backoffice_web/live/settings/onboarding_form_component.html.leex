@@ -1,13 +1,13 @@
 <%
   errors = if assigns[:errors], do: @errors, else: %{}
   # TODO Move this somewhere else. Maybe to the live view.
-  fields_with_labels = [title: gettext("title"), body: gettext("body")]
+  fields_with_labels = [first_name: gettext("First name"), last_name: gettext("Last name")]
 %>
 <%=
-  f = form_for :message, "#",
+  f = form_for :account, "#",
     errors: errors,
     phx_target: @myself,
-    phx_submit: "save_message"
+    phx_submit: "save_account"
 %>
   <%= if assigns[:error] do %>
     <div class="mt-4">
@@ -19,57 +19,60 @@
       %>
     </div>
   <% end %>
-  <%# TODO Change as this should be set automatically %>
   <%=
     hidden_input f,
       :id,
-      value: @message.id
+      value: @account.id
+  %>
+  <%=
+    hidden_input f,
+      :user_id,
+      value: @account.user_id
   %>
   <div class="w-full mx-auto mt-8 sm:w-2/3 lg:w-1/2">
-    <div>
-      <%=
-        label f,
-          gettext("title")
-      %>
-      <%=
-        text_input f,
-          :title,
-          value: @message.title,
-          class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :title), do: " border-red-700"}"
-      %>
-      <%=
-        errors_for_field f,
-          :title,
-          class: if has_errors?(f, :title), do: "text-red-700", else: ""
-      %>
-    </div>
-    <div class="mt-2">
-      <%=
-        label f,
-          gettext("body")
-      %>
-      <%=
-        textarea f, :body,
-          value: @message.body,
-          rows: 10,
-          class: "form-input flex-1 block w-full px-3 py-2 rounded-md sm:text-sm sm:leading-5#{if has_errors?(f, :body), do: " border-red-700"}"
-      %>
-      <%=
-        errors_for_field f,
-          :body,
-          class: if has_errors?(f, :body), do: "text-red-700", else: ""
-      %>
+    <div class="flex space-x-2">
+      <div class="w-1/2">
+        <%=
+          label f,
+            gettext("First name")
+        %>
+        <%=
+          text_input f,
+            :first_name,
+            class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :first_name), do: " border-red-700"}"
+        %>
+        <%=
+          errors_for_field f,
+            :first_name,
+            class: if has_errors?(f, :first_name), do: "text-red-700", else: ""
+        %>
+      </div>
+      <div class="w-1/2">
+        <%=
+          label f,
+            gettext("Last name")
+        %>
+        <%=
+          text_input f, :last_name,
+            class: "form-input flex-1 block w-full px-3 py-2 rounded-md sm:text-sm sm:leading-5#{if has_errors?(f, :body), do: " border-red-700"}"
+        %>
+        <%=
+          errors_for_field f,
+            :last_name,
+            class: if has_errors?(f, :last_name), do: "text-red-700", else: ""
+        %>
+      </div>
     </div>
     <div class="flex justify-end mt-4">
       <span class="inline-flex ml-3 rounded-md shadow-sm">
         <%=
           link gettext("Cancel"),
-          to: Routes.organization_messages_path(@socket, :index),
+          to: Routes.settings_path(@socket, :index),
           method: :get,
           class: "mr-2 inline-flex justify-center py-2 px-4 border border-yellow-400  text-sm leading-5 font-medium rounded-md text-yellow-400 focus:outline-none focus:border-yellow-700 focus:shadow-outline-gray transition duration-150 ease-in-out"
         %>
         <%=
-          submit gettext("Save message"),
+          submit gettext("Save account"),
           class: "inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:shadow-outline-gray active:bg-yellow-700 transition duration-150 ease-in-out"
         %>
       </span>

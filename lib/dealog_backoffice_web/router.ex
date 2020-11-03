@@ -84,6 +84,7 @@ defmodule DealogBackofficeWeb.Router do
 
     scope "/settings", SettingsLive do
       live("/", Index, :index, as: :settings)
+      live("/onboard/:id", Onboarding, :new, as: :settings)
     end
 
     live("/changelog", ChangelogLive, :index)

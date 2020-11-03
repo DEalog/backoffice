@@ -18,7 +18,9 @@ defmodule DealogBackoffice.Accounts do
   List users.
   """
   def list do
-    Repo.all(User)
+    User
+    |> preload(:account)
+    |> Repo.all()
   end
 
   @doc """

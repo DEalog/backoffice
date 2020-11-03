@@ -46,7 +46,9 @@
                         </div>
                         <div class="ml-4">
                           <div class="text-sm font-medium text-gray-900 leading-5">
-                            Maxime Mustermann
+                            <%= if user.account do %>
+                              <%= user.account.first_name %> <%= user.account.last_name %>
+                            <% end %>
                           </div>
                           <div class="text-sm text-gray-500 leading-5">
                             <%= user.email %>
@@ -80,9 +82,11 @@
                         </a>
                       </div>
                       <div class="mt-2">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">
-                          <%= gettext "Onboard" %>
-                        </a>
+                        <%=
+                          link gettext("Onboard"),
+                            to: Routes.settings_path(@socket, :new, user),
+                            class: "text-indigo-600 hover:text-indigo-900"
+                        %>
                       </div>
                     </td>
                   </tr>

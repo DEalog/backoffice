@@ -27,7 +27,7 @@ defmodule DealogBackoffice.Router do
 
   # Account
 
-  identify(Account, by: :account_id, prefic: "account-")
+  identify(Account, by: :account_id, prefix: "account-")
 
   dispatch([CreateAccount], to: Account)
 

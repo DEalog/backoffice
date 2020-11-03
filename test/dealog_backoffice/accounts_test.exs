@@ -15,7 +15,7 @@ defmodule DealogBackoffice.AccountsTest do
     test "does return a list of users" do
       user = user_fixture()
       assert [listed_user] = Accounts.list()
-      assert listed_user == user
+      assert listed_user.email == user.email
     end
   end
 
