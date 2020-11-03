@@ -505,6 +505,16 @@ defmodule DealogBackoffice.AccountsTest do
     end
 
     @tag :integration
+    test "should fail when user already has an account" do
+      user = user_fixture()
+      data = %{first_name: "John", last_name: "Doe", user_id: user.id}
+      Accounts.create_account(data)
+
+      assert {:error, {:validation_failure, errors}} = Accounts.create_account(data)
+      assert %{user_id: _} = errors
+    end
+
+    @tag :integration
     test "should fail when data is invalid" do
       data = %{first_name: nil, last_name: nil, user_id: UUID.uuid4()}
       assert {:error, {:validation_failure, errors}} = Accounts.create_account(data)

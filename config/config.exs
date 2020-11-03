@@ -42,6 +42,7 @@ config :vex,
   sources: [
     DealogBackoffice.Validators,
     DealogBackoffice.Messages.Validators,
+    DealogBackoffice.Accounts.Validators,
     Vex.Validators
   ]
 

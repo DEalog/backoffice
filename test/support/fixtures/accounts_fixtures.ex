@@ -24,4 +24,12 @@ defmodule DealogBackoffice.AccountsFixtures do
     [_, token, _] = String.split(captured.text_body, "[TOKEN]")
     token
   end
+
+  def create_account_and_link_user(user) do
+    DealogBackoffice.Accounts.create_account(%{
+      first_name: "John",
+      last_name: "Doe",
+      user_id: user.id
+    })
+  end
 end

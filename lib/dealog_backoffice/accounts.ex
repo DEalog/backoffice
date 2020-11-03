@@ -394,6 +394,13 @@ defmodule DealogBackoffice.Accounts do
     get(Account, id)
   end
 
+  def get_account_by_user(user_id) when is_binary(user_id) do
+    case Repo.get_by(Account, user_id: user_id) do
+      nil -> {:error, :not_found}
+      account -> {:ok, account}
+    end
+  end
+
   defp get(schema, uuid) do
     case Repo.get(schema, uuid) do
       nil -> {:error, :not_found}
