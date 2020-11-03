@@ -2,6 +2,7 @@ defmodule DealogBackofficeWeb.SettingsLive.Index do
   use DealogBackofficeWeb, :live_view
 
   alias DealogBackoffice.Accounts
+  alias DealogBackoffice.Accounts.User
 
   @impl true
   def mount(_params, session, socket) do
@@ -20,5 +21,33 @@ defmodule DealogBackofficeWeb.SettingsLive.Index do
       active_page: :settings,
       users: Accounts.list()
     )
+  end
+
+  defp get_latest_change(%User{} = user) do
+    if user.account do
+      account_updated = user.account.updated_at
+
+      user_updated =
+        user.updated_at
+        |> DateTime.from_naive!("Etc/UTC")
+
+      if DateTime.diff(user_updated, account_updated) < 0, do: account_updated, else: user_updated
+    else
+      user.updated_at
+    end
+  end
+
+  defp get_status(%User{} = user) do
+    user_status =
+      cond do
+        user.confirmed_at -> :confirmed
+        true -> :unconfirmed
+      end
+
+    if user.account do
+      {user_status, :onboarded}
+    else
+      {user_status, :new}
+    end
   end
 end

@@ -1,7 +1,7 @@
 <%
   errors = if assigns[:errors], do: @errors, else: %{}
   # TODO Move this somewhere else. Maybe to the live view.
-  fields_with_labels = [first_name: gettext("First name"), last_name: gettext("Last name")]
+  fields_with_labels = [first_name: gettext("First name"), last_name: gettext("Last name"), user_id: gettext("User")]
 %>
 <%=
   f = form_for :account, "#",

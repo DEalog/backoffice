@@ -12,6 +12,10 @@ defmodule DealogBackofficeWeb.DateHelpers do
     |> format_date_time()
   end
 
+  def display_date_time_relative(%NaiveDateTime{} = date_time) do
+    display_date_time_relative(DateTime.from_naive!(date_time, "Etc/UTC"))
+  end
+
   def display_date_time_relative(%DateTime{} = date_time) do
     Timex.lformat!(date_time, "{relative}", read_config(:locale), :relative)
   end
