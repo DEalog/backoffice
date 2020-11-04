@@ -7,7 +7,7 @@ defmodule DealogBackoffice.Router do
   use Commanded.Commands.Router
 
   alias DealogBackoffice.Accounts.Aggregates.Account
-  alias DealogBackoffice.Accounts.Commands.CreateAccount
+  alias DealogBackoffice.Accounts.Commands.{CreateAccount, ChangePersonalData}
 
   alias DealogBackoffice.Messages.Aggregates.Message
 
@@ -29,7 +29,7 @@ defmodule DealogBackoffice.Router do
 
   identify(Account, by: :account_id, prefix: "account-")
 
-  dispatch([CreateAccount], to: Account)
+  dispatch([CreateAccount, ChangePersonalData], to: Account)
 
   # Message
 

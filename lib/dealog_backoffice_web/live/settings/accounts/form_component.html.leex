@@ -39,6 +39,7 @@
         <%=
           text_input f,
             :first_name,
+            value: @account.first_name,
             class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :first_name), do: " border-red-700"}"
         %>
         <%=
@@ -53,7 +54,9 @@
             gettext("Last name")
         %>
         <%=
-          text_input f, :last_name,
+          text_input f, 
+            :last_name,
+            value: @account.last_name,
             class: "form-input flex-1 block w-full px-3 py-2 rounded-md sm:text-sm sm:leading-5#{if has_errors?(f, :body), do: " border-red-700"}"
         %>
         <%=

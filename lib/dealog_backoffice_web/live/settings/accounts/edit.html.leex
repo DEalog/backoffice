@@ -1,0 +1,39 @@
+<section class="w-full mx-auto">
+  <%
+    texts =
+      if @live_action in [:change] do
+        %{
+          heading: gettext("Change account for %{email}", email: @user.email),
+          hint: gettext("Changing the user's account.")
+        }
+      else
+        %{
+          heading: gettext("Create new account for %{email}", email: @user.email),
+          hint: gettext("Create a new account for an existing user.")
+        }
+      end
+  %>
+  <h1 class="text-2xl font-bold text-gray-900 leading-7 sm:text-3xl sm:leading-9 sm:truncate">
+    <%= texts.heading %>
+  </h1>
+  <p class="mt-4">
+    <%= texts.hint %>
+  </p>
+  <section class="mt-8">
+    <div>
+      <h2 class="text-xl font-bold text-gray-900 leading-7 sm:text-2xl sm:leading-9 sm:truncate">
+        <%= gettext "Personal data" %>
+      </h2>
+      <div class="w-full">
+        <%=
+          live_component @socket,
+            DealogBackofficeWeb.SettingsLive.Accounts.FormComponent,
+            id: @account.id || :new,
+            action: @live_action,
+            account: @account,
+            return_to: Routes.settings_path(@socket, :index)
+        %>
+      </div>
+    </div>
+  </section>
+</section>

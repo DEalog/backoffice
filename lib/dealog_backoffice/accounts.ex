@@ -9,7 +9,7 @@ defmodule DealogBackoffice.Accounts do
 
   alias DealogBackoffice.{App, Repo}
   alias DealogBackoffice.Accounts.{User, UserToken, UserNotifier}
-  alias DealogBackoffice.Accounts.Commands.CreateAccount
+  alias DealogBackoffice.Accounts.Commands.{CreateAccount, ChangePersonalData}
   alias DealogBackoffice.Accounts.Projections.Account
 
   ## Database getters
@@ -391,13 +391,30 @@ defmodule DealogBackoffice.Accounts do
   end
 
   def get_account(id) do
-    get(Account, id)
+    Account
+    |> preload([:user])
+    |> Repo.get(id)
+    |> case do
+      nil -> {:error, :not_found}
+      entity -> {:ok, entity}
+    end
   end
 
   def get_account_by_user(user_id) when is_binary(user_id) do
     case Repo.get_by(Account, user_id: user_id) do
       nil -> {:error, :not_found}
       account -> {:ok, account}
+    end
+  end
+
+  def change_account(%Account{} = account, attrs \\ %{}) do
+    change_personal_data =
+      attrs
+      |> ChangePersonalData.new()
+      |> ChangePersonalData.assign_account_id(account.id)
+
+    with :ok <- App.dispatch(change_personal_data, consistency: :strong) do
+      get(Account, account.id)
     end
   end
 

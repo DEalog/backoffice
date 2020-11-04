@@ -117,19 +117,25 @@
                     </td>
                     <td class="px-6 py-4 text-sm font-medium text-right whitespace-no-wrap leading-5">
                       <div>
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">
+                        <a href="#" class="text-yellow-400 hover:text-yellow-600">
                           <%= gettext "Lock" %>
                         </a>
                       </div>
-                      <%= if account_status == :new do %>
-                        <div class="mt-2">
+                      <div class="mt-2">
+                        <%= if account_status == :new do %>
                           <%=
                             link gettext("Onboard"),
                               to: Routes.settings_path(@socket, :new, user),
-                              class: "text-indigo-600 hover:text-indigo-900"
+                              class: "text-yellow-400 hover:text-yellow-600"
                           %>
-                        </div>
-                      <% end %>
+                        <% else %>
+                          <%=
+                            link gettext("Edit"),
+                              to: Routes.settings_path(@socket, :change, user.account),
+                              class: "text-yellow-400 hover:text-yellow-600"
+                          %>
+                        <% end %>
+                      </div>
                     </td>
                   </tr>
                 <% end %>
