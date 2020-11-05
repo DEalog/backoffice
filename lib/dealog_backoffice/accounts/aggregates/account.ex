@@ -4,15 +4,24 @@ defmodule DealogBackoffice.Accounts.Aggregates.Account do
     :first_name,
     :last_name,
     :user_id,
+    :administrative_area,
     :organization,
-    :administrative_area
+    :position
   ]
 
   alias DealogBackoffice.Accounts.Aggregates.Account
 
-  alias DealogBackoffice.Accounts.Commands.{CreateAccount, ChangePersonalData}
+  alias DealogBackoffice.Accounts.Commands.{
+    CreateAccount,
+    ChangePersonalData,
+    ChangeOrganizationalSettings
+  }
 
-  alias DealogBackoffice.Accounts.Events.{AccountCreated, PersonalDataChanged}
+  alias DealogBackoffice.Accounts.Events.{
+    AccountCreated,
+    PersonalDataChanged,
+    OrganizationalSettingsChanged
+  }
 
   def execute(%Account{account_id: nil}, %CreateAccount{} = create) do
     %AccountCreated{
@@ -31,6 +40,18 @@ defmodule DealogBackoffice.Accounts.Aggregates.Account do
     }
   end
 
+  def execute(
+        %Account{account_id: account_id},
+        %ChangeOrganizationalSettings{} = change_organizational_settings
+      ) do
+    %OrganizationalSettingsChanged{
+      account_id: account_id,
+      administrative_area: change_organizational_settings.administrative_area,
+      organization: change_organizational_settings.organization,
+      position: change_organizational_settings.position
+    }
+  end
+
   def apply(%Account{} = account, %AccountCreated{} = created) do
     %Account{
       account
@@ -46,6 +67,15 @@ defmodule DealogBackoffice.Accounts.Aggregates.Account do
       account
       | first_name: personal_data_changed.first_name,
         last_name: personal_data_changed.last_name
+    }
+  end
+
+  def apply(%Account{} = account, %OrganizationalSettingsChanged{} = organizational_data_changed) do
+    %Account{
+      account
+      | administrative_area: organizational_data_changed.administrative_area,
+        organization: organizational_data_changed.organization,
+        position: organizational_data_changed.position
     }
   end
 end

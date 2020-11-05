@@ -525,7 +525,7 @@ defmodule DealogBackoffice.AccountsTest do
 
   describe "change_account/2" do
     @tag :integration
-    test "should succeed with valid data" do
+    test "should succeed changing personal data with valid data" do
       user = user_fixture()
 
       {:ok, %Account{} = account} =
@@ -539,22 +539,42 @@ defmodule DealogBackoffice.AccountsTest do
       assert changed_account.user_id == account.user_id
     end
 
-    #    @tag :integration
-    #    test "should fail when user already has an account" do
-    #      user = user_fixture()
-    #      data = %{first_name: "John", last_name: "Doe", user_id: user.id}
-    #      Accounts.create_account(data)
-    #
-    #      assert {:error, {:validation_failure, errors}} = Accounts.create_account(data)
-    #      assert %{user_id: _} = errors
-    #    end
-    #
-    #    @tag :integration
-    #    test "should fail when data is invalid" do
-    #      data = %{first_name: nil, last_name: nil, user_id: UUID.uuid4()}
-    #      assert {:error, {:validation_failure, errors}} = Accounts.create_account(data)
-    #
-    #      assert %{first_name: _, last_name: _} = errors
-    #    end
+    @tag :integration
+    test "should succeed changing organizational settings with valid data" do
+      user = user_fixture()
+
+      {:ok, %Account{} = account} =
+        Accounts.create_account(%{first_name: "John", last_name: "Doe", user_id: user.id})
+
+      assert {:ok, %Account{} = changed_account} =
+               Accounts.change_account(account, %{
+                 administrative_area: "123",
+                 organization: "An organization",
+                 position: "A position"
+               })
+
+      assert changed_account.first_name == "John"
+      assert changed_account.last_name == "Doe"
+      assert changed_account.user_id == account.user_id
+      assert changed_account.administrative_area == "123"
+      assert(changed_account.organization == "An organization")
+      assert changed_account.position == "A position"
+    end
+
+    @tag :integration
+    test "should fail when data is invalid" do
+      user = user_fixture()
+
+      {:ok, %Account{} = account} =
+        Accounts.create_account(%{first_name: "John", last_name: "Doe", user_id: user.id})
+
+      assert {:error, {:validation_failure, errors}} =
+               Accounts.change_account(account, %{
+                 first_name: nil,
+                 last_name: nil
+               })
+
+      assert %{first_name: _, last_name: _} = errors
+    end
   end
 end

@@ -1,8 +1,17 @@
 defmodule DealogBackoffice.Accounts.Aggregates.AccountTest do
   use DealogBackoffice.AggregateCase, aggregate: DealogBackoffice.Accounts.Aggregates.Account
 
-  alias DealogBackoffice.Accounts.Commands.{CreateAccount, ChangePersonalData}
-  alias DealogBackoffice.Accounts.Events.{AccountCreated, PersonalDataChanged}
+  alias DealogBackoffice.Accounts.Commands.{
+    CreateAccount,
+    ChangePersonalData,
+    ChangeOrganizationalSettings
+  }
+
+  alias DealogBackoffice.Accounts.Events.{
+    AccountCreated,
+    PersonalDataChanged,
+    OrganizationalSettingsChanged
+  }
 
   describe "create account" do
     @tag :unit
@@ -43,6 +52,37 @@ defmodule DealogBackoffice.Accounts.Aggregates.AccountTest do
             account_id: account_id,
             first_name: "Johnny",
             last_name: "Doesy"
+          }
+        ]
+      )
+    end
+  end
+
+  describe "change organizational settings" do
+    @tag :unit
+    test "should successfully change when valid" do
+      account_id = UUID.uuid4()
+
+      assert_events(
+        [
+          %AccountCreated{
+            account_id: account_id,
+            first_name: "John",
+            last_name: "Doe",
+            user_id: ""
+          }
+        ],
+        struct(ChangeOrganizationalSettings, %{
+          administrative_area: "123",
+          organization: "An organization",
+          position: "A position"
+        }),
+        [
+          %OrganizationalSettingsChanged{
+            account_id: account_id,
+            administrative_area: "123",
+            organization: "An organization",
+            position: "A position"
           }
         ]
       )

@@ -45,7 +45,7 @@ defmodule DealogBackoffice.AdministrativeAreasTest do
 
   describe "listing hierarchical filtered administrative areas" do
     test "returns empty list if nothing is there" do
-      assert [] == AdministrativeAreas.list_hierarchical_by("0")
+      assert AdministrativeAreas.list_hierarchical_by("0") == []
     end
 
     test "returns list when areas are available" do
@@ -60,7 +60,8 @@ defmodule DealogBackoffice.AdministrativeAreasTest do
 
     test "returns an empty list when areas are available but not matching" do
       create_administrative_area()
-      assert [] == AdministrativeAreas.list_hierarchical_by("0")
+
+      assert AdministrativeAreas.list_hierarchical_by("0") == []
     end
 
     test "returns a list with child ARS" do

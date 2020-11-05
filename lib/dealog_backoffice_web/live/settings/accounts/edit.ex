@@ -1,7 +1,7 @@
 defmodule DealogBackofficeWeb.SettingsLive.Accounts.Edit do
   use DealogBackofficeWeb, :live_view
 
-  alias DealogBackoffice.Accounts
+  alias DealogBackoffice.{Accounts, AdministrativeAreas}
 
   @impl true
   def mount(_params, session, socket) do
@@ -18,7 +18,16 @@ defmodule DealogBackofficeWeb.SettingsLive.Accounts.Edit do
       socket,
       page_title: gettext("Create user account"),
       active_page: :settings,
-      account: %{id: nil, first_name: nil, last_name: nil, user_id: user_id},
+      administrative_areas: get_areas_options(),
+      account: %{
+        id: nil,
+        first_name: nil,
+        last_name: nil,
+        user_id: user_id,
+        administrative_area: nil,
+        organization: nil,
+        position: nil
+      },
       user: Accounts.get_user!(user_id)
     )
   end
@@ -30,8 +39,17 @@ defmodule DealogBackofficeWeb.SettingsLive.Accounts.Edit do
       socket,
       page_title: gettext("Change user account"),
       active_page: :settings,
+      administrative_areas: get_areas_options(),
       account: account,
       user: account.user
     )
+  end
+
+  defp get_areas_options() do
+    areas =
+      AdministrativeAreas.list()
+      |> Enum.map(&{"#{&1.type_label} #{&1.name}", &1.ars})
+
+    [{gettext("Please choose an administrative area"), nil}] ++ areas
   end
 end

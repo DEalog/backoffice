@@ -9,8 +9,17 @@ defmodule DealogBackoffice.Accounts do
 
   alias DealogBackoffice.{App, Repo}
   alias DealogBackoffice.Accounts.{User, UserToken, UserNotifier}
-  alias DealogBackoffice.Accounts.Commands.{CreateAccount, ChangePersonalData}
+
+  alias DealogBackoffice.Accounts.Commands.{
+    CreateAccount,
+    ChangePersonalData,
+    ChangeOrganizationalSettings
+  }
+
   alias DealogBackoffice.Accounts.Projections.Account
+
+  @allowed_personal_data_keys [:first_name, :last_name]
+  @allowed_organizational_data_keys [:administrative_area, :organization, :position]
 
   ## Database getters
 
@@ -408,13 +417,67 @@ defmodule DealogBackoffice.Accounts do
   end
 
   def change_account(%Account{} = account, attrs \\ %{}) do
-    change_personal_data =
-      attrs
-      |> ChangePersonalData.new()
-      |> ChangePersonalData.assign_account_id(account.id)
-
-    with :ok <- App.dispatch(change_personal_data, consistency: :strong) do
+    with :ok <- maybe_change_personal_data(account, attrs),
+         :ok <- maybe_change_organizational_settings(account, attrs) do
       get(Account, account.id)
+    end
+  end
+
+  defp maybe_change_personal_data(account, attrs) do
+    if has_changed?(account, attrs, @allowed_personal_data_keys) do
+      change_personal_data =
+        attrs
+        |> ChangePersonalData.new()
+        |> ChangePersonalData.assign_account_id(account.id)
+
+      App.dispatch(change_personal_data, consistency: :strong)
+    else
+      :ok
+    end
+  end
+
+  defp maybe_change_organizational_settings(account, attrs) do
+    if has_changed?(account, attrs, @allowed_organizational_data_keys) do
+      change_organizational_settings =
+        attrs
+        |> ChangeOrganizationalSettings.new()
+        |> ChangeOrganizationalSettings.assign_account_id(account.id)
+
+      App.dispatch(change_organizational_settings, consistency: :strong)
+    else
+      :ok
+    end
+  end
+
+  # Check if there has been a content change.
+  defp has_changed?(account, attrs, allowed_keys) do
+    attrs =
+      attrs
+      |> filter_by_map_keys(allowed_keys)
+      |> convert_map_keys()
+
+    account
+    |> Map.from_struct()
+    |> Map.take(Map.keys(attrs))
+    |> MapDiff.diff(attrs)
+    |> case do
+      %{changed: :equal} -> false
+      _ -> true
+    end
+  end
+
+  # Filter the input data map to only allow valid entries.
+  defp filter_by_map_keys(map, keys) do
+    Map.take(map, keys ++ Enum.map(keys, &Atom.to_string/1))
+  end
+
+  # Convert the map keys to atoms (if not already) to enable comparision with the struct.
+  defp convert_map_keys(map) do
+    for {key, val} <- map, into: %{} do
+      case key do
+        key when is_binary(key) -> {String.to_atom(key), val}
+        _ -> {key, val}
+      end
     end
   end
 
