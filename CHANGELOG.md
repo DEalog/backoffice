@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `FIX` Login with unconfirmed users issues a note
 - `ADD` Setup GH Actions to deploy application to AWS
 - `CNG` Send ARS instead of a geocode to Kafka
 - `CNG` Structure of administrative areas is changed to ARS (from AGS)

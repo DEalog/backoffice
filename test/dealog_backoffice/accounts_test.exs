@@ -27,8 +27,9 @@ defmodule DealogBackoffice.AccountsTest do
       refute Accounts.get_user_by_email_and_password(user.email, "invalid")
     end
 
-    test "returns the user if the email and password are valid" do
+    test "returns the user if the user is confirmed and email and password are valid" do
       %{id: id} = user = user_fixture()
+      confirm_user(user)
 
       assert %User{id: ^id} =
                Accounts.get_user_by_email_and_password(user.email, valid_user_password())
@@ -229,7 +230,9 @@ defmodule DealogBackoffice.AccountsTest do
 
   describe "update_user_password/3" do
     setup do
-      %{user: user_fixture()}
+      user = user_fixture()
+      confirm_user(user)
+      %{user: user}
     end
 
     test "validates password", %{user: user} do
@@ -438,7 +441,9 @@ defmodule DealogBackoffice.AccountsTest do
 
   describe "reset_user_password/2" do
     setup do
-      %{user: user_fixture()}
+      user = user_fixture()
+      confirm_user(user)
+      %{user: user}
     end
 
     test "validates password", %{user: user} do

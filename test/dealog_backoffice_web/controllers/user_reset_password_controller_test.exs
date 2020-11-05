@@ -6,7 +6,9 @@ defmodule DealogBackofficeWeb.UserResetPasswordControllerTest do
   import DealogBackoffice.AccountsFixtures
 
   setup do
-    %{user: user_fixture()}
+    user = user_fixture()
+    confirm_user(user)
+    %{user: user}
   end
 
   describe "GET /users/reset_password" do

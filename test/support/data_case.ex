@@ -25,6 +25,7 @@ defmodule DealogBackoffice.DataCase do
       import Ecto.Query
       import Commanded.Assertions.EventAssertions
       import DealogBackoffice.DataCase
+      import DealogBackoffice.AccountTestHelpers
     end
   end
 
