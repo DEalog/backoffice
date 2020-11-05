@@ -87,7 +87,7 @@
           <%=
             text_input f,
               :email,
-              value: @account.user.email,
+              value: @user.email,
               class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :email), do: " border-red-700"}"
           %>
           <p class="text-xs text-gray-500 leading-5">

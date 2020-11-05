@@ -3,6 +3,7 @@ defmodule DealogBackofficeWeb.SettingsLive.Index do
 
   alias DealogBackoffice.Accounts
   alias DealogBackoffice.Accounts.User
+  alias DealogBackoffice.AdministrativeAreas
 
   @impl true
   def mount(_params, session, socket) do
@@ -50,4 +51,11 @@ defmodule DealogBackofficeWeb.SettingsLive.Index do
       {user_status, :new}
     end
   end
+
+  defp get_area_name(ars) when not is_nil(ars) do
+    %{name: name, type_label: type} = AdministrativeAreas.get_by_ars(ars)
+    "#{type} #{name}"
+  end
+
+  defp get_area_name(_), do: ""
 end

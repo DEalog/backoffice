@@ -33,6 +33,12 @@ defmodule DealogBackoffice.AdministrativeAreas do
     |> Repo.all()
   end
 
+  def get_by_ars(ars) do
+    AdministrativeArea
+    |> where(ars: ^ars)
+    |> Repo.one!()
+  end
+
   @doc """
   Create a new administrative area.
 

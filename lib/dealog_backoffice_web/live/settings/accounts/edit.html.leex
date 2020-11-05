@@ -26,6 +26,7 @@
         id: @account.id || :new,
         action: @live_action,
         account: @account,
+        user: @user,
         administrative_areas: @administrative_areas,
         return_to: Routes.settings_path(@socket, :index)
     %>
