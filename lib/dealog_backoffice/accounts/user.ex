@@ -117,4 +117,10 @@ defmodule DealogBackoffice.Accounts.User do
       add_error(changeset, :current_password, "is not valid")
     end
   end
+
+  def confirmed?(user) when is_nil(user), do: false
+
+  def confirmed?(user) do
+    !is_nil(user.confirmed_at)
+  end
 end

@@ -31,6 +31,9 @@ defmodule DealogBackoffice.Accounts do
   @doc """
   Gets a user by email and password.
 
+  If the user is not yet confirmed they will be treated as with invalid
+  credentials to avoid tampering.
+
   ## Examples
 
       iex> get_user_by_email_and_password("foo@example.com", "correct_password")
@@ -43,7 +46,7 @@ defmodule DealogBackoffice.Accounts do
   def get_user_by_email_and_password(email, password)
       when is_binary(email) and is_binary(password) do
     user = Repo.get_by(User, email: email)
-    if User.valid_password?(user, password), do: user
+    if User.confirmed?(user) and User.valid_password?(user, password), do: user
   end
 
   @doc """
