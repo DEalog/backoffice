@@ -19,6 +19,13 @@ defmodule DealogBackoffice.AccountsFixtures do
     user
   end
 
+  def confirmed_user_fixture(attrs \\ %{}) do
+    user = user_fixture(attrs)
+    DealogBackoffice.AccountTestHelpers.confirm_user(user)
+
+    user
+  end
+
   def extract_user_token(fun) do
     {:ok, captured} = fun.(&"[TOKEN]#{&1}[TOKEN]")
     [_, token, _] = String.split(captured.text_body, "[TOKEN]")

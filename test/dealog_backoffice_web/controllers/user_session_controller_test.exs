@@ -6,9 +6,7 @@ defmodule DealogBackofficeWeb.UserSessionControllerTest do
   import DealogBackoffice.AccountsFixtures
 
   setup do
-    user = user_fixture()
-    confirm_user(user)
-    %{user: user}
+    %{user: confirmed_user_fixture()}
   end
 
   describe "GET /users/log_in" do
