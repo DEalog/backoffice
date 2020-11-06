@@ -8,13 +8,14 @@ on:
     branches:
       - main
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    name: Build Elixir project
+defaults:
+  run:
+    shell: sh
 
-    env:
-      MIX_ENV: prod
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    name: Create version number
 
     steps:
       - uses: actions/checkout@v2
@@ -24,25 +25,49 @@ jobs:
         uses: DEalog/version-action@v0.1.0
         with:
           fallback-prefix: "1.0.0-SNAPSHOT-"
+      
+      - name: Create artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: version
+          path: |
+            ./version.txt
+          if-no-files-found: error
+
+  build:
+    runs-on: ubuntu-latest
+    name: Build Elixir project
+
+    container: elixir:1.10.4-alpine
+
+    env:
+      MIX_ENV: prod
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Prepare build environment
+        run: |
+          apk add --no-cache build-base npm git python
+          npm install -g yarn
 
       - name: Cache Elixir dependencies
         id: mix_cache
         uses: actions/cache@v2
         with:
-          path: deps
+          path: |
+            ~/.mix
+            deps
           key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
           restore-keys: |
             ${{ runner.os }}-mix-
 
-      - name: Use Elixir
-        uses: actions/setup-elixir@v1
-        with:
-          elixir-version: "1.10.4"
-          otp-version: "23.0.2"
-
       - name: Install and compile Elixir dependencies
         if: steps.mix_cache.outputs.cache-hit != 'true'
-        run: mix do deps.get, deps.compile
+        run: |
+          mix local.hex --force
+          mix local.rebar --force
+          mix do deps.get, deps.compile
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -56,11 +81,6 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14'
 
       - name: Install Node.js dependencies (from cache)
         run: (cd ./assets && yarn install)
@@ -71,33 +91,36 @@ jobs:
       - name: Dump tailwindcss config
         run: (cd ./assets && yarn dump)
 
-      - name: Digests and compresses static files
+      - name: Digest and compress static files
         run: mix phx.digest
 
       - name: Compile and release application
         run: mix do compile, release
+      
+      - name: Tar application files to keep file permissions
+        run: tar -cvf app.tar ./_build/prod/rel/backoffice ./rel/run.sh
       
       - name: Create artifact
         uses: actions/upload-artifact@v2
         with:
           name: backoffice
           path: |
-            ./_build/prod/rel/backoffice
+            ./app.tar
             ./CHANGELOG.md
             ./.github/Dockerfile
-            ./rel/run.sh
-            ./version.txt
           if-no-files-found: error
   
   test:
     runs-on: ubuntu-latest
     name: Test Elixir project
 
+    container: elixir:1.10.4-alpine
+
     env:
       MIX_ENV: test
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_HOST: localhost
+      POSTGRES_HOST: db
 
     services:
       db:
@@ -112,24 +135,27 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Prepare build environment
+        run: |
+          apk add --no-cache build-base git python
+
       - name: Cache Elixir dependencies
         id: mix_cache
         uses: actions/cache@v2
         with:
-          path: deps
-          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+          path: |
+            ~/.mix
+            deps
+          key: ${{ runner.os }}-mix-test-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
           restore-keys: |
-            ${{ runner.os }}-mix-
-
-      - name: Use Elixir
-        uses: actions/setup-elixir@v1
-        with:
-          elixir-version: "1.10.4"
-          otp-version: "23.0.2"
+            ${{ runner.os }}-mix-test
 
       - name: Install and compile Elixir dependencies
         if: steps.mix_cache.outputs.cache-hit != 'true'
-        run: mix do deps.get, deps.compile
+        run: |
+          mix local.hex --force
+          mix local.rebar --force
+          mix do deps.get, deps.compile
 
       - name: Setup event store
         run: mix do event_store.create, event_store.init
@@ -140,13 +166,21 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     name: Dockerize and publish
-    needs: [ build ]
+    needs: [ version, build, test ]
 
     steps:
-      - name: Fetch artifact
+      - name: Fetch version artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: version
+      
+      - name: Fetch build artifact
         uses: actions/download-artifact@v2
         with:
           name: backoffice
+      
+      - name: Untar application files
+        run: tar -xvf app.tar .
 
       - name: Set env
         run: |
