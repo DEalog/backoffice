@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `FIX` The Kafka configuration is read correctly when no projectors are configured
 - `FIX` Login with unconfirmed users issues a note
 - `ADD` Setup GH Actions to deploy application to AWS
 - `CNG` Send ARS instead of a geocode to Kafka
