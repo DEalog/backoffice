@@ -27,7 +27,7 @@ jobs:
         echo ::set-env name=SERVICE_NAME::backoffice
         echo ::set-env name=CONTAINER_NAME::backoffice
         echo ::set-env name=FULL_IMAGE_NAME::$(cat ./dockerized-backoffice/full_image_name.txt)
-        echo ::set-env name=IMAGE_TAG::$(cat ./backoffice/version.txt)
+        echo ::set-env name=IMAGE_TAG::$(cat ./version/version.txt)
     
     - name: Set production env
       if: github.ref == 'refs/heads/main'
