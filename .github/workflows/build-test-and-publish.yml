@@ -211,7 +211,7 @@ jobs:
           dockerfile: ./.github/Dockerfile
       
       - name: Store docker image name
-        run: echo "${{ steps.docker-build.outputs.FULL_IMAGE_NAME }}:${{ env.VERSION }}" >> ./full_image_name.txt
+        run: echo ${{ steps.docker-build.outputs.FULL_IMAGE_NAME }} >> ./full_image_name.txt
 
       - name: Create artifact
         uses: actions/upload-artifact@v2
