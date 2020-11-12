@@ -2,6 +2,8 @@ defmodule DealogBackofficeWeb.SettingsLive.Accounts.FormComponent do
   use DealogBackofficeWeb, :live_component
 
   alias DealogBackoffice.Accounts
+  alias DealogBackoffice.Accounts.Projections.Account
+  alias DealogBackofficeWeb.SettingsLive.Accounts.FormData
 
   @impl true
   def update(assigns, socket) do
@@ -13,14 +15,16 @@ defmodule DealogBackofficeWeb.SettingsLive.Accounts.FormComponent do
   end
 
   @impl true
-  def handle_event("save_account", %{"account" => account_params}, socket) do
+  def handle_event("save", %{"form_data" => account_params}, socket) do
     {:noreply, apply_action(socket, socket.assigns.action, account_params)}
   end
 
   defp apply_action(socket, :new, account_params) do
-    case Accounts.create_account(account_params) do
-      {:error, {:validation_failure, errors}} ->
-        assign(socket, error: true, errors: errors, account: convert(account_params))
+    changeset = build_changeset(%Account{}, account_params)
+
+    case Accounts.create_account_from_changeset(changeset) do
+      {:error, changeset} ->
+        assign(socket, changeset: changeset)
 
       {:ok, account} ->
         socket
@@ -36,15 +40,12 @@ defmodule DealogBackofficeWeb.SettingsLive.Accounts.FormComponent do
   end
 
   defp apply_action(socket, :change, account_params) do
-    # TODO Move to change_message function to keep API clean
-    {:ok, original_account} =
-      account_params
-      |> Map.get("id")
-      |> Accounts.get_account()
+    account = load_account(account_params)
+    changeset = build_changeset(account, account_params)
 
-    case Accounts.change_account(original_account, account_params) do
-      {:error, {:validation_failure, errors}} ->
-        assign(socket, error: true, errors: errors, account: convert(account_params))
+    case Accounts.change_account_from_changeset(account, changeset) do
+      {:error, changeset} ->
+        assign(socket, changeset: changeset)
 
       {:ok, account} ->
         socket
@@ -59,11 +60,16 @@ defmodule DealogBackofficeWeb.SettingsLive.Accounts.FormComponent do
     end
   end
 
-  defp convert(%{
-         "id" => id,
-         "user_id" => user_id,
-         "first_name" => first_name,
-         "last_name" => last_name
-       }),
-       do: %{id: id, user_id: user_id, first_name: first_name, last_name: last_name}
+  defp build_changeset(%Account{} = account, params) do
+    account
+    |> FormData.load_from_account()
+    |> FormData.changeset_for_account(params)
+    |> Map.put(:action, :change_account)
+  end
+
+  defp load_account(%{"id" => id}) do
+    {:ok, account} = Accounts.get_account(id)
+
+    account
+  end
 end

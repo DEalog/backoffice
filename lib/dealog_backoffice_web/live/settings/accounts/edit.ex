@@ -2,6 +2,8 @@ defmodule DealogBackofficeWeb.SettingsLive.Accounts.Edit do
   use DealogBackofficeWeb, :live_view
 
   alias DealogBackoffice.{Accounts, AdministrativeAreas}
+  alias DealogBackoffice.Accounts.Projections.Account
+  alias DealogBackofficeWeb.SettingsLive.Accounts.FormData
 
   @impl true
   def mount(_params, session, socket) do
@@ -19,6 +21,7 @@ defmodule DealogBackofficeWeb.SettingsLive.Accounts.Edit do
       page_title: gettext("Create user account"),
       active_page: :settings,
       administrative_areas: get_areas_options(),
+      changeset: Accounts.new_account(user_id) |> build_changeset(),
       account: %{
         id: nil,
         first_name: nil,
@@ -40,9 +43,16 @@ defmodule DealogBackofficeWeb.SettingsLive.Accounts.Edit do
       page_title: gettext("Change user account"),
       active_page: :settings,
       administrative_areas: get_areas_options(),
+      changeset: build_changeset(account),
       account: account,
       user: account.user
     )
+  end
+
+  defp build_changeset(%Account{} = account) do
+    account
+    |> FormData.load_from_account()
+    |> FormData.changeset_for_account()
   end
 
   defp get_areas_options() do

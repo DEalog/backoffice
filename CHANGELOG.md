@@ -1,6 +1,6 @@
 ## Unreleased
 
-- `FIX` Login with unconfirmed users issues a note
+- `FIX` Login with unconfirmed users issues is handled by emitting a user or password wrong message
 - `ADD` Setup GH Actions to deploy application to AWS
 - `CNG` Send ARS instead of a geocode to Kafka
 - `CNG` Structure of administrative areas is changed to ARS (from AGS)

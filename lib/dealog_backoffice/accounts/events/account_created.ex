@@ -4,6 +4,9 @@ defmodule DealogBackoffice.Accounts.Events.AccountCreated do
     :account_id,
     :first_name,
     :last_name,
-    :user_id
+    :user_id,
+    :administrative_area,
+    :organization,
+    :position
   ]
 end

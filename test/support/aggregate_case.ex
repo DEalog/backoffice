@@ -36,7 +36,10 @@ defmodule DealogBackoffice.AggregateCase do
           |> evolve(initial_events)
           |> execute(commands)
 
-        assert error == expected_error, "Expected error did not occur"
+        assert error == expected_error, """
+        Expected error did not occur.
+        Expected: #{inspect(expected_error)}, got: #{inspect(error)}
+        """
       end
 
       # Apply one or more events to an aggregate

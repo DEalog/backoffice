@@ -23,12 +23,17 @@ defmodule DealogBackoffice.Accounts.Aggregates.Account do
     OrganizationalSettingsChanged
   }
 
+  def execute(%Account{}, %CreateAccount{user_id: ""}), do: {:error, :missing_user_id}
+
   def execute(%Account{account_id: nil}, %CreateAccount{} = create) do
     %AccountCreated{
       account_id: create.account_id,
       first_name: create.first_name,
       last_name: create.last_name,
-      user_id: create.user_id
+      user_id: create.user_id,
+      administrative_area: create.administrative_area,
+      organization: create.organization,
+      position: create.position
     }
   end
 

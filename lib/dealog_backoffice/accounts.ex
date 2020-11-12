@@ -18,9 +18,6 @@ defmodule DealogBackoffice.Accounts do
 
   alias DealogBackoffice.Accounts.Projections.Account
 
-  @allowed_personal_data_keys [:first_name, :last_name]
-  @allowed_organizational_data_keys [:administrative_area, :organization, :position]
-
   ## Database getters
 
   @doc """
@@ -387,7 +384,70 @@ defmodule DealogBackoffice.Accounts do
     end
   end
 
-  # Account
+  #
+  # Account related functions
+  #
+
+  @doc """
+  Get an account by its ID.
+
+  Returns `{:ok, account}` when found.
+  When the account could not be found it returns `{:error, :not_found}`
+  """
+  def get_account(id) do
+    Account
+    |> preload([:user])
+    |> Repo.get(id)
+    |> case do
+      nil -> {:error, :not_found}
+      entity -> {:ok, entity}
+    end
+  end
+
+  @doc """
+  Get an account by its linked user's ID.
+
+  Returns `{:ok, account}` when found.
+  When the account could not be found it returns `{:error, :not_found}`
+  """
+  def get_account_by_user(user_id) when is_binary(user_id) do
+    case Repo.get_by(Account, user_id: user_id) do
+      nil -> {:error, :not_found}
+      account -> {:ok, account}
+    end
+  end
+
+  @doc """
+  Build a new account with a to be linked user ID.
+  """
+  def new_account(user_id) do
+    %Account{user_id: user_id}
+  end
+
+  @doc """
+  Create a new account from a changeset.
+
+  This function first evaluates if the given changeset is valid. Then the 
+  account is created. Any failure will be reflected to the changeset.
+
+  Returns `{:ok, created_account}` on success.
+  Returns `{:error, changeset}` on failure.
+  """
+  def create_account_from_changeset(%Ecto.Changeset{} = changeset) do
+    if changeset.valid? do
+      {:ok, changes} = Ecto.Changeset.apply_action(changeset, :create_account)
+
+      case create_account(Map.from_struct(changes)) do
+        {:error, {:validation_failure, errors}} ->
+          {:error, assign_errors_to_changeset(changeset, errors)}
+
+        {:ok, account} ->
+          {:ok, account}
+      end
+    else
+      {:error, changeset}
+    end
+  end
 
   def create_account(attrs \\ %{}) do
     account_id = UUID.uuid4()
@@ -402,23 +462,43 @@ defmodule DealogBackoffice.Accounts do
     end
   end
 
-  def get_account(id) do
-    Account
-    |> preload([:user])
-    |> Repo.get(id)
-    |> case do
-      nil -> {:error, :not_found}
-      entity -> {:ok, entity}
+  @doc """
+  Change an existing account from a changeset.
+
+  This function first evaluates if the given changeset is valid. Then the 
+  account is changed. Any failure will be reflected to the changeset.
+
+  Returns `{:ok, changed_account}` on success.
+  Returns `{:error, changeset}` on failure.
+  """
+  def change_account_from_changeset(%Account{} = account, %Ecto.Changeset{} = changeset) do
+    if changeset.valid? do
+      {:ok, changes} = Ecto.Changeset.apply_action(changeset, :change_account)
+
+      case change_account(account, Map.from_struct(changes)) do
+        {:error, {:validation_failure, errors}} ->
+          {:error, assign_errors_to_changeset(changeset, errors)}
+
+        {:ok, account} ->
+          {:ok, account}
+      end
+    else
+      {:error, changeset}
     end
   end
 
-  def get_account_by_user(user_id) when is_binary(user_id) do
-    case Repo.get_by(Account, user_id: user_id) do
-      nil -> {:error, :not_found}
-      account -> {:ok, account}
-    end
-  end
+  @doc """
+  Change an existing account.
 
+  This function changes the personal data and/or the organizational settings of
+  a given account.
+
+  A check is performed to determine if the changed data affects the personal 
+  data or the organizational settings and each change is only performed then.
+
+  Returns `{:ok, account}` on success.
+  If there is an error it returns `{:error, {:validation_failure, errors}}`.
+  """
   def change_account(%Account{} = account, attrs \\ %{}) do
     with :ok <- maybe_change_personal_data(account, attrs),
          :ok <- maybe_change_organizational_settings(account, attrs) do
@@ -426,8 +506,20 @@ defmodule DealogBackoffice.Accounts do
     end
   end
 
+  # Assign errors from the domain layer to the changeset
+  defp assign_errors_to_changeset(changeset, errors) do
+    Enum.reduce(errors, changeset, fn {field, messages}, changeset ->
+      Enum.reduce(messages, changeset, fn message, changeset ->
+        Ecto.Changeset.add_error(changeset, field, message, validation: :domain_failure)
+      end)
+    end)
+  end
+
+  @personal_data_keys [:first_name, :last_name]
+  @organizational_data_keys [:administrative_area, :organization, :position]
+
   defp maybe_change_personal_data(account, attrs) do
-    if has_changed?(account, attrs, @allowed_personal_data_keys) do
+    if has_changed?(account, attrs, @personal_data_keys) do
       change_personal_data =
         attrs
         |> ChangePersonalData.new()
@@ -440,7 +532,7 @@ defmodule DealogBackoffice.Accounts do
   end
 
   defp maybe_change_organizational_settings(account, attrs) do
-    if has_changed?(account, attrs, @allowed_organizational_data_keys) do
+    if has_changed?(account, attrs, @organizational_data_keys) do
       change_organizational_settings =
         attrs
         |> ChangeOrganizationalSettings.new()

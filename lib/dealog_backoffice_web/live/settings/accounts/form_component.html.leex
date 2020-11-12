@@ -1,33 +1,25 @@
-<%
-  errors = if assigns[:errors], do: @errors, else: %{}
-  # TODO Move this somewhere else. Maybe to the live view.
-  fields_with_labels = [first_name: gettext("First name"), last_name: gettext("Last name"), user_id: gettext("User")]
-%>
 <%=
-  f = form_for :account, "#",
-    errors: errors,
+  f = form_for @changeset, "#",
     phx_target: @myself,
-    phx_submit: "save_account"
+    phx_submit: "save"
 %>
-  <%= if assigns[:error] do %>
-    <div class="mt-4">
+  <%= if has_errors?(@changeset) do %>
+    <div class="my-4">
       <%=
         live_component @socket,
           DealogBackofficeWeb.BannerError,
-          heading: dgettext("errors", "There were errors in the form!"),
-          errors: all_errors(errors, fields_with_labels)
+          heading: dgettext("errors", "There are errors in the form."),
+          hint: dgettext("errors", "Please check the form fields for error reasons.")
       %>
     </div>
   <% end %>
   <%=
     hidden_input f,
-      :id,
-      value: @account.id
+      :id
   %>
   <%=
     hidden_input f,
-      :user_id,
-      value: @account.user_id
+      :user_id
   %>
   <div class="shadow sm:rounded-md sm:overflow-hidden">
     <div class="px-4 py-6 bg-white space-y-6 sm:p-6">
@@ -49,14 +41,13 @@
           <%=
             text_input f,
               :first_name,
-              value: @account.first_name,
               placeholder: gettext("First name, e.g. Maxime"),
               class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :first_name), do: " border-red-700"}"
           %>
           <%=
-            errors_for_field f,
+            error_tag f,
               :first_name,
-              class: if has_errors?(f, :first_name), do: "text-red-700", else: ""
+              class: "text-red-700"
           %>
         </div>
         <div class="col-span-4 sm:col-span-2">
@@ -68,35 +59,13 @@
           <%=
             text_input f,
               :last_name,
-              value: @account.last_name,
               placeholder: gettext("Last name, e.g. Mustermann"),
               class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :last_name), do: " border-red-700"}"
           %>
           <%=
-            errors_for_field f,
+            error_tag f,
               :last_name,
-              class: if has_errors?(f, :last_name), do: "text-red-700", else: ""
-          %>
-        </div>
-        <div class="col-span-4 sm:col-span-2">
-          <%=
-            label f,
-              :email,
-              gettext("Email address")
-          %>
-          <%=
-            text_input f,
-              :email,
-              value: @user.email,
-              class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :email), do: " border-red-700"}"
-          %>
-          <p class="text-xs text-gray-500 leading-5">
-            <%= gettext "Note that changing the email address will issue a confirmation email to the user's email address! The user needs to confirm the change until it gets effective." %>
-          </p>
-          <%=
-            errors_for_field f,
-              :email,
-              class: if has_errors?(f, :email), do: "text-red-700", else: ""
+              class: "text-red-700"
           %>
         </div>
       </div>
@@ -121,13 +90,12 @@
             select f,
               :administrative_area,
               @administrative_areas,
-              value: @account.administrative_area,
               class: "form-select block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :administrative_area), do: " border-red-700"}"
           %>
           <%=
-            errors_for_field f,
+            error_tag f,
               :administrative_area,
-              class: if has_errors?(f, :administrative_area), do: "text-red-700", else: ""
+              class: "text-red-700"
           %>
         </div>
         <div></div>
@@ -140,14 +108,13 @@
           <%=
             text_input f,
               :organization,
-              value: @account.organization,
               placeholder: gettext("Name of the organization, e.g. fire department"),
               class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :organization), do: " border-red-700"}"
           %>
           <%=
-            errors_for_field f,
+            error_tag f,
               :organization,
-              class: if has_errors?(f, :organization), do: "text-red-700", else: ""
+              class: "text-red-700"
           %>
         </div>
         <div class="col-span-4 sm:col-span-2">
@@ -159,14 +126,13 @@
           <%=
             text_input f,
               :position,
-              value: @account.position,
               placeholder: gettext("Position in the organization, e.g. captain"),
               class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :position), do: " border-red-700"}"
           %>
           <%=
-            errors_for_field f,
+            error_tag f,
               :position,
-              class: if has_errors?(f, :position), do: "text-red-700", else: ""
+              class: "text-red-700"
           %>
         </div>
       </div>
