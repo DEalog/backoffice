@@ -44,6 +44,7 @@ jobs:
       run: aws ecs describe-task-definition --task-definition ${{ env.SERVICE_NAME }} --query taskDefinition > task-definition.json
 
     - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def-update
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: ./task-definition.json
@@ -53,7 +54,7 @@ jobs:
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        task-definition: ./task-definition.json
+        task-definition: ${{ steps.task-def-update.outputs.task-definition }}
         service: ${{ env.SERVICE_NAME }}
         cluster: ${{ env.CLUSTER_NAME }}
         wait-for-service-stability: true
