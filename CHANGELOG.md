@@ -1,6 +1,7 @@
 ## Unreleased
 
 - `FIX` Login with unconfirmed users issues is handled by emitting a user or password wrong message
+- `FIX` The Kafka configuration is read correctly when no projectors are configured
 - `ADD` Setup GH Actions to deploy application to AWS
 - `CNG` Send ARS instead of a geocode to Kafka
 - `CNG` Structure of administrative areas is changed to ARS (from AGS)
