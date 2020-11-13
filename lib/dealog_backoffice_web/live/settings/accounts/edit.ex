@@ -22,16 +22,7 @@ defmodule DealogBackofficeWeb.SettingsLive.Accounts.Edit do
       active_page: :settings,
       administrative_areas: get_areas_options(),
       changeset: Accounts.new_account(user_id) |> build_changeset(),
-      account: %{
-        id: nil,
-        first_name: nil,
-        last_name: nil,
-        user_id: user_id,
-        administrative_area: nil,
-        organization: nil,
-        position: nil
-      },
-      user: Accounts.get_user!(user_id)
+      account: nil
     )
   end
 
@@ -43,9 +34,7 @@ defmodule DealogBackofficeWeb.SettingsLive.Accounts.Edit do
       page_title: gettext("Change user account"),
       active_page: :settings,
       administrative_areas: get_areas_options(),
-      changeset: build_changeset(account),
-      account: account,
-      user: account.user
+      changeset: build_changeset(account)
     )
   end
 

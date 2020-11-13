@@ -3,12 +3,12 @@
     texts =
       if @live_action in [:change] do
         %{
-          heading: gettext("Change account for %{email}", email: @user.email),
+          heading: gettext("Change account"),
           hint: gettext("Change the user's personal data and organizational settings.")
         }
       else
         %{
-          heading: gettext("Create new account for %{email}", email: @user.email),
+          heading: gettext("Create new account"),
           hint: gettext("Create a new account for an existing user by providing their personal data as well organizational assignments.")
         }
       end
@@ -23,11 +23,9 @@
     <%=
       live_component @socket,
         DealogBackofficeWeb.SettingsLive.Accounts.FormComponent,
-        id: @account.id || :new,
+        id: @changeset.data.id || :new,
         action: @live_action,
         changeset: @changeset,
-        account: @account,
-        user: @user,
         administrative_areas: @administrative_areas,
         return_to: Routes.settings_path(@socket, :index)
     %>
