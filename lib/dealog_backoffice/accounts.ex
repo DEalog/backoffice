@@ -449,6 +449,12 @@ defmodule DealogBackoffice.Accounts do
     end
   end
 
+  @doc """
+  Create an account.
+
+  Returns `{:ok, created_account}` on success.
+  Returns `{:error, {:validation_failure, errors}}` on failure.
+  """
   def create_account(attrs \\ %{}) do
     account_id = UUID.uuid4()
 
