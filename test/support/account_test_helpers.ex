@@ -52,9 +52,26 @@ defmodule DealogBackoffice.AccountTestHelpers do
     |> Plug.Conn.put_session(:user_token, token)
   end
 
+  @doc """
+  Extract the user from the session.
+  """
   def get_user_from_session(conn) do
     conn
     |> Plug.Conn.get_session(:user_token)
     |> DealogBackoffice.Accounts.get_user_by_session_token()
+  end
+
+  @doc """
+  Create an account for a given user.
+  """
+  def create_account_for_user(user) do
+    {:ok, account} =
+      DealogBackoffice.Accounts.create_account(%{
+        first_name: "Han",
+        last_name: "Solo",
+        user_id: user.id
+      })
+
+    account
   end
 end
