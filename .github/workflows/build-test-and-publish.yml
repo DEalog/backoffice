@@ -168,6 +168,10 @@ jobs:
     name: Dockerize and publish
     needs: [version, build, test]
 
+    env:
+      AWS_REGION: eu-central-1
+      IMAGE_REPO: backoffice
+
     steps:
       - name: Fetch version artifact
         uses: actions/download-artifact@v2
@@ -184,9 +188,7 @@ jobs:
 
       - name: Set env
         run: |
-          echo "{VERSION}={$(cat ./version.txt)}" >> ${GITHUB_ENV}
-          echo "{IMAGE_REPO}={backoffice}" >> ${GITHUB_ENV}
-          echo "{AWS_REGION}={eu-central-1}" >> ${GITHUB_ENV}
+          echo "VERSION=$(cat ./version.txt)" >> ${GITHUB_ENV}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1

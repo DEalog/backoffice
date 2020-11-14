@@ -13,6 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy to Amazon ECS
 
+    env:
+      AWS_REGION: eu-central-1
+      CLUSTER_NAME: dealog-dev
+      SERVICE_NAME: backoffice
+      CONTAINER_NAME: backoffice
+
     steps:
       - name: Download build artifacts
         uses: dawidd6/action-download-artifact@v2
@@ -21,10 +27,6 @@ jobs:
 
       - name: Set env
         run: |
-          echo "{AWS_REGION}={eu-central-1}" >> ${GITHUB_ENV}
-          echo "{CLUSTER_NAME}={dealog-dev}" >> ${GITHUB_ENV}
-          echo "{SERVICE_NAME}={backoffice}" >> ${GITHUB_ENV}
-          echo "{CONTAINER_NAME}={backoffice}" >> ${GITHUB_ENV}
           echo "{FULL_IMAGE_NAME}={$(cat ./dockerized-backoffice/full_image_name.txt)}" >> ${GITHUB_ENV}
           echo "{IMAGE_TAG}={$(cat ./version/version.txt)}" >> ${GITHUB_ENV}
 
