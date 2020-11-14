@@ -19,6 +19,13 @@ defmodule DealogBackofficeWeb.ErrorHelpers do
   end
 
   @doc """
+  Check if the given changeset has errors.
+  """
+  def has_errors?(%Ecto.Changeset{} = changeset) do
+    changeset.action && not changeset.valid?
+  end
+
+  @doc """
   Check if the given form field has errors.
   """
   def has_errors?(form, field) do
@@ -34,6 +41,7 @@ defmodule DealogBackofficeWeb.ErrorHelpers do
   @doc """
   Generate the error message(s) for a specific field.
   """
+  @deprecated "Please do not use this function anymore and switch to error_tag/3"
   def errors_for_field(form, field, opts \\ []) do
     if Map.has_key?(Map.from_struct(form).errors, field) do
       content_tag(:span, translate(Map.get(Map.from_struct(form).errors, field)),
@@ -43,19 +51,19 @@ defmodule DealogBackofficeWeb.ErrorHelpers do
     end
   end
 
-  @doc """
-  Generates tag for inlined form input errors.
-  """
-  def error_tag(form, field) do
-    Enum.map(Keyword.get_values(form.errors, field), fn error ->
-      content_tag(:span, translate_error(error), class: "help-block")
-    end)
-  end
-
   defp translate(errors) when is_list(errors) do
     errors = Enum.map(errors, &translate_error({&1, []}))
     glue = Gettext.dgettext(DealogBackofficeWeb.Gettext, "errors", "and")
     Enum.join(errors, " #{glue} ")
+  end
+
+  @doc """
+  Generates tag for inlined form input errors.
+  """
+  def error_tag(form, field, opts \\ []) do
+    Enum.map(Keyword.get_values(form.errors, field), fn error ->
+      content_tag(:span, translate_error(error), opts)
+    end)
   end
 
   @doc """

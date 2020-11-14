@@ -7,10 +7,27 @@ defmodule DealogBackoffice.Accounts do
 
   import Ecto.Query, warn: false
 
-  alias DealogBackoffice.Repo
+  alias DealogBackoffice.{App, Repo}
   alias DealogBackoffice.Accounts.{User, UserToken, UserNotifier}
 
+  alias DealogBackoffice.Accounts.Commands.{
+    CreateAccount,
+    ChangePersonalData,
+    ChangeOrganizationalSettings
+  }
+
+  alias DealogBackoffice.Accounts.Projections.Account
+
   ## Database getters
+
+  @doc """
+  List users.
+  """
+  def list do
+    User
+    |> preload(:account)
+    |> Repo.all()
+  end
 
   @doc """
   Gets a user by email.
@@ -64,6 +81,20 @@ defmodule DealogBackoffice.Accounts do
 
   """
   def get_user!(id), do: Repo.get!(User, id)
+
+  @doc """
+  Gets a single user.
+
+  ## Examples
+
+      iex> get_user(123)
+      {:ok, %User{}}
+
+      iex> get_user(456)
+      {:error, :not_found}
+
+  """
+  def get_user(id), do: get(User, id)
 
   ## User registration
 
@@ -350,6 +381,211 @@ defmodule DealogBackoffice.Accounts do
     |> case do
       {:ok, %{user: user}} -> {:ok, user}
       {:error, :user, changeset, _} -> {:error, changeset}
+    end
+  end
+
+  #
+  # Account related functions
+  #
+
+  @doc """
+  Get an account by its ID.
+
+  Returns `{:ok, account}` when found.
+  When the account could not be found it returns `{:error, :not_found}`
+  """
+  def get_account(id) do
+    Account
+    |> preload([:user])
+    |> Repo.get(id)
+    |> case do
+      nil -> {:error, :not_found}
+      entity -> {:ok, entity}
+    end
+  end
+
+  @doc """
+  Get an account by its linked user's ID.
+
+  Returns `{:ok, account}` when found.
+  When the account could not be found it returns `{:error, :not_found}`
+  """
+  def get_account_by_user(user_id) when is_binary(user_id) do
+    case Repo.get_by(Account, user_id: user_id) do
+      nil -> {:error, :not_found}
+      account -> {:ok, account}
+    end
+  end
+
+  @doc """
+  Build a new account with a to be linked user ID.
+  """
+  def new_account(user_id) do
+    %Account{user_id: user_id}
+  end
+
+  @doc """
+  Create a new account from a changeset.
+
+  This function first evaluates if the given changeset is valid. Then the
+  account is created. Any failure will be reflected to the changeset.
+
+  Returns `{:ok, created_account}` on success.
+  Returns `{:error, changeset}` on failure.
+  """
+  def create_account_from_changeset(%Ecto.Changeset{} = changeset) do
+    if changeset.valid? do
+      {:ok, changes} = Ecto.Changeset.apply_action(changeset, :create_account)
+
+      case create_account(Map.from_struct(changes)) do
+        {:error, {:validation_failure, errors}} ->
+          {:error, assign_errors_to_changeset(changeset, errors)}
+
+        {:ok, account} ->
+          {:ok, account}
+      end
+    else
+      {:error, changeset}
+    end
+  end
+
+  @doc """
+  Create an account.
+
+  Returns `{:ok, created_account}` on success.
+  Returns `{:error, {:validation_failure, errors}}` on failure.
+  """
+  def create_account(attrs \\ %{}) do
+    account_id = UUID.uuid4()
+
+    create_account =
+      attrs
+      |> CreateAccount.new()
+      |> CreateAccount.assign_account_id(account_id)
+
+    with :ok <- App.dispatch(create_account, consistency: :strong) do
+      get(Account, account_id)
+    end
+  end
+
+  @doc """
+  Change an existing account from a changeset.
+
+  This function first evaluates if the given changeset is valid. Then the
+  account is changed. Any failure will be reflected to the changeset.
+
+  Returns `{:ok, changed_account}` on success.
+  Returns `{:error, changeset}` on failure.
+  """
+  def change_account_from_changeset(%Account{} = account, %Ecto.Changeset{} = changeset) do
+    if changeset.valid? do
+      {:ok, changes} = Ecto.Changeset.apply_action(changeset, :change_account)
+
+      case change_account(account, Map.from_struct(changes)) do
+        {:error, {:validation_failure, errors}} ->
+          {:error, assign_errors_to_changeset(changeset, errors)}
+
+        {:ok, account} ->
+          {:ok, account}
+      end
+    else
+      {:error, changeset}
+    end
+  end
+
+  @doc """
+  Change an existing account.
+
+  This function changes the personal data and/or the organizational settings of
+  a given account.
+
+  A check is performed to determine if the changed data affects the personal
+  data or the organizational settings and each change is only performed then.
+
+  Returns `{:ok, account}` on success.
+  If there is an error it returns `{:error, {:validation_failure, errors}}`.
+  """
+  def change_account(%Account{} = account, attrs \\ %{}) do
+    with :ok <- maybe_change_personal_data(account, attrs),
+         :ok <- maybe_change_organizational_settings(account, attrs) do
+      get(Account, account.id)
+    end
+  end
+
+  # Assign errors from the domain layer to the changeset
+  defp assign_errors_to_changeset(changeset, errors) do
+    Enum.reduce(errors, changeset, fn {field, messages}, changeset ->
+      Enum.reduce(messages, changeset, fn message, changeset ->
+        Ecto.Changeset.add_error(changeset, field, message, validation: :domain_failure)
+      end)
+    end)
+  end
+
+  @personal_data_keys [:first_name, :last_name]
+  @organizational_data_keys [:administrative_area, :organization, :position]
+
+  defp maybe_change_personal_data(account, attrs) do
+    if has_changed?(account, attrs, @personal_data_keys) do
+      change_personal_data =
+        attrs
+        |> ChangePersonalData.new()
+        |> ChangePersonalData.assign_account_id(account.id)
+
+      App.dispatch(change_personal_data, consistency: :strong)
+    else
+      :ok
+    end
+  end
+
+  defp maybe_change_organizational_settings(account, attrs) do
+    if has_changed?(account, attrs, @organizational_data_keys) do
+      change_organizational_settings =
+        attrs
+        |> ChangeOrganizationalSettings.new()
+        |> ChangeOrganizationalSettings.assign_account_id(account.id)
+
+      App.dispatch(change_organizational_settings, consistency: :strong)
+    else
+      :ok
+    end
+  end
+
+  # Check if there has been a content change.
+  defp has_changed?(account, attrs, allowed_keys) do
+    attrs =
+      attrs
+      |> filter_by_map_keys(allowed_keys)
+      |> convert_map_keys()
+
+    account
+    |> Map.from_struct()
+    |> Map.take(Map.keys(attrs))
+    |> MapDiff.diff(attrs)
+    |> case do
+      %{changed: :equal} -> false
+      _ -> true
+    end
+  end
+
+  # Filter the input data map to only allow valid entries.
+  defp filter_by_map_keys(map, keys) do
+    Map.take(map, keys ++ Enum.map(keys, &Atom.to_string/1))
+  end
+
+  # Convert the map keys to atoms (if not already) to enable comparision with the struct.
+  defp convert_map_keys(map) do
+    for {key, val} <- map, into: %{} do
+      case key do
+        key when is_binary(key) -> {String.to_atom(key), val}
+        _ -> {key, val}
+      end
+    end
+  end
+
+  defp get(schema, uuid) do
+    case Repo.get(schema, uuid) do
+      nil -> {:error, :not_found}
+      entity -> {:ok, entity}
     end
   end
 end

@@ -11,31 +11,31 @@ msgid ""
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice/accounts/user_notifier.ex:25
+#: lib/dealog_backoffice/accounts/user_notifier.ex:27
 msgid "Confirm your DEalog account"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice/accounts/user_notifier.ex:48
+#: lib/dealog_backoffice/accounts/user_notifier.ex:50
 msgid "Reset your DEalog password"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice/accounts/user_notifier.ex:71
+#: lib/dealog_backoffice/accounts/user_notifier.ex:73
 msgid "Update your DEalog email address"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice/accounts/user_notifier.ex:72
+#: lib/dealog_backoffice/accounts/user_notifier.ex:74
 msgid "Hi %{email},\n\nyou can change your email address by visiting the URL below:\n\n%{url}\n\nIf you didn't request this change, please ignore this.\n"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice/accounts/user_notifier.ex:26
+#: lib/dealog_backoffice/accounts/user_notifier.ex:28
 msgid "Hi %{email},\n\nyou can confirm your account by visiting the URL below:\n\n%{url}\n\nIf you didn't create an account, please ignore this.\n"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice/accounts/user_notifier.ex:49
+#: lib/dealog_backoffice/accounts/user_notifier.ex:51
 msgid "Hi %{email},\n\nyou can reset your password by visiting the URL below:\n\n%{url}\n\nIf you didn't request this change, please ignore this.\n"
 msgstr ""

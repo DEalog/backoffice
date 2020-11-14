@@ -3,9 +3,9 @@
   # TODO Move this somewhere else. Maybe to the live view.
   fields_with_labels = [title: gettext("title"), body: gettext("body")]
 %>
-<%= 
+<%=
   f = form_for :message, "#",
-    errors: errors, 
+    errors: errors,
     phx_target: @myself,
     phx_submit: "save_message"
 %>
@@ -14,26 +14,25 @@
       <%=
         live_component @socket,
           DealogBackofficeWeb.BannerError,
-          heading: dgettext("errors", "There were errors in the form!"),
+          heading: dgettext("errors", "There are errors in the form!"),
           errors: all_errors(errors, fields_with_labels)
       %>
     </div>
   <% end %>
-
-  <div class="mt-8 mx-auto w-full sm:w-2/3 lg:w-1/2">
+  <%# TODO Change as this should be set automatically %>
+  <%=
+    hidden_input f,
+      :id,
+      value: @message.id
+  %>
+  <div class="w-full mx-auto mt-8 sm:w-2/3 lg:w-1/2">
     <div>
-      <%# TODO Change %>
-      <%= 
-        hidden_input f, 
-          :id,
-          value: @message.id
-      %>
       <%=
         label f,
           gettext("title")
       %>
       <%=
-        text_input f, 
+        text_input f,
           :title,
           value: @message.title,
           class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :title), do: " border-red-700"}"
@@ -61,8 +60,8 @@
           class: if has_errors?(f, :body), do: "text-red-700", else: ""
       %>
     </div>
-    <div class="mt-4 flex justify-end">
-      <span class="ml-3 inline-flex rounded-md shadow-sm">
+    <div class="flex justify-end mt-4">
+      <span class="inline-flex ml-3 rounded-md shadow-sm">
         <%=
           link gettext("Cancel"),
           to: Routes.organization_messages_path(@socket, :index),

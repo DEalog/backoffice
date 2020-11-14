@@ -39,7 +39,8 @@ if Mix.env() == :dev or should_run do
   projections = [
     %{table: "messages", name: "Messages.Projectors.Message"},
     %{table: "deleted_messages", name: "Messages.Projectors.DeletedMessage"},
-    %{table: "message_approvals", name: "Messages.Projectors.MessageApproval"}
+    %{table: "message_approvals", name: "Messages.Projectors.MessageApproval"},
+    %{table: "accounts", name: "Accounts.Projectors.Account"}
   ]
 
   Enum.each(projections, fn %{table: table, name: name} ->
@@ -61,6 +62,14 @@ if Mix.env() == :dev or should_run do
   Enum.filter(
     Process.list(),
     &(Keyword.get(Process.info(&1), :registered_name) == DealogBackoffice.Messages.Supervisor)
+  )
+
+  Process.exit(pid, :kill)
+
+  [pid] =
+  Enum.filter(
+    Process.list(),
+    &(Keyword.get(Process.info(&1), :registered_name) == DealogBackoffice.Accounts.Supervisor)
   )
 
   Process.exit(pid, :kill)

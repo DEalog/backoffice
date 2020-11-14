@@ -101,6 +101,7 @@ defmodule DealogBackofficeWeb do
       import DealogBackofficeWeb.Gettext
       import DealogBackofficeWeb.HtmlHelpers
       import DealogBackofficeWeb.LiveHelpers
+      import DealogBackofficeWeb.MediaHelpers
 
       alias DealogBackofficeWeb.Router.Helpers, as: Routes
     end

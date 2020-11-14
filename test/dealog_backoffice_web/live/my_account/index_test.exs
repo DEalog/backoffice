@@ -8,7 +8,7 @@ defmodule DealogBackofficeWeb.MyAccountLive.IndexTest do
 
   setup :register_and_log_in_user
 
-  describe "GET /my-account" do
+  describe "List my account settings" do
     test "renders settings page", %{conn: conn} do
       {:ok, view, html} = live(conn, "/my-account")
       assert html =~ "My account"

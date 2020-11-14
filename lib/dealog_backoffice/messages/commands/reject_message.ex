@@ -29,4 +29,3 @@ defmodule DealogBackoffice.Messages.Commands.RejectMessage do
     %RejectMessage{message | reason: reason}
   end
 end
-

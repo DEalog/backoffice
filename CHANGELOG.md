@@ -1,7 +1,11 @@
 ## Unreleased
 
+- `ADD` User accounts can be changed
+- `ADD` Users can be onboarded with an account containing the personal data as well as the organizational settings
+- `ADD` Users are listed in the settings area
+- `CNG` Frontend dependecies are updated
+- `FIX` Login with unconfirmed users issues is handled by emitting a user or password wrong message
 - `FIX` The Kafka configuration is read correctly when no projectors are configured
-- `FIX` Login with unconfirmed users issues a note
 - `ADD` Setup GH Actions to deploy application to AWS
 - `CNG` Send ARS instead of a geocode to Kafka
 - `CNG` Structure of administrative areas is changed to ARS (from AGS)

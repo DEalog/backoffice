@@ -5,6 +5,19 @@ defmodule DealogBackoffice.AccountsTest do
 
   alias DealogBackoffice.Accounts
   alias DealogBackoffice.Accounts.{User, UserToken}
+  alias DealogBackoffice.Accounts.Projections.Account
+
+  describe "list/0" do
+    test "does return an empty list when no user is registered" do
+      assert [] = Accounts.list()
+    end
+
+    test "does return a list of users" do
+      user = user_fixture()
+      assert [listed_user] = Accounts.list()
+      assert listed_user.email == user.email
+    end
+  end
 
   describe "get_user_by_email/1" do
     test "does not return the user if the email does not exist" do
@@ -476,6 +489,107 @@ defmodule DealogBackoffice.AccountsTest do
   describe "inspect/2" do
     test "does not include password" do
       refute inspect(%User{password: "123456"}) =~ "password: \"123456\""
+    end
+  end
+
+  describe "create_account/1" do
+    @tag :integration
+    test "should succeed with valid data" do
+      user = user_fixture()
+      data = %{first_name: "John", last_name: "Doe", user_id: user.id, administrative_area: "123"}
+
+      assert {:ok, %Account{} = account} = Accounts.create_account(data)
+      assert account.first_name == "John"
+      assert account.last_name == "Doe"
+      assert account.user_id == user.id
+    end
+
+    @tag :integration
+    test "should fail when user already has an account" do
+      user = user_fixture()
+      data = %{first_name: "John", last_name: "Doe", user_id: user.id, administrative_area: "123"}
+      Accounts.create_account(data)
+
+      assert {:error, {:validation_failure, errors}} = Accounts.create_account(data)
+      assert %{user_id: _} = errors
+    end
+
+    @tag :integration
+    test "should fail when data is invalid" do
+      data = %{first_name: nil, last_name: nil, user_id: UUID.uuid4()}
+      assert {:error, {:validation_failure, errors}} = Accounts.create_account(data)
+
+      assert %{first_name: _, last_name: _} = errors
+    end
+  end
+
+  describe "change_account/2" do
+    @tag :integration
+    test "should succeed changing personal data with valid data" do
+      user = user_fixture()
+
+      {:ok, %Account{} = account} =
+        Accounts.create_account(%{
+          first_name: "John",
+          last_name: "Doe",
+          user_id: user.id,
+          administrative_area: "123"
+        })
+
+      assert {:ok, %Account{} = changed_account} =
+               Accounts.change_account(account, %{first_name: "Johnny", last_name: "Doey"})
+
+      assert changed_account.first_name == "Johnny"
+      assert changed_account.last_name == "Doey"
+      assert changed_account.user_id == account.user_id
+    end
+
+    @tag :integration
+    test "should succeed changing organizational settings with valid data" do
+      user = user_fixture()
+
+      {:ok, %Account{} = account} =
+        Accounts.create_account(%{
+          first_name: "John",
+          last_name: "Doe",
+          user_id: user.id,
+          administrative_area: "123"
+        })
+
+      assert {:ok, %Account{} = changed_account} =
+               Accounts.change_account(account, %{
+                 administrative_area: "123",
+                 organization: "An organization",
+                 position: "A position"
+               })
+
+      assert changed_account.first_name == "John"
+      assert changed_account.last_name == "Doe"
+      assert changed_account.user_id == account.user_id
+      assert changed_account.administrative_area == "123"
+      assert changed_account.organization == "An organization"
+      assert changed_account.position == "A position"
+    end
+
+    @tag :integration
+    test "should fail when data is invalid" do
+      user = user_fixture()
+
+      {:ok, %Account{} = account} =
+        Accounts.create_account(%{
+          first_name: "John",
+          last_name: "Doe",
+          user_id: user.id,
+          administrative_area: "123"
+        })
+
+      assert {:error, {:validation_failure, errors}} =
+               Accounts.change_account(account, %{
+                 first_name: nil,
+                 last_name: nil
+               })
+
+      assert %{first_name: _, last_name: _} = errors
     end
   end
 end

@@ -12,32 +12,31 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/dealog_backoffice/accounts/user_notifier.ex:25
+#: lib/dealog_backoffice/accounts/user_notifier.ex:27
 msgid "Confirm your DEalog account"
 msgstr "Bestätigung des DEalog Benutzerkontos"
 
 #, elixir-format
-#: lib/dealog_backoffice/accounts/user_notifier.ex:48
+#: lib/dealog_backoffice/accounts/user_notifier.ex:50
 msgid "Reset your DEalog password"
 msgstr "DEalog Passwort zurücksetzen"
 
 #, elixir-format
-#: lib/dealog_backoffice/accounts/user_notifier.ex:71
+#: lib/dealog_backoffice/accounts/user_notifier.ex:73
 msgid "Update your DEalog email address"
 msgstr "DEalog E-Mail Adresse aktualisieren"
 
 #, elixir-format
-#: lib/dealog_backoffice/accounts/user_notifier.ex:72
+#: lib/dealog_backoffice/accounts/user_notifier.ex:74
 msgid "Hi %{email},\n\nyou can change your email address by visiting the URL below:\n\n%{url}\n\nIf you didn't request this change, please ignore this.\n"
 msgstr "Hallo %{email},\n\ndurch Klicken des folgenden Links wird die Änderung der E-Mail Adresse bestätigt:\n\n%{url}\n\nWenn diese Änderung nicht angefordert wurde, kann diese E-Mail Nachricht ignoriert werden.\n"
 
 #, elixir-format
-#: lib/dealog_backoffice/accounts/user_notifier.ex:49
-msgid "Hi %{email},\n\nyou can reset your password by visiting the URL below:\n\n%{url}\n\nIf you didn't request this change, please ignore this.\n"
-msgstr "Hallo %{email},\n\ndurch Klicken des folgenden Links wird das Passwort zurückgesetzt:\n\n%{url}\n\nWenn diese Änderung nicht angefordert wurde, kann diese E-Mail Nachricht ignoriert werden.\n"
-
-#, elixir-format
-#: lib/dealog_backoffice/accounts/user_notifier.ex:26
+#: lib/dealog_backoffice/accounts/user_notifier.ex:28
 msgid "Hi %{email},\n\nyou can confirm your account by visiting the URL below:\n\n%{url}\n\nIf you didn't create an account, please ignore this.\n"
 msgstr "Willkommen %{email},\n\ndurch Klicken des folgenden Links wird das Benutzerkonto bestätigt:\n\n%{url}\n\nWenn das Benutzerkonto nicht angelegt wurde, kann diese E-Mail Nachricht ignoriert werden.\n"
 
+#, elixir-format
+#: lib/dealog_backoffice/accounts/user_notifier.ex:51
+msgid "Hi %{email},\n\nyou can reset your password by visiting the URL below:\n\n%{url}\n\nIf you didn't request this change, please ignore this.\n"
+msgstr "Hallo %{email},\n\ndurch Klicken des folgenden Links wird das Passwort zurückgesetzt:\n\n%{url}\n\nWenn diese Änderung nicht angefordert wurde, kann diese E-Mail Nachricht ignoriert werden.\n"

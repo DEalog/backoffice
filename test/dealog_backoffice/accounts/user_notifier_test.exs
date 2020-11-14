@@ -10,8 +10,7 @@ defmodule DealogBackoffice.Accounts.UserNotifierTest do
     user = user_fixture()
     url = "/url"
 
-    assert {:ok, mail} =
-             UserNotifier.deliver_confirmation_instructions(user, url)
+    assert {:ok, mail} = UserNotifier.deliver_confirmation_instructions(user, url)
 
     assert_email_sent(mail)
     assert mail.to == [{"", user.email}]
@@ -24,8 +23,7 @@ defmodule DealogBackoffice.Accounts.UserNotifierTest do
     user = user_fixture()
     url = "/url"
 
-    assert {:ok, mail} =
-             UserNotifier.deliver_reset_password_instructions(user, url)
+    assert {:ok, mail} = UserNotifier.deliver_reset_password_instructions(user, url)
 
     assert_email_sent(mail)
     assert mail.to == [{"", user.email}]
@@ -38,8 +36,7 @@ defmodule DealogBackoffice.Accounts.UserNotifierTest do
     user = user_fixture()
     url = "/url"
 
-    assert {:ok, mail} =
-             UserNotifier.deliver_update_email_instructions(user, url)
+    assert {:ok, mail} = UserNotifier.deliver_update_email_instructions(user, url)
 
     assert mail.to == [{"", user.email}]
     assert mail.text_body =~ user.email

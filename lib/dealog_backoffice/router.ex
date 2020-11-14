@@ -6,6 +6,14 @@ defmodule DealogBackoffice.Router do
   """
   use Commanded.Commands.Router
 
+  alias DealogBackoffice.Accounts.Aggregates.Account
+
+  alias DealogBackoffice.Accounts.Commands.{
+    CreateAccount,
+    ChangePersonalData,
+    ChangeOrganizationalSettings
+  }
+
   alias DealogBackoffice.Messages.Aggregates.Message
 
   alias DealogBackoffice.Messages.Commands.{
@@ -21,6 +29,14 @@ defmodule DealogBackoffice.Router do
   alias DealogBackoffice.Middlewares.Validate
 
   middleware(Validate)
+
+  # Account
+
+  identify(Account, by: :account_id, prefix: "account-")
+
+  dispatch([CreateAccount, ChangePersonalData, ChangeOrganizationalSettings], to: Account)
+
+  # Message
 
   identify(Message, by: :message_id, prefix: "message-")
 

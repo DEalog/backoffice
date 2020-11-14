@@ -1,0 +1,157 @@
+<%=
+  f = form_for @changeset, "#",
+    phx_target: @myself,
+    phx_submit: "save"
+%>
+  <%= if has_errors?(@changeset) do %>
+    <div class="my-4">
+      <%=
+        live_component @socket,
+          DealogBackofficeWeb.BannerError,
+          heading: dgettext("errors", "There are errors in the form."),
+          hint: dgettext("errors", "Please check the form fields for error reasons.")
+      %>
+    </div>
+  <% end %>
+  <%=
+    hidden_input f,
+      :id
+  %>
+  <%=
+    hidden_input f,
+      :user_id
+  %>
+  <div class="shadow sm:rounded-md sm:overflow-hidden">
+    <div class="px-4 py-6 bg-white space-y-6 sm:p-6">
+      <div>
+        <h2 class="text-lg font-medium text-gray-900 leading-6">
+          <%= gettext "Personal data" %>
+        </h2>
+        <p class="mt-1 text-sm text-gray-500 leading-5">
+          <%= gettext "Update personal data of a user." %>
+        </p>
+      </div>
+      <div class="grid grid-cols-4 gap-6">
+        <div class="col-span-4 sm:col-span-2">
+          <%=
+            label f,
+              :first_name
+              gettext("First name")
+          %>
+          <%=
+            text_input f,
+              :first_name,
+              placeholder: gettext("First name, e.g. Maxime"),
+              class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :first_name), do: " border-red-700"}"
+          %>
+          <%=
+            error_tag f,
+              :first_name,
+              class: "text-red-700"
+          %>
+        </div>
+        <div class="col-span-4 sm:col-span-2">
+          <%=
+            label f,
+              :last_name,
+              gettext("Last name")
+          %>
+          <%=
+            text_input f,
+              :last_name,
+              placeholder: gettext("Last name, e.g. Mustermann"),
+              class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :last_name), do: " border-red-700"}"
+          %>
+          <%=
+            error_tag f,
+              :last_name,
+              class: "text-red-700"
+          %>
+        </div>
+      </div>
+    </div>
+    <div class="px-4 py-6 bg-white space-y-6 sm:p-6">
+      <div>
+        <h2 class="text-lg font-medium text-gray-900 leading-6">
+          <%= gettext "Organizational settings" %>
+        </h2>
+        <p class="mt-1 text-sm text-gray-500 leading-5">
+          <%= gettext "Update the organizational role for this user." %>
+        </p>
+      </div>
+      <div class="grid grid-cols-4 gap-6">
+        <div class="col-span-4 sm:col-span-2">
+          <%=
+            label f,
+              :administrative_area,
+              gettext("Administrative Area")
+          %>
+          <%=
+            select f,
+              :administrative_area,
+              @administrative_areas,
+              class: "form-select block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :administrative_area), do: " border-red-700"}"
+          %>
+          <%=
+            error_tag f,
+              :administrative_area,
+              class: "text-red-700"
+          %>
+        </div>
+        <div></div>
+        <div class="col-span-4 sm:col-span-2">
+          <%=
+            label f,
+              :organization,
+              gettext("Organization")
+          %>
+          <%=
+            text_input f,
+              :organization,
+              placeholder: gettext("Name of the organization, e.g. fire department"),
+              class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :organization), do: " border-red-700"}"
+          %>
+          <%=
+            error_tag f,
+              :organization,
+              class: "text-red-700"
+          %>
+        </div>
+        <div class="col-span-4 sm:col-span-2">
+          <%=
+            label f,
+              :position,
+              gettext("Position")
+          %>
+          <%=
+            text_input f,
+              :position,
+              placeholder: gettext("Position in the organization, e.g. captain"),
+              class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :position), do: " border-red-700"}"
+          %>
+          <%=
+            error_tag f,
+              :position,
+              class: "text-red-700"
+          %>
+        </div>
+      </div>
+    </div>
+    <div class="px-4 py-3 text-right bg-gray-50 sm:px-6">
+      <div class="flex justify-end">
+        <span class="inline-flex ml-3 rounded-md shadow-sm">
+          <%=
+            link gettext("Cancel"),
+            to: Routes.settings_path(@socket, :index),
+            method: :get,
+            class: "mr-2 inline-flex justify-center py-2 px-4 border border-yellow-400  text-sm leading-5 font-medium rounded-md text-yellow-400 focus:outline-none focus:border-yellow-700 focus:shadow-outline-gray transition duration-150 ease-in-out"
+          %>
+          <%=
+            submit gettext("Save account"),
+            class: "inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:shadow-outline-gray active:bg-yellow-700 transition duration-150 ease-in-out"
+          %>
+        </span>
+      </div>
+    </div>
+  </div>
+</form>

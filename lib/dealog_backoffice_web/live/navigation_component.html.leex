@@ -82,7 +82,7 @@
               <button
                 @click="isProfileOpen = !isProfileOpen"
                 class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out" id="user-menu" aria-label="<%= gettext "User menu" %>" aria-haspopup="true">
-            <img class="w-8 h-8 border-2 border-gray-300 rounded-full" src="https://avatars.dicebear.com/api/identicon/<%= :crypto.hash(:md5, @current_user.email) |> Base.encode16(case: :lower) %>.svg" alt="<%= @current_user.email %>">
+            <img class="w-8 h-8 border-2 border-gray-300 rounded-full" src="https://avatars.dicebear.com/api/identicon/<%= get_hash(@current_user.email) %>.svg" alt="<%= @current_user.email %>">
               </button>
             </div>
             <div
@@ -166,7 +166,7 @@
     <div class="pt-4 pb-3 border-t border-gray-200">
       <div class="flex items-center px-4 sm:px-6">
         <div class="flex-shrink-0">
-          <img class="w-10 h-10 rounded-full" src="https://avatars.dicebear.com/api/identicon/<%= :crypto.hash(:md5, @current_user.email) |> Base.encode16(case: :lower) %>.svg" alt="">
+          <img class="w-10 h-10 rounded-full" src="https://avatars.dicebear.com/api/identicon/<%= get_hash(@current_user.email) %>.svg" alt="">
         </div>
         <div class="ml-3">
           <div class="text-base font-medium text-gray-800 leading-6"><%= gettext "Logged in as" %></div>

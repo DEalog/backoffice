@@ -1,0 +1,167 @@
+<section>
+  <h1 class="text-2xl font-bold text-gray-900 leading-7 sm:text-3xl sm:leading-9 sm:truncate">
+    <%= gettext "Settings" %>
+  </h1>
+  <p class="mt-4">
+    <%= gettext "The settings of the DEalog Backoffice." %>
+  </p>
+  <section>
+    <div class="mt-4">
+      <h2 class="text-xl font-extrabold tracking-tight text-gray-900 leading-9 sm:text-2xl sm:leading-10">
+        <%= gettext "Users" %>
+      </h2>
+      <p>
+        <%= gettext "Users that are registered need to get onboarded here to enable them fully." %>
+      </p>
+    </div>
+    <div class="flex flex-col mt-2">
+      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead>
+                <tr>
+                  <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-gray-50 leading-4">
+                    <%= gettext "Email address" %>
+                  </th>
+                  <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-gray-50 leading-4">
+                    &nbsp;
+                  </th>
+                  <th class="px-6 py-3 text-xs font-medium tracking-wider text-center text-gray-500 uppercase bg-gray-50 leading-4">
+                    <span class="block whitespace-no-wrap">
+                      <%= gettext "Last changed" %>
+                    </span>
+                    <span class="block whitespace-no-wrap">
+                      <%= gettext "Registered since" %>
+                    </span>
+                  </th>
+                  <th class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase bg-gray-50 leading-4">
+                    <span class="block whitespace-no-wrap">
+                      <%= gettext "Status" %>
+                    </span>
+                    <span class="block whitespace-no-wrap">
+                      <%= gettext "User" %> <%= gettext "Account" %>
+                    </span>
+                  </th>
+                  <th class="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase bg-gray-50 leading-4">
+                    <%= gettext "Role" %>
+                  </th>
+                  <th class="px-6 py-3 bg-gray-50"></th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <%= for user <- @users do %>
+                  <tr>
+                    <td class="px-6 py-4 whitespace-no-wrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 w-10 h-10">
+                          <img class="w-10 h-10 border-2 border-gray-300 rounded-full" src="https://avatars.dicebear.com/api/identicon/<%= get_hash(user.email) %>.svg" alt="<%= user.email %>">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900 leading-5">
+                            <%= if user.account do %>
+                              <%= user.account.first_name %> <%= user.account.last_name %>
+                            <% end %>
+                            <%= if @current_user.email == user.email do %>
+                              <span>
+                                <span class="px-2 text-xs font-semibold text-blue-800 bg-blue-200 border rounded-full leading-5">
+                                  <%= gettext "current user" %>
+                                </span>
+                              </span>
+                            <% end %>
+                          </div>
+                          <div class="text-sm text-gray-500 leading-5">
+                            <span>
+                              <%= user.email %>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-no-wrap">
+                      <%= if user.account do %>
+                        <div class="text-sm text-gray-900 leading-5">
+                          <span class="block">
+                            <%= get_area_name(user.account.administrative_area) %>
+                          </span>
+                          <span class="block">
+                            <%= user.account.organization %>
+                          </span>
+                          <span class="block">
+                            <%= user.account.position %>
+                          </span>
+                        </div>
+                      <% end %>
+                    </td>
+                    <td class="px-6 py-4 whitespace-no-wrap">
+                      <div class="text-sm text-gray-900 leading-5">
+                        <span class="block">
+                          <%= display_date_time_relative(get_latest_change(user)) %>
+                        </span>
+                        <span class="block">
+                          <%= display_date_time(user.inserted_at) %>
+                        </span>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-center whitespace-no-wrap">
+                      <%
+                        {user_status, account_status} = get_status(user)
+                        user_status_label = case user_status do
+                          :confirmed -> gettext("Confirmed")
+                          :unconfirmed -> gettext("Unconfirmed")
+                        end
+                        user_status_color = case user_status do
+                          :confirmed -> "text-green-800 bg-green-100 border-green-100"
+                          :unconfirmed -> "text-yellow-800 bg-yellow-100 border-yellow-100"
+                        end
+                        account_status_label = case account_status do
+                          :onboarded -> gettext("Onboarded")
+                          :new -> gettext("New user")
+                        end
+                        account_status_color = case account_status do
+                          :onboarded -> "text-green-600 bg-white border-green-100"
+                          :new -> "text-yellow-800 bg-white border-yellow-100"
+                        end
+                      %>
+                      <span class="px-2 text-xs font-semibold border rounded-l-full leading-5 <%= user_status_color %>">
+                        <%= user_status_label %>
+                      </span>
+                      <span class="px-2 text-xs font-semibold border rounded-r-full leading-5 <%= account_status_color %>">
+                        <%= account_status_label %>
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-center text-gray-500 whitespace-no-wrap leading-5">
+                      Admin
+                    </td>
+                    <td class="px-6 py-4 text-sm font-medium text-right whitespace-no-wrap leading-5">
+                      <div>
+                        <a href="#" class="text-yellow-400 hover:text-yellow-600">
+                          <%= gettext "Lock" %>
+                        </a>
+                      </div>
+                      <div class="mt-2">
+                        <%= if account_status == :new do %>
+                          <%=
+                            link gettext("Onboard"),
+                              to: Routes.settings_path(@socket, :new, user),
+                              class: "text-yellow-400 hover:text-yellow-600"
+                          %>
+                        <% else %>
+                          <%=
+                            link gettext("Edit"),
+                              to: Routes.settings_path(@socket, :change, user.account),
+                              class: "text-yellow-400 hover:text-yellow-600"
+                          %>
+                        <% end %>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

@@ -83,8 +83,8 @@ msgstr "Mein Benutzerkonto"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:115
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:183 lib/dealog_backoffice_web/live/settings_live.ex:9
-#: lib/dealog_backoffice_web/live/settings_live.html.leex:3
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:183 lib/dealog_backoffice_web/live/settings/index.ex:21
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:3
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -183,7 +183,7 @@ msgid "The changelog lists all noteworthy changes to the application. It is only
 msgstr "Die Änderungshistorie beinhaltet alle erwähnenswerten Änderungen an der Applikation. Diese ist nur in Englisch verfügbar."
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/settings_live.html.leex:6
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:6
 msgid "The settings of the DEalog Backoffice."
 msgstr "Die Einstellungen des DEalog Backoffice"
 
@@ -363,7 +363,7 @@ msgstr "Ihr Vorname"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:4
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:50
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:49
 msgid "body"
 msgstr "Meldungstext"
 
@@ -374,7 +374,7 @@ msgstr "oder ziehen und ablegen"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:4
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:33
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:32
 msgid "title"
 msgstr "Titel"
 
@@ -391,6 +391,7 @@ msgstr "Autor"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:200
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:151
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -404,7 +405,7 @@ msgstr "Metadaten"
 #: lib/dealog_backoffice_web/live/all_messages/index.html.leex:18
 #: lib/dealog_backoffice_web/live/all_messages/show.html.leex:105 lib/dealog_backoffice_web/live/message_approvals/index.html.leex:18
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:109 lib/dealog_backoffice_web/live/organization_messages/index.html.leex:18
-#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:109
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:109 lib/dealog_backoffice_web/live/settings/index.html.leex:40
 msgid "Status"
 msgstr "Status"
 
@@ -492,7 +493,7 @@ msgid "Successfully performed action!"
 msgstr "Aktion erfolgreich durchgeführt!"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:73
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:72
 msgid "Save message"
 msgstr "Meldung speichern"
 
@@ -682,8 +683,9 @@ msgstr "Veröffentlichen"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/my_account/index.html.leex:22
-#: lib/dealog_backoffice_web/templates/user_confirmation/new.html.eex:14 lib/dealog_backoffice_web/templates/user_registration/new.html.eex:40
-#: lib/dealog_backoffice_web/templates/user_reset_password/new.html.eex:14 lib/dealog_backoffice_web/templates/user_session/new.html.eex:54
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:25 lib/dealog_backoffice_web/templates/user_confirmation/new.html.eex:14
+#: lib/dealog_backoffice_web/templates/user_registration/new.html.eex:40 lib/dealog_backoffice_web/templates/user_reset_password/new.html.eex:14
+#: lib/dealog_backoffice_web/templates/user_session/new.html.eex:54
 msgid "Email address"
 msgstr "E-Mail Adresse"
 
@@ -736,7 +738,7 @@ msgstr "Sie müssen angemeldet sein, um diese Seite laden zu können."
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:49
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:67
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:66 lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:144
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -886,3 +888,189 @@ msgstr "Wenn die angegebene E-Mail Adresse im System vorhanden und noch nicht be
 #: lib/dealog_backoffice_web/controllers/user_session_controller.ex:29
 msgid "Logged out successfully."
 msgstr "Erfolgreich abgemeldet."
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.ex:33
+msgid "Account for %{first_name} %{last_name} created successfully"
+msgstr "Konto für %{first_name} %{last_name} erfolgreich erstellt"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.ex:54
+msgid "Account for %{first_name} %{last_name} updated successfully"
+msgstr "Konto für %{first_name} %{last_name} erfolgreich aktualisiert"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:87
+msgid "Administrative Area"
+msgstr "Verwaltungsgebiet"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/edit.html.leex:7
+msgid "Change the user's personal data and organizational settings."
+msgstr "Ändern der persönlichen Daten und organisatorischen Einstellungen des Benutzers."
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/edit.ex:34
+#: lib/dealog_backoffice_web/live/settings/accounts/edit.html.leex:6
+msgid "Change user account"
+msgstr "Benutzerkonto ändern"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:110
+msgid "Confirmed"
+msgstr "Bestätigt"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/edit.ex:21
+msgid "Create user account"
+msgstr "Benutzerkonto erstellen"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:39
+msgid "First name"
+msgstr "Vorname"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:44
+msgid "First name, e.g. Maxime"
+msgstr "Vorname, z.B. Maxime"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/edit.html.leex:13
+msgid "In order to create a new account you need to provide at least the personal data and an administrative area."
+msgstr "Um ein neues Konto erstellen zu können, müssen mindestens die persönlichen Daten, sowie das Verwaltungsgebiet angegeben werden."
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:32
+msgid "Last changed"
+msgstr "Zuletzt geändert"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:57
+msgid "Last name"
+msgstr "Nachname"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:62
+msgid "Last name, e.g. Mustermann"
+msgstr "Nachname, z.B. Mustermann"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:139
+msgid "Lock"
+msgstr "Sperren"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:111
+msgid "Name of the organization, e.g. fire department"
+msgstr "Name der Organisation, z.B. Feuerwehr"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:119
+msgid "New user"
+msgstr "Neuer Benutzer"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:145
+msgid "Onboard"
+msgstr "Einrichten"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:118
+msgid "Onboarded"
+msgstr "Eingerichtet"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:106
+msgid "Organization"
+msgstr "Organisation"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:76
+msgid "Organizational settings"
+msgstr "Organisationseinstellungen"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:28
+msgid "Personal data"
+msgstr "Persönliche Daten"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/edit.ex:57
+msgid "Please choose an administrative area"
+msgstr "Bitte ein Verwaltungsgebiet wählen"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:124
+msgid "Position"
+msgstr "Stellung"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:129
+msgid "Position in the organization, e.g. captain"
+msgstr "Stellung in der Organisation, z.B. Hauptmann"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:35
+msgid "Registered since"
+msgstr "Registriert seit"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:47
+msgid "Role"
+msgstr "Rolle"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:150
+msgid "Save account"
+msgstr "Konto speichern"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:111
+msgid "Unconfirmed"
+msgstr "Unbestätigt"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:31
+msgid "Update personal data of a user."
+msgstr "Persönliche Daten eines Benutzers aktualisieren."
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:79
+msgid "Update the organizational role for this user."
+msgstr "Rolle des Benutzers in der Organisation aktualisieren."
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:11
+msgid "Users"
+msgstr "Benutzer"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:68
+msgid "current user"
+msgstr "Aktueller Benutzer"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:14
+msgid "Users that are registered need to get onboarded here to enable them fully."
+msgstr "Registrierte Benutzer müssen eingerichtet werden, um vollständige Berechtigungen zu erhalten."
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/edit.html.leex:11
+msgid "Create new user account"
+msgstr "Neues Benutzerkonto erstellen"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/accounts/edit.html.leex:12
+msgid "Create a new account for an existing user by providing their personal data and organizational settings."
+msgstr "Erstellen eines neuen Kontos für einen bestehenden Benutzer durch Angabe der perönlichen Daten, sowie der Organisationseinstellungen."
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:43
+msgid "Account"
+msgstr "Benutzerkonto"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:43
+msgid "User"
+msgstr "Benutzer"

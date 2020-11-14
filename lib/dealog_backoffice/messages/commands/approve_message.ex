@@ -29,4 +29,3 @@ defmodule DealogBackoffice.Messages.Commands.ApproveMessage do
     %ApproveMessage{message | note: note}
   end
 end
-

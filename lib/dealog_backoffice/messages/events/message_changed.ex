@@ -6,6 +6,7 @@ defmodule DealogBackoffice.Messages.Events.MessageChanged do
     :body,
     :status
   ]
+
   defimpl Commanded.Event.Upcaster, for: __MODULE__ do
     alias DealogBackoffice.Messages.Events.MessageChanged
 
