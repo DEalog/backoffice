@@ -3,13 +3,13 @@
     texts =
       if @live_action in [:change] do
         %{
-          heading: gettext("Change account"),
+          heading: gettext("Change user account"),
           help_text: gettext("Change the user's personal data and organizational settings.")
         }
       else
         %{
-          heading: gettext("Create new account"),
-          help_text: gettext("Create a new account for an existing user by providing their personal data as well organizational assignments."),
+          heading: gettext("Create new user account"),
+          help_text: gettext("Create a new account for an existing user by providing their personal data and organizational settings."),
           hint: gettext("In order to create a new account you need to provide at least the personal data and an administrative area.")
         }
       end

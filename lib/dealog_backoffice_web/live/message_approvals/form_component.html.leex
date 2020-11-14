@@ -14,13 +14,13 @@
       <%=
         live_component @socket,
           DealogBackofficeWeb.BannerError,
-          heading: dgettext("errors", "There were errors in the form!"),
+          heading: dgettext("errors", "There are errors in the form!"),
           errors: all_errors(errors, fields_with_labels)
       %>
     </div>
   <% end %>
 
-  <div class="mt-8 mx-auto w-full sm:w-2/3 lg:w-1/2">
+  <div class="w-full mx-auto mt-8 sm:w-2/3 lg:w-1/2">
     <%= 
       hidden_input f, 
         :id,
@@ -43,8 +43,8 @@
           class: if has_errors?(f, :text), do: "text-red-700", else: ""
       %>
     </div>
-    <div class="mt-4 flex justify-end">
-      <span class="ml-3 inline-flex rounded-md shadow-sm">
+    <div class="flex justify-end mt-4">
+      <span class="inline-flex ml-3 rounded-md shadow-sm">
         <%=
           link gettext("Cancel"),
           to: Routes.approvals_path(@socket, :index),
@@ -52,7 +52,7 @@
           class: "mr-2 inline-flex justify-center py-2 px-4 border border-yellow-400  text-sm leading-5 font-medium rounded-md text-yellow-400 focus:outline-none focus:border-yellow-700 focus:shadow-outline-gray transition duration-150 ease-in-out"
         %>
       </span>
-      <span class="ml-3 inline-flex rounded-md shadow-sm">
+      <span class="inline-flex ml-3 rounded-md shadow-sm">
         <%=
           submit @label_submit_button,
           class: "inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:shadow-outline-gray active:bg-yellow-700 transition duration-150 ease-in-out"
