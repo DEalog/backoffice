@@ -69,7 +69,8 @@ defmodule DealogBackoffice.AccountTestHelpers do
       DealogBackoffice.Accounts.create_account(%{
         first_name: "Han",
         last_name: "Solo",
-        user_id: user.id
+        user_id: user.id,
+        administrative_area: "abc"
       })
 
     account

@@ -36,7 +36,8 @@ defmodule DealogBackoffice.AccountsFixtures do
     DealogBackoffice.Accounts.create_account(%{
       first_name: "John",
       last_name: "Doe",
-      user_id: user.id
+      user_id: user.id,
+      administrative_area: "abc"
     })
   end
 end

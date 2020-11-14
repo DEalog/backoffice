@@ -14,7 +14,12 @@ defmodule DealogBackoffice.Accounts.Validators.UniqueAccountIdTest do
     user = user_fixture()
 
     {:ok, account} =
-      Accounts.create_account(%{first_name: "John", last_name: "Doe", user_id: user.id})
+      Accounts.create_account(%{
+        first_name: "John",
+        last_name: "Doe",
+        user_id: user.id,
+        administrative_area: "abc"
+      })
 
     assert {:error, "has already been created"} = UniqueAccountId.validate(account.id, %{})
   end

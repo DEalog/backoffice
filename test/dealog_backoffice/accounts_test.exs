@@ -496,7 +496,7 @@ defmodule DealogBackoffice.AccountsTest do
     @tag :integration
     test "should succeed with valid data" do
       user = user_fixture()
-      data = %{first_name: "John", last_name: "Doe", user_id: user.id}
+      data = %{first_name: "John", last_name: "Doe", user_id: user.id, administrative_area: "123"}
 
       assert {:ok, %Account{} = account} = Accounts.create_account(data)
       assert account.first_name == "John"
@@ -507,7 +507,7 @@ defmodule DealogBackoffice.AccountsTest do
     @tag :integration
     test "should fail when user already has an account" do
       user = user_fixture()
-      data = %{first_name: "John", last_name: "Doe", user_id: user.id}
+      data = %{first_name: "John", last_name: "Doe", user_id: user.id, administrative_area: "123"}
       Accounts.create_account(data)
 
       assert {:error, {:validation_failure, errors}} = Accounts.create_account(data)
@@ -529,7 +529,12 @@ defmodule DealogBackoffice.AccountsTest do
       user = user_fixture()
 
       {:ok, %Account{} = account} =
-        Accounts.create_account(%{first_name: "John", last_name: "Doe", user_id: user.id})
+        Accounts.create_account(%{
+          first_name: "John",
+          last_name: "Doe",
+          user_id: user.id,
+          administrative_area: "123"
+        })
 
       assert {:ok, %Account{} = changed_account} =
                Accounts.change_account(account, %{first_name: "Johnny", last_name: "Doey"})
@@ -544,7 +549,12 @@ defmodule DealogBackoffice.AccountsTest do
       user = user_fixture()
 
       {:ok, %Account{} = account} =
-        Accounts.create_account(%{first_name: "John", last_name: "Doe", user_id: user.id})
+        Accounts.create_account(%{
+          first_name: "John",
+          last_name: "Doe",
+          user_id: user.id,
+          administrative_area: "123"
+        })
 
       assert {:ok, %Account{} = changed_account} =
                Accounts.change_account(account, %{
@@ -566,7 +576,12 @@ defmodule DealogBackoffice.AccountsTest do
       user = user_fixture()
 
       {:ok, %Account{} = account} =
-        Accounts.create_account(%{first_name: "John", last_name: "Doe", user_id: user.id})
+        Accounts.create_account(%{
+          first_name: "John",
+          last_name: "Doe",
+          user_id: user.id,
+          administrative_area: "123"
+        })
 
       assert {:error, {:validation_failure, errors}} =
                Accounts.change_account(account, %{
