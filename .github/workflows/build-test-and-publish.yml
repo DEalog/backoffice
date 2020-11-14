@@ -25,7 +25,7 @@ jobs:
         uses: DEalog/version-action@v0.1.0
         with:
           fallback-prefix: "1.0.0-SNAPSHOT-"
-      
+
       - name: Create artifact
         uses: actions/upload-artifact@v2
         with:
@@ -96,10 +96,10 @@ jobs:
 
       - name: Compile and release application
         run: mix do compile, release
-      
+
       - name: Tar application files to keep file permissions
         run: tar -cvf app.tar ./_build/prod/rel/backoffice ./rel/run.sh
-      
+
       - name: Create artifact
         uses: actions/upload-artifact@v2
         with:
@@ -109,7 +109,7 @@ jobs:
             ./CHANGELOG.md
             ./.github/Dockerfile
           if-no-files-found: error
-  
+
   test:
     runs-on: ubuntu-latest
     name: Test Elixir project
@@ -125,7 +125,7 @@ jobs:
     services:
       db:
         image: postgres:12.1-alpine
-        ports: [ "5432:5432" ]
+        ports: ["5432:5432"]
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -166,27 +166,27 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     name: Dockerize and publish
-    needs: [ version, build, test ]
+    needs: [version, build, test]
 
     steps:
       - name: Fetch version artifact
         uses: actions/download-artifact@v2
         with:
           name: version
-      
+
       - name: Fetch build artifact
         uses: actions/download-artifact@v2
         with:
           name: backoffice
-      
+
       - name: Untar application files
         run: tar -xvf app.tar .
 
       - name: Set env
         run: |
-          echo ::set-env name=VERSION::$(cat ./version.txt)
-          echo ::set-env name=IMAGE_REPO::backoffice
-          echo ::set-env name=AWS_REGION::eu-central-1
+          echo "{VERSION}={$(cat ./version.txt)}" >> ${GITHUB_ENV}
+          echo "{IMAGE_REPO}={backoffice}" >> ${GITHUB_ENV}
+          echo "{AWS_REGION}={eu-central-1}" >> ${GITHUB_ENV}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -209,7 +209,7 @@ jobs:
           image_tag: ${{ env.VERSION }}
           registry: ${{ steps.login-ecr.outputs.registry }}
           dockerfile: ./.github/Dockerfile
-      
+
       - name: Store docker image name
         run: echo ${{ steps.docker-build.outputs.FULL_IMAGE_NAME }} >> ./full_image_name.txt
 
