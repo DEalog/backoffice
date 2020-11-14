@@ -1,5 +1,7 @@
 ## Unreleased
 
+- `ADD` User accounts can be changed
+- `ADD` Users can be onboarded with an account containing the personal data as well as the organizational settings
 - `FIX` Login with unconfirmed users issues is handled by emitting a user or password wrong message
 - `FIX` The Kafka configuration is read correctly when no projectors are configured
 - `ADD` Setup GH Actions to deploy application to AWS
