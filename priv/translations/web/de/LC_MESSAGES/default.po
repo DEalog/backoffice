@@ -983,7 +983,7 @@ msgstr "Eingerichtet"
 #, elixir-format
 #: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:106
 msgid "Organization"
-msgstr "Meine Organisation"
+msgstr "Organisation"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:76
@@ -1041,11 +1041,6 @@ msgid "Update the organizational role for this user."
 msgstr "Rolle des Benutzers in der Organisation aktualisieren."
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/settings/index.html.leex:43
-msgid "User | Account"
-msgstr "Benutzer | Konto"
-
-#, elixir-format
 #: lib/dealog_backoffice_web/live/settings/index.html.leex:11
 msgid "Users"
 msgstr "Benutzer"
@@ -1069,3 +1064,13 @@ msgstr "Neues Benutzerkonto erstellen"
 #: lib/dealog_backoffice_web/live/settings/accounts/edit.html.leex:12
 msgid "Create a new account for an existing user by providing their personal data and organizational settings."
 msgstr "Erstellen eines neuen Kontos für einen bestehenden Benutzer durch Angabe der perönlichen Daten, sowie der Organisationseinstellungen."
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:43
+msgid "Account"
+msgstr "Benutzerkonto"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:43
+msgid "User"
+msgstr "Benutzer"

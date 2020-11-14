@@ -1040,11 +1040,6 @@ msgid "Update the organizational role for this user."
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/settings/index.html.leex:43
-msgid "User | Account"
-msgstr ""
-
-#, elixir-format
 #: lib/dealog_backoffice_web/live/settings/index.html.leex:11
 msgid "Users"
 msgstr ""
@@ -1067,4 +1062,14 @@ msgstr ""
 #, elixir-format
 #: lib/dealog_backoffice_web/live/settings/accounts/edit.html.leex:12
 msgid "Create a new account for an existing user by providing their personal data and organizational settings."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:43
+msgid "Account"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:43
+msgid "User"
 msgstr ""
