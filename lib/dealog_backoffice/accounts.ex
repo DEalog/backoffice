@@ -427,7 +427,7 @@ defmodule DealogBackoffice.Accounts do
   @doc """
   Create a new account from a changeset.
 
-  This function first evaluates if the given changeset is valid. Then the 
+  This function first evaluates if the given changeset is valid. Then the
   account is created. Any failure will be reflected to the changeset.
 
   Returns `{:ok, created_account}` on success.
@@ -471,7 +471,7 @@ defmodule DealogBackoffice.Accounts do
   @doc """
   Change an existing account from a changeset.
 
-  This function first evaluates if the given changeset is valid. Then the 
+  This function first evaluates if the given changeset is valid. Then the
   account is changed. Any failure will be reflected to the changeset.
 
   Returns `{:ok, changed_account}` on success.
@@ -499,7 +499,7 @@ defmodule DealogBackoffice.Accounts do
   This function changes the personal data and/or the organizational settings of
   a given account.
 
-  A check is performed to determine if the changed data affects the personal 
+  A check is performed to determine if the changed data affects the personal
   data or the organizational settings and each change is only performed then.
 
   Returns `{:ok, account}` on success.

@@ -16,7 +16,7 @@ defmodule DealogBackoffice.Accounts.Commands.CreateAccount do
   validates(:first_name, presence: [message: "can't be blank"], string: true)
   validates(:last_name, presence: [message: "can't be blank"], string: true)
   validates(:user_id, uuid: true, existing_user_id: true, unlinked_user_id: true)
-  validates(:administrative_area, string: true)
+  validates(:administrative_area, presence: [message: "one has to be chosen"], string: true)
   validates(:organization, string: true)
   validates(:position, string: true)
 

@@ -20,7 +20,9 @@ defmodule DealogBackofficeWeb.SettingsLive.Accounts.FormComponent do
   end
 
   defp apply_action(socket, :new, account_params) do
-    changeset = build_changeset(%Account{}, account_params)
+    changeset =
+      build_changeset(%Account{}, account_params)
+      |> IO.inspect()
 
     case Accounts.create_account_from_changeset(changeset) do
       {:error, changeset} ->
