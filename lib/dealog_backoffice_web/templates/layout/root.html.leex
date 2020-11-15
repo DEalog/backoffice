@@ -9,6 +9,9 @@
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/fonts/inter/inter.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+    <%= if get_hostname() != "dealog_local" do %>
+      <script async defer data-domain="<%= get_hostname() %>" src="https://plausible.io/js/plausible.js"></script>
+    <% end %>
   </head>
   <body class="h-full">
     <div class="relative min-h-full">

@@ -17,6 +17,7 @@ services:
     environment:
       - DATABASE_URL=postgres://postgres@db:5432/dealog_backoffice_dev
       - DATABASE_TEST_URL=postgres://postgres@db:5432/dealog_backoffice_test
+      - HOSTNAME=dealog_local
     depends_on:
       - db
     ports:
