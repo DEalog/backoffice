@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `FIX` Publish at is sent as a timestamp instead of a ISO 8601 string
 - `FIX` Type of first time published messages is changed to `Created`
 - `ADD` Messages that already have been published are detected as updated ones
 - `FIX` Message payload is now compatible with the Message Service
