@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `FIX` Type of first time published messages is changed to `Created`
 - `ADD` Messages that already have been published are detected as updated ones
 - `FIX` Message payload is now compatible with the Message Service
 - `FIX` Project information (readme) can be viewed on released instances
