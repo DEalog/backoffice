@@ -40,7 +40,7 @@ defmodule DealogBackoffice.Messages.Projectors.MessageService do
           headline: event.title,
           description: event.body,
           ars: "059580004004",
-          published_at: NaiveDateTime.to_iso8601(metadata.created_at)
+          publishedAt: DateTime.to_unix(metadata.created_at, :millisecond)
         }
       }
       |> Jason.encode!()
