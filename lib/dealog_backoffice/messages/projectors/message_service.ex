@@ -11,7 +11,7 @@ defmodule DealogBackoffice.Messages.Projectors.MessageService do
   alias KafkaEx.Protocol.Produce.Request
 
   def handle(%MessagePublished{} = event, metadata) do
-    produce_and_send_message("Published", event, metadata)
+    produce_and_send_message("Created", event, metadata)
   end
 
   def handle(%MessageUpdated{} = event, metadata) do
