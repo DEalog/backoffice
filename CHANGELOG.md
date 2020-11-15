@@ -1,5 +1,7 @@
 ## Unreleased
 
+- `ADD` Messages that already have been published are detected as updated ones
+- `FIX` Message payload is now compatible with the Message Service
 - `FIX` Project information (readme) can be viewed on released instances
 - `ADD` Users are anonymously tracked to get some metrics
 - `ADD` User accounts can be changed

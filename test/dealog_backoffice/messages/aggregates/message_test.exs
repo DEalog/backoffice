@@ -18,7 +18,8 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
     MessageDeleted,
     MessageApproved,
     MessageRejected,
-    MessagePublished
+    MessagePublished,
+    MessageUpdated
   }
 
   describe "create message" do
@@ -415,6 +416,65 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
           message_id: message_id
         }),
         {:error, :invalid_state}
+      )
+    end
+
+    @tag :unit
+    test "should successfully be updated when already published" do
+      message_id = UUID.uuid4()
+
+      assert_events(
+        [
+          %MessageCreated{
+            message_id: message_id,
+            status: :draft,
+            title: "A title",
+            body: "A body"
+          },
+          %MessageSentForApproval{
+            message_id: message_id,
+            status: :waiting_for_approval,
+            title: "A title",
+            body: "A body"
+          },
+          %MessageApproved{
+            message_id: message_id,
+            status: :approved
+          },
+          %MessagePublished{
+            message_id: message_id,
+            status: :published,
+            title: "A title",
+            body: "A body"
+          },
+          %MessageChanged{
+            message_id: message_id,
+            status: :draft,
+            title: "A changed title",
+            body: "A changed body"
+          },
+          %MessageSentForApproval{
+            message_id: message_id,
+            status: :waiting_for_approval,
+            title: "A changed title",
+            body: "A changed body"
+          },
+          %MessageApproved{
+            message_id: message_id,
+            status: :approved
+          }
+        ],
+        struct(PublishMessage, %{
+          message_id: message_id
+        }),
+        [
+          %MessageUpdated{
+            message_id: message_id,
+            status: :published,
+            title: "A changed title",
+            body: "A changed body"
+          }
+        ]
       )
     end
   end
