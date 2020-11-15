@@ -5,7 +5,8 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     :body,
     :status,
     :approval_notes,
-    :rejection_reasons
+    :rejection_reasons,
+    published: false
   ]
 
   alias DealogBackoffice.Messages.Aggregates.Message
@@ -27,7 +28,8 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     MessageDeleted,
     MessageApproved,
     MessageRejected,
-    MessagePublished
+    MessagePublished,
+    MessageUpdated
   }
 
   @doc """
@@ -124,12 +126,21 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
         %Message{message_id: message_id, status: :approved} = message,
         %PublishMessage{} = publish
       ) do
-    %MessagePublished{
-      message_id: message_id,
-      title: message.title,
-      body: message.body,
-      status: publish.status
-    }
+    if message.published do
+      %MessageUpdated{
+        message_id: message_id,
+        title: message.title,
+        body: message.body,
+        status: publish.status
+      }
+    else
+      %MessagePublished{
+        message_id: message_id,
+        title: message.title,
+        body: message.body,
+        status: publish.status
+      }
+    end
   end
 
   def execute(%Message{}, %PublishMessage{}), do: {:error, :invalid_state}
@@ -200,7 +211,18 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       | message_id: published.message_id,
         status: published.status,
         title: published.title,
-        body: published.body
+        body: published.body,
+        published: true
+    }
+  end
+
+  def apply(%Message{} = message, %MessageUpdated{} = updated) do
+    %Message{
+      message
+      | message_id: updated.message_id,
+        status: updated.status,
+        title: updated.title,
+        body: updated.body
     }
   end
 end
