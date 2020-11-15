@@ -42,6 +42,7 @@ WORKDIR /app
 RUN chown nobody:nobody /app
 
 COPY CHANGELOG.md /app/CHANGELOG.md
+COPY README.md /app/README.md
 COPY rel/run.sh /app
 
 USER nobody:nobody

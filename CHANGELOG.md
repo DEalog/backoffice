@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `FIX` Project information (readme) can be viewed on released instances
 - `ADD` Users are anonymously tracked to get some metrics
 - `ADD` User accounts can be changed
 - `ADD` Users can be onboarded with an account containing the personal data as well as the organizational settings
