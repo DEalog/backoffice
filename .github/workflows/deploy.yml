@@ -27,12 +27,12 @@ jobs:
 
       - name: Set env
         run: |
-          echo "{FULL_IMAGE_NAME}={$(cat ./dockerized-backoffice/full_image_name.txt)}" >> ${GITHUB_ENV}
-          echo "{IMAGE_TAG}={$(cat ./version/version.txt)}" >> ${GITHUB_ENV}
+          echo "FULL_IMAGE_NAME=$(cat ./dockerized-backoffice/full_image_name.txt)" >> ${GITHUB_ENV}
+          echo "IMAGE_TAG=$(cat ./version/version.txt)" >> ${GITHUB_ENV}
 
       - name: Set production env
         if: github.ref == 'refs/heads/main'
-        run: echo "{CLUSTER_NAME}={dealog-dev}" >> ${GITHUB_ENV}
+        run: echo "CLUSTER_NAME=dealog-dev" >> ${GITHUB_ENV}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
