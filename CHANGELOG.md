@@ -1,5 +1,11 @@
 ## Unreleased
 
+- `FIX` Publish at is sent as a timestamp instead of a ISO 8601 string
+- `FIX` Type of first time published messages is changed to `Created`
+- `ADD` Messages that already have been published are detected as updated ones
+- `FIX` Message payload is now compatible with the Message Service
+- `FIX` Project information (readme) can be viewed on released instances
+- `ADD` Users are anonymously tracked to get some metrics
 - `ADD` User accounts can be changed
 - `ADD` Users can be onboarded with an account containing the personal data as well as the organizational settings
 - `ADD` Users are listed in the settings area

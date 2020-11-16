@@ -8,6 +8,7 @@ RUN set -xe \
 WORKDIR /app
 
 COPY ./CHANGELOG.md ./CHANGELOG.md
+COPY ./README.md ./README.md
 COPY --chown=nobody:nobody ./rel/run.sh .
 COPY --chown=nobody:nobody ./_build/prod/rel/backoffice .
 

@@ -4,37 +4,34 @@ defmodule DealogBackoffice.Messages.Projectors.PublishedMessage do
     name: "Messages.Projectors.PublishedMessage",
     consistency: :strong
 
-  alias DealogBackoffice.Messages
-  alias DealogBackoffice.Messages.Events.MessagePublished
+  alias DealogBackoffice.Messages.Events.{MessagePublished, MessageUpdated}
   alias DealogBackoffice.Messages.Projections.PublishedMessage
 
   project(%MessagePublished{} = published, metadata, fn multi ->
-    case Messages.get_published_message(published.message_id) do
-      {:ok, _} ->
-        changes = [
-          title: published.title,
-          body: published.body,
-          status: published.status,
-          updated_at: NaiveDateTime.utc_now()
-        ]
+    Ecto.Multi.insert(
+      multi,
+      :create_published_message,
+      %PublishedMessage{
+        id: published.message_id,
+        title: published.title,
+        body: published.body,
+        status: published.status,
+        inserted_at: metadata.created_at
+      }
+    )
+  end)
 
-        Ecto.Multi.update_all(multi, :update_published_message, query(published.message_id),
-          set: changes
-        )
+  project(%MessageUpdated{} = updated, metadata, fn multi ->
+    changes = [
+      title: updated.title,
+      body: updated.body,
+      status: updated.status,
+      updated_at: metadata.created_at
+    ]
 
-      {:error, _} ->
-        Ecto.Multi.insert(
-          multi,
-          :published_message,
-          %PublishedMessage{
-            id: published.message_id,
-            title: published.title,
-            body: published.body,
-            status: published.status,
-            inserted_at: metadata.created_at
-          }
-        )
-    end
+    Ecto.Multi.update_all(multi, :update_published_message, query(updated.message_id),
+      set: changes
+    )
   end)
 
   defp query(message_id) do

@@ -107,6 +107,7 @@ jobs:
           path: |
             ./app.tar
             ./CHANGELOG.md
+            ./README.md
             ./.github/Dockerfile
           if-no-files-found: error
 
@@ -167,7 +168,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Dockerize and publish
     needs: [version, build, test]
-
     env:
       AWS_REGION: eu-central-1
       IMAGE_REPO: backoffice
