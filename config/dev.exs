@@ -24,7 +24,7 @@ config :kafka_ex,
   client_id: "dealog_backoffice_kafka",
   disable_default_worker: true,
   brokers: [
-    {"kafka", 9092}
+    {"kafka", 29092}
   ]
 
 config :dealog_backoffice, :projection, projectors: :all
