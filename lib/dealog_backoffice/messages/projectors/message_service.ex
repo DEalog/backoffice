@@ -6,6 +6,8 @@ defmodule DealogBackoffice.Messages.Projectors.MessageService do
   @topic "messages"
   @worker_name :kafka_ex
 
+  require Logger
+
   alias DealogBackoffice.Messages.Events.{MessagePublished, MessageUpdated}
   alias KafkaEx.Protocol.Produce.Message, as: KafkaMessage
   alias KafkaEx.Protocol.Produce.Request
@@ -22,6 +24,11 @@ defmodule DealogBackoffice.Messages.Projectors.MessageService do
     ensure_connected()
     messages = build_messages(type, event, metadata)
     request = %Request{topic: @topic, api_version: 3, messages: messages}
+
+    Logger.info(
+      "Trying to publish message to topic #{@topic} [type: #{type}, id: #{event.message_id}]"
+    )
+
     KafkaEx.produce(request)
   end
 
