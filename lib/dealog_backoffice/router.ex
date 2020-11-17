@@ -26,8 +26,9 @@ defmodule DealogBackoffice.Router do
     PublishMessage
   }
 
-  alias DealogBackoffice.Middlewares.Validate
+  alias DealogBackoffice.Middlewares.{Log, Validate}
 
+  middleware(Log)
   middleware(Validate)
 
   # Account
