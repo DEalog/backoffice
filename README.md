@@ -29,6 +29,18 @@ mentioned tools are available and accessible then start the stack.
 
 > To get all available commands of the `dev` script run `./dev --help`.
 
+### Create a super user
+
+To create a super user for local development please run
+
+```
+./dev mix run priv/repo/create_super_user.exs
+```
+
+If successful you will see an output like this:
+
+`Confirmed super user created: %{email: "super_user@dealog.de", password: "C7LX6OQsULON"}`
+
 ### Testing
 
 To run the tests please use `./dev test` or `./dev test.watch`.
@@ -99,6 +111,14 @@ to be reachable):
 > accessible from the Backoffice Docker container and use a `.env` file for the
 > variables mentioned above.
 
+The following environment variables can be set:
+
+- `SUPER_USER_EMAIL`: The email address of the super user to create.
+- `SUPER_USER_PASSWORD`: The password for the super user to be set.
+
+> If these variables are not set everything will work fine just some
+> functionality will not be executed.
+
 ### Deployment all in one
 
 For now there is a command script under `rel/run.sh` running all the setup
@@ -133,6 +153,25 @@ docker run --network my_network --env-file=./.env dealog/backoffice:latest bin/b
 > Note: `my_network` should contain the network the PostgreSQL instance is
 > reachable from.
 
+### Import the adminsitrative areas
+
+```
+docker run --network my_network --env-file=./.env dealog/backoffice:latest bin/backoffice eval "DealogBackoffice.Release.import_administrative_areas()"
+```
+
+> Note: `my_network` should contain the network the PostgreSQL instance is
+> reachable from.
+
+### Create the super user
+
+```
+docker run --network my_network --env-file=./.env dealog/backoffice:latest bin/backoffice eval "DealogBackoffice.Release.create_super_user()"
+```
+
+> Note: `my_network` should contain the network the PostgreSQL instance is
+> reachable from. Further ensure that the `SUPER_USER_EMAIL` and
+> `SUPER_USER_PASSWORD` env vars are set.
+
 ### Start the container
 
 ```
@@ -148,6 +187,9 @@ In order to deploy a branch for review there is a script available. The script
 creates a Dokku application and deploys the current branch.
 
 Currently this is a manual task.
+
+> Please copy the `preview_env.dist` to `.preview_env` and set the variables
+> accordingly: `cp preview_env.dist .preview_env`
 
 To deploy run: `./preview_deploy` on the respective branch.
 To cleanup run: `./preview_deploy --cleanup` on the branch. Additionally you

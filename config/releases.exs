@@ -89,3 +89,8 @@ config :dealog_backoffice, DealogBackoffice.Accounts.Mailer,
   port: smtp_port,
   username: smtp_username,
   password: smtp_password
+
+# Super user settings
+config :dealog_backoffice, :super_user,
+  email: System.get_env("SUPER_USER_EMAIL"),
+  password: System.get_env("SUPER_USER_PASSWORD")

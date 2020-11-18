@@ -68,6 +68,11 @@ config :dealog_backoffice, DealogBackofficeWeb.Endpoint,
   pubsub_server: DealogBackoffice.PubSub,
   live_view: [signing_salt: "d2buOMuU"]
 
+# Super user settings
+config :dealog_backoffice, :super_user,
+  email: nil,
+  password: nil
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

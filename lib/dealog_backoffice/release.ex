@@ -48,6 +48,21 @@ defmodule DealogBackoffice.Release do
     |> DealogBackoffice.Importer.AdministrativeAreas.import_all_from()
   end
 
+  @doc """
+  Creates a super user if not already created.
+  """
+  def create_super_user do
+    load_app()
+
+    case super_user_config() do
+      {:ok, config} ->
+        DealogBackoffice.Importer.SuperUser.create(config)
+
+      :error ->
+        nil
+    end
+  end
+
   defp repos do
     Application.fetch_env!(@app, :ecto_repos)
   end
@@ -57,5 +72,9 @@ defmodule DealogBackoffice.Release do
     {:ok, _} = Application.ensure_all_started(:ssl)
 
     :ok = Application.load(@app)
+  end
+
+  defp super_user_config do
+    Application.fetch_env(@app, :super_user)
   end
 end
