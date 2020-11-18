@@ -46,6 +46,7 @@ defmodule DealogBackoffice.Messages.Projectors.MessageService do
           identifier: event.message_id,
           headline: event.title,
           description: event.body,
+          category: "Other",
           ars: "059580004004",
           organization: "DEalog Team",
           publishedAt: DateTime.to_unix(metadata.created_at, :millisecond)
