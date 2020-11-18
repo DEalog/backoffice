@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `ADD` The category of the message being published is added (hard coded at the moment)
 - `ADD` The organization of the message being published is added (hard coded at the moment)
 - `ADD` The ars code of the message being published is added (hard coded at the moment)
 - `ADD` A super user can be created if email and password is supplied
