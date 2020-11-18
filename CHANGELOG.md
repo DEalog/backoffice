@@ -1,5 +1,7 @@
 ## Unreleased
 
+- `ADD` The organization of the message being published is added (hard coded at the moment)
+- `ADD` The ars code of the message being published is added (hard coded at the moment)
 - `ADD` A super user can be created if email and password is supplied
 - `ADD` Publishing of messsages to Kafka is logged
 - `ADD` All command dispatches are logged

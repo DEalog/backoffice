@@ -15,6 +15,8 @@ defmodule DealogBackoffice.Messages.Projectors.PublishedMessage do
         id: published.message_id,
         title: published.title,
         body: published.body,
+        ars: "059580004004",
+        organization: "DEalog Team",
         status: published.status,
         inserted_at: metadata.created_at
       }
@@ -25,6 +27,8 @@ defmodule DealogBackoffice.Messages.Projectors.PublishedMessage do
     changes = [
       title: updated.title,
       body: updated.body,
+      ars: "059580004004",
+      organization: "DEalog Team",
       status: updated.status,
       updated_at: metadata.created_at
     ]

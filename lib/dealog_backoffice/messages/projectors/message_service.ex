@@ -47,6 +47,7 @@ defmodule DealogBackoffice.Messages.Projectors.MessageService do
           headline: event.title,
           description: event.body,
           ars: "059580004004",
+          organization: "DEalog Team",
           publishedAt: DateTime.to_unix(metadata.created_at, :millisecond)
         }
       }
