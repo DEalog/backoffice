@@ -53,6 +53,7 @@ defmodule DealogBackoffice.Release do
   """
   def create_super_user do
     load_app()
+    {:ok, _} = Application.ensure_all_started(:dealog_backoffice)
 
     case super_user_config() do
       {:ok, [email: email, password: password]} ->
