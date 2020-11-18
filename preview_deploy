@@ -6,17 +6,23 @@ if [ -z ${DOKKU_CMD+x} ] || [ -z ${DOMAIN+x} ] || [ -z ${PHX_SECRET+x} ] || [ -z
     cat << HINT
 You need to provide the following environment variables:
 
-- DOKKU_CMD     The Dokku (remote) command, e.g. ssh dokku-host
-- DOMAIN        The domain, e.g. dev.host (will become PREVIEW_NAME.dev.host)
-- PHX_SECRET    A Phoenix secret, best generate via `./dev mix phx.gen.secret`
-- EMAIL_ADDR    The email address for Let's Encrypt
-- KAFKA_HOSTS   The Kafka hosts (f.e. localhost:9092)
-- SMTP_RELAY    The SMTP server host
-- SMTP_PORT     The SMTP server port
-- SMTP_USERNAME The SMTP user
-- SMTP_PASSWORD The SMTP password
+- DOKKU_CMD             The Dokku (remote) command, e.g. ssh dokku-host
+- DOMAIN                The domain, e.g. dev.host (will become PREVIEW_NAME.dev.host)
+- PHX_SECRET            A Phoenix secret, best generate via `./dev mix phx.gen.secret`
+- EMAIL_ADDR            The email address for Let's Encrypt
+- KAFKA_HOSTS           The Kafka hosts (f.e. localhost:9092)
+- SMTP_RELAY            The SMTP server host
+- SMTP_PORT             The SMTP server port
+- SMTP_USERNAME         The SMTP user
+- SMTP_PASSWORD         The SMTP password
+
+You can set the following variables if desired:
+
+- SUPER_USER_EMAIL      The email address of the super user
+- SUPER_USER_PASSWORD   The password of the super user
 
 You can override the following variables:
+
 - APP_PREFIX
 - PROJECTORS
 
@@ -141,6 +147,17 @@ function enable_ssl {
   ${DOKKU_CMD} letsencrypt ${app_name}
 }
 
+function setup_superuser {
+  local app_name=${1}
+  if [ -z "${SUPER_USER_EMAIL}" ] || [ -z "${SUPER_USER_PASSWORD}" ]; then
+    echo "No super user is being set"
+    return
+  fi
+  set_config ${app_name} SUPER_USER_EMAIL ${SUPER_USER_EMAIL}
+  set_config ${app_name} SUPER_USER_PASSWORD ${SUPER_USER_PASSWORD}
+  echo "Super user config set"
+}
+
 function deploy {
   local short_sha=$(git rev-parse --short HEAD)
   local branch_name=$(git rev-parse --abbrev-ref HEAD)
@@ -167,6 +184,7 @@ function deploy {
     local db_alias="${database##*:}"
     ensure_database ${app_name} ${db_name} ${db_alias}
   done
+  setup_superuser ${app_name}
   setup_git ${app_name}
   deploy_application ${app_name} ${branch_name}
   enable_ssl ${app_name} ${EMAIL_ADDR}

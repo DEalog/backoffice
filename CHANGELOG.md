@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `ADD` A super user can be created if email and password is supplied
 - `ADD` Publishing of messsages to Kafka is logged
 - `ADD` All command dispatches are logged
 - `FIX` Publish at is sent as a timestamp instead of a ISO 8601 string
