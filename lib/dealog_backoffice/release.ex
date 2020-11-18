@@ -55,8 +55,8 @@ defmodule DealogBackoffice.Release do
     load_app()
 
     case super_user_config() do
-      {:ok, config} ->
-        DealogBackoffice.Importer.SuperUser.create(config)
+      {:ok, [email: email, password: password]} ->
+        DealogBackoffice.Importer.SuperUser.create(%{email: email, password: password})
 
       :error ->
         nil
