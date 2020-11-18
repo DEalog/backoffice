@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `CNG` Login and other user related pages are centered on the screen
 - `ADD` The category of the message being published is added (hard coded at the moment)
 - `ADD` The organization of the message being published is added (hard coded at the moment)
 - `ADD` The ars code of the message being published is added (hard coded at the moment)
