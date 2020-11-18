@@ -189,7 +189,8 @@ creates a Dokku application and deploys the current branch.
 Currently this is a manual task.
 
 > Please copy the `preview_env.dist` to `.preview_env` and set the variables
-> accordingly: `cp preview_env.dist .preview_env`
+> accordingly:
+> `cp preview_env.dist .preview_env`
 
 To deploy run: `./preview_deploy` on the respective branch.
 To cleanup run: `./preview_deploy --cleanup` on the branch. Additionally you
