@@ -10,14 +10,16 @@ defmodule DealogBackoffice.Messages do
     DeleteMessage,
     ApproveMessage,
     RejectMessage,
-    PublishMessage
+    PublishMessage,
+    ArchiveMessage
   }
 
   alias DealogBackoffice.Messages.Projections.{
     Message,
     MessageForApproval,
     DeletedMessage,
-    PublishedMessage
+    PublishedMessage,
+    ArchivedMessage
   }
 
   alias DealogBackoffice.Messages.Queries.{
@@ -101,6 +103,18 @@ defmodule DealogBackoffice.Messages do
     case get_message(message_id) do
       {:ok, message} ->
         do_delete_message(message)
+
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+  @doc """
+  """
+  def archive_message(message_id) do
+    case get_message(message_id) do
+      {:ok, message} ->
+        do_archive_message(message)
 
       {:error, reason} ->
         {:error, reason}
@@ -289,6 +303,18 @@ defmodule DealogBackoffice.Messages do
     else
       _ ->
         {:error, :invalid_transition}
+    end
+  end
+
+  defp do_archive_message(message) do
+    archive_message =
+      message
+      |> ArchiveMessage.new()
+      |> ArchiveMessage.assign_message_id(message)
+      |> ArchiveMessage.set_status()
+
+    with :ok <- App.dispatch(archive_message, consistency: :strong) do
+      get(ArchivedMessage, message.id)
     end
   end
 end

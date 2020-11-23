@@ -18,7 +18,8 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     DeleteMessage,
     ApproveMessage,
     RejectMessage,
-    PublishMessage
+    PublishMessage,
+    ArchiveMessage
   }
 
   alias DealogBackoffice.Messages.Events.{
@@ -29,7 +30,8 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     MessageApproved,
     MessageRejected,
     MessagePublished,
-    MessageUpdated
+    MessageUpdated,
+    MessageArchived
   }
 
   @doc """
@@ -145,6 +147,23 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
 
   def execute(%Message{}, %PublishMessage{}), do: {:error, :invalid_state}
 
+  @doc """
+  Archive an existing message if it was or is published.
+  """
+  def execute(
+        %Message{message_id: message_id, published: true} = message,
+        %ArchiveMessage{} = archive
+      ) do
+    %MessageArchived{
+      message_id: message_id,
+      title: message.title,
+      body: message.body,
+      status: archive.status
+    }
+  end
+
+  def execute(%Message{}, %ArchiveMessage{}), do: {:error, :invalid_state}
+
   # State mutators for reconstitution
 
   def apply(%Message{} = message, %MessageCreated{} = created) do
@@ -223,6 +242,16 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
         status: updated.status,
         title: updated.title,
         body: updated.body
+    }
+  end
+
+  def apply(%Message{} = message, %MessageArchived{} = archived) do
+    %Message{
+      message
+      | message_id: archived.message_id,
+        title: archived.title,
+        body: archived.body,
+        status: archived.status
     }
   end
 end

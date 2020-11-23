@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `NEW` Published messages can be archived (taken offline)
 - `CNG` Administrative areas are preloaded differently
 - `CNG` Login and other user related pages are centered on the screen
 - `NEW` The category of the message being published is added (hard coded at the moment)

@@ -8,7 +8,7 @@ defmodule DealogBackoffice.Messages.Projectors.MessageService do
 
   require Logger
 
-  alias DealogBackoffice.Messages.Events.{MessagePublished, MessageUpdated}
+  alias DealogBackoffice.Messages.Events.{MessagePublished, MessageUpdated, MessageArchived}
   alias KafkaEx.Protocol.Produce.Message, as: KafkaMessage
   alias KafkaEx.Protocol.Produce.Request
 
@@ -18,6 +18,10 @@ defmodule DealogBackoffice.Messages.Projectors.MessageService do
 
   def handle(%MessageUpdated{} = event, metadata) do
     produce_and_send_message("Updated", event, metadata)
+  end
+
+  def handle(%MessageArchived{} = event, metadata) do
+    produce_and_send_message("Disposed", event, metadata)
   end
 
   defp produce_and_send_message(type, event, metadata) do

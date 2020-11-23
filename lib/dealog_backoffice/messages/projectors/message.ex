@@ -12,7 +12,8 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     MessageApproved,
     MessageRejected,
     MessagePublished,
-    MessageUpdated
+    MessageUpdated,
+    MessageArchived
   }
 
   alias DealogBackoffice.Messages.Projections.Message
@@ -51,6 +52,10 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
 
   project(%MessageDeleted{} = deleted, fn multi ->
     Ecto.Multi.delete_all(multi, :delete_message, query(deleted.message_id))
+  end)
+
+  project(%MessageArchived{} = archived, fn multi ->
+    Ecto.Multi.delete_all(multi, :archive_message, query(archived.message_id))
   end)
 
   project(%MessageApproved{} = approved, metadata, fn multi ->

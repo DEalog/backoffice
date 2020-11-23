@@ -4,7 +4,7 @@ defmodule DealogBackoffice.Messages.Projectors.PublishedMessage do
     name: "Messages.Projectors.PublishedMessage",
     consistency: :strong
 
-  alias DealogBackoffice.Messages.Events.{MessagePublished, MessageUpdated}
+  alias DealogBackoffice.Messages.Events.{MessagePublished, MessageUpdated, MessageArchived}
   alias DealogBackoffice.Messages.Projections.PublishedMessage
 
   project(%MessagePublished{} = published, metadata, fn multi ->
@@ -38,6 +38,10 @@ defmodule DealogBackoffice.Messages.Projectors.PublishedMessage do
     Ecto.Multi.update_all(multi, :update_published_message, query(updated.message_id),
       set: changes
     )
+  end)
+
+  project(%MessageArchived{} = archived, fn multi ->
+    Ecto.Multi.delete_all(multi, :archive_message, query(archived.message_id))
   end)
 
   defp query(message_id) do

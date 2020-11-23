@@ -23,7 +23,8 @@ defmodule DealogBackoffice.Router do
     DeleteMessage,
     ApproveMessage,
     RejectMessage,
-    PublishMessage
+    PublishMessage,
+    ArchiveMessage
   }
 
   alias DealogBackoffice.Middlewares.{Log, Validate}
@@ -49,7 +50,8 @@ defmodule DealogBackoffice.Router do
       DeleteMessage,
       ApproveMessage,
       RejectMessage,
-      PublishMessage
+      PublishMessage,
+      ArchiveMessage
     ],
     to: Message
   )

@@ -19,7 +19,8 @@ defmodule DealogBackoffice.Messages.Supervisor do
     Projectors.Message,
     Projectors.MessageApproval,
     Projectors.DeletedMessage,
-    Projectors.PublishedMessage
+    Projectors.PublishedMessage,
+    Projectors.ArchivedMessage
   ]
 
   @addional_projectors [
