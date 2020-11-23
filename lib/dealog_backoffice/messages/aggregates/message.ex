@@ -6,7 +6,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     :status,
     :approval_notes,
     :rejection_reasons,
-    published: false
+    published?: false
   ]
 
   alias DealogBackoffice.Messages.Aggregates.Message
@@ -125,24 +125,27 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
   Publish an approved message.
   """
   def execute(
-        %Message{message_id: message_id, status: :approved} = message,
+        %Message{message_id: message_id, status: :approved, published?: false} = message,
         %PublishMessage{} = publish
       ) do
-    if message.published do
-      %MessageUpdated{
-        message_id: message_id,
-        title: message.title,
-        body: message.body,
-        status: publish.status
-      }
-    else
-      %MessagePublished{
-        message_id: message_id,
-        title: message.title,
-        body: message.body,
-        status: publish.status
-      }
-    end
+    %MessagePublished{
+      message_id: message_id,
+      title: message.title,
+      body: message.body,
+      status: publish.status
+    }
+  end
+
+  def execute(
+        %Message{message_id: message_id, status: :approved, published?: true} = message,
+        %PublishMessage{} = publish
+      ) do
+    %MessageUpdated{
+      message_id: message_id,
+      title: message.title,
+      body: message.body,
+      status: publish.status
+    }
   end
 
   def execute(%Message{}, %PublishMessage{}), do: {:error, :invalid_state}
@@ -151,7 +154,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
   Archive an existing message if it was or is published.
   """
   def execute(
-        %Message{message_id: message_id, published: true} = message,
+        %Message{message_id: message_id, published?: true} = message,
         %ArchiveMessage{} = archive
       ) do
     %MessageArchived{
@@ -231,7 +234,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
         status: published.status,
         title: published.title,
         body: published.body,
-        published: true
+        published?: true
     }
   end
 
