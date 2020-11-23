@@ -25,7 +25,7 @@ defmodule DealogBackoffice.Accounts do
   """
   def list do
     User
-    |> preload(:account)
+    |> preload(account: [:administrative_area])
     |> Repo.all()
   end
 
@@ -396,7 +396,7 @@ defmodule DealogBackoffice.Accounts do
   """
   def get_account(id) do
     Account
-    |> preload([:user])
+    |> preload([:user, :administrative_area])
     |> Repo.get(id)
     |> case do
       nil -> {:error, :not_found}
@@ -411,7 +411,11 @@ defmodule DealogBackoffice.Accounts do
   When the account could not be found it returns `{:error, :not_found}`
   """
   def get_account_by_user(user_id) when is_binary(user_id) do
-    case Repo.get_by(Account, user_id: user_id) do
+    account_query =
+      Account
+      |> preload(:administrative_area)
+
+    case Repo.get_by(account_query, user_id: user_id) do
       nil -> {:error, :not_found}
       account -> {:ok, account}
     end
