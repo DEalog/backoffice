@@ -566,7 +566,7 @@ defmodule DealogBackoffice.AccountsTest do
       assert changed_account.first_name == "John"
       assert changed_account.last_name == "Doe"
       assert changed_account.user_id == account.user_id
-      assert changed_account.administrative_area == "123"
+      assert changed_account.administrative_area_id == "123"
       assert changed_account.organization == "An organization"
       assert changed_account.position == "A position"
     end

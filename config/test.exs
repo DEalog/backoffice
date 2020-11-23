@@ -3,6 +3,10 @@ use Mix.Config
 # Only in tests, remove the complexity from the password hashing algorithm
 config :bcrypt_elixir, :log_rounds, 1
 
+# Reduce consistency timeouts from 5_000 to 100
+config :commanded,
+  dispatch_consistency_timeout: 100
+
 config :dealog_backoffice, DealogBackofficeWeb.Gettext, default_locale: "en"
 config :dealog_backoffice, DealogBackoffice.Gettext, default_locale: "en"
 

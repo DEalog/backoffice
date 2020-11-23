@@ -21,7 +21,7 @@ defmodule DealogBackoffice.Accounts.Projectors.Account do
         first_name: created.first_name,
         last_name: created.last_name,
         user_id: created.user_id,
-        administrative_area: created.administrative_area,
+        administrative_area_id: created.administrative_area,
         organization: created.organization,
         position: created.position,
         inserted_at: metadata.created_at
@@ -42,7 +42,7 @@ defmodule DealogBackoffice.Accounts.Projectors.Account do
     metadata,
     fn multi ->
       update_account(multi, changed_organizational_settings.account_id,
-        administrative_area: changed_organizational_settings.administrative_area,
+        administrative_area_id: changed_organizational_settings.administrative_area,
         organization: changed_organizational_settings.organization,
         position: changed_organizational_settings.position,
         updated_at: metadata.created_at

@@ -83,18 +83,18 @@
         <div class="col-span-4 sm:col-span-2">
           <%=
             label f,
-              :administrative_area,
+              :administrative_area_id,
               gettext("Administrative Area")
           %>
           <%=
             select f,
-              :administrative_area,
+              :administrative_area_id,
               @administrative_areas,
-              class: "form-select block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :administrative_area), do: " border-red-700"}"
+              class: "form-select block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :administrative_area_id), do: " border-red-700"}"
           %>
           <%=
             error_tag f,
-              :administrative_area,
+              :administrative_area_id,
               class: "text-red-700"
           %>
         </div>

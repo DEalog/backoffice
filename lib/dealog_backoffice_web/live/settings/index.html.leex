@@ -82,7 +82,9 @@
                       <%= if user.account do %>
                         <div class="text-sm text-gray-900 leading-5">
                           <span class="block">
-                            <%= get_area_name(user.account.administrative_area) %>
+                            <%= if user.account.administrative_area do %>
+                              <%= "#{user.account.administrative_area.type_label} #{user.account.administrative_area.name}" %>
+                            <% end %>
                           </span>
                           <span class="block">
                             <%= user.account.organization %>

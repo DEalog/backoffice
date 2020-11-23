@@ -10,7 +10,7 @@ defmodule DealogBackofficeWeb.SettingsLive.Accounts.FormData do
     :first_name,
     :last_name,
     :user_id,
-    :administrative_area
+    :administrative_area_id
   ]
   @optional_fields [
     :organization,
@@ -22,6 +22,7 @@ defmodule DealogBackofficeWeb.SettingsLive.Accounts.FormData do
     field :first_name, :string
     field :last_name, :string
     field :user_id, :binary_id
+    field :administrative_area_id, :string
     field :administrative_area, :string
     field :organization, :string
     field :position, :string
@@ -36,5 +37,16 @@ defmodule DealogBackofficeWeb.SettingsLive.Accounts.FormData do
     schema
     |> cast(account_params, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
+    |> set_administrative_area()
+  end
+
+  defp set_administrative_area(changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{administrative_area_id: administrative_area_id}} ->
+        put_change(changeset, :administrative_area, administrative_area_id)
+
+      _ ->
+        changeset
+    end
   end
 end
