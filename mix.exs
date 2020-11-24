@@ -57,6 +57,7 @@ defmodule DealogBackoffice.MixProject do
       {:elixir_uuid, "~> 1.2"},
       {:eventstore, "~> 1.1"},
       {:exconstructor, "~> 1.1"},
+      {:faker, "~> 0.16", only: [:dev, :test], runtime: false},
       {:floki, ">= 0.0.0", only: :test},
       {:gen_smtp, "~> 0.13"},
       {:gettext, "~> 0.11"},
@@ -89,12 +90,14 @@ defmodule DealogBackoffice.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "cmd npm install --prefix assets"],
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      setup: ["deps.get", "event_store.setup", "ecto.setup", "seed"],
+      reset: ["event_store.reset", "ecto.reset", "seed"],
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      "ecto.setup": ["ecto.create", "ecto.migrate"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "event_store.reset": ["event_store.drop", "event_store.setup"],
       "event_store.setup": ["event_store.create", "event_store.init"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      seed: ["backoffice.seed.messages", "backoffice.seed.dev_user"]
     ]
   end
 end
