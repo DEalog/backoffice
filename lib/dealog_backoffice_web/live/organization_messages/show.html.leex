@@ -192,16 +192,34 @@
               <%= gettext "Back to overview" %>
             </a>
           </div>
-          <%= if @message.status == :published do %>
+          <%= if @message.published and @message.status in [:draft] do %>
+            <div>
+              <a
+                href="<%= Routes.organization_messages_path(@socket, :discard_change, @message) %>"
+                class="flex items-center w-full px-2 py-2 mt-1 text-sm font-medium text-gray-600 bg-white group leading-5 rounded-md hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
+                  <%= gettext "Discard unpublished change" %>
+              </a>
+            </div>
+          <% end %>
+          <%= if @message.published and @message.status in [:published] do %>
             <div>
               <a
                 href="<%= Routes.organization_messages_path(@socket, :archive, @message) %>"
                 class="flex items-center w-full px-2 py-2 mt-1 text-sm font-medium text-gray-600 bg-white group leading-5 rounded-md hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
-                <%= gettext "Archive" %>
+                  <%= gettext "Archive" %>
               </a>
             </div>
           <% end %>
-          <%= unless @message.status == :waiting_for_approval do %>
+          <%= if @message.published and @message.status in [:draft] do %>
+            <div>
+              <a
+                href="<%= Routes.organization_messages_path(@socket, :archive, @message) %>"
+                class="flex items-center w-full px-2 py-2 mt-1 text-sm font-medium text-gray-600 bg-white group leading-5 rounded-md hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
+                  <%= gettext "Discard unpublished changes and archive" %>
+              </a>
+            </div>
+          <% end %>
+          <%= unless @message.status in [:waiting_for_approval] do %>
             <div>
               <a
                 href="<%= Routes.organization_messages_path(@socket, :change, @message) %>"
@@ -219,7 +237,7 @@
               </a>
             </div>
           <% end %>
-          <%= if @message.status in [:draft] do %>
+          <%= if @message.status in [:draft] and !@message.published do %>
             <div>
               <a
                 href="<%= Routes.organization_messages_path(@socket, :delete, @message) %>"

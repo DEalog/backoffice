@@ -19,7 +19,8 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     ApproveMessage,
     RejectMessage,
     PublishMessage,
-    ArchiveMessage
+    ArchiveMessage,
+    DiscardChange
   }
 
   alias DealogBackoffice.Messages.Events.{
@@ -31,7 +32,8 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     MessageRejected,
     MessagePublished,
     MessageUpdated,
-    MessageArchived
+    MessageArchived,
+    ChangeDiscarded
   }
 
   @doc """
@@ -167,6 +169,20 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
 
   def execute(%Message{}, %ArchiveMessage{}), do: {:error, :invalid_state}
 
+  def execute(
+        %Message{message_id: message_id, published?: true},
+        %DiscardChange{} = discard_change
+      ) do
+    %ChangeDiscarded{
+      message_id: message_id,
+      title: discard_change.title,
+      body: discard_change.body,
+      status: discard_change.status
+    }
+  end
+
+  def execute(%Message{}, %DiscardChange{}), do: {:error, :invalid_state}
+
   # State mutators for reconstitution
 
   def apply(%Message{} = message, %MessageCreated{} = created) do
@@ -255,6 +271,16 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
         title: archived.title,
         body: archived.body,
         status: archived.status
+    }
+  end
+
+  def apply(%Message{} = message, %ChangeDiscarded{} = discarded) do
+    %Message{
+      message
+      | message_id: discarded.message_id,
+        title: discarded.title,
+        body: discarded.body,
+        status: discarded.status
     }
   end
 end

@@ -11,7 +11,8 @@ defmodule DealogBackoffice.Messages do
     ApproveMessage,
     RejectMessage,
     PublishMessage,
-    ArchiveMessage
+    ArchiveMessage,
+    DiscardChange
   }
 
   alias DealogBackoffice.Messages.Projections.{
@@ -228,6 +229,21 @@ defmodule DealogBackoffice.Messages do
     else
       _ ->
         {:error, :invalid_transition}
+    end
+  end
+
+  def discard_change(message_id) do
+    {:ok, published_message} = get_published_message(message_id)
+    {:ok, current_message} = get_message(message_id)
+
+    discard_change =
+      %{}
+      |> DiscardChange.new()
+      |> DiscardChange.assign_message_id(current_message)
+      |> DiscardChange.apply_data_from(published_message)
+
+    with :ok <- App.dispatch(discard_change, consistency: :strong) do
+      get(Message, current_message.id)
     end
   end
 

@@ -91,7 +91,7 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
             id: id
           )
         )
-        |> push_redirect(to: Routes.organization_messages_path(socket, :show, id))
+        |> push_redirect(to: Routes.organization_messages_path(socket, :index))
 
       {:ok, message} ->
         socket
@@ -123,13 +123,45 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
             id: id
           )
         )
-        |> push_redirect(to: Routes.organization_messages_path(socket, :show, id))
+        |> push_redirect(to: Routes.organization_messages_path(socket, :index))
 
       {:ok, message} ->
         socket
         |> put_flash(
           :save_success,
           gettext("Message %{title} successfully archived", title: message.title)
+        )
+        |> push_redirect(to: Routes.organization_messages_path(socket, :index))
+    end
+  end
+
+  defp apply_action(socket, :discard_change, %{"id" => id}) do
+    case Messages.discard_change(id) do
+      {:ok, message} ->
+        socket
+        |> put_flash(
+          :save_success,
+          gettext("Message %{title} reverted to published version", title: message.title)
+        )
+        |> push_redirect(to: Routes.organization_messages_path(socket, :index))
+
+      {:error, :invalid_transition} ->
+        socket
+        |> put_flash(
+          :save_error,
+          gettext("Changes for message %{id} could not be discarded",
+            id: id
+          )
+        )
+        |> push_redirect(to: Routes.organization_messages_path(socket, :show, id))
+
+      {:error, :not_found} ->
+        socket
+        |> put_flash(
+          :save_error,
+          gettext("Message %{id} could not be found",
+            id: id
+          )
         )
         |> push_redirect(to: Routes.organization_messages_path(socket, :index))
     end

@@ -11,6 +11,7 @@ defmodule DealogBackoffice.Messages.Projections.Message do
     field :body, :string
     field :status, Status
     field :rejection_reason, :string
+    field :published, :boolean
 
     timestamps()
   end

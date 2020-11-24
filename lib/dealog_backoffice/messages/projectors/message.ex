@@ -13,7 +13,8 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     MessageRejected,
     MessagePublished,
     MessageUpdated,
-    MessageArchived
+    MessageArchived,
+    ChangeDiscarded
   }
 
   alias DealogBackoffice.Messages.Projections.Message
@@ -76,6 +77,7 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
   project(%MessagePublished{} = published, metadata, fn multi ->
     update_message(multi, published.message_id,
       status: published.status,
+      published: true,
       updated_at: metadata.created_at
     )
   end)
@@ -83,6 +85,16 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
   project(%MessageUpdated{} = updated, metadata, fn multi ->
     update_message(multi, updated.message_id,
       status: updated.status,
+      updated_at: metadata.created_at
+    )
+  end)
+
+  project(%ChangeDiscarded{} = discarded, metadata, fn multi ->
+    update_message(multi, discarded.message_id,
+      title: discarded.title,
+      body: discarded.body,
+      status: discarded.status,
+      # TODO Revert the date?
       updated_at: metadata.created_at
     )
   end)
