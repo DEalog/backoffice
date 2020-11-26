@@ -166,4 +166,38 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
         |> push_redirect(to: Routes.organization_messages_path(socket, :index))
     end
   end
+
+  defp apply_action(socket, :discard_change_and_archive, %{"id" => id}) do
+    case Messages.discard_change_and_archive(id) do
+      {:ok, message} ->
+        socket
+        |> put_flash(
+          :save_success,
+          gettext("Message %{title} reverted to published version and archived",
+            title: message.title
+          )
+        )
+        |> push_redirect(to: Routes.organization_messages_path(socket, :index))
+
+      {:error, :invalid_transition} ->
+        socket
+        |> put_flash(
+          :save_error,
+          gettext("Message %{id} could not be reverted and archived",
+            id: id
+          )
+        )
+        |> push_redirect(to: Routes.organization_messages_path(socket, :show, id))
+
+      {:error, :not_found} ->
+        socket
+        |> put_flash(
+          :save_error,
+          gettext("Message %{id} could not be found",
+            id: id
+          )
+        )
+        |> push_redirect(to: Routes.organization_messages_path(socket, :index))
+    end
+  end
 end

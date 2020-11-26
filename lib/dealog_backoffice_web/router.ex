@@ -69,6 +69,11 @@ defmodule DealogBackofficeWeb.Router do
       live("/:id/delete", Edit, :delete, as: :organization_messages)
       live("/:id/archive", Edit, :archive, as: :organization_messages)
       live("/:id/discard_change", Edit, :discard_change, as: :organization_messages)
+
+      live("/:id/discard_change_and_archive", Edit, :discard_change_and_archive,
+        as: :organization_messages
+      )
+
       live("/:id", Show, :show, as: :organization_messages)
     end
 

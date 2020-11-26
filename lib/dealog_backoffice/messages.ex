@@ -247,6 +247,12 @@ defmodule DealogBackoffice.Messages do
     end
   end
 
+  def discard_change_and_archive(message_id) do
+    with {:ok, _} <- discard_change(message_id) do
+      archive_message(message_id)
+    end
+  end
+
   @doc """
   Get a published messsage by its ID.
   """

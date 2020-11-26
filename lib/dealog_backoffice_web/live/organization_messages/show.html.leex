@@ -213,7 +213,7 @@
           <%= if @message.published and @message.status in [:draft] do %>
             <div>
               <a
-                href="<%= Routes.organization_messages_path(@socket, :archive, @message) %>"
+                href="<%= Routes.organization_messages_path(@socket, :discard_change_and_archive, @message) %>"
                 class="flex items-center w-full px-2 py-2 mt-1 text-sm font-medium text-gray-600 bg-white group leading-5 rounded-md hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
                   <%= gettext "Discard unpublished changes and archive" %>
               </a>
