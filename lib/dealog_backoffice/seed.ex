@@ -1,28 +1,72 @@
 defmodule DealogBackoffice.Seed do
   alias DealogBackoffice.Messages
 
-  def messages(amount \\ 10) do
+  @drafted_amount 7
+  @sent_for_approval_amount 5
+  @approved_amount 6
+  @published_amount 10
+
+  def messages do
     Faker.start()
 
-    for _ <- 0..amount do
+    drafted = Task.async(&create_drafted/0)
+    sent_for_approval = Task.async(&create_sent_for_approval/0)
+    approved = Task.async(&create_approved/0)
+    published = Task.async(&create_published/0)
+    Task.await(drafted, :infinity)
+    Task.await(sent_for_approval, :infinity)
+    Task.await(approved, :infinity)
+    Task.await(published, :infinity)
+  end
+
+  defp create_drafted do
+    for _ <- 0..@drafted_amount do
+      {:ok, _} =
+        Messages.create_message(%{
+          title: random_title(),
+          body: random_body()
+        })
+    end
+  end
+
+  defp create_sent_for_approval do
+    for _ <- 0..@sent_for_approval_amount do
       {:ok, message} =
         Messages.create_message(%{
           title: random_title(),
           body: random_body()
         })
 
-      if should_transition?() do
-        {:ok, message_for_approval} = Messages.send_message_for_approval(message)
+      {:ok, _} = Messages.send_message_for_approval(message)
+    end
+  end
 
-        if should_transition?() do
-          {:ok, message_to_approve} = Messages.get_message_for_approval(message_for_approval.id)
-          {:ok, approved_message} = Messages.approve_message(message_to_approve)
+  defp create_approved do
+    for _ <- 0..@approved_amount do
+      {:ok, message} =
+        Messages.create_message(%{
+          title: random_title(),
+          body: random_body()
+        })
 
-          if should_transition?() do
-            Messages.publish_message(approved_message)
-          end
-        end
-      end
+      {:ok, message_for_approval} = Messages.send_message_for_approval(message)
+      {:ok, message_to_approve} = Messages.get_message_for_approval(message_for_approval.id)
+      {:ok, _} = Messages.approve_message(message_to_approve)
+    end
+  end
+
+  defp create_published do
+    for _ <- 0..@published_amount do
+      {:ok, message} =
+        Messages.create_message(%{
+          title: random_title(),
+          body: random_body()
+        })
+
+      {:ok, message_for_approval} = Messages.send_message_for_approval(message)
+      {:ok, message_to_approve} = Messages.get_message_for_approval(message_for_approval.id)
+      {:ok, approved_message} = Messages.approve_message(message_to_approve)
+      {:ok, _} = Messages.publish_message(approved_message)
     end
   end
 
@@ -44,9 +88,5 @@ defmodule DealogBackoffice.Seed do
     2..5
     |> Faker.Lorem.paragraphs()
     |> Enum.join("\n")
-  end
-
-  defp should_transition? do
-    Faker.Random.Elixir.random_between(0, 1) == 1
   end
 end
