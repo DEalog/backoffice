@@ -1,8 +1,10 @@
 ## Unreleased
 
+- `NEW` Sample data can be loaded to the application for development
 - `NEW` Changed published messages can be reverted to published state and archived
 - `NEW` Changes on published messages can be discarded
 - `NEW` Published messages can be archived (taken offline)
+- `CNG` Changelog is cleaned up
 - `CNG` Administrative areas are preloaded differently
 - `CNG` Login and other user related pages are centered on the screen
 - `NEW` The category of the message being published is added (hard coded at the moment)
