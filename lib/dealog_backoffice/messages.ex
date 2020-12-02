@@ -97,25 +97,13 @@ defmodule DealogBackoffice.Messages do
 
   This will change the status of the message to `deleted`.
 
-  Returns {:ok, %DeleteMessage{}} when successfull
+  Returns {:ok, %DeletedMessage{}} when successfull
   Returns {:error, :invalid_transition} when not allowed
   """
   def delete_message(message_id) do
     case get_message(message_id) do
       {:ok, message} ->
         do_delete_message(message)
-
-      {:error, reason} ->
-        {:error, reason}
-    end
-  end
-
-  @doc """
-  """
-  def archive_message(message_id) do
-    case get_message(message_id) do
-      {:ok, message} ->
-        do_archive_message(message)
 
       {:error, reason} ->
         {:error, reason}
@@ -232,6 +220,33 @@ defmodule DealogBackoffice.Messages do
     end
   end
 
+  @doc """
+  Archive a message by its ID.
+
+  This will change the status of the message to `archived`.
+
+  Returns {:ok, %ArchivedMessage{}} when successfull
+  Returns {:error, :invalid_transition} when not allowed
+  """
+  def archive_message(message_id) do
+    case get_message(message_id) do
+      {:ok, message} ->
+        do_archive_message(message)
+
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+  @doc """
+  Discard a change to the currently published message version.
+
+  This will replace the `:title` and `:body` to the respective one of the
+  published message.
+
+  Returns {:ok, %Message{}} when successfull
+  Returns {:error, :invalid_transition} when not allowed
+  """
   def discard_change(message_id) do
     {:ok, published_message} = get_published_message(message_id)
     {:ok, current_message} = get_message(message_id)
@@ -247,6 +262,16 @@ defmodule DealogBackoffice.Messages do
     end
   end
 
+  @doc """
+  Discard a change to the currently published message version and directly 
+  archive the message.
+
+  This will replace the `:title` and `:body` to the respective one of the
+  published message and archive this version.
+
+  Returns {:ok, %ArchivedMessage{}} when successfull
+  Returns {:error, :invalid_transition} when not allowed
+  """
   def discard_change_and_archive(message_id) do
     with {:ok, _} <- discard_change(message_id) do
       archive_message(message_id)
