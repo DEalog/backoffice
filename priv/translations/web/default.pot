@@ -82,7 +82,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:115
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:183 lib/dealog_backoffice_web/live/settings/index.ex:21
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:183 lib/dealog_backoffice_web/live/settings/index.ex:20
 #: lib/dealog_backoffice_web/live/settings/index.html.leex:3
 msgid "Settings"
 msgstr ""
@@ -389,8 +389,8 @@ msgid "Author"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:200
-#: lib/dealog_backoffice_web/live/settings/index.html.leex:151
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:227
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:153
 msgid "Edit"
 msgstr ""
 
@@ -456,7 +456,7 @@ msgid "Message %{title} successfully sent for approval"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:209
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:236
 msgid "Send for approval"
 msgstr ""
 
@@ -560,6 +560,8 @@ msgstr ""
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/show.ex:30
 #: lib/dealog_backoffice_web/live/message_approvals/edit.ex:55 lib/dealog_backoffice_web/live/message_approvals/show.ex:30
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:90 lib/dealog_backoffice_web/live/organization_messages/edit.ex:122
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:162 lib/dealog_backoffice_web/live/organization_messages/edit.ex:196
 #: lib/dealog_backoffice_web/live/organization_messages/show.ex:30
 msgid "Message %{id} could not be found"
 msgstr ""
@@ -651,7 +653,7 @@ msgid "Attach reason and reject"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:218
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:245
 msgid "Delete message"
 msgstr ""
 
@@ -661,7 +663,7 @@ msgid "Message %{id} could not be deleted"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:90
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:100
 msgid "Message %{title} successfully deleted"
 msgstr ""
 
@@ -889,12 +891,12 @@ msgid "Logged out successfully."
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/settings/accounts/form_component.ex:33
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.ex:35
 msgid "Account for %{first_name} %{last_name} created successfully"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/settings/accounts/form_component.ex:54
+#: lib/dealog_backoffice_web/live/settings/accounts/form_component.ex:56
 msgid "Account for %{first_name} %{last_name} updated successfully"
 msgstr ""
 
@@ -915,7 +917,7 @@ msgid "Change user account"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/settings/index.html.leex:110
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:112
 msgid "Confirmed"
 msgstr ""
 
@@ -955,7 +957,7 @@ msgid "Last name, e.g. Mustermann"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/settings/index.html.leex:139
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:141
 msgid "Lock"
 msgstr ""
 
@@ -965,17 +967,17 @@ msgid "Name of the organization, e.g. fire department"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/settings/index.html.leex:119
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:121
 msgid "New user"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/settings/index.html.leex:145
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:147
 msgid "Onboard"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/settings/index.html.leex:118
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:120
 msgid "Onboarded"
 msgstr ""
 
@@ -1025,7 +1027,7 @@ msgid "Save account"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/settings/index.html.leex:111
+#: lib/dealog_backoffice_web/live/settings/index.html.leex:113
 msgid "Unconfirmed"
 msgstr ""
 
@@ -1072,4 +1074,49 @@ msgstr ""
 #, elixir-format
 #: lib/dealog_backoffice_web/live/settings/index.html.leex:43
 msgid "User"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:209
+msgid "Archive"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:152
+msgid "Changes for message %{id} could not be discarded"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:200
+msgid "Discard unpublished change"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/show.html.leex:218
+msgid "Discard unpublished changes and archive"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:112
+msgid "Message %{id} could not be archived"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:186
+msgid "Message %{id} could not be reverted and archived"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:144
+msgid "Message %{title} reverted to published version"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:176
+msgid "Message %{title} reverted to published version and archived"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:132
+msgid "Message %{title} successfully archived"
 msgstr ""
