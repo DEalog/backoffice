@@ -7,7 +7,8 @@ defmodule DealogBackoffice.MessagesTest do
     Message,
     MessageForApproval,
     DeletedMessage,
-    PublishedMessage
+    PublishedMessage,
+    ArchivedMessage
   }
 
   @valid_data %{title: "The title", body: "The body"}
@@ -196,6 +197,78 @@ defmodule DealogBackoffice.MessagesTest do
         assert published_message.title == @valid_data.title
         assert published_message.body == @valid_data.body
         assert published_message.status == :published
+      end
+    end
+  end
+
+  describe "archive message" do
+    @tag :integration
+    test "should succeed" do
+      with {:ok, message} = Messages.create_message(@valid_data),
+           {:ok, _} = Messages.send_message_for_approval(message),
+           {:ok, message_for_approval} = Messages.get_message_for_approval(message.id),
+           {:ok, approved_message} = Messages.approve_message(message_for_approval),
+           {:ok, %PublishedMessage{} = published_message} =
+             Messages.publish_message(approved_message) do
+        {:ok, %ArchivedMessage{} = archived_message} =
+          Messages.archive_message(published_message.id)
+
+        assert archived_message.title == @valid_data.title
+        assert archived_message.body == @valid_data.body
+        assert archived_message.status == :archived
+      end
+    end
+  end
+
+  describe "discard change" do
+    @tag :integration
+    test "should succeed" do
+      with {:ok, message} <- Messages.create_message(@valid_data),
+           {:ok, _} <- Messages.send_message_for_approval(message),
+           {:ok, message_for_approval} <- Messages.get_message_for_approval(message.id),
+           {:ok, approved_message} <- Messages.approve_message(message_for_approval),
+           {:ok, %PublishedMessage{} = published_message} <-
+             Messages.publish_message(approved_message) do
+        {:ok, %Message{} = loaded_message} = Messages.get_message(published_message.id)
+
+        {:ok, %Message{} = updated_message} =
+          Messages.change_message(loaded_message, %{
+            title: "Changed title",
+            body: "Changed body"
+          })
+
+        {:ok, %Message{} = reverted_message} = Messages.discard_change(updated_message.id)
+
+        assert reverted_message.title == @valid_data.title
+        assert reverted_message.body == @valid_data.body
+        assert reverted_message.status == :published
+      end
+    end
+  end
+
+  describe "discard change and archive" do
+    @tag :integration
+    test "should succeed" do
+      with {:ok, message} <- Messages.create_message(@valid_data),
+           {:ok, _} <- Messages.send_message_for_approval(message),
+           {:ok, message_for_approval} <- Messages.get_message_for_approval(message.id),
+           {:ok, approved_message} <- Messages.approve_message(message_for_approval),
+           {:ok, %PublishedMessage{} = published_message} <-
+             Messages.publish_message(approved_message) do
+        {:ok, %Message{} = loaded_message} = Messages.get_message(published_message.id)
+
+        {:ok, %Message{} = updated_message} =
+          Messages.change_message(loaded_message, %{
+            title: "Changed title",
+            body: "Changed body"
+          })
+
+        {:ok, %ArchivedMessage{} = reverted_message} =
+          Messages.discard_change_and_archive(updated_message.id)
+
+        assert reverted_message.title == @valid_data.title
+        assert reverted_message.body == @valid_data.body
+        assert reverted_message.status == :archived
       end
     end
   end

@@ -10,14 +10,17 @@ defmodule DealogBackoffice.Messages do
     DeleteMessage,
     ApproveMessage,
     RejectMessage,
-    PublishMessage
+    PublishMessage,
+    ArchiveMessage,
+    DiscardChange
   }
 
   alias DealogBackoffice.Messages.Projections.{
     Message,
     MessageForApproval,
     DeletedMessage,
-    PublishedMessage
+    PublishedMessage,
+    ArchivedMessage
   }
 
   alias DealogBackoffice.Messages.Queries.{
@@ -94,7 +97,7 @@ defmodule DealogBackoffice.Messages do
 
   This will change the status of the message to `deleted`.
 
-  Returns {:ok, %DeleteMessage{}} when successfull
+  Returns {:ok, %DeletedMessage{}} when successfull
   Returns {:error, :invalid_transition} when not allowed
   """
   def delete_message(message_id) do
@@ -218,6 +221,64 @@ defmodule DealogBackoffice.Messages do
   end
 
   @doc """
+  Archive a message by its ID.
+
+  This will change the status of the message to `archived`.
+
+  Returns {:ok, %ArchivedMessage{}} when successfull
+  Returns {:error, :invalid_transition} when not allowed
+  """
+  def archive_message(message_id) do
+    case get_message(message_id) do
+      {:ok, message} ->
+        do_archive_message(message)
+
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+  @doc """
+  Discard a change to the currently published message version.
+
+  This will replace the `:title` and `:body` to the respective one of the
+  published message.
+
+  Returns {:ok, %Message{}} when successfull
+  Returns {:error, :invalid_transition} when not allowed
+  """
+  def discard_change(message_id) do
+    {:ok, published_message} = get_published_message(message_id)
+    {:ok, current_message} = get_message(message_id)
+
+    discard_change =
+      %{}
+      |> DiscardChange.new()
+      |> DiscardChange.assign_message_id(current_message)
+      |> DiscardChange.apply_data_from(published_message)
+
+    with :ok <- App.dispatch(discard_change, consistency: :strong) do
+      get(Message, current_message.id)
+    end
+  end
+
+  @doc """
+  Discard a change to the currently published message version and directly 
+  archive the message.
+
+  This will replace the `:title` and `:body` to the respective one of the
+  published message and archive this version.
+
+  Returns {:ok, %ArchivedMessage{}} when successfull
+  Returns {:error, :invalid_transition} when not allowed
+  """
+  def discard_change_and_archive(message_id) do
+    with {:ok, _} <- discard_change(message_id) do
+      archive_message(message_id)
+    end
+  end
+
+  @doc """
   Get a published messsage by its ID.
   """
   def get_published_message(id) do
@@ -289,6 +350,18 @@ defmodule DealogBackoffice.Messages do
     else
       _ ->
         {:error, :invalid_transition}
+    end
+  end
+
+  defp do_archive_message(message) do
+    archive_message =
+      message
+      |> ArchiveMessage.new()
+      |> ArchiveMessage.assign_message_id(message)
+      |> ArchiveMessage.set_status()
+
+    with :ok <- App.dispatch(archive_message, consistency: :strong) do
+      get(ArchivedMessage, message.id)
     end
   end
 end

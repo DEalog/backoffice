@@ -6,7 +6,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     :status,
     :approval_notes,
     :rejection_reasons,
-    published: false
+    published?: false
   ]
 
   alias DealogBackoffice.Messages.Aggregates.Message
@@ -18,7 +18,9 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     DeleteMessage,
     ApproveMessage,
     RejectMessage,
-    PublishMessage
+    PublishMessage,
+    ArchiveMessage,
+    DiscardChange
   }
 
   alias DealogBackoffice.Messages.Events.{
@@ -29,7 +31,9 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     MessageApproved,
     MessageRejected,
     MessagePublished,
-    MessageUpdated
+    MessageUpdated,
+    MessageArchived,
+    ChangeDiscarded
   }
 
   @doc """
@@ -123,27 +127,61 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
   Publish an approved message.
   """
   def execute(
-        %Message{message_id: message_id, status: :approved} = message,
+        %Message{message_id: message_id, status: :approved, published?: false} = message,
         %PublishMessage{} = publish
       ) do
-    if message.published do
-      %MessageUpdated{
-        message_id: message_id,
-        title: message.title,
-        body: message.body,
-        status: publish.status
-      }
-    else
-      %MessagePublished{
-        message_id: message_id,
-        title: message.title,
-        body: message.body,
-        status: publish.status
-      }
-    end
+    %MessagePublished{
+      message_id: message_id,
+      title: message.title,
+      body: message.body,
+      status: publish.status
+    }
+  end
+
+  def execute(
+        %Message{message_id: message_id, status: :approved, published?: true} = message,
+        %PublishMessage{} = publish
+      ) do
+    %MessageUpdated{
+      message_id: message_id,
+      title: message.title,
+      body: message.body,
+      status: publish.status
+    }
   end
 
   def execute(%Message{}, %PublishMessage{}), do: {:error, :invalid_state}
+
+  @doc """
+  Archive an existing message if it was or is published.
+  """
+  def execute(
+        %Message{message_id: message_id, published?: true} = message,
+        %ArchiveMessage{} = archive
+      ) do
+    %MessageArchived{
+      message_id: message_id,
+      title: message.title,
+      body: message.body,
+      status: archive.status
+    }
+  end
+
+  def execute(%Message{}, %ArchiveMessage{}), do: {:error, :invalid_state}
+
+  def execute(
+        %Message{message_id: message_id, published?: true},
+        %DiscardChange{} = discard_change
+      ) do
+    %ChangeDiscarded{
+      message_id: message_id,
+      title: discard_change.title,
+      body: discard_change.body,
+      status: discard_change.status
+    }
+  end
+
+  def execute(%Message{}, %DiscardChange{}), do: {:error, :invalid_state}
 
   # State mutators for reconstitution
 
@@ -212,7 +250,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
         status: published.status,
         title: published.title,
         body: published.body,
-        published: true
+        published?: true
     }
   end
 
@@ -223,6 +261,26 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
         status: updated.status,
         title: updated.title,
         body: updated.body
+    }
+  end
+
+  def apply(%Message{} = message, %MessageArchived{} = archived) do
+    %Message{
+      message
+      | message_id: archived.message_id,
+        title: archived.title,
+        body: archived.body,
+        status: archived.status
+    }
+  end
+
+  def apply(%Message{} = message, %ChangeDiscarded{} = discarded) do
+    %Message{
+      message
+      | message_id: discarded.message_id,
+        title: discarded.title,
+        body: discarded.body,
+        status: discarded.status
     }
   end
 end

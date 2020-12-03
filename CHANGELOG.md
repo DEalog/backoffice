@@ -1,78 +1,83 @@
 ## Unreleased
 
+- `NEW` Sample data can be loaded to the application for development
+- `NEW` Changed published messages can be reverted to published state and archived
+- `NEW` Changes on published messages can be discarded
+- `NEW` Published messages can be archived (taken offline)
+- `CNG` Changelog is cleaned up
 - `CNG` Administrative areas are preloaded differently
 - `CNG` Login and other user related pages are centered on the screen
-- `ADD` The category of the message being published is added (hard coded at the moment)
-- `ADD` The organization of the message being published is added (hard coded at the moment)
-- `ADD` The ars code of the message being published is added (hard coded at the moment)
-- `ADD` A super user can be created if email and password is supplied
-- `ADD` Publishing of messsages to Kafka is logged
-- `ADD` All command dispatches are logged
+- `NEW` The category of the message being published is added (hard coded at the moment)
+- `NEW` The organization of the message being published is added (hard coded at the moment)
+- `NEW` The ars code of the message being published is added (hard coded at the moment)
+- `NEW` A super user can be created if email and password is supplied
+- `NEW` Publishing of messsages to Kafka is logged
+- `NEW` All command dispatches are logged
 - `FIX` Publish at is sent as a timestamp instead of a ISO 8601 string
 - `FIX` Type of first time published messages is changed to `Created`
-- `ADD` Messages that already have been published are detected as updated ones
+- `NEW` Messages that already have been published are detected as updated ones
 - `FIX` Message payload is now compatible with the Message Service
 - `FIX` Project information (readme) can be viewed on released instances
-- `ADD` Users are anonymously tracked to get some metrics
-- `ADD` User accounts can be changed
-- `ADD` Users can be onboarded with an account containing the personal data as well as the organizational settings
-- `ADD` Users are listed in the settings area
+- `NEW` Users are anonymously tracked to get some metrics
+- `NEW` User accounts can be changed
+- `NEW` Users can be onboarded with an account containing the personal data as well as the organizational settings
+- `NEW` Users are listed in the settings area
 - `CNG` Frontend dependecies are updated
 - `FIX` Login with unconfirmed users issues is handled by emitting a user or password wrong message
 - `FIX` The Kafka configuration is read correctly when no projectors are configured
-- `ADD` Setup GH Actions to deploy application to AWS
+- `NEW` Setup GH Actions to deploy application to AWS
 - `CNG` Send ARS instead of a geocode to Kafka
 - `CNG` Structure of administrative areas is changed to ARS (from AGS)
-- `ADD` Mail support for registration, password reset, email change is available
+- `NEW` Mail support for registration, password reset, email change is available
 - `CNG` Update dependencies
-- `ADD` Authentication is implemented for all content pages
-- `ADD` Users can change their email address
-- `ADD` Users can change their password
-- `ADD` Users can authenticate
-- `ADD` Users can register
+- `NEW` Authentication is implemented for all content pages
+- `NEW` Users can change their email address
+- `NEW` Users can change their password
+- `NEW` Users can authenticate
+- `NEW` Users can register
 
 ## 0.4.0
 
 This release covers message publishing for a single organization.
 
-- `ADD` Forms have cancel buttons
+- `NEW` Forms have cancel buttons
 - `CNG` Deployments are update to use the new default branch `main`
 - `CNG` Adapt dev script for new default branch `main`
 - `CNG` Import of administrative areas is running on container start (until there is support for one-off tasks)
-- `ADD` Administrative areas can be imported
+- `NEW` Administrative areas can be imported
 - `FIX` The Kafka host can be configured via an env var
-- `ADD` Published message details can be viewed
-- `ADD` Published messages are shown in the all messages list
-- `ADD` Preview deployment cleanup supports custom branches
-- `ADD` Published messages get distributed to Kafka if enabled
-- `ADD` Messages that are approved can be published
+- `NEW` Published message details can be viewed
+- `NEW` Published messages are shown in the all messages list
+- `NEW` Preview deployment cleanup supports custom branches
+- `NEW` Published messages get distributed to Kafka if enabled
+- `NEW` Messages that are approved can be published
 - `CNG` Projection reset script can be run in prod as well (with a security flag)
 - `FIX` Tag name for master build
 - `FIX` Fix GH Action output for deployment
-- `ADD` Manual preview deployments are available
-- `ADD` A health endpoint is added for monitoring
-- `ADD` Application can be deployed via mix release on Docker
+- `NEW` Manual preview deployments are available
+- `NEW` A health endpoint is added for monitoring
+- `NEW` Application can be deployed via mix release on Docker
 - `CNG` Rejected messages are removed from the approval section
 - `CNG` Improve message listings
-- `ADD` Messages can be deleted
+- `NEW` Messages can be deleted
 
 ## 0.3.0
 
 This release has a basic approval process for a single organization on board.
 
 - `CNG` Redirects of actions on message refer to the detail view of that message
-- `ADD` Approved messages can have a note attached to them
-- `ADD` Messages waiting for approval can be approved
-- `ADD` Message details can be viewed for approvals
-- `ADD` Message details can be viewed for my organization
-- `ADD` Rejected messages can have a reason
-- `ADD` Messages waiting for approval can be rejected
-- `ADD` Dev script has a task to reset the task database
-- `ADD` Messages waiting for approval are listed in the approvals section
-- `ADD` Messages can be sent for approval
-- `ADD` Error messages are displayed as notification
+- `NEW` Approved messages can have a note attached to them
+- `NEW` Messages waiting for approval can be approved
+- `NEW` Message details can be viewed for approvals
+- `NEW` Message details can be viewed for my organization
+- `NEW` Rejected messages can have a reason
+- `NEW` Messages waiting for approval can be rejected
+- `NEW` Dev script has a task to reset the task database
+- `NEW` Messages waiting for approval are listed in the approvals section
+- `NEW` Messages can be sent for approval
+- `NEW` Error messages are displayed as notification
 - `CNG` No change saves do not emit a changed event
-- `ADD` Favicons are added
+- `NEW` Favicons are added
 - `CNG` Improve my organization table layout
 
 ## 0.2.0

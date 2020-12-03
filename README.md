@@ -29,17 +29,22 @@ mentioned tools are available and accessible then start the stack.
 
 > To get all available commands of the `dev` script run `./dev --help`.
 
-### Create a super user
+### Load sample data
 
-To create a super user for local development please run
+The sample data spans messages and a development user.
+
+To import the sample data run
 
 ```
-./dev mix run priv/repo/create_super_user.exs
+./dev m reset
 ```
 
-If successful you will see an output like this:
+This command can also be run to have a clean starting point again.
 
-`Confirmed super user created: %{email: "super_user@dealog.de", password: "C7LX6OQsULON"}`
+The development user is identified by: `dev@dealog.de` // `password1234`
+
+> Note: The application if running should be stopped. This command will drop
+> all databases (event store and projection / Ecto database).
 
 ### Testing
 
@@ -220,4 +225,5 @@ an audit log as well as a reproducible state of projected data.
 To get a snappy UI feeling the project leverages
 [Phoenix LiveView](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html).
 
-Mailing is done via the great [Swoosh](https://hexdocs.pm/swoosh/Swoosh.html) library.
+Mailing is done via the great [Swoosh](https://hexdocs.pm/swoosh/Swoosh.html)
+library.

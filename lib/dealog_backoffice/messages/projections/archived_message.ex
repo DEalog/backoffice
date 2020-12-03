@@ -1,4 +1,4 @@
-defmodule DealogBackoffice.Messages.Projections.Message do
+defmodule DealogBackoffice.Messages.Projections.ArchivedMessage do
   use Ecto.Schema
 
   alias DealogBackoffice.Ecto.Type.Status
@@ -6,12 +6,10 @@ defmodule DealogBackoffice.Messages.Projections.Message do
   @primary_key {:id, :binary_id, autogenerate: false}
   @timestamps_opts [type: :utc_datetime_usec]
 
-  schema "messages" do
+  schema "archived_messages" do
     field :title, :string
     field :body, :string
     field :status, Status
-    field :rejection_reason, :string
-    field :published, :boolean
 
     timestamps()
   end
