@@ -8,7 +8,9 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
     DeleteMessage,
     ApproveMessage,
     RejectMessage,
-    PublishMessage
+    PublishMessage,
+    ArchiveMessage,
+    DiscardChange
   }
 
   alias DealogBackoffice.Messages.Events.{
@@ -19,7 +21,9 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
     MessageApproved,
     MessageRejected,
     MessagePublished,
-    MessageUpdated
+    MessageUpdated,
+    MessageArchived,
+    ChangeDiscarded
   }
 
   describe "create message" do
@@ -475,6 +479,143 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             body: "A changed body"
           }
         ]
+      )
+    end
+  end
+
+  describe "archive message" do
+    @tag :unit
+    test "should successfully be archived when published" do
+      message_id = UUID.uuid4()
+
+      assert_events(
+        [
+          %MessageCreated{
+            message_id: message_id,
+            status: :draft,
+            title: "A title",
+            body: "A body"
+          },
+          %MessageSentForApproval{
+            message_id: message_id,
+            status: :waiting_for_approval,
+            title: "A title",
+            body: "A body"
+          },
+          %MessageApproved{
+            message_id: message_id,
+            status: :approved
+          },
+          %MessagePublished{
+            message_id: message_id,
+            title: "A title",
+            body: "A body"
+          }
+        ],
+        struct(ArchiveMessage, %{
+          message_id: message_id
+        }),
+        [
+          %MessageArchived{
+            message_id: message_id,
+            status: :archived,
+            title: "A title",
+            body: "A body"
+          }
+        ]
+      )
+    end
+
+    @tag :unit
+    test "should be rejected when not in state published" do
+      message_id = UUID.uuid4()
+
+      assert_error(
+        [
+          %MessageCreated{
+            message_id: message_id,
+            status: :draft,
+            title: "A title",
+            body: "A body"
+          }
+        ],
+        struct(ArchiveMessage, %{
+          message_id: message_id
+        }),
+        {:error, :invalid_state}
+      )
+    end
+  end
+
+  describe "discard change" do
+    @tag :unit
+    test "should successfully be archived when published" do
+      message_id = UUID.uuid4()
+
+      assert_events(
+        [
+          %MessageCreated{
+            message_id: message_id,
+            status: :draft,
+            title: "A title",
+            body: "A body"
+          },
+          %MessageSentForApproval{
+            message_id: message_id,
+            status: :waiting_for_approval,
+            title: "A title",
+            body: "A body"
+          },
+          %MessageApproved{
+            message_id: message_id,
+            status: :approved
+          },
+          %MessagePublished{
+            message_id: message_id,
+            title: "A title",
+            body: "A body"
+          },
+          %MessageChanged{
+            message_id: message_id,
+            title: "A changed title",
+            body: "A changed body"
+          }
+        ],
+        struct(DiscardChange, %{
+          message_id: message_id,
+          title: "A title",
+          body: "A body"
+        }),
+        [
+          %ChangeDiscarded{
+            message_id: message_id,
+            status: :published,
+            title: "A title",
+            body: "A body"
+          }
+        ]
+      )
+    end
+
+    @tag :unit
+    test "should be rejected when not in state published" do
+      message_id = UUID.uuid4()
+
+      assert_error(
+        [
+          %MessageCreated{
+            message_id: message_id,
+            status: :draft,
+            title: "A title",
+            body: "A body"
+          }
+        ],
+        struct(DiscardChange, %{
+          message_id: message_id,
+          title: "A title",
+          body: "A body"
+        }),
+        {:error, :invalid_state}
       )
     end
   end
