@@ -1,12 +1,14 @@
 defmodule DealogBackoffice.Support.ProjectionRebuilder do
+  require Logger
+
   alias DealogBackoffice.{Repo, EventStore}
 
-  def truncate_projection_table(table) do
+  defp truncate_projection_table(table) do
     truncate_query = "TRUNCATE TABLE #{table} RESTART IDENTITY;"
     Ecto.Adapters.SQL.query!(Repo, truncate_query)
   end
 
-  def delete_projection_versions(name) do
+  defp delete_projection_versions(name) do
     delete_projection_version_query = """
       DELETE FROM projection_versions
         WHERE projection_name = '#{name}';
@@ -15,11 +17,11 @@ defmodule DealogBackoffice.Support.ProjectionRebuilder do
     Ecto.Adapters.SQL.query!(Repo, delete_projection_version_query)
   end
 
-  def delete_subscription(name) do
+  defp delete_subscription(name) do
     :ok = EventStore.delete_subscription("$all", name)
   end
 
-  def reload_messages_projection_supervisor do
+  defp reload_messages_projection_supervisor do
     [pid] =
       Enum.filter(
         Process.list(),
@@ -29,7 +31,7 @@ defmodule DealogBackoffice.Support.ProjectionRebuilder do
     Process.exit(pid, :kill)
   end
 
-  def reload_account_projection_supervisor do
+  defp reload_account_projection_supervisor do
     [pid] =
       Enum.filter(
         Process.list(),
@@ -48,11 +50,15 @@ defmodule DealogBackoffice.Support.ProjectionRebuilder do
     ]
 
     Enum.each(projections, fn %{table: table, name: name} ->
+      Logger.info("Truncating table #{table}")
       truncate_projection_table(table)
+      Logger.info("Deleting projection version #{name}")
       delete_projection_versions(name)
+      Logger.info("Deleting subscription #{name}")
       delete_subscription(name)
     end)
 
+    Logger.info("Reloading supervisor")
     reload_messages_projection_supervisor()
   end
 
