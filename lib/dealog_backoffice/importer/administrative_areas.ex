@@ -3,6 +3,8 @@ defmodule DealogBackoffice.Importer.AdministrativeAreas do
   Importer for CSV based administrative areas.
   """
 
+  require Logger
+
   alias DealogBackoffice.Repo
 
   @doc """
@@ -18,7 +20,7 @@ defmodule DealogBackoffice.Importer.AdministrativeAreas do
         total + amount
       end)
 
-    IO.puts("\tInserted #{count} new administrative areas")
+    Logger.debug("Inserted #{count} new administrative areas")
   end
 
   defp collect_import_files(path) do
@@ -30,7 +32,7 @@ defmodule DealogBackoffice.Importer.AdministrativeAreas do
   defp import_file(path, file_name) do
     full_path = Path.join(path, file_name)
     ars = Path.rootname(file_name)
-    IO.puts("\tProcessing ARS #{ars}")
+    Logger.debug("Processing ARS #{ars}")
 
     entries =
       File.stream!(full_path)

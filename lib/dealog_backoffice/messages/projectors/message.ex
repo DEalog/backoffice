@@ -28,7 +28,8 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
         title: created.title,
         body: created.body,
         status: created.status,
-        inserted_at: metadata.created_at
+        inserted_at: metadata.created_at,
+        updated_at: metadata.created_at
       }
     )
   end)

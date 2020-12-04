@@ -22,7 +22,7 @@ defmodule DealogBackoffice.Messages.Projectors.MessageApproval do
           title: sent.title,
           body: sent.body,
           status: sent.status,
-          updated_at: NaiveDateTime.utc_now()
+          updated_at: metadata.created_at
         )
 
       {:error, _} ->
@@ -68,7 +68,8 @@ defmodule DealogBackoffice.Messages.Projectors.MessageApproval do
         title: sent.title,
         body: sent.body,
         status: sent.status,
-        inserted_at: metadata.created_at
+        inserted_at: metadata.created_at,
+        updated_at: metadata.created_at
       }
     )
   end
