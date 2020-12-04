@@ -64,12 +64,21 @@ wording let it be resolved during the pull request process.
 
 The DEalog Backoffice uses the [Commanded](https://commanded.io) library
 providing [CQRS](https://www.martinfowler.com/bliki/CQRS.html) support. To
-replay projections use the following script:
+replay projections locally you can run the following module on the IEx shell:
 
-`./dev mix run priv/repo/reset_projection.exs`
+For messages:
 
-On the remote machine you can use this script as well but have to add the
-`--run` option.
+```
+DEalog IEx>>> DealogBackoffice.Support.ProjectionRebuilder.rebuild_messages()
+```
+
+For accounts:
+
+```
+DEalog IEx>>> DealogBackoffice.Support.ProjectionRebuilder.rebuild_accounts()
+```
+
+These commands purge all **local** projections and replay the events.
 
 ## Collaboration
 

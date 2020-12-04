@@ -1,5 +1,10 @@
 ## Unreleased
 
+- `FIX` The updated date on the message for approval projection was fixed
+- `FIX` The updated date on the created message projection was fixed
+- `ADD` Support module to rebuild account projections was added
+- `ADD` Support module to rebuild message projections was added
+- `REM` Rebuild projections script was removed
 - `NEW` Sample data can be loaded to the application for development
 - `NEW` Changed published messages can be reverted to published state and archived
 - `NEW` Changes on published messages can be discarded
