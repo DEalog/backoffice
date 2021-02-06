@@ -263,7 +263,7 @@ defmodule DealogBackoffice.Messages do
   end
 
   @doc """
-  Discard a change to the currently published message version and directly 
+  Discard a change to the currently published message version and directly
   archive the message.
 
   This will replace the `:title` and `:body` to the respective one of the

@@ -5,7 +5,7 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.EditTest do
 
   alias DealogBackoffice.Messages
 
-  setup :register_and_log_in_user
+  setup :register_log_in_and_setup_user
 
   describe "Create new message" do
     test "disconnected and connected render", %{conn: conn} do

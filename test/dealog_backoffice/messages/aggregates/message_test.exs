@@ -38,7 +38,49 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            author_id: "",
+            author_email: "",
+            author_first_name: "",
+            author_last_name: "",
+            administrative_area_id: "",
+            organization: "",
+            position: ""
+          }
+        ]
+      )
+    end
+
+    @tag :unit
+    test "should successfully build with valid and additional data" do
+      message_id = UUID.uuid4()
+
+      assert_events(
+        struct(CreateMessage, %{
+          message_id: message_id,
+          title: "A title",
+          body: "A body",
+          author_id: "123",
+          author_email: "an@email.com",
+          author_first_name: "first",
+          author_last_name: "last",
+          administrative_area_id: "abc",
+          organization: "An organization",
+          position: "A position"
+        }),
+        [
+          %MessageCreated{
+            message_id: message_id,
+            status: :draft,
+            title: "A title",
+            body: "A body",
+            author_id: "123",
+            author_email: "an@email.com",
+            author_first_name: "first",
+            author_last_name: "last",
+            administrative_area_id: "abc",
+            organization: "An organization",
+            position: "A position"
           }
         ]
       )

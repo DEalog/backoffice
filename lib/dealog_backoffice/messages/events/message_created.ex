@@ -4,7 +4,14 @@ defmodule DealogBackoffice.Messages.Events.MessageCreated do
     :message_id,
     :title,
     :body,
-    :status
+    :status,
+    :author_id,
+    :author_email,
+    :author_first_name,
+    :author_last_name,
+    :administrative_area_id,
+    :organization,
+    :position
   ]
 
   defimpl Commanded.Event.Upcaster, for: __MODULE__ do
