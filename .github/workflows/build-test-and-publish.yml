@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build Elixir project
 
-    container: elixir:1.10.4-alpine
+    container: hexpm/elixir:1.10.4-erlang-23.2.7-alpine-3.13.2
 
     env:
       MIX_ENV: prod
@@ -48,12 +48,12 @@ jobs:
 
       - name: Prepare build environment
         run: |
-          apk add --no-cache build-base npm git python
+          apk add --no-cache build-base npm git
           npm install -g yarn
 
       - name: Cache Elixir dependencies
         id: mix_cache
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: |
             ~/.mix
@@ -75,7 +75,7 @@ jobs:
 
       - name: Cache Node.js dependencies
         id: yarn-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -115,7 +115,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Test Elixir project
 
-    container: elixir:1.10.4-alpine
+    container: hexpm/elixir:1.10.4-erlang-23.2.7-alpine-3.13.2
 
     env:
       MIX_ENV: test
@@ -138,11 +138,11 @@ jobs:
 
       - name: Prepare build environment
         run: |
-          apk add --no-cache build-base git python
+          apk add --no-cache build-base git
 
       - name: Cache Elixir dependencies
         id: mix_cache
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: |
             ~/.mix
