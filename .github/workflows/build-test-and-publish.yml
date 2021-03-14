@@ -48,7 +48,7 @@ jobs:
 
       - name: Prepare build environment
         run: |
-          apk add --no-cache build-base npm
+          apk add --no-cache build-base npm git
           npm install -g yarn
 
       - name: Cache Elixir dependencies
@@ -138,7 +138,7 @@ jobs:
 
       - name: Prepare build environment
         run: |
-          apk add --no-cache build-base git python
+          apk add --no-cache build-base git
 
       - name: Cache Elixir dependencies
         id: mix_cache
