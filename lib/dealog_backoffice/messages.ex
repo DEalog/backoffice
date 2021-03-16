@@ -120,7 +120,7 @@ defmodule DealogBackoffice.Messages do
   @doc """
   Get a message by its ID.
   """
-  def get_message(message_id), do: get(Message, message_id)
+  def get_message(message_id), do: get(Message, message_id, [:changes])
 
   @doc """
   Get a (paginated) list of message approvals.
@@ -285,8 +285,10 @@ defmodule DealogBackoffice.Messages do
     get(PublishedMessage, id)
   end
 
-  defp get(schema, uuid) do
-    case Repo.get(schema, uuid) do
+  defp get(schema, uuid, preload \\ []) do
+    entity = Repo.get(schema, uuid) |> Repo.preload(preload)
+
+    case entity do
       nil -> {:error, :not_found}
       message -> {:ok, message}
     end

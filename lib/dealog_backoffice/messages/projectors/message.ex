@@ -20,8 +20,8 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
   alias DealogBackoffice.Messages.Projections.Message
 
   project(%MessageCreated{} = created, metadata, fn multi ->
-    Ecto.Multi.insert(
-      multi,
+    multi
+    |> Ecto.Multi.insert(
       :message,
       %Message{
         id: created.message_id,
@@ -32,6 +32,23 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
         updated_at: metadata.created_at
       }
     )
+    |> Ecto.Multi.insert(:message_change, fn %{message: message} ->
+      %Message.Change{
+        id: UUID.uuid4(),
+        action: "create",
+        author: %Message.Change.Author{
+          name: "#{created.author_first_name} #{created.author_last_name}",
+          email: created.author_email,
+          position: created.position
+        },
+        organization: %Message.Change.Organization{
+          name: created.organization,
+          administrative_area_id: created.administrative_area_id
+        },
+        message: message,
+        inserted_at: metadata.created_at
+      }
+    end)
   end)
 
   project(%MessageChanged{} = changed, metadata, fn multi ->

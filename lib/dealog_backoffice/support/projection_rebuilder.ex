@@ -4,7 +4,7 @@ defmodule DealogBackoffice.Support.ProjectionRebuilder do
   alias DealogBackoffice.{Repo, EventStore}
 
   defp truncate_projection_table(table) do
-    truncate_query = "TRUNCATE TABLE #{table} RESTART IDENTITY;"
+    truncate_query = "TRUNCATE TABLE #{table} RESTART IDENTITY CASCADE;"
     Ecto.Adapters.SQL.query!(Repo, truncate_query)
   end
 

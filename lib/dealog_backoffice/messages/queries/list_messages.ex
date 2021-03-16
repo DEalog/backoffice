@@ -16,7 +16,7 @@ defmodule DealogBackoffice.Messages.Queries.ListMessages do
   end
 
   defp query do
-    from(m in Message, order_by: [desc: m.updated_at])
+    from(m in Message, order_by: [desc: m.updated_at], preload: :changes)
   end
 
   defp count(query) do
