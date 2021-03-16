@@ -19,7 +19,7 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.FormComponent do
   end
 
   defp apply_action(socket, :new, message_params) do
-    message_params = Map.merge(message_params, extract_user_attrs(socket.assigns.current_user))
+    message_params = put_user_attrs(message_params, socket.assigns.current_user)
 
     case Messages.create_message(message_params) do
       {:error, {:validation_failure, errors}} ->
@@ -58,6 +58,9 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.FormComponent do
 
   defp convert(%{"id" => id, "title" => title, "body" => body}),
     do: %{id: id, title: title, body: body}
+
+  defp put_user_attrs(message_params, user),
+    do: Map.merge(message_params, extract_user_attrs(user))
 
   defp extract_user_attrs(user) do
     %{
