@@ -6,8 +6,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     :status,
     :approval_notes,
     :rejection_reasons,
-    published?: false,
-    authors: []
+    published?: false
   ]
 
   alias DealogBackoffice.Messages.Aggregates.Message
@@ -199,19 +198,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       | message_id: created.message_id,
         title: created.title,
         body: created.body,
-        status: created.status,
-        authors: [
-          %{
-            id: created.author_id,
-            full_name: "#{created.author_first_name} #{created.author_last_name}",
-            email: created.author_email,
-            organization: %{
-              administrative_area_id: created.administrative_area_id,
-              name: created.organization,
-              position: created.position
-            }
-          }
-        ]
+        status: created.status
     }
   end
 
