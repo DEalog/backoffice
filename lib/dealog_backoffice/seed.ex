@@ -1,6 +1,17 @@
 defmodule DealogBackoffice.Seed do
   alias DealogBackoffice.Messages
 
+  @user %DealogBackoffice.Accounts.User{
+    email: "system@dealog.de",
+    account: %DealogBackoffice.Accounts.Projections.Account{
+      first_name: "DEalog",
+      last_name: "System",
+      position: "",
+      administrative_area_id: "000000000000",
+      organization: "DEalog Team"
+    }
+  }
+
   @drafted_amount 7
   @sent_for_approval_amount 5
   @approved_amount 6
@@ -22,7 +33,7 @@ defmodule DealogBackoffice.Seed do
   defp create_drafted do
     for _ <- 0..@drafted_amount do
       {:ok, _} =
-        Messages.create_message(%{
+        Messages.create_message(@user, %{
           title: random_title(),
           body: random_body()
         })
@@ -32,7 +43,7 @@ defmodule DealogBackoffice.Seed do
   defp create_sent_for_approval do
     for _ <- 0..@sent_for_approval_amount do
       {:ok, message} =
-        Messages.create_message(%{
+        Messages.create_message(@user, %{
           title: random_title(),
           body: random_body()
         })
@@ -44,7 +55,7 @@ defmodule DealogBackoffice.Seed do
   defp create_approved do
     for _ <- 0..@approved_amount do
       {:ok, message} =
-        Messages.create_message(%{
+        Messages.create_message(@user, %{
           title: random_title(),
           body: random_body()
         })
@@ -58,7 +69,7 @@ defmodule DealogBackoffice.Seed do
   defp create_published do
     for _ <- 0..@published_amount do
       {:ok, message} =
-        Messages.create_message(%{
+        Messages.create_message(@user, %{
           title: random_title(),
           body: random_body()
         })
