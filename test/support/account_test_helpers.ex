@@ -32,7 +32,10 @@ defmodule DealogBackoffice.AccountTestHelpers do
     confirm_user(user)
     DealogBackoffice.AccountsFixtures.create_account_and_link_user(user)
 
-    %{conn: log_in_user(conn, user), user: user}
+    %{
+      conn: log_in_user(conn, user),
+      user: DealogBackoffice.Accounts.get_user_with_account(user.id)
+    }
   end
 
   @doc """

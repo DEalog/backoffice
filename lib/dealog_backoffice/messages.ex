@@ -3,6 +3,9 @@ defmodule DealogBackoffice.Messages do
   The boundary for messages.
   """
 
+  alias DealogBackoffice.Accounts.User
+  alias DealogBackoffice.Messages.Author
+
   alias DealogBackoffice.Messages.Commands.{
     CreateMessage,
     ChangeMessage,
@@ -40,7 +43,9 @@ defmodule DealogBackoffice.Messages do
   Returns the message when successful {:ok, message}
   Returns an error when invalid or failed {:error, reason}
   """
-  def create_message(attrs \\ %{}) do
+  def create_message(%User{} = user, attrs \\ %{}) do
+    author = build_author(user)
+
     message_id = UUID.uuid4()
 
     create_message =
@@ -48,7 +53,8 @@ defmodule DealogBackoffice.Messages do
       |> CreateMessage.new()
       |> CreateMessage.assign_message_id(message_id)
 
-    with :ok <- App.dispatch(create_message, consistency: :strong) do
+    with :ok <-
+           App.dispatch(create_message, consistency: :strong, metadata: %{"author" => author}) do
       get(Message, message_id)
     end
   end
@@ -292,6 +298,19 @@ defmodule DealogBackoffice.Messages do
       nil -> {:error, :not_found}
       message -> {:ok, message}
     end
+  end
+
+  # Build author from user to add to meta data
+  defp build_author(%User{} = user) do
+    %Author{
+      id: user.id,
+      first_name: user.account.first_name,
+      last_name: user.account.last_name,
+      email: user.email,
+      position: user.account.position,
+      organization: user.account.organization,
+      administrative_area_id: user.account.administrative_area_id
+    }
   end
 
   # Run the actual command to change a message.

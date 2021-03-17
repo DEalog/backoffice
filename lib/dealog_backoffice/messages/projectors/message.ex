@@ -33,18 +33,13 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
       }
     )
     |> Ecto.Multi.insert(:message_change, fn %{message: message} ->
+      author = metadata["author"] || get_fallback_author()
+
       %Message.Change{
         id: UUID.uuid4(),
         action: "create",
-        author: %Message.Change.Author{
-          name: "#{created.author_first_name} #{created.author_last_name}",
-          email: created.author_email,
-          position: created.position
-        },
-        organization: %Message.Change.Organization{
-          name: created.organization,
-          administrative_area_id: created.administrative_area_id
-        },
+        author: build_author(author),
+        organization: build_organization(author),
         message: message,
         inserted_at: metadata.created_at
       }
@@ -123,5 +118,33 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
 
   defp query(message_id) do
     from(m in Message, where: m.id == ^message_id)
+  end
+
+  defp get_fallback_author() do
+    %{
+      "id" => nil,
+      "first_name" => "Unbekannter",
+      "last_name" => "Benutzer",
+      "email" => "system@dealog.de",
+      "position" => "",
+      "administrative_area_id" => "000000000000",
+      "organization" => "DEalog Team"
+    }
+  end
+
+  defp build_author(author) do
+    %Message.Change.Author{
+      id: author["id"],
+      name: "#{author["first_name"]} #{author["last_name"]}",
+      email: author["email"],
+      position: author["position"]
+    }
+  end
+
+  defp build_organization(author) do
+    %Message.Change.Organization{
+      name: author["organization"],
+      administrative_area_id: author["administrative_area_id"]
+    }
   end
 end

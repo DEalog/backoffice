@@ -38,14 +38,7 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body",
-            author_id: "",
-            author_email: "",
-            author_first_name: "",
-            author_last_name: "",
-            administrative_area_id: "",
-            organization: "",
-            position: ""
+            body: "A body"
           }
         ]
       )
@@ -59,28 +52,14 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
         struct(CreateMessage, %{
           message_id: message_id,
           title: "A title",
-          body: "A body",
-          author_id: "123",
-          author_email: "an@email.com",
-          author_first_name: "first",
-          author_last_name: "last",
-          administrative_area_id: "abc",
-          organization: "An organization",
-          position: "A position"
+          body: "A body"
         }),
         [
           %MessageCreated{
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body",
-            author_id: "123",
-            author_email: "an@email.com",
-            author_first_name: "first",
-            author_last_name: "last",
-            administrative_area_id: "abc",
-            organization: "An organization",
-            position: "A position"
+            body: "A body"
           }
         ]
       )

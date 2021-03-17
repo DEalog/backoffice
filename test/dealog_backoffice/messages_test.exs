@@ -1,6 +1,8 @@
 defmodule DealogBackoffice.MessagesTest do
   use DealogBackoffice.DataCase
 
+  import DealogBackoffice.MessageTestHelpers
+
   alias DealogBackoffice.Messages
 
   alias DealogBackoffice.Messages.Projections.{
@@ -15,16 +17,20 @@ defmodule DealogBackoffice.MessagesTest do
   @invalid_data %{title: nil, body: nil}
 
   describe "create message" do
+    setup [:user]
+
     @tag :integration
-    test "should succeed with valid data" do
-      assert {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+    test "should succeed with valid data", %{user: user} do
+      assert {:ok, %Message{} = message} = Messages.create_message(user, @valid_data)
       assert message.title == @valid_data.title
       assert message.body == @valid_data.body
     end
 
     @tag :integration
-    test "should fail with invalid data" do
-      assert {:error, {:validation_failure, errors}} = Messages.create_message(@invalid_data)
+    test "should fail with invalid data", %{user: user} do
+      assert {:error, {:validation_failure, errors}} =
+               Messages.create_message(user, @invalid_data)
+
       assert %{title: _, body: _} = errors
     end
   end
@@ -33,9 +39,10 @@ defmodule DealogBackoffice.MessagesTest do
     @valid_update_data %{title: "An updated title", body: "An updated body"}
     @invalid_update_data %{title: nil, body: nil}
 
+    setup [:user, :newly_created_message]
+
     @tag :integration
-    test "should succeed with valid data" do
-      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+    test "should succeed with valid data", %{message: message} do
       {:ok, %Message{} = updated_message} = Messages.change_message(message, @valid_update_data)
 
       refute updated_message == message
@@ -44,17 +51,14 @@ defmodule DealogBackoffice.MessagesTest do
     end
 
     @tag :integration
-    test "should succeed but not change if input is same as original" do
-      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+    test "should succeed but not change if input is same as original", %{message: message} do
       {:ok, %Message{} = updated_message} = Messages.change_message(message, @valid_data)
 
       assert updated_message == message
     end
 
     @tag :integration
-    test "should fail with invalid data" do
-      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
-
+    test "should fail with invalid data", %{message: message} do
       assert {:error, {:validation_failure, errors}} =
                Messages.change_message(message, @invalid_update_data)
 
@@ -63,18 +67,17 @@ defmodule DealogBackoffice.MessagesTest do
   end
 
   describe "send message for approval" do
-    @tag :integration
-    test "should succeed if in status draft" do
-      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+    setup [:user, :newly_created_message]
 
+    @tag :integration
+    test "should succeed if in status draft", %{message: message} do
       assert {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
       assert message.status == :draft
       assert sent_message.status == :waiting_for_approval
     end
 
     @tag :integration
-    test "should fail when not in draft" do
-      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+    test "should fail when not in draft", %{message: message} do
       {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
 
       assert {:error, :invalid_transition} = Messages.send_message_for_approval(sent_message)
@@ -82,10 +85,10 @@ defmodule DealogBackoffice.MessagesTest do
   end
 
   describe "delete message" do
-    @tag :integration
-    test "should succeed if in status draft" do
-      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+    setup [:user, :newly_created_message]
 
+    @tag :integration
+    test "should succeed if in status draft", %{message: message} do
       assert message.status == :draft
       assert {:ok, %DeletedMessage{} = deleted_message} = Messages.delete_message(message.id)
       assert {:error, :not_found} = Messages.get_message(message.id)
@@ -93,8 +96,7 @@ defmodule DealogBackoffice.MessagesTest do
     end
 
     @tag :integration
-    test "should fail when not in draft" do
-      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+    test "should fail when not in draft", %{message: message} do
       {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
 
       assert {:error, :invalid_transition} = Messages.delete_message(sent_message.id)
@@ -102,9 +104,10 @@ defmodule DealogBackoffice.MessagesTest do
   end
 
   describe "approve message" do
+    setup [:user, :newly_created_message]
+
     @tag :integration
-    test "should succeed without adding a note" do
-      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+    test "should succeed without adding a note", %{message: message} do
       Messages.send_message_for_approval(message)
 
       {:ok, %MessageForApproval{} = message_for_approval} =
@@ -119,8 +122,7 @@ defmodule DealogBackoffice.MessagesTest do
     end
 
     @tag :integration
-    test "should succeed with a note attached" do
-      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+    test "should succeed with a note attached", %{message: message} do
       Messages.send_message_for_approval(message)
 
       {:ok, %MessageForApproval{} = message_for_approval} =
@@ -136,8 +138,7 @@ defmodule DealogBackoffice.MessagesTest do
     end
 
     @tag :integration
-    test "should fail when not in status waiting for approval" do
-      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+    test "should fail when not in status waiting for approval", %{message: message} do
       Messages.send_message_for_approval(message)
 
       {:ok, %MessageForApproval{} = message_for_approval} =
@@ -151,9 +152,10 @@ defmodule DealogBackoffice.MessagesTest do
   end
 
   describe "reject message" do
+    setup [:user, :newly_created_message]
+
     @tag :integration
-    test "should succeed without giving a reason" do
-      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+    test "should succeed without giving a reason", %{message: message} do
       Messages.send_message_for_approval(message)
 
       {:ok, %MessageForApproval{} = message_for_approval} =
@@ -167,8 +169,7 @@ defmodule DealogBackoffice.MessagesTest do
     end
 
     @tag :integration
-    test "should succeed with a reason attached" do
-      {:ok, %Message{} = message} = Messages.create_message(@valid_data)
+    test "should succeed with a reason attached", %{message: message} do
       Messages.send_message_for_approval(message)
 
       {:ok, %MessageForApproval{} = message_for_approval} =
@@ -185,10 +186,11 @@ defmodule DealogBackoffice.MessagesTest do
   end
 
   describe "publish message" do
+    setup [:user, :newly_created_message]
+
     @tag :integration
-    test "should succeed" do
-      with {:ok, message} = Messages.create_message(@valid_data),
-           {:ok, _} = Messages.send_message_for_approval(message),
+    test "should succeed", %{message: message} do
+      with {:ok, _} = Messages.send_message_for_approval(message),
            {:ok, message_for_approval} = Messages.get_message_for_approval(message.id),
            {:ok, approved_message} = Messages.approve_message(message_for_approval) do
         assert {:ok, %PublishedMessage{} = published_message} =
@@ -202,10 +204,11 @@ defmodule DealogBackoffice.MessagesTest do
   end
 
   describe "archive message" do
+    setup [:user, :newly_created_message]
+
     @tag :integration
-    test "should succeed" do
-      with {:ok, message} = Messages.create_message(@valid_data),
-           {:ok, _} = Messages.send_message_for_approval(message),
+    test "should succeed", %{message: message} do
+      with {:ok, _} = Messages.send_message_for_approval(message),
            {:ok, message_for_approval} = Messages.get_message_for_approval(message.id),
            {:ok, approved_message} = Messages.approve_message(message_for_approval),
            {:ok, %PublishedMessage{} = published_message} =
@@ -221,10 +224,11 @@ defmodule DealogBackoffice.MessagesTest do
   end
 
   describe "discard change" do
+    setup [:user, :newly_created_message]
+
     @tag :integration
-    test "should succeed" do
-      with {:ok, message} <- Messages.create_message(@valid_data),
-           {:ok, _} <- Messages.send_message_for_approval(message),
+    test "should succeed", %{message: message} do
+      with {:ok, _} <- Messages.send_message_for_approval(message),
            {:ok, message_for_approval} <- Messages.get_message_for_approval(message.id),
            {:ok, approved_message} <- Messages.approve_message(message_for_approval),
            {:ok, %PublishedMessage{} = published_message} <-
@@ -247,10 +251,11 @@ defmodule DealogBackoffice.MessagesTest do
   end
 
   describe "discard change and archive" do
+    setup [:user, :newly_created_message]
+
     @tag :integration
-    test "should succeed" do
-      with {:ok, message} <- Messages.create_message(@valid_data),
-           {:ok, _} <- Messages.send_message_for_approval(message),
+    test "should succeed", %{message: message} do
+      with {:ok, _} <- Messages.send_message_for_approval(message),
            {:ok, message_for_approval} <- Messages.get_message_for_approval(message.id),
            {:ok, approved_message} <- Messages.approve_message(message_for_approval),
            {:ok, %PublishedMessage{} = published_message} <-
@@ -271,5 +276,14 @@ defmodule DealogBackoffice.MessagesTest do
         assert reverted_message.status == :archived
       end
     end
+  end
+
+  defp user(_) do
+    %{user: build_user()}
+  end
+
+  defp newly_created_message(%{user: user}) do
+    {:ok, %Message{} = message} = Messages.create_message(user, @valid_data)
+    %{message: message}
   end
 end

@@ -4,28 +4,16 @@ defmodule DealogBackoffice.Messages.Events.MessageCreated do
     :message_id,
     :title,
     :body,
-    :status,
-    :author_id,
-    :author_email,
-    :author_first_name,
-    :author_last_name,
-    :administrative_area_id,
-    :organization,
-    :position
+    :status
   ]
 
   defimpl Commanded.Event.Upcaster, for: __MODULE__ do
     alias DealogBackoffice.Messages.Events.MessageCreated
 
-    def upcast(%MessageCreated{status: "draft", author_id: ""} = event, _metadata) do
+    def upcast(%MessageCreated{status: "draft"} = event, _metadata) do
       %MessageCreated{
         event
-        | status: :draft,
-          author_first_name: "Unbekannter",
-          author_last_name: "Benutzer",
-          author_email: "system@dealog.de",
-          administrative_area_id: "000000000000",
-          organization: "DEalog System"
+        | status: :draft
       }
     end
   end

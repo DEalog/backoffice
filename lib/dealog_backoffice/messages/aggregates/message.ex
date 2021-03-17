@@ -44,14 +44,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       message_id: create.message_id,
       title: create.title,
       body: create.body,
-      status: create.status,
-      author_id: create.author_id,
-      author_email: create.author_email,
-      author_first_name: create.author_first_name,
-      author_last_name: create.author_last_name,
-      administrative_area_id: create.administrative_area_id,
-      organization: create.organization,
-      position: create.position
+      status: create.status
     }
   end
 
