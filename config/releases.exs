@@ -57,6 +57,7 @@ config :dealog_backoffice, DealogBackofficeWeb.Endpoint,
     port: String.to_integer(System.get_env("PORT") || "4000"),
     transport_options: [socket_opts: [:inet6]]
   ],
+  check_origin: ["//#{hostname}"],
   secret_key_base: secret_key_base
 
 smtp_relay =
