@@ -52,8 +52,6 @@ config :dealog_backoffice, DealogBackofficeWeb.Endpoint,
   ],
   secret_key_base: secret_key_base
 
-config :dealog_backoffice, DealogBackofficeWeb.Endpoint, server: true
-
 smtp_relay =
   System.get_env("SMTP_RELAY") ||
     raise """
