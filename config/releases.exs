@@ -1,5 +1,7 @@
 import Config
 
+require Logger
+
 database_url =
   System.get_env("DATABASE_URL") ||
     raise """
@@ -50,6 +52,8 @@ hostname =
     raise """
     environment variable HOSTNAME is missing.
     """
+
+Logger.info("Setting hostname to #{hostname}")
 
 config :dealog_backoffice, DealogBackofficeWeb.Endpoint,
   url: [host: hostname, port: 443, scheme: "https"],
