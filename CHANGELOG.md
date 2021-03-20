@@ -1,5 +1,7 @@
 ## Unreleased
 
+- `ADD` Check origin config for websocket connections is introduced
+- `CNG` Move hostname config to release
 - `NEW` Release startup actions are logged properly
 - `FIX` The updated date on the message for approval projection was fixed
 - `FIX` The updated date on the created message projection was fixed

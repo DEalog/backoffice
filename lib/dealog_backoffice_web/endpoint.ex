@@ -14,7 +14,9 @@ defmodule DealogBackofficeWeb.Endpoint do
     websocket: true,
     longpoll: false
 
-  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+  socket "/live", Phoenix.LiveView.Socket,
+    longpoll: [connect_info: [:x_headers, :user_agent, session: @session_options]],
+    websocket: [connect_info: [:x_headers, :user_agent, session: @session_options]]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
