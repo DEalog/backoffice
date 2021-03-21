@@ -73,7 +73,9 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
   end
 
   defp apply_action(socket, :delete, %{"id" => id}) do
-    case Messages.delete_message(id) do
+    user = socket.assigns.current_user
+
+    case Messages.delete_message(user, id) do
       {:error, :invalid_transition} ->
         socket
         |> put_flash(

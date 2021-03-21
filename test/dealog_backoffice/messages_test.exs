@@ -93,9 +93,12 @@ defmodule DealogBackoffice.MessagesTest do
     setup [:user, :newly_created_message]
 
     @tag :integration
-    test "should succeed if in status draft", %{message: message} do
+    test "should succeed if in status draft", %{user: user, message: message} do
       assert message.status == :draft
-      assert {:ok, %DeletedMessage{} = deleted_message} = Messages.delete_message(message.id)
+
+      assert {:ok, %DeletedMessage{} = deleted_message} =
+               Messages.delete_message(user, message.id)
+
       assert {:error, :not_found} = Messages.get_message(message.id)
       assert deleted_message.status == :deleted
     end
@@ -104,53 +107,36 @@ defmodule DealogBackoffice.MessagesTest do
     test "should fail when not in draft", %{user: user, message: message} do
       {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(user, message)
 
-      assert {:error, :invalid_transition} = Messages.delete_message(sent_message.id)
+      assert {:error, :invalid_transition} = Messages.delete_message(user, sent_message.id)
     end
   end
 
   describe "approve message" do
-    setup [:user, :newly_created_message]
+    setup [:user, :message_in_approval]
 
     @tag :integration
-    test "should succeed without adding a note", %{user: user, message: message} do
-      Messages.send_message_for_approval(user, message)
+    test "should succeed without adding a note", %{message: message} do
+      assert message.status == :waiting_for_approval
 
-      {:ok, %MessageForApproval{} = message_for_approval} =
-        Messages.get_message_for_approval(message.id)
-
-      assert message_for_approval.status == :waiting_for_approval
-
-      assert {:ok, %MessageForApproval{} = approved_message} =
-               Messages.approve_message(message_for_approval)
+      assert {:ok, %MessageForApproval{} = approved_message} = Messages.approve_message(message)
 
       assert approved_message.status == :approved
     end
 
     @tag :integration
-    test "should succeed with a note attached", %{user: user, message: message} do
-      Messages.send_message_for_approval(user, message)
-
-      {:ok, %MessageForApproval{} = message_for_approval} =
-        Messages.get_message_for_approval(message.id)
-
-      assert message_for_approval.status == :waiting_for_approval
+    test "should succeed with a note attached", %{message: message} do
+      assert message.status == :waiting_for_approval
 
       assert {:ok, %MessageForApproval{} = approved_message} =
-               Messages.approve_message(message_for_approval, "A note")
+               Messages.approve_message(message, "A note")
 
       assert approved_message.status == :approved
       assert approved_message.note == "A note"
     end
 
     @tag :integration
-    test "should fail when not in status waiting for approval", %{user: user, message: message} do
-      Messages.send_message_for_approval(user, message)
-
-      {:ok, %MessageForApproval{} = message_for_approval} =
-        Messages.get_message_for_approval(message.id)
-
-      {:ok, %MessageForApproval{} = approved_message} =
-        Messages.approve_message(message_for_approval)
+    test "should fail when not in status waiting for approval", %{message: message} do
+      {:ok, %MessageForApproval{} = approved_message} = Messages.approve_message(message)
 
       assert {:error, :invalid_transition} = Messages.approve_message(approved_message)
     end
@@ -289,6 +275,15 @@ defmodule DealogBackoffice.MessagesTest do
 
   defp newly_created_message(%{user: user}) do
     {:ok, %Message{} = message} = Messages.create_message(user, @valid_data)
+
+    %{message: message}
+  end
+
+  defp message_in_approval(%{user: user}) do
+    {:ok, %Message{} = message} = Messages.create_message(user, @valid_data)
+    {:ok, %Message{} = message} = Messages.send_message_for_approval(user, message)
+    {:ok, %MessageForApproval{} = message} = Messages.get_message_for_approval(message.id)
+
     %{message: message}
   end
 end

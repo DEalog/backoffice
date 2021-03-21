@@ -111,10 +111,10 @@ defmodule DealogBackoffice.Messages do
   Returns {:ok, %DeletedMessage{}} when successfull
   Returns {:error, :invalid_transition} when not allowed
   """
-  def delete_message(message_id) do
+  def delete_message(%User{} = user, message_id) do
     case get_message(message_id) do
       {:ok, message} ->
-        do_delete_message(message)
+        do_delete_message(user, message)
 
       {:error, reason} ->
         {:error, reason}
@@ -391,14 +391,17 @@ defmodule DealogBackoffice.Messages do
     end
   end
 
-  defp do_delete_message(message) do
+  defp do_delete_message(user, message) do
+    author = build_author(user)
+
     delete_message =
       message
       |> DeleteMessage.new()
       |> DeleteMessage.assign_message_id(message)
       |> DeleteMessage.set_status()
 
-    with :ok <- App.dispatch(delete_message, consistency: :strong) do
+    with :ok <-
+           App.dispatch(delete_message, consistency: :strong, metadata: %{"author" => author}) do
       get(DeletedMessage, message.id)
     else
       _ ->
