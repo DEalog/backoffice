@@ -36,13 +36,14 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.FormComponent do
   end
 
   defp apply_action(socket, :change, message_params) do
-    # TODO Move to change_message function to keep API clean
+    user = socket.assigns.current_user
+
     {:ok, original_message} =
       message_params
       |> Map.get("id")
       |> Messages.get_message()
 
-    case Messages.change_message(original_message, message_params) do
+    case Messages.change_message(user, original_message, message_params) do
       {:error, {:validation_failure, errors}} ->
         assign(socket, error: true, errors: errors, message: convert(message_params))
 

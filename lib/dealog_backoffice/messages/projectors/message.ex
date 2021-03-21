@@ -47,12 +47,25 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
   end)
 
   project(%MessageChanged{} = changed, metadata, fn multi ->
-    update_message(multi, changed.message_id,
+    multi
+    |> update_message(changed.message_id,
       title: changed.title,
       body: changed.body,
       status: changed.status,
       updated_at: metadata.created_at
     )
+    |> Ecto.Multi.insert(:message_change, fn _ ->
+      author = metadata["author"] || get_fallback_author()
+
+      %Message.Change{
+        id: UUID.uuid4(),
+        action: "edit",
+        author: build_author(author),
+        organization: build_organization(author),
+        message_id: changed.message_id,
+        inserted_at: metadata.created_at
+      }
+    end)
   end)
 
   project(%MessageSentForApproval{} = sent_for_approval, metadata, fn multi ->

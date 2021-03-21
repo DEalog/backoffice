@@ -42,8 +42,9 @@ defmodule DealogBackoffice.MessagesTest do
     setup [:user, :newly_created_message]
 
     @tag :integration
-    test "should succeed with valid data", %{message: message} do
-      {:ok, %Message{} = updated_message} = Messages.change_message(message, @valid_update_data)
+    test "should succeed with valid data", %{user: user, message: message} do
+      {:ok, %Message{} = updated_message} =
+        Messages.change_message(user, message, @valid_update_data)
 
       refute updated_message == message
       assert updated_message.title == @valid_update_data.title
@@ -51,16 +52,19 @@ defmodule DealogBackoffice.MessagesTest do
     end
 
     @tag :integration
-    test "should succeed but not change if input is same as original", %{message: message} do
-      {:ok, %Message{} = updated_message} = Messages.change_message(message, @valid_data)
+    test "should succeed but not change if input is same as original", %{
+      user: user,
+      message: message
+    } do
+      {:ok, %Message{} = updated_message} = Messages.change_message(user, message, @valid_data)
 
       assert updated_message == message
     end
 
     @tag :integration
-    test "should fail with invalid data", %{message: message} do
+    test "should fail with invalid data", %{user: user, message: message} do
       assert {:error, {:validation_failure, errors}} =
-               Messages.change_message(message, @invalid_update_data)
+               Messages.change_message(user, message, @invalid_update_data)
 
       assert %{title: _, body: _} = errors
     end
@@ -227,7 +231,7 @@ defmodule DealogBackoffice.MessagesTest do
     setup [:user, :newly_created_message]
 
     @tag :integration
-    test "should succeed", %{message: message} do
+    test "should succeed", %{user: user, message: message} do
       with {:ok, _} <- Messages.send_message_for_approval(message),
            {:ok, message_for_approval} <- Messages.get_message_for_approval(message.id),
            {:ok, approved_message} <- Messages.approve_message(message_for_approval),
@@ -236,7 +240,7 @@ defmodule DealogBackoffice.MessagesTest do
         {:ok, %Message{} = loaded_message} = Messages.get_message(published_message.id)
 
         {:ok, %Message{} = updated_message} =
-          Messages.change_message(loaded_message, %{
+          Messages.change_message(user, loaded_message, %{
             title: "Changed title",
             body: "Changed body"
           })
@@ -254,7 +258,7 @@ defmodule DealogBackoffice.MessagesTest do
     setup [:user, :newly_created_message]
 
     @tag :integration
-    test "should succeed", %{message: message} do
+    test "should succeed", %{user: user, message: message} do
       with {:ok, _} <- Messages.send_message_for_approval(message),
            {:ok, message_for_approval} <- Messages.get_message_for_approval(message.id),
            {:ok, approved_message} <- Messages.approve_message(message_for_approval),
@@ -263,7 +267,7 @@ defmodule DealogBackoffice.MessagesTest do
         {:ok, %Message{} = loaded_message} = Messages.get_message(published_message.id)
 
         {:ok, %Message{} = updated_message} =
-          Messages.change_message(loaded_message, %{
+          Messages.change_message(user, loaded_message, %{
             title: "Changed title",
             body: "Changed body"
           })

@@ -67,9 +67,9 @@ defmodule DealogBackoffice.Messages do
   Returns the message when successful {:ok, message}
   Returns an error tuple when invalid {:error, reason}
   """
-  def change_message(%Message{} = message, attrs \\ %{}) do
+  def change_message(%User{} = user, %Message{} = message, attrs \\ %{}) do
     if has_changed?(message, attrs) do
-      apply_change(message, attrs)
+      apply_change(user, message, attrs)
     else
       {:ok, message}
     end
@@ -314,13 +314,16 @@ defmodule DealogBackoffice.Messages do
   end
 
   # Run the actual command to change a message.
-  defp apply_change(message, attrs) do
+  defp apply_change(user, message, attrs) do
+    author = build_author(user)
+
     change_message =
       attrs
       |> ChangeMessage.new()
       |> ChangeMessage.assign_message_id(message)
 
-    with :ok <- App.dispatch(change_message, consistency: :strong) do
+    with :ok <-
+           App.dispatch(change_message, consistency: :strong, metadata: %{"author" => author}) do
       get(Message, message.id)
     end
   end
