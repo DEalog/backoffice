@@ -17,7 +17,7 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     ChangeDiscarded
   }
 
-  alias DealogBackoffice.Messages.Projections.Message
+  alias DealogBackoffice.Messages.Projections.{Message, MessageChange}
 
   project(%MessageCreated{} = created, metadata, fn multi ->
     multi
@@ -35,7 +35,7 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     |> Ecto.Multi.insert(:message_change, fn %{message: message} ->
       author = metadata["author"] || get_fallback_author()
 
-      %Message.Change{
+      %MessageChange{
         id: UUID.uuid4(),
         action: "create",
         author: build_author(author),
@@ -57,7 +57,7 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     |> Ecto.Multi.insert(:message_change, fn _ ->
       author = metadata["author"] || get_fallback_author()
 
-      %Message.Change{
+      %MessageChange{
         id: UUID.uuid4(),
         action: "edit",
         author: build_author(author),
@@ -69,12 +69,25 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
   end)
 
   project(%MessageSentForApproval{} = sent_for_approval, metadata, fn multi ->
-    update_message(multi, sent_for_approval.message_id,
+    multi
+    |> update_message(sent_for_approval.message_id,
       title: sent_for_approval.title,
       body: sent_for_approval.body,
       status: sent_for_approval.status,
       updated_at: metadata.created_at
     )
+    |> Ecto.Multi.insert(:message_change, fn _ ->
+      author = metadata["author"] || get_fallback_author()
+
+      %MessageChange{
+        id: UUID.uuid4(),
+        action: "sent_for_approval",
+        author: build_author(author),
+        organization: build_organization(author),
+        message_id: sent_for_approval.message_id,
+        inserted_at: metadata.created_at
+      }
+    end)
   end)
 
   project(%MessageDeleted{} = deleted, fn multi ->
@@ -146,7 +159,7 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
   end
 
   defp build_author(author) do
-    %Message.Change.Author{
+    %MessageChange.Author{
       id: author["id"],
       name: "#{author["first_name"]} #{author["last_name"]}",
       email: author["email"],
@@ -155,7 +168,7 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
   end
 
   defp build_organization(author) do
-    %Message.Change.Organization{
+    %MessageChange.Organization{
       name: author["organization"],
       administrative_area_id: author["administrative_area_id"]
     }

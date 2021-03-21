@@ -74,17 +74,18 @@ defmodule DealogBackoffice.MessagesTest do
     setup [:user, :newly_created_message]
 
     @tag :integration
-    test "should succeed if in status draft", %{message: message} do
-      assert {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
+    test "should succeed if in status draft", %{user: user, message: message} do
+      assert {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(user, message)
       assert message.status == :draft
       assert sent_message.status == :waiting_for_approval
     end
 
     @tag :integration
-    test "should fail when not in draft", %{message: message} do
-      {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
+    test "should fail when not in draft", %{user: user, message: message} do
+      {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(user, message)
 
-      assert {:error, :invalid_transition} = Messages.send_message_for_approval(sent_message)
+      assert {:error, :invalid_transition} =
+               Messages.send_message_for_approval(user, sent_message)
     end
   end
 
@@ -100,8 +101,8 @@ defmodule DealogBackoffice.MessagesTest do
     end
 
     @tag :integration
-    test "should fail when not in draft", %{message: message} do
-      {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(message)
+    test "should fail when not in draft", %{user: user, message: message} do
+      {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(user, message)
 
       assert {:error, :invalid_transition} = Messages.delete_message(sent_message.id)
     end
@@ -111,8 +112,8 @@ defmodule DealogBackoffice.MessagesTest do
     setup [:user, :newly_created_message]
 
     @tag :integration
-    test "should succeed without adding a note", %{message: message} do
-      Messages.send_message_for_approval(message)
+    test "should succeed without adding a note", %{user: user, message: message} do
+      Messages.send_message_for_approval(user, message)
 
       {:ok, %MessageForApproval{} = message_for_approval} =
         Messages.get_message_for_approval(message.id)
@@ -126,8 +127,8 @@ defmodule DealogBackoffice.MessagesTest do
     end
 
     @tag :integration
-    test "should succeed with a note attached", %{message: message} do
-      Messages.send_message_for_approval(message)
+    test "should succeed with a note attached", %{user: user, message: message} do
+      Messages.send_message_for_approval(user, message)
 
       {:ok, %MessageForApproval{} = message_for_approval} =
         Messages.get_message_for_approval(message.id)
@@ -142,8 +143,8 @@ defmodule DealogBackoffice.MessagesTest do
     end
 
     @tag :integration
-    test "should fail when not in status waiting for approval", %{message: message} do
-      Messages.send_message_for_approval(message)
+    test "should fail when not in status waiting for approval", %{user: user, message: message} do
+      Messages.send_message_for_approval(user, message)
 
       {:ok, %MessageForApproval{} = message_for_approval} =
         Messages.get_message_for_approval(message.id)
@@ -159,8 +160,8 @@ defmodule DealogBackoffice.MessagesTest do
     setup [:user, :newly_created_message]
 
     @tag :integration
-    test "should succeed without giving a reason", %{message: message} do
-      Messages.send_message_for_approval(message)
+    test "should succeed without giving a reason", %{user: user, message: message} do
+      Messages.send_message_for_approval(user, message)
 
       {:ok, %MessageForApproval{} = message_for_approval} =
         Messages.get_message_for_approval(message.id)
@@ -173,8 +174,8 @@ defmodule DealogBackoffice.MessagesTest do
     end
 
     @tag :integration
-    test "should succeed with a reason attached", %{message: message} do
-      Messages.send_message_for_approval(message)
+    test "should succeed with a reason attached", %{user: user, message: message} do
+      Messages.send_message_for_approval(user, message)
 
       {:ok, %MessageForApproval{} = message_for_approval} =
         Messages.get_message_for_approval(message.id)
@@ -193,8 +194,8 @@ defmodule DealogBackoffice.MessagesTest do
     setup [:user, :newly_created_message]
 
     @tag :integration
-    test "should succeed", %{message: message} do
-      with {:ok, _} = Messages.send_message_for_approval(message),
+    test "should succeed", %{user: user, message: message} do
+      with {:ok, _} = Messages.send_message_for_approval(user, message),
            {:ok, message_for_approval} = Messages.get_message_for_approval(message.id),
            {:ok, approved_message} = Messages.approve_message(message_for_approval) do
         assert {:ok, %PublishedMessage{} = published_message} =
@@ -211,8 +212,8 @@ defmodule DealogBackoffice.MessagesTest do
     setup [:user, :newly_created_message]
 
     @tag :integration
-    test "should succeed", %{message: message} do
-      with {:ok, _} = Messages.send_message_for_approval(message),
+    test "should succeed", %{user: user, message: message} do
+      with {:ok, _} = Messages.send_message_for_approval(user, message),
            {:ok, message_for_approval} = Messages.get_message_for_approval(message.id),
            {:ok, approved_message} = Messages.approve_message(message_for_approval),
            {:ok, %PublishedMessage{} = published_message} =
@@ -232,7 +233,7 @@ defmodule DealogBackoffice.MessagesTest do
 
     @tag :integration
     test "should succeed", %{user: user, message: message} do
-      with {:ok, _} <- Messages.send_message_for_approval(message),
+      with {:ok, _} <- Messages.send_message_for_approval(user, message),
            {:ok, message_for_approval} <- Messages.get_message_for_approval(message.id),
            {:ok, approved_message} <- Messages.approve_message(message_for_approval),
            {:ok, %PublishedMessage{} = published_message} <-
@@ -259,7 +260,7 @@ defmodule DealogBackoffice.MessagesTest do
 
     @tag :integration
     test "should succeed", %{user: user, message: message} do
-      with {:ok, _} <- Messages.send_message_for_approval(message),
+      with {:ok, _} <- Messages.send_message_for_approval(user, message),
            {:ok, message_for_approval} <- Messages.get_message_for_approval(message.id),
            {:ok, approved_message} <- Messages.approve_message(message_for_approval),
            {:ok, %PublishedMessage{} = published_message} <-

@@ -134,7 +134,7 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.EditTest do
 
   defp prepare_message_for_approval(%{user: user}) do
     message = fixture(:message, user)
-    Messages.send_message_for_approval(message)
+    Messages.send_message_for_approval(user, message)
     {:ok, message_for_approval} = Messages.get_message_for_approval(message.id)
     {:ok, message_for_approval: message_for_approval}
   end

@@ -32,7 +32,7 @@ defmodule DealogBackofficeWeb.AllMessagesLive.IndexTest do
 
   defp fixture(:message, user) do
     {:ok, message} = Messages.create_message(user, @valid_attrs)
-    {:ok, message} = Messages.send_message_for_approval(message)
+    {:ok, message} = Messages.send_message_for_approval(user, message)
     {:ok, message_for_approval} = Messages.get_message_for_approval(message.id)
     {:ok, approved_message} = Messages.approve_message(message_for_approval)
     {:ok, published_message} = Messages.publish_message(approved_message)

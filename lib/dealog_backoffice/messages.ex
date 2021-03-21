@@ -3,6 +3,8 @@ defmodule DealogBackoffice.Messages do
   The boundary for messages.
   """
 
+  import Ecto.Query
+
   alias DealogBackoffice.Accounts.User
   alias DealogBackoffice.Messages.Author
 
@@ -23,7 +25,8 @@ defmodule DealogBackoffice.Messages do
     MessageForApproval,
     DeletedMessage,
     PublishedMessage,
-    ArchivedMessage
+    ArchivedMessage,
+    MessageChange
   }
 
   alias DealogBackoffice.Messages.Queries.{
@@ -83,14 +86,16 @@ defmodule DealogBackoffice.Messages do
   Returns the message when successful {:ok, message}
   Returns an error tuple when invalid {:error, reason}
   """
-  def send_message_for_approval(%Message{} = message) do
+  def send_message_for_approval(%User{} = user, %Message{} = message) do
+    author = build_author(user)
+
     send_message =
       message
       |> SendMessageForApproval.new()
       |> SendMessageForApproval.assign_message_id(message)
       |> SendMessageForApproval.set_status()
 
-    with :ok <- App.dispatch(send_message, consistency: :strong) do
+    with :ok <- App.dispatch(send_message, consistency: :strong, metadata: %{"author" => author}) do
       get(Message, message.id)
     else
       _ ->
@@ -126,7 +131,19 @@ defmodule DealogBackoffice.Messages do
   @doc """
   Get a message by its ID.
   """
-  def get_message(message_id), do: get(Message, message_id, [:changes])
+  def get_message(message_id) do
+    message =
+      from(m in Message,
+        where: m.id == ^message_id,
+        preload: [changes: ^from(mc in MessageChange, order_by: :inserted_at)]
+      )
+      |> Repo.one()
+
+    case message do
+      nil -> {:error, :not_found}
+      message -> {:ok, message}
+    end
+  end
 
   @doc """
   Get a (paginated) list of message approvals.
@@ -138,7 +155,19 @@ defmodule DealogBackoffice.Messages do
   @doc """
   Get a message sent for approval by its ID.
   """
-  def get_message_for_approval(message_id), do: get(MessageForApproval, message_id)
+  def get_message_for_approval(message_id) do
+    message =
+      from(m in MessageForApproval,
+        where: m.id == ^message_id,
+        preload: [changes: ^from(mc in MessageChange, order_by: :inserted_at)]
+      )
+      |> Repo.one()
+
+    case message do
+      nil -> {:error, :not_found}
+      message -> {:ok, message}
+    end
+  end
 
   @doc """
   Approve a message.
@@ -291,8 +320,8 @@ defmodule DealogBackoffice.Messages do
     get(PublishedMessage, id)
   end
 
-  defp get(schema, uuid, preload \\ []) do
-    entity = Repo.get(schema, uuid) |> Repo.preload(preload)
+  defp get(schema, uuid) do
+    entity = Repo.get(schema, uuid)
 
     case entity do
       nil -> {:error, :not_found}

@@ -48,7 +48,7 @@ defmodule DealogBackoffice.Seed do
           body: random_body()
         })
 
-      {:ok, _} = Messages.send_message_for_approval(message)
+      {:ok, _} = Messages.send_message_for_approval(@user, message)
     end
   end
 
@@ -60,7 +60,7 @@ defmodule DealogBackoffice.Seed do
           body: random_body()
         })
 
-      {:ok, message_for_approval} = Messages.send_message_for_approval(message)
+      {:ok, message_for_approval} = Messages.send_message_for_approval(@user, message)
       {:ok, message_to_approve} = Messages.get_message_for_approval(message_for_approval.id)
       {:ok, _} = Messages.approve_message(message_to_approve)
     end
@@ -74,7 +74,7 @@ defmodule DealogBackoffice.Seed do
           body: random_body()
         })
 
-      {:ok, message_for_approval} = Messages.send_message_for_approval(message)
+      {:ok, message_for_approval} = Messages.send_message_for_approval(@user, message)
       {:ok, message_to_approve} = Messages.get_message_for_approval(message_for_approval.id)
       {:ok, approved_message} = Messages.approve_message(message_to_approve)
       {:ok, _} = Messages.publish_message(approved_message)

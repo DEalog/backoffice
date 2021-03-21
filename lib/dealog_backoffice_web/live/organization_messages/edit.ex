@@ -45,10 +45,11 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
   end
 
   defp apply_action(socket, :send_for_approval, %{"id" => id}) do
-    # TODO Move to change_message function to keep API clean
+    user = socket.assigns.current_user
+
     {:ok, original_message} = Messages.get_message(id)
 
-    case Messages.send_message_for_approval(original_message) do
+    case Messages.send_message_for_approval(user, original_message) do
       {:error, :invalid_transition} ->
         socket
         |> put_flash(
