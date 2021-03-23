@@ -212,7 +212,9 @@ defmodule DealogBackoffice.Messages do
   Returns the message as {:ok, %MessageForApproval{}} when transitioned.
   Returns {:error, :invalid_transition} when transition is not allowed.
   """
-  def reject_message(%MessageForApproval{} = message, reason \\ "") do
+  def reject_message(%User{} = user, %MessageForApproval{} = message, reason \\ "") do
+    author = build_author(user)
+
     reject_message =
       message
       |> RejectMessage.new()
@@ -220,7 +222,8 @@ defmodule DealogBackoffice.Messages do
       |> RejectMessage.set_status()
       |> RejectMessage.maybe_set_reason(reason)
 
-    with :ok <- App.dispatch(reject_message, consistency: :strong) do
+    with :ok <-
+           App.dispatch(reject_message, consistency: :strong, metadata: %{"author" => author}) do
       get(Message, message.id)
     else
       _ ->

@@ -35,9 +35,10 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.FormComponent do
   end
 
   defp apply_action(socket, :reject, %{"id" => id, "text" => reason}) do
+    user = socket.assigns.current_user
     {:ok, message} = Messages.get_message_for_approval(id)
 
-    case Messages.reject_message(message, reason) do
+    case Messages.reject_message(user, message, reason) do
       {:ok, message} ->
         socket
         |> put_flash(
