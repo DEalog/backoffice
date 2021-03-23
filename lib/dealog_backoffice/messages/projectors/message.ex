@@ -99,10 +99,23 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
   end)
 
   project(%MessageApproved{} = approved, metadata, fn multi ->
-    update_message(multi, approved.message_id,
+    multi
+    |> update_message(approved.message_id,
       status: approved.status,
       updated_at: metadata.created_at
     )
+    |> Ecto.Multi.insert(:message_change, fn _ ->
+      author = metadata["author"] || get_fallback_author()
+
+      %MessageChange{
+        id: UUID.uuid4(),
+        action: "approved",
+        author: build_author(author),
+        organization: build_organization(author),
+        message_id: approved.message_id,
+        inserted_at: metadata.created_at
+      }
+    end)
   end)
 
   project(%MessageRejected{} = rejected, metadata, fn multi ->
