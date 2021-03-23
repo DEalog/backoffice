@@ -42,7 +42,7 @@ defmodule DealogBackoffice.MessagesTest do
     setup [:user, :newly_created_message]
 
     @tag :integration
-    test "should succeed with valid data", %{user: user, message: message} do
+    test "should succeed with valid data", %{user: user, created_message: message} do
       {:ok, %Message{} = updated_message} =
         Messages.change_message(user, message, @valid_update_data)
 
@@ -54,7 +54,7 @@ defmodule DealogBackoffice.MessagesTest do
     @tag :integration
     test "should succeed but not change if input is same as original", %{
       user: user,
-      message: message
+      created_message: message
     } do
       {:ok, %Message{} = updated_message} = Messages.change_message(user, message, @valid_data)
 
@@ -62,7 +62,7 @@ defmodule DealogBackoffice.MessagesTest do
     end
 
     @tag :integration
-    test "should fail with invalid data", %{user: user, message: message} do
+    test "should fail with invalid data", %{user: user, created_message: message} do
       assert {:error, {:validation_failure, errors}} =
                Messages.change_message(user, message, @invalid_update_data)
 
@@ -74,15 +74,16 @@ defmodule DealogBackoffice.MessagesTest do
     setup [:user, :newly_created_message]
 
     @tag :integration
-    test "should succeed if in status draft", %{user: user, message: message} do
+    test "should succeed if in status draft", %{user: user, created_message: message} do
       assert {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(user, message)
       assert message.status == :draft
       assert sent_message.status == :waiting_for_approval
     end
 
     @tag :integration
-    test "should fail when not in draft", %{user: user, message: message} do
-      {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(user, message)
+    test "should fail when not in draft", %{user: user} do
+      message_in_approval = fixture(:message_in_approval, user)
+      {:ok, sent_message} = Messages.get_message(message_in_approval.id)
 
       assert {:error, :invalid_transition} =
                Messages.send_message_for_approval(user, sent_message)
@@ -90,10 +91,11 @@ defmodule DealogBackoffice.MessagesTest do
   end
 
   describe "delete message" do
-    setup [:user, :newly_created_message]
+    setup [:user]
 
     @tag :integration
-    test "should succeed if in status draft", %{user: user, message: message} do
+    test "should succeed if in status draft", %{user: user} do
+      message = fixture(:created_message, user)
       assert message.status == :draft
 
       assert {:ok, %DeletedMessage{} = deleted_message} =
@@ -104,10 +106,9 @@ defmodule DealogBackoffice.MessagesTest do
     end
 
     @tag :integration
-    test "should fail when not in draft", %{user: user, message: message} do
-      {:ok, %Message{} = sent_message} = Messages.send_message_for_approval(user, message)
-
-      assert {:error, :invalid_transition} = Messages.delete_message(user, sent_message.id)
+    test "should fail when not in draft", %{user: user} do
+      message_in_approval = fixture(:message_in_approval, user)
+      assert {:error, :invalid_transition} = Messages.delete_message(user, message_in_approval.id)
     end
   end
 
@@ -115,16 +116,14 @@ defmodule DealogBackoffice.MessagesTest do
     setup [:user, :message_in_approval]
 
     @tag :integration
-    test "should succeed without adding a note", %{message: message} do
+    test "should succeed without adding a note", %{message_in_approval: message} do
       assert message.status == :waiting_for_approval
-
       assert {:ok, %MessageForApproval{} = approved_message} = Messages.approve_message(message)
-
       assert approved_message.status == :approved
     end
 
     @tag :integration
-    test "should succeed with a note attached", %{message: message} do
+    test "should succeed with a note attached", %{message_in_approval: message} do
       assert message.status == :waiting_for_approval
 
       assert {:ok, %MessageForApproval{} = approved_message} =
@@ -135,7 +134,7 @@ defmodule DealogBackoffice.MessagesTest do
     end
 
     @tag :integration
-    test "should fail when not in status waiting for approval", %{message: message} do
+    test "should fail when not in status waiting for approval", %{message_in_approval: message} do
       {:ok, %MessageForApproval{} = approved_message} = Messages.approve_message(message)
 
       assert {:error, :invalid_transition} = Messages.approve_message(approved_message)
@@ -143,33 +142,22 @@ defmodule DealogBackoffice.MessagesTest do
   end
 
   describe "reject message" do
-    setup [:user, :newly_created_message]
+    setup [:user, :message_in_approval]
 
     @tag :integration
-    test "should succeed without giving a reason", %{user: user, message: message} do
-      Messages.send_message_for_approval(user, message)
+    test "should succeed without giving a reason", %{message_in_approval: message} do
+      assert message.status == :waiting_for_approval
 
-      {:ok, %MessageForApproval{} = message_for_approval} =
-        Messages.get_message_for_approval(message.id)
-
-      assert message_for_approval.status == :waiting_for_approval
-
-      assert {:ok, %Message{} = rejected_message} = Messages.reject_message(message_for_approval)
+      assert {:ok, %Message{} = rejected_message} = Messages.reject_message(message)
 
       assert rejected_message.status == :rejected
     end
 
     @tag :integration
-    test "should succeed with a reason attached", %{user: user, message: message} do
-      Messages.send_message_for_approval(user, message)
+    test "should succeed with a reason attached", %{message_in_approval: message} do
+      assert message.status == :waiting_for_approval
 
-      {:ok, %MessageForApproval{} = message_for_approval} =
-        Messages.get_message_for_approval(message.id)
-
-      assert message_for_approval.status == :waiting_for_approval
-
-      assert {:ok, %Message{} = rejected_message} =
-               Messages.reject_message(message_for_approval, "A reason")
+      assert {:ok, %Message{} = rejected_message} = Messages.reject_message(message, "A reason")
 
       assert rejected_message.status == :rejected
       assert rejected_message.rejection_reason == "A reason"
@@ -177,113 +165,126 @@ defmodule DealogBackoffice.MessagesTest do
   end
 
   describe "publish message" do
-    setup [:user, :newly_created_message]
+    setup [:user, :approved_message]
 
     @tag :integration
-    test "should succeed", %{user: user, message: message} do
-      with {:ok, _} = Messages.send_message_for_approval(user, message),
-           {:ok, message_for_approval} = Messages.get_message_for_approval(message.id),
-           {:ok, approved_message} = Messages.approve_message(message_for_approval) do
-        assert {:ok, %PublishedMessage{} = published_message} =
-                 Messages.publish_message(approved_message)
+    test "should succeed", %{approved_message: message} do
+      assert {:ok, %PublishedMessage{} = published_message} = Messages.publish_message(message)
 
-        assert published_message.title == @valid_data.title
-        assert published_message.body == @valid_data.body
-        assert published_message.status == :published
-      end
+      assert published_message.title == @valid_data.title
+      assert published_message.body == @valid_data.body
+      assert published_message.status == :published
     end
   end
 
   describe "archive message" do
-    setup [:user, :newly_created_message]
+    setup [:user, :published_message]
 
     @tag :integration
-    test "should succeed", %{user: user, message: message} do
-      with {:ok, _} = Messages.send_message_for_approval(user, message),
-           {:ok, message_for_approval} = Messages.get_message_for_approval(message.id),
-           {:ok, approved_message} = Messages.approve_message(message_for_approval),
-           {:ok, %PublishedMessage{} = published_message} =
-             Messages.publish_message(approved_message) do
-        {:ok, %ArchivedMessage{} = archived_message} =
-          Messages.archive_message(published_message.id)
+    test "should succeed", %{published_message: message} do
+      {:ok, %ArchivedMessage{} = archived_message} = Messages.archive_message(message.id)
 
-        assert archived_message.title == @valid_data.title
-        assert archived_message.body == @valid_data.body
-        assert archived_message.status == :archived
-      end
+      assert archived_message.title == @valid_data.title
+      assert archived_message.body == @valid_data.body
+      assert archived_message.status == :archived
     end
   end
 
   describe "discard change" do
-    setup [:user, :newly_created_message]
+    setup [:user, :published_message]
 
     @tag :integration
-    test "should succeed", %{user: user, message: message} do
-      with {:ok, _} <- Messages.send_message_for_approval(user, message),
-           {:ok, message_for_approval} <- Messages.get_message_for_approval(message.id),
-           {:ok, approved_message} <- Messages.approve_message(message_for_approval),
-           {:ok, %PublishedMessage{} = published_message} <-
-             Messages.publish_message(approved_message) do
-        {:ok, %Message{} = loaded_message} = Messages.get_message(published_message.id)
+    test "should succeed", %{user: user, published_message: message} do
+      {:ok, %Message{} = loaded_message} = Messages.get_message(message.id)
 
-        {:ok, %Message{} = updated_message} =
-          Messages.change_message(user, loaded_message, %{
-            title: "Changed title",
-            body: "Changed body"
-          })
+      {:ok, %Message{} = updated_message} =
+        Messages.change_message(user, loaded_message, %{
+          title: "Changed title",
+          body: "Changed body"
+        })
 
-        {:ok, %Message{} = reverted_message} = Messages.discard_change(updated_message.id)
+      {:ok, %Message{} = reverted_message} = Messages.discard_change(updated_message.id)
 
-        assert reverted_message.title == @valid_data.title
-        assert reverted_message.body == @valid_data.body
-        assert reverted_message.status == :published
-      end
+      assert reverted_message.title == @valid_data.title
+      assert reverted_message.body == @valid_data.body
+      assert reverted_message.status == :published
     end
   end
 
   describe "discard change and archive" do
-    setup [:user, :newly_created_message]
+    setup [:user, :published_message]
 
     @tag :integration
-    test "should succeed", %{user: user, message: message} do
-      with {:ok, _} <- Messages.send_message_for_approval(user, message),
-           {:ok, message_for_approval} <- Messages.get_message_for_approval(message.id),
-           {:ok, approved_message} <- Messages.approve_message(message_for_approval),
-           {:ok, %PublishedMessage{} = published_message} <-
-             Messages.publish_message(approved_message) do
-        {:ok, %Message{} = loaded_message} = Messages.get_message(published_message.id)
+    test "should succeed", %{user: user, published_message: message} do
+      {:ok, %Message{} = loaded_message} = Messages.get_message(message.id)
 
-        {:ok, %Message{} = updated_message} =
-          Messages.change_message(user, loaded_message, %{
-            title: "Changed title",
-            body: "Changed body"
-          })
+      {:ok, %Message{} = updated_message} =
+        Messages.change_message(user, loaded_message, %{
+          title: "Changed title",
+          body: "Changed body"
+        })
 
-        {:ok, %ArchivedMessage{} = reverted_message} =
-          Messages.discard_change_and_archive(updated_message.id)
+      {:ok, %ArchivedMessage{} = reverted_message} =
+        Messages.discard_change_and_archive(updated_message.id)
 
-        assert reverted_message.title == @valid_data.title
-        assert reverted_message.body == @valid_data.body
-        assert reverted_message.status == :archived
-      end
+      assert reverted_message.title == @valid_data.title
+      assert reverted_message.body == @valid_data.body
+      assert reverted_message.status == :archived
     end
   end
 
-  defp user(_) do
-    %{user: build_user()}
-  end
+  defp fixture(:user), do: build_user()
 
-  defp newly_created_message(%{user: user}) do
+  defp fixture(:created_message, user) do
     {:ok, %Message{} = message} = Messages.create_message(user, @valid_data)
 
-    %{message: message}
+    message
   end
 
-  defp message_in_approval(%{user: user}) do
-    {:ok, %Message{} = message} = Messages.create_message(user, @valid_data)
+  defp fixture(:message_in_approval, user) do
+    message = fixture(:created_message, user)
     {:ok, %Message{} = message} = Messages.send_message_for_approval(user, message)
     {:ok, %MessageForApproval{} = message} = Messages.get_message_for_approval(message.id)
 
-    %{message: message}
+    message
+  end
+
+  defp fixture(:approved_message, user) do
+    message = fixture(:created_message, user)
+    {:ok, %Message{} = message} = Messages.send_message_for_approval(user, message)
+    {:ok, %MessageForApproval{} = message} = Messages.get_message_for_approval(message.id)
+    {:ok, %MessageForApproval{} = message} = Messages.approve_message(message, "Approval granted")
+
+    message
+  end
+
+  defp fixture(:published_message, user) do
+    message = fixture(:created_message, user)
+    {:ok, %Message{} = message} = Messages.send_message_for_approval(user, message)
+    {:ok, %MessageForApproval{} = message} = Messages.get_message_for_approval(message.id)
+    {:ok, %MessageForApproval{} = message} = Messages.approve_message(message, "Approval granted")
+    {:ok, %PublishedMessage{} = message} = Messages.publish_message(message)
+
+    message
+  end
+
+  defp user(_) do
+    %{user: fixture(:user)}
+  end
+
+  defp newly_created_message(%{user: user}) do
+    %{created_message: fixture(:created_message, user)}
+  end
+
+  defp message_in_approval(%{user: user}) do
+    %{message_in_approval: fixture(:message_in_approval, user)}
+  end
+
+  defp approved_message(%{user: user}) do
+    %{approved_message: fixture(:approved_message, user)}
+  end
+
+  defp published_message(%{user: user}) do
+    %{published_message: fixture(:published_message, user)}
   end
 end
