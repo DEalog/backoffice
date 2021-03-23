@@ -121,7 +121,7 @@
               <dd class="mt-1 text-sm text-gray-900 leading-5 sm:mt-0 sm:col-span-2">
                 <ul class="border border-gray-200 rounded-md">
                   <%= for change <- @message.changes do %>
-                    <%= 
+                    <%=
                       live_component @socket,
                         DealogBackofficeWeb.Components.ChangeEntryComponent,
                         change: change

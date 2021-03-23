@@ -156,14 +156,12 @@ defmodule DealogBackoffice.Messages do
   Get a message sent for approval by its ID.
   """
   def get_message_for_approval(message_id) do
-    message =
-      from(m in MessageForApproval,
-        where: m.id == ^message_id,
-        preload: [changes: ^from(mc in MessageChange, order_by: :inserted_at)]
-      )
-      |> Repo.one()
-
-    case message do
+    from(m in MessageForApproval,
+      where: m.id == ^message_id,
+      preload: [changes: ^from(mc in MessageChange, order_by: :inserted_at)]
+    )
+    |> Repo.one()
+    |> case do
       nil -> {:error, :not_found}
       message -> {:ok, message}
     end
@@ -328,7 +326,15 @@ defmodule DealogBackoffice.Messages do
   Get a published messsage by its ID.
   """
   def get_published_message(id) do
-    get(PublishedMessage, id)
+    from(m in PublishedMessage,
+      where: m.id == ^id,
+      preload: [changes: ^from(mc in MessageChange, order_by: :inserted_at)]
+    )
+    |> Repo.one()
+    |> case do
+      nil -> {:error, :not_found}
+      message -> {:ok, message}
+    end
   end
 
   defp get(schema, uuid) do

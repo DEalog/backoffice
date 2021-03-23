@@ -3,6 +3,8 @@ defmodule DealogBackoffice.Messages.Projections.PublishedMessage do
 
   alias DealogBackoffice.Ecto.Type.Status
 
+  alias DealogBackoffice.Messages.Projections.MessageChange
+
   @primary_key {:id, :binary_id, autogenerate: false}
   @timestamps_opts [type: :utc_datetime_usec]
 
@@ -13,6 +15,8 @@ defmodule DealogBackoffice.Messages.Projections.PublishedMessage do
     field :ars, :string
     field :organization, :string
     field :status, Status
+
+    has_many :changes, MessageChange, foreign_key: :message_id
 
     timestamps()
   end
