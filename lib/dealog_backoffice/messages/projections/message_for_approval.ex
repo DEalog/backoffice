@@ -14,6 +14,7 @@ defmodule DealogBackoffice.Messages.Projections.MessageForApproval do
     field :status, Status
     field :reason, :string
     field :note, :string
+    field :author, :string
 
     has_many :changes, MessageChange, foreign_key: :message_id
 

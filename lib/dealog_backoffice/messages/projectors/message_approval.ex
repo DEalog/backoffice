@@ -22,6 +22,7 @@ defmodule DealogBackoffice.Messages.Projectors.MessageApproval do
           title: sent.title,
           body: sent.body,
           status: sent.status,
+          author: get_author(metadata),
           updated_at: metadata.created_at
         )
 
@@ -34,6 +35,7 @@ defmodule DealogBackoffice.Messages.Projectors.MessageApproval do
     update_message_approval(multi, approved.message_id,
       status: approved.status,
       note: approved.note,
+      author: get_author(metadata),
       updated_at: metadata.created_at
     )
   end)
@@ -68,9 +70,16 @@ defmodule DealogBackoffice.Messages.Projectors.MessageApproval do
         title: sent.title,
         body: sent.body,
         status: sent.status,
+        author: get_author(metadata),
         inserted_at: metadata.created_at,
         updated_at: metadata.created_at
       }
     )
   end
+
+  defp get_author(%{"author" => %{"first_name" => first_name, "last_name" => last_name}}) do
+    "#{first_name} #{last_name}"
+  end
+
+  defp get_author(_), do: "Unbekannter Benutzer"
 end
