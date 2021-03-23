@@ -90,8 +90,14 @@ defmodule DealogBackoffice.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "event_store.setup", "ecto.setup", "seed"],
-      reset: ["event_store.reset", "ecto.reset", "seed"],
+      setup: [
+        "deps.get",
+        "event_store.setup",
+        "ecto.setup",
+        "backoffice.import.administrative_areas",
+        "seed"
+      ],
+      reset: ["event_store.reset", "ecto.reset", "backoffice.import.administrative_areas", "seed"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "ecto.setup": ["ecto.create", "ecto.migrate"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
