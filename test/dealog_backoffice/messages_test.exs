@@ -116,28 +116,31 @@ defmodule DealogBackoffice.MessagesTest do
     setup [:user, :message_in_approval]
 
     @tag :integration
-    test "should succeed without adding a note", %{message_in_approval: message} do
+    test "should succeed without adding a note", %{user: user, message_in_approval: message} do
       assert message.status == :waiting_for_approval
-      assert {:ok, %MessageForApproval{} = approved_message} = Messages.approve_message(message)
+
+      assert {:ok, %MessageForApproval{} = approved_message} =
+               Messages.approve_message(user, message)
+
       assert approved_message.status == :approved
     end
 
     @tag :integration
-    test "should succeed with a note attached", %{message_in_approval: message} do
+    test "should succeed with a note attached", %{user: user, message_in_approval: message} do
       assert message.status == :waiting_for_approval
 
       assert {:ok, %MessageForApproval{} = approved_message} =
-               Messages.approve_message(message, "A note")
+               Messages.approve_message(user, message, "A note")
 
       assert approved_message.status == :approved
       assert approved_message.note == "A note"
     end
 
     @tag :integration
-    test "should fail when not in status waiting for approval", %{message_in_approval: message} do
-      {:ok, %MessageForApproval{} = approved_message} = Messages.approve_message(message)
+    test "should fail when not in status waiting for approval", %{user: user} do
+      approved_message = fixture(:approved_message, user)
 
-      assert {:error, :invalid_transition} = Messages.approve_message(approved_message)
+      assert {:error, :invalid_transition} = Messages.approve_message(user, approved_message)
     end
   end
 
@@ -253,7 +256,9 @@ defmodule DealogBackoffice.MessagesTest do
     message = fixture(:created_message, user)
     {:ok, %Message{} = message} = Messages.send_message_for_approval(user, message)
     {:ok, %MessageForApproval{} = message} = Messages.get_message_for_approval(message.id)
-    {:ok, %MessageForApproval{} = message} = Messages.approve_message(message, "Approval granted")
+
+    {:ok, %MessageForApproval{} = message} =
+      Messages.approve_message(user, message, "Approval granted")
 
     message
   end
@@ -262,7 +267,10 @@ defmodule DealogBackoffice.MessagesTest do
     message = fixture(:created_message, user)
     {:ok, %Message{} = message} = Messages.send_message_for_approval(user, message)
     {:ok, %MessageForApproval{} = message} = Messages.get_message_for_approval(message.id)
-    {:ok, %MessageForApproval{} = message} = Messages.approve_message(message, "Approval granted")
+
+    {:ok, %MessageForApproval{} = message} =
+      Messages.approve_message(user, message, "Approval granted")
+
     {:ok, %PublishedMessage{} = message} = Messages.publish_message(message)
 
     message
