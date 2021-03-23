@@ -14,6 +14,7 @@ defmodule DealogBackoffice.Messages.Projections.Message do
     field :status, Status
     field :rejection_reason, :string
     field :published, :boolean
+    field :author
 
     has_many :changes, MessageChange
 
