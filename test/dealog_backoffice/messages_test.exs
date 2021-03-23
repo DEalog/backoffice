@@ -186,8 +186,8 @@ defmodule DealogBackoffice.MessagesTest do
     setup [:user, :published_message]
 
     @tag :integration
-    test "should succeed", %{published_message: message} do
-      {:ok, %ArchivedMessage{} = archived_message} = Messages.archive_message(message.id)
+    test "should succeed", %{user: user, published_message: message} do
+      {:ok, %ArchivedMessage{} = archived_message} = Messages.archive_message(user, message.id)
 
       assert archived_message.title == @valid_data.title
       assert archived_message.body == @valid_data.body
@@ -208,7 +208,7 @@ defmodule DealogBackoffice.MessagesTest do
           body: "Changed body"
         })
 
-      {:ok, %Message{} = reverted_message} = Messages.discard_change(updated_message.id)
+      {:ok, %Message{} = reverted_message} = Messages.discard_change(user, updated_message.id)
 
       assert reverted_message.title == @valid_data.title
       assert reverted_message.body == @valid_data.body
@@ -230,7 +230,7 @@ defmodule DealogBackoffice.MessagesTest do
         })
 
       {:ok, %ArchivedMessage{} = reverted_message} =
-        Messages.discard_change_and_archive(updated_message.id)
+        Messages.discard_change_and_archive(user, updated_message.id)
 
       assert reverted_message.title == @valid_data.title
       assert reverted_message.body == @valid_data.body

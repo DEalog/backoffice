@@ -272,10 +272,10 @@ defmodule DealogBackoffice.Messages do
   Returns {:ok, %ArchivedMessage{}} when successfull
   Returns {:error, :invalid_transition} when not allowed
   """
-  def archive_message(message_id) do
+  def archive_message(%User{} = user, message_id) do
     case get_message(message_id) do
       {:ok, message} ->
-        do_archive_message(message)
+        do_archive_message(user, message)
 
       {:error, reason} ->
         {:error, reason}
@@ -291,7 +291,8 @@ defmodule DealogBackoffice.Messages do
   Returns {:ok, %Message{}} when successfull
   Returns {:error, :invalid_transition} when not allowed
   """
-  def discard_change(message_id) do
+  def discard_change(%User{} = user, message_id) do
+    author = build_author(user)
     {:ok, published_message} = get_published_message(message_id)
     {:ok, current_message} = get_message(message_id)
 
@@ -301,7 +302,8 @@ defmodule DealogBackoffice.Messages do
       |> DiscardChange.assign_message_id(current_message)
       |> DiscardChange.apply_data_from(published_message)
 
-    with :ok <- App.dispatch(discard_change, consistency: :strong) do
+    with :ok <-
+           App.dispatch(discard_change, consistency: :strong, metadata: %{"author" => author}) do
       get(Message, current_message.id)
     end
   end
@@ -316,9 +318,9 @@ defmodule DealogBackoffice.Messages do
   Returns {:ok, %ArchivedMessage{}} when successfull
   Returns {:error, :invalid_transition} when not allowed
   """
-  def discard_change_and_archive(message_id) do
-    with {:ok, _} <- discard_change(message_id) do
-      archive_message(message_id)
+  def discard_change_and_archive(%User{} = user, message_id) do
+    with {:ok, _} <- discard_change(user, message_id) do
+      archive_message(user, message_id)
     end
   end
 
@@ -418,14 +420,17 @@ defmodule DealogBackoffice.Messages do
     end
   end
 
-  defp do_archive_message(message) do
+  defp do_archive_message(user, message) do
+    author = build_author(user)
+
     archive_message =
       message
       |> ArchiveMessage.new()
       |> ArchiveMessage.assign_message_id(message)
       |> ArchiveMessage.set_status()
 
-    with :ok <- App.dispatch(archive_message, consistency: :strong) do
+    with :ok <-
+           App.dispatch(archive_message, consistency: :strong, metadata: %{"author" => author}) do
       get(ArchivedMessage, message.id)
     end
   end

@@ -107,7 +107,9 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
   end
 
   defp apply_action(socket, :archive, %{"id" => id}) do
-    case Messages.archive_message(id) do
+    user = socket.assigns.current_user
+
+    case Messages.archive_message(user, id) do
       {:error, :invalid_transition} ->
         socket
         |> put_flash(
@@ -139,7 +141,9 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
   end
 
   defp apply_action(socket, :discard_change, %{"id" => id}) do
-    case Messages.discard_change(id) do
+    user = socket.assigns.current_user
+
+    case Messages.discard_change(user, id) do
       {:ok, message} ->
         socket
         |> put_flash(
@@ -171,7 +175,9 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
   end
 
   defp apply_action(socket, :discard_change_and_archive, %{"id" => id}) do
-    case Messages.discard_change_and_archive(id) do
+    user = socket.assigns.current_user
+
+    case Messages.discard_change_and_archive(user, id) do
       {:ok, message} ->
         socket
         |> put_flash(
