@@ -8,7 +8,7 @@ defmodule DealogBackoffice.Repo.Migrations.CreateMessageHistoryProjection do
       add :author, :jsonb, default: "[]"
       add :organization, :jsonb, default: "[]"
 
-      add :message_id, references(:messages, type: :binary_id, on_delete: :delete_all)
+      add :message_id, :uuid
 
       timestamps(updated_at: false)
     end

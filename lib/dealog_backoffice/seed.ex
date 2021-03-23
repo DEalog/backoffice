@@ -12,10 +12,10 @@ defmodule DealogBackoffice.Seed do
     }
   }
 
-  @drafted_amount 7
-  @sent_for_approval_amount 5
-  @approved_amount 6
-  @published_amount 10
+  @drafted_amount 3
+  @sent_for_approval_amount 3
+  @approved_amount 2
+  @published_amount 5
 
   def messages do
     Faker.start()

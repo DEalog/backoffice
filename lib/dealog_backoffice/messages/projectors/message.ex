@@ -4,6 +4,8 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     name: "Messages.Projectors.Message",
     consistency: :strong
 
+  require Logger
+
   alias DealogBackoffice.Messages.Events.{
     MessageCreated,
     MessageChanged,
@@ -17,11 +19,13 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     ChangeDiscarded
   }
 
-  alias DealogBackoffice.Messages.Projections.{Message, MessageChange}
+  alias DealogBackoffice.Messages.Projections.Message
 
   project(%MessageCreated{} = created, metadata, fn multi ->
-    multi
-    |> Ecto.Multi.insert(
+    Logger.debug("Projecting created event to messages", %{id: created.message_id})
+
+    Ecto.Multi.insert(
+      multi,
       :message,
       %Message{
         id: created.message_id,
@@ -32,62 +36,24 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
         updated_at: metadata.created_at
       }
     )
-    |> Ecto.Multi.insert(:message_change, fn %{message: message} ->
-      author = metadata["author"] || get_fallback_author()
-
-      %MessageChange{
-        id: UUID.uuid4(),
-        action: "create",
-        author: build_author(author),
-        organization: build_organization(author),
-        message: message,
-        inserted_at: metadata.created_at
-      }
-    end)
   end)
 
   project(%MessageChanged{} = changed, metadata, fn multi ->
-    multi
-    |> update_message(changed.message_id,
+    update_message(multi, changed.message_id,
       title: changed.title,
       body: changed.body,
       status: changed.status,
       updated_at: metadata.created_at
     )
-    |> Ecto.Multi.insert(:message_change, fn _ ->
-      author = metadata["author"] || get_fallback_author()
-
-      %MessageChange{
-        id: UUID.uuid4(),
-        action: "edit",
-        author: build_author(author),
-        organization: build_organization(author),
-        message_id: changed.message_id,
-        inserted_at: metadata.created_at
-      }
-    end)
   end)
 
   project(%MessageSentForApproval{} = sent_for_approval, metadata, fn multi ->
-    multi
-    |> update_message(sent_for_approval.message_id,
+    update_message(multi, sent_for_approval.message_id,
       title: sent_for_approval.title,
       body: sent_for_approval.body,
       status: sent_for_approval.status,
       updated_at: metadata.created_at
     )
-    |> Ecto.Multi.insert(:message_change, fn _ ->
-      author = metadata["author"] || get_fallback_author()
-
-      %MessageChange{
-        id: UUID.uuid4(),
-        action: "sent_for_approval",
-        author: build_author(author),
-        organization: build_organization(author),
-        message_id: sent_for_approval.message_id,
-        inserted_at: metadata.created_at
-      }
-    end)
   end)
 
   project(%MessageDeleted{} = deleted, fn multi ->
@@ -99,65 +65,26 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
   end)
 
   project(%MessageApproved{} = approved, metadata, fn multi ->
-    multi
-    |> update_message(approved.message_id,
+    update_message(multi, approved.message_id,
       status: approved.status,
       updated_at: metadata.created_at
     )
-    |> Ecto.Multi.insert(:message_change, fn _ ->
-      author = metadata["author"] || get_fallback_author()
-
-      %MessageChange{
-        id: UUID.uuid4(),
-        action: "approved",
-        author: build_author(author),
-        organization: build_organization(author),
-        message_id: approved.message_id,
-        inserted_at: metadata.created_at
-      }
-    end)
   end)
 
   project(%MessageRejected{} = rejected, metadata, fn multi ->
-    multi
-    |> update_message(rejected.message_id,
+    update_message(multi, rejected.message_id,
       status: rejected.status,
       rejection_reason: rejected.reason,
       updated_at: metadata.created_at
     )
-    |> Ecto.Multi.insert(:message_change, fn _ ->
-      author = metadata["author"] || get_fallback_author()
-
-      %MessageChange{
-        id: UUID.uuid4(),
-        action: "rejected",
-        author: build_author(author),
-        organization: build_organization(author),
-        message_id: rejected.message_id,
-        inserted_at: metadata.created_at
-      }
-    end)
   end)
 
   project(%MessagePublished{} = published, metadata, fn multi ->
-    multi
-    |> update_message(published.message_id,
+    update_message(multi, published.message_id,
       status: published.status,
       published: true,
       updated_at: metadata.created_at
     )
-    |> Ecto.Multi.insert(:message_change, fn _ ->
-      author = metadata["author"] || get_fallback_author()
-
-      %MessageChange{
-        id: UUID.uuid4(),
-        action: "published",
-        author: build_author(author),
-        organization: build_organization(author),
-        message_id: published.message_id,
-        inserted_at: metadata.created_at
-      }
-    end)
   end)
 
   project(%MessageUpdated{} = updated, metadata, fn multi ->
@@ -183,33 +110,5 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
 
   defp query(message_id) do
     from(m in Message, where: m.id == ^message_id)
-  end
-
-  defp get_fallback_author() do
-    %{
-      "id" => nil,
-      "first_name" => "Unbekannter",
-      "last_name" => "Benutzer",
-      "email" => "system@dealog.de",
-      "position" => "",
-      "administrative_area_id" => "000000000000",
-      "organization" => "DEalog Team"
-    }
-  end
-
-  defp build_author(author) do
-    %MessageChange.Author{
-      id: author["id"],
-      name: "#{author["first_name"]} #{author["last_name"]}",
-      email: author["email"],
-      position: author["position"]
-    }
-  end
-
-  defp build_organization(author) do
-    %MessageChange.Organization{
-      name: author["organization"],
-      administrative_area_id: author["administrative_area_id"]
-    }
   end
 end
