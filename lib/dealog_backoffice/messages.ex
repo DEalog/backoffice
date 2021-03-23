@@ -6,7 +6,7 @@ defmodule DealogBackoffice.Messages do
   import Ecto.Query
 
   alias DealogBackoffice.Accounts.User
-  alias DealogBackoffice.Messages.Author
+  alias DealogBackoffice.Messages.{Author, Organization}
 
   alias DealogBackoffice.Messages.Commands.{
     CreateMessage,
@@ -47,8 +47,6 @@ defmodule DealogBackoffice.Messages do
   Returns an error when invalid or failed {:error, reason}
   """
   def create_message(%User{} = user, attrs \\ %{}) do
-    author = build_author(user)
-
     message_id = UUID.uuid4()
 
     create_message =
@@ -56,8 +54,14 @@ defmodule DealogBackoffice.Messages do
       |> CreateMessage.new()
       |> CreateMessage.assign_message_id(message_id)
 
+    author = build_author(user)
+    organization = build_organization(user)
+
     with :ok <-
-           App.dispatch(create_message, consistency: :strong, metadata: %{"author" => author}) do
+           App.dispatch(create_message,
+             consistency: :strong,
+             metadata: %{"author" => author, "organization" => organization}
+           ) do
       get(Message, message_id)
     end
   end
@@ -87,15 +91,20 @@ defmodule DealogBackoffice.Messages do
   Returns an error tuple when invalid {:error, reason}
   """
   def send_message_for_approval(%User{} = user, %Message{} = message) do
-    author = build_author(user)
-
     send_message =
       message
       |> SendMessageForApproval.new()
       |> SendMessageForApproval.assign_message_id(message)
       |> SendMessageForApproval.set_status()
 
-    with :ok <- App.dispatch(send_message, consistency: :strong, metadata: %{"author" => author}) do
+    author = build_author(user)
+    organization = build_organization(user)
+
+    with :ok <-
+           App.dispatch(send_message,
+             consistency: :strong,
+             metadata: %{"author" => author, "organization" => organization}
+           ) do
       get(Message, message.id)
     else
       _ ->
@@ -180,8 +189,6 @@ defmodule DealogBackoffice.Messages do
   Returns {:error, :invalid_transition} when transition is not allowed.
   """
   def approve_message(%User{} = user, %MessageForApproval{} = message, note \\ "") do
-    author = build_author(user)
-
     approve_message =
       message
       |> ApproveMessage.new()
@@ -189,8 +196,14 @@ defmodule DealogBackoffice.Messages do
       |> ApproveMessage.set_status()
       |> ApproveMessage.maybe_set_note(note)
 
+    author = build_author(user)
+    organization = build_organization(user)
+
     with :ok <-
-           App.dispatch(approve_message, consistency: :strong, metadata: %{"author" => author}) do
+           App.dispatch(approve_message,
+             consistency: :strong,
+             metadata: %{"author" => author, "organization" => organization}
+           ) do
       get(MessageForApproval, message.id)
     else
       _ ->
@@ -211,8 +224,6 @@ defmodule DealogBackoffice.Messages do
   Returns {:error, :invalid_transition} when transition is not allowed.
   """
   def reject_message(%User{} = user, %MessageForApproval{} = message, reason \\ "") do
-    author = build_author(user)
-
     reject_message =
       message
       |> RejectMessage.new()
@@ -220,8 +231,14 @@ defmodule DealogBackoffice.Messages do
       |> RejectMessage.set_status()
       |> RejectMessage.maybe_set_reason(reason)
 
+    author = build_author(user)
+    organization = build_organization(user)
+
     with :ok <-
-           App.dispatch(reject_message, consistency: :strong, metadata: %{"author" => author}) do
+           App.dispatch(reject_message,
+             consistency: :strong,
+             metadata: %{"author" => author, "organization" => organization}
+           ) do
       get(Message, message.id)
     else
       _ ->
@@ -245,16 +262,20 @@ defmodule DealogBackoffice.Messages do
   Returns {:error, :invalid_transition} when transition is not allowed.
   """
   def publish_message(%User{} = user, %MessageForApproval{} = message) do
-    author = build_author(user)
-
     publish_message =
       message
       |> PublishMessage.new()
       |> PublishMessage.assign_message_id(message)
       |> PublishMessage.set_status()
 
+    author = build_author(user)
+    organization = build_organization(user)
+
     with :ok <-
-           App.dispatch(publish_message, consistency: :strong, metadata: %{"author" => author}) do
+           App.dispatch(publish_message,
+             consistency: :strong,
+             metadata: %{"author" => author, "organization" => organization}
+           ) do
       get(PublishedMessage, message.id)
     else
       _ ->
@@ -290,7 +311,6 @@ defmodule DealogBackoffice.Messages do
   Returns {:error, :invalid_transition} when not allowed
   """
   def discard_change(%User{} = user, message_id) do
-    author = build_author(user)
     {:ok, published_message} = get_published_message(message_id)
     {:ok, current_message} = get_message(message_id)
 
@@ -300,8 +320,14 @@ defmodule DealogBackoffice.Messages do
       |> DiscardChange.assign_message_id(current_message)
       |> DiscardChange.apply_data_from(published_message)
 
+    author = build_author(user)
+    organization = build_organization(user)
+
     with :ok <-
-           App.dispatch(discard_change, consistency: :strong, metadata: %{"author" => author}) do
+           App.dispatch(discard_change,
+             consistency: :strong,
+             metadata: %{"author" => author, "organization" => organization}
+           ) do
       get(Message, current_message.id)
     end
   end
@@ -353,23 +379,33 @@ defmodule DealogBackoffice.Messages do
       first_name: user.account.first_name,
       last_name: user.account.last_name,
       email: user.email,
-      position: user.account.position,
-      organization: user.account.organization,
+      position: user.account.position
+    }
+  end
+
+  defp build_organization(%User{} = user) do
+    %Organization{
+      id: nil,
+      name: user.account.organization,
       administrative_area_id: user.account.administrative_area_id
     }
   end
 
   # Run the actual command to change a message.
   defp apply_change(user, message, attrs) do
-    author = build_author(user)
-
     change_message =
       attrs
       |> ChangeMessage.new()
       |> ChangeMessage.assign_message_id(message)
 
+    author = build_author(user)
+    organization = build_organization(user)
+
     with :ok <-
-           App.dispatch(change_message, consistency: :strong, metadata: %{"author" => author}) do
+           App.dispatch(change_message,
+             consistency: :strong,
+             metadata: %{"author" => author, "organization" => organization}
+           ) do
       get(Message, message.id)
     end
   end
@@ -409,16 +445,20 @@ defmodule DealogBackoffice.Messages do
   end
 
   defp do_delete_message(user, message) do
-    author = build_author(user)
-
     delete_message =
       message
       |> DeleteMessage.new()
       |> DeleteMessage.assign_message_id(message)
       |> DeleteMessage.set_status()
 
+    author = build_author(user)
+    organization = build_organization(user)
+
     with :ok <-
-           App.dispatch(delete_message, consistency: :strong, metadata: %{"author" => author}) do
+           App.dispatch(delete_message,
+             consistency: :strong,
+             metadata: %{"author" => author, "organization" => organization}
+           ) do
       get(DeletedMessage, message.id)
     else
       _ ->

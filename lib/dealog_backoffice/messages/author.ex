@@ -5,8 +5,6 @@ defmodule DealogBackoffice.Messages.Author do
     :first_name,
     :last_name,
     :email,
-    :position,
-    :organization,
-    :administrative_area_id
+    :position
   ]
 end

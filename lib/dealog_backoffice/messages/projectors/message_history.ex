@@ -72,24 +72,30 @@ defmodule DealogBackoffice.Messages.Projectors.MessageHistory do
 
   defp build_message_change(action, event, metadata) do
     author = metadata["author"] || get_fallback_author()
+    organization = metadata["organization"] || get_fallback_organization()
 
     %MessageChange{
       id: UUID.uuid4(),
       action: action,
       author: build_author(author),
-      organization: build_organization(author),
+      organization: build_organization(organization),
       message_id: event.message_id,
       inserted_at: metadata.created_at
     }
   end
 
-  defp get_fallback_author() do
+  defp get_fallback_author do
     %{
       "id" => nil,
       "first_name" => "Unbekannter",
       "last_name" => "Benutzer",
       "email" => "system@dealog.de",
-      "position" => "",
+      "position" => ""
+    }
+  end
+
+  defp get_fallback_organization do
+    %{
       "administrative_area_id" => "000000000000",
       "organization" => "DEalog System"
     }
@@ -104,10 +110,10 @@ defmodule DealogBackoffice.Messages.Projectors.MessageHistory do
     }
   end
 
-  defp build_organization(author) do
+  defp build_organization(organization) do
     %MessageChange.Organization{
-      name: author["organization"],
-      administrative_area_id: author["administrative_area_id"]
+      name: organization["name"],
+      administrative_area_id: organization["administrative_area_id"]
     }
   end
 end
