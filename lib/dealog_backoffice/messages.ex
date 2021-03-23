@@ -246,14 +246,17 @@ defmodule DealogBackoffice.Messages do
   Returns the published message as {:ok, %PublishedMessage{}} when successful.
   Returns {:error, :invalid_transition} when transition is not allowed.
   """
-  def publish_message(%MessageForApproval{} = message) do
+  def publish_message(%User{} = user, %MessageForApproval{} = message) do
+    author = build_author(user)
+
     publish_message =
       message
       |> PublishMessage.new()
       |> PublishMessage.assign_message_id(message)
       |> PublishMessage.set_status()
 
-    with :ok <- App.dispatch(publish_message, consistency: :strong) do
+    with :ok <-
+           App.dispatch(publish_message, consistency: :strong, metadata: %{"author" => author}) do
       get(PublishedMessage, message.id)
     else
       _ ->

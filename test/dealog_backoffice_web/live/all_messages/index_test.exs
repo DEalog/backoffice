@@ -35,7 +35,7 @@ defmodule DealogBackofficeWeb.AllMessagesLive.IndexTest do
     {:ok, message} = Messages.send_message_for_approval(user, message)
     {:ok, message_for_approval} = Messages.get_message_for_approval(message.id)
     {:ok, approved_message} = Messages.approve_message(user, message_for_approval)
-    {:ok, published_message} = Messages.publish_message(approved_message)
+    {:ok, published_message} = Messages.publish_message(user, approved_message)
     published_message
   end
 

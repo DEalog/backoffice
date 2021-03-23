@@ -172,8 +172,9 @@ defmodule DealogBackoffice.MessagesTest do
     setup [:user, :approved_message]
 
     @tag :integration
-    test "should succeed", %{approved_message: message} do
-      assert {:ok, %PublishedMessage{} = published_message} = Messages.publish_message(message)
+    test "should succeed", %{user: user, approved_message: message} do
+      assert {:ok, %PublishedMessage{} = published_message} =
+               Messages.publish_message(user, message)
 
       assert published_message.title == @valid_data.title
       assert published_message.body == @valid_data.body
@@ -272,7 +273,7 @@ defmodule DealogBackoffice.MessagesTest do
     {:ok, %MessageForApproval{} = message} =
       Messages.approve_message(user, message, "Approval granted")
 
-    {:ok, %PublishedMessage{} = message} = Messages.publish_message(message)
+    {:ok, %PublishedMessage{} = message} = Messages.publish_message(user, message)
 
     message
   end
