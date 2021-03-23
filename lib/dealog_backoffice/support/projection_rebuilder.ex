@@ -44,7 +44,7 @@ defmodule DealogBackoffice.Support.ProjectionRebuilder do
   def rebuild_messages do
     projections = [
       %{table: "messages", name: "Messages.Projectors.Message"},
-      %{table: "message_history", name: "Messages.Projectors.MessageHistory"},
+      %{table: "messages_history", name: "Messages.Projectors.MessageHistory"},
       %{table: "deleted_messages", name: "Messages.Projectors.DeletedMessage"},
       %{table: "message_approvals", name: "Messages.Projectors.MessageApproval"},
       %{table: "archived_messages", name: "Messages.Projectors.ArchivedMessage"}
