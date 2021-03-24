@@ -1,4 +1,6 @@
-## Unreleased
+## 0.5.0
+
+This release provides the user system.
 
 - `FIX` Sending message for approval is possible again
 - `ADD` All message actions are disabled when the account is incomplete
