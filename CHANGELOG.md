@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `FIX` Sending message for approval is possible again
 - `ADD` All message actions are disabled when the account is incomplete
 - `ADD` User gets a warning when account is not setup
 - `ADD` Author and organization meta data is saved for all message related events
