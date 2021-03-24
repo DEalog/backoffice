@@ -1,26 +1,26 @@
 <section>
-  <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+  <h1 class="text-2xl font-bold text-gray-900 leading-7 sm:text-3xl sm:leading-9 sm:truncate">
     <%= gettext "My organization" %>
   </h1>
   <p class="mt-4">
     <%= gettext "All messages of this organization are listed here." %>
   </p>
-  <div class="mt-4 flex flex-col">
-    <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-      <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+  <div class="flex flex-col mt-4">
+    <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+      <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
         <table class="min-w-full divide-y divide-gray-200">
           <thead>
             <tr>
-              <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-gray-50 leading-4">
                 <%= gettext "Title" %>
               </th>
-              <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-center text-gray-500 uppercase bg-gray-50 leading-4">
                 <%= gettext "Status" %>
               </th>
-              <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-gray-50 leading-4">
                 <%= gettext "Metadata" %>
               </th>
-              <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              <th class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-gray-50 leading-4">
                 <%= gettext "Author" %>
               </th>
             </tr>
@@ -38,7 +38,7 @@
                 end
               %>
               <tr class="<%= if is_even?(index), do: "bg-gray-100" %>">
-                <td class="max-w-xs px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                <td class="max-w-xs px-6 py-4 text-sm text-gray-900 whitespace-no-wrap leading-5">
                   <a name="<%= message.id %>"></a>
                   <a
                     class="flex items-center text-gray-600 hover:text-gray-900"
@@ -52,12 +52,12 @@
                     </span>
                   </a>
                 </td>
-                <td class="px-6 py-4 text-center whitespace-no-wrap text-sm leading-5 text-gray-500">
+                <td class="px-6 py-4 text-sm text-center text-gray-500 whitespace-no-wrap leading-5">
                   <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 <%= status_colors %>">
                     <%= Gettext.gettext(DealogBackofficeWeb.Gettext, Atom.to_string(message.status)) %>
                   </span>
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-600">
+                <td class="px-6 py-4 text-sm text-gray-600 whitespace-no-wrap leading-5">
                   <div>
                     <div>
                       <%= display_date_time(message.inserted_at) %>
@@ -67,7 +67,7 @@
                     </div>
                   </div>
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                <td class="px-6 py-4 text-sm text-gray-500 whitespace-no-wrap leading-5">
                   <%= message.author %>
                 </td>
               </tr>
