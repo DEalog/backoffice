@@ -144,13 +144,13 @@
                       <div class="mt-2">
                         <%= if account_status == :new do %>
                           <%=
-                            link gettext("Onboard"),
+                            live_redirect gettext("Onboard"),
                               to: Routes.settings_path(@socket, :new, user),
                               class: "text-yellow-400 hover:text-yellow-600"
                           %>
                         <% else %>
                           <%=
-                            link gettext("Edit"),
+                            live_redirect gettext("Edit"),
                               to: Routes.settings_path(@socket, :change, user.account),
                               class: "text-yellow-400 hover:text-yellow-600"
                           %>

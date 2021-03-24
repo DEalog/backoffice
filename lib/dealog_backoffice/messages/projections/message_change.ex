@@ -1,7 +1,7 @@
 defmodule DealogBackoffice.Messages.Projections.MessageChange do
   use Ecto.Schema
 
-  alias DealogBackoffice.Messages.Projections.{Message, MessageForApproval}
+  alias DealogBackoffice.Messages.Projections.Message
 
   @primary_key {:id, :binary_id, autogenerate: false}
   @timestamps_opts [type: :utc_datetime_usec]

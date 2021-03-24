@@ -7,6 +7,15 @@
   %>
 </header>
 <main role="main" class="px-4 pt-4 pb-48 sm:pb:24">
+  <%= if is_account_incomplete?(@current_user) do %>
+    <div class="mb-2 -mx-4 -mt-2">
+      <%=
+        live_component @socket,
+          DealogBackofficeWeb.Components.IncompleteAccountBanner,
+          current_user: @current_user
+      %>
+    </div>
+  <% end %>
   <%= if has_success_flash?(@flash) do %>
     <div class="alert alert-info" role="alert"
       phx-value-key="info"

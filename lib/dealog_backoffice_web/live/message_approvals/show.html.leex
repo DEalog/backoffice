@@ -146,7 +146,7 @@
               <%= gettext "Back to overview" %>
             </a>
           </div>
-          <%= if @message.status == :waiting_for_approval do %>
+          <%= if is_account_complete?(@current_user) and @message.status == :waiting_for_approval do %>
             <div>
               <a
                 href="<%= Routes.approvals_path(@socket, :approve, @message) %>"
@@ -155,7 +155,7 @@
               </a>
             </div>
           <% end %>
-          <%= if @message.status == :waiting_for_approval do %>
+          <%= if is_account_complete?(@current_user) and @message.status == :waiting_for_approval do %>
             <div>
               <a
                 href="<%= Routes.approvals_path(@socket, :reject, @message) %>"
@@ -164,7 +164,7 @@
               </a>
             </div>
           <% end %>
-          <%= if @message.status == :approved do %>
+          <%= if is_account_complete?(@current_user) and @message.status == :approved do %>
             <div>
               <a
                 href="<%= Routes.approvals_path(@socket, :publish, @message) %>"

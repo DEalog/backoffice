@@ -121,7 +121,7 @@
               <dd class="mt-1 text-sm text-gray-900 leading-5 sm:mt-0 sm:col-span-2">
                 <ul class="border border-gray-200 rounded-md">
                   <%= for change <- @message.changes do %>
-                    <%= 
+                    <%=
                       live_component @socket,
                         DealogBackofficeWeb.Components.ChangeEntryComponent,
                         change: change
@@ -146,7 +146,7 @@
               <%= gettext "Back to overview" %>
             </a>
           </div>
-          <%= if @message.published and @message.status in [:draft] do %>
+          <%= if is_account_complete?(@current_user) and @message.published and @message.status in [:draft] do %>
             <div>
               <a
                 href="<%= Routes.organization_messages_path(@socket, :discard_change, @message) %>"
@@ -155,7 +155,7 @@
               </a>
             </div>
           <% end %>
-          <%= if @message.published and @message.status in [:published] do %>
+          <%= if is_account_complete?(@current_user) and @message.published and @message.status in [:published] do %>
             <div>
               <a
                 href="<%= Routes.organization_messages_path(@socket, :archive, @message) %>"
@@ -164,7 +164,7 @@
               </a>
             </div>
           <% end %>
-          <%= if @message.published and @message.status in [:draft] do %>
+          <%= if is_account_complete?(@current_user) and @message.published and @message.status in [:draft] do %>
             <div>
               <a
                 href="<%= Routes.organization_messages_path(@socket, :discard_change_and_archive, @message) %>"
@@ -173,7 +173,7 @@
               </a>
             </div>
           <% end %>
-          <%= unless @message.status in [:waiting_for_approval] do %>
+          <%= unless is_account_incomplete?(@current_user) or @message.status in [:waiting_for_approval] do %>
             <div>
               <a
                 href="<%= Routes.organization_messages_path(@socket, :change, @message) %>"
@@ -182,7 +182,7 @@
               </a>
             </div>
           <% end %>
-          <%= if @message.status in [:draft] do %>
+          <%= if is_account_complete?(@current_user) and @message.status in [:draft] do %>
             <div>
               <a
                 href="<%= Routes.organization_messages_path(@socket, :send_for_approval, @message) %>"
@@ -191,7 +191,7 @@
               </a>
             </div>
           <% end %>
-          <%= if @message.status in [:draft] and !@message.published do %>
+          <%= if is_account_complete?(@current_user) and @message.status in [:draft] and !@message.published do %>
             <div>
               <a
                 href="<%= Routes.organization_messages_path(@socket, :delete, @message) %>"
