@@ -488,8 +488,8 @@ msgid "Message %{title} is in review an cannot be changed"
 msgstr "Die Meldung %{title} ist in Prüfung und kann momentan nicht geändert werden"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/templates/layout/live.html.leex:18
-#: lib/dealog_backoffice_web/templates/layout/live.html.leex:33
+#: lib/dealog_backoffice_web/templates/layout/live.html.leex:27
+#: lib/dealog_backoffice_web/templates/layout/live.html.leex:42
 msgid "Successfully performed action!"
 msgstr "Aktion erfolgreich durchgeführt!"
 
@@ -499,8 +499,8 @@ msgid "Save message"
 msgstr "Meldung speichern"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/templates/layout/live.html.leex:47
-#: lib/dealog_backoffice_web/templates/layout/live.html.leex:61
+#: lib/dealog_backoffice_web/templates/layout/live.html.leex:56
+#: lib/dealog_backoffice_web/templates/layout/live.html.leex:70
 msgid "There was an error!"
 msgstr "Ein Fehler ist aufgetreten!"
 
@@ -510,7 +510,7 @@ msgid "Add a note of why the message is rejected. This message will be shown to 
 msgstr "Bitte einen Hinweis, warum die Meldung zurückgewiesen wurde. Dieser wird der bearbeitenden Person angezeigt werden."
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:45
+#: lib/dealog_backoffice_web/live/message_approvals/form_component.ex:46
 msgid "Message %{title} rejected"
 msgstr "Meldung %{title} erfolgreich erstellt"
 
@@ -530,7 +530,7 @@ msgid "Reject message"
 msgstr "Meldung zurückweisen"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/all_messages/show.html.leex:188
+#: lib/dealog_backoffice_web/live/all_messages/show.html.leex:142
 #: lib/dealog_backoffice_web/live/message_approvals/show.html.leex:146 lib/dealog_backoffice_web/live/organization_messages/show.html.leex:146
 msgid "Back to overview"
 msgstr "Zurück zur Übersicht"
@@ -562,8 +562,8 @@ msgstr "Zuletzt geändert um"
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/show.ex:30
 #: lib/dealog_backoffice_web/live/message_approvals/edit.ex:55 lib/dealog_backoffice_web/live/message_approvals/show.ex:30
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:93 lib/dealog_backoffice_web/live/organization_messages/edit.ex:125
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:165 lib/dealog_backoffice_web/live/organization_messages/edit.ex:199
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:93 lib/dealog_backoffice_web/live/organization_messages/edit.ex:127
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:169 lib/dealog_backoffice_web/live/organization_messages/edit.ex:205
 #: lib/dealog_backoffice_web/live/organization_messages/show.ex:30
 msgid "Message %{id} could not be found"
 msgstr "Meldung %{id} konnte nicht gefunden werden"
@@ -587,7 +587,7 @@ msgid "Message information"
 msgstr "Meldungsinformationen"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/templates/layout/live.html.leex:75
+#: lib/dealog_backoffice_web/templates/layout/live.html.leex:84
 msgid "Message not found!"
 msgstr "Meldung nicht gefunden!"
 
@@ -598,9 +598,7 @@ msgid "Message status"
 msgstr "Meldungsstatus"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/all_messages/show.html.leex:129
-#: lib/dealog_backoffice_web/live/all_messages/show.html.leex:142 lib/dealog_backoffice_web/live/all_messages/show.html.leex:155
-#: lib/dealog_backoffice_web/live/all_messages/show.html.leex:169 lib/dealog_backoffice_web/live/components/change_entry_component.html.leex:72
+#: lib/dealog_backoffice_web/live/components/change_entry_component.html.leex:72
 msgid "by"
 msgstr "von"
 
@@ -666,12 +664,12 @@ msgid "Message %{title} successfully deleted"
 msgstr "Meldung %{title} erfolgreich gelöscht"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:69
+#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:71
 msgid "Message %{title} has to be in status approved in order to be published"
 msgstr "Die Meldung %{title} muss sich im Zustand freigegeben befinden, um veröffentlicht werden zu können"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:79
+#: lib/dealog_backoffice_web/live/message_approvals/edit.ex:81
 msgid "Message %{title} successfully published"
 msgstr "Meldung %{title} erfolgreich veröffentlicht"
 
@@ -970,7 +968,7 @@ msgid "New user"
 msgstr "Neuer Benutzer"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/settings/index.html.leex:147
+#: lib/dealog_backoffice_web/live/components/incomplete_account_banner.html.leex:16 lib/dealog_backoffice_web/live/settings/index.html.leex:147
 msgid "Onboard"
 msgstr "Einrichten"
 
@@ -1080,7 +1078,7 @@ msgid "Archive"
 msgstr "Archivieren"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:155
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:159
 msgid "Changes for message %{id} could not be discarded"
 msgstr "Änderungen für Meldung %{id} konnten nicht zurückgesetzt werden"
 
@@ -1095,27 +1093,27 @@ msgid "Discard unpublished changes and archive"
 msgstr "Unveröffentlichte Änderungen verwerfen und archivieren"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:115
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:117
 msgid "Message %{id} could not be archived"
 msgstr "Meldung %{id} konnte nicht archiviert werden"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:189
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:195
 msgid "Message %{id} could not be reverted and archived"
 msgstr "Meldung %{id} konnte nicht zurückgesetzt und archiviert werden"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:147
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:151
 msgid "Message %{title} reverted to published version"
 msgstr "Meldung %{title} zum veröffentlichten Stand zurückgesetzt"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:179
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:185
 msgid "Message %{title} reverted to published version and archived"
 msgstr "Meldung %{title} zum veröffentlichten Stand zurückgesetzt und archiviert"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:135
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:137
 msgid "Message %{title} successfully archived"
 msgstr "Meldung %{title} erfolgreich archiviert"
 
@@ -1153,3 +1151,13 @@ msgstr "Zurückgewiesen"
 #: lib/dealog_backoffice_web/live/components/change_entry_component.html.leex:20
 msgid "Sent for approval"
 msgstr "Zur Freigabe geschickt"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/components/incomplete_account_banner.html.leex:6
+msgid "Please setup your account in order to use DEalog."
+msgstr "Bitte richten Sie ein Benutzerkonto ein um DEalog nutzen zu können."
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/components/incomplete_account_banner.html.leex:9
+msgid "The account is not onboarded. Please setup your account in order to use DEalog."
+msgstr "Das Benutzerkonto ist nicht eingerichtet. Bitte richten Sie das Konto ein um DEalog nutzen zu können."

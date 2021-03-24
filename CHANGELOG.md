@@ -1,5 +1,7 @@
 ## Unreleased
 
+- `ADD` All message actions are disabled when the account is incomplete
+- `ADD` User gets a warning when account is not setup
 - `ADD` Author and organization meta data is saved for all message related events
 - `ADD` Check origin config for websocket connections is introduced
 - `CNG` Move hostname config to release

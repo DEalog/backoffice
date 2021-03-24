@@ -95,6 +95,7 @@ defmodule DealogBackofficeWeb do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
+      import DealogBackofficeWeb.AuthHelpers
       import DealogBackofficeWeb.DateHelpers
       import DealogBackofficeWeb.ErrorHelpers
       import DealogBackofficeWeb.FeedbackHelpers
