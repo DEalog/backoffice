@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `ADD` Author and organization meta data is saved for all message related events
 - `ADD` Check origin config for websocket connections is introduced
 - `CNG` Move hostname config to release
 - `NEW` Release startup actions are logged properly

@@ -11,7 +11,10 @@ defmodule DealogBackoffice.Messages.Events.MessageCreated do
     alias DealogBackoffice.Messages.Events.MessageCreated
 
     def upcast(%MessageCreated{status: "draft"} = event, _metadata) do
-      %MessageCreated{event | status: :draft}
+      %MessageCreated{
+        event
+        | status: :draft
+      }
     end
   end
 end

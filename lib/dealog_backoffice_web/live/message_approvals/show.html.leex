@@ -11,17 +11,17 @@
 %>
 <section class="sm:flex">
   <article class="w-full sm:w-3/4">
-   <main class="col-span-1 flex flex-col bg-white rounded-lg shadow">
-      <div class="flex-1 flex flex-col p-8">
-        <h1 class="text-center text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+   <main class="flex flex-col bg-white rounded-lg shadow col-span-1">
+      <div class="flex flex-col flex-1 p-8">
+        <h1 class="text-2xl font-bold text-center text-gray-900 leading-7 sm:text-3xl sm:leading-9 sm:truncate">
           <%= @title %>
         </h1>
-        <dl class="mt-1 flex-grow flex flex-col justify-between">
-          <div class="mt-1 flex justify-between items-center">
+        <dl class="flex flex-col justify-between flex-grow mt-1">
+          <div class="flex items-center justify-between mt-1">
             <dt class="sr-only">
               <%= gettext "Message status" %>
             </dt>
-            <dd class="text-gray-600 text-xs leading-5">
+            <dd class="text-xs text-gray-600 leading-5">
               <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 <%= external_status_colors %>">
                 <%= Gettext.gettext(DealogBackofficeWeb.Gettext, "new_message") %>
               </span>
@@ -29,14 +29,14 @@
             <dt class="sr-only">
               <%= gettext "Date of message" %>
             </dt>
-            <dd class="text-gray-600 text-xs leading-5">
+            <dd class="text-xs text-gray-600 leading-5">
               <%= display_date_time(@message.updated_at) %>
             </dd>
           </div>
           <dt class="sr-only">
             <%= gettext "Body" %>
           </dt>
-          <dd class="mt-3 text-gray-800 text-sm leading-5">
+          <dd class="mt-3 text-sm text-gray-800 leading-5">
             <%= parse(@message.body) %>
           </dd>
         </dl>
@@ -52,16 +52,16 @@
           class="w-full focus:outline-none"
         >
         <div
-          class="flex justify-between items-center px-4 py-5 sm:px-6"
+          class="flex items-center justify-between px-4 py-5 sm:px-6"
           :class="{ 'border-b border-gray-200': isOpen }"
         >
-            <h3 class="text-lg leading-6 font-medium text-gray-900">
+            <h3 class="text-lg font-medium text-gray-900 leading-6">
               <%= gettext "Message information" %>
             </h3>
             <div
               x-show="!isOpen"
             >
-              <svg class="flex-shrink-0 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <svg class="flex-shrink-0 w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
               </svg>
             </div>
@@ -69,7 +69,7 @@
               x-show="isOpen"
               x-cloak
             >
-              <svg class="flex-shrink-0 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <svg class="flex-shrink-0 w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
               </svg>
             </div>
@@ -80,99 +80,53 @@
           x-cloak
         >
           <dl>
-            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm leading-5 font-medium text-gray-500">
+            <div class="px-4 py-5 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt class="text-sm font-medium text-gray-500 leading-5">
                 <%= gettext "Message ID" %>
               </dt>
-              <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+              <dd class="mt-1 text-sm text-gray-900 leading-5 sm:mt-0 sm:col-span-2">
                 <%= @message.id %>
               </dd>
             </div>
-            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm leading-5 font-medium text-gray-500">
+            <div class="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt class="text-sm font-medium text-gray-500 leading-5">
                 <%= gettext "Created at" %>
               </dt>
-              <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+              <dd class="mt-1 text-sm text-gray-900 leading-5 sm:mt-0 sm:col-span-2">
               <%= display_date_time(@message.inserted_at) %> (<%= display_date_time_relative(@message.inserted_at) %>)
               </dd>
             </div>
-            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm leading-5 font-medium text-gray-500">
+            <div class="px-4 py-5 bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt class="text-sm font-medium text-gray-500 leading-5">
                 <%= gettext "Last changed at" %>
               </dt>
-              <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+              <dd class="mt-1 text-sm text-gray-900 leading-5 sm:mt-0 sm:col-span-2">
               <%= display_date_time(@message.updated_at) %> (<%= display_date_time_relative(@message.updated_at) %>)
               </dd>
             </div>
-            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm leading-5 font-medium text-gray-500">
+            <div class="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt class="text-sm font-medium text-gray-500 leading-5">
                 <%= gettext "Status" %>
               </dt>
-              <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+              <dd class="mt-1 text-sm text-gray-900 leading-5 sm:mt-0 sm:col-span-2">
                 <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium leading-4 <%= status_colors %>">
                   <%= Gettext.gettext(DealogBackofficeWeb.Gettext, Atom.to_string(@message.status)) %>
                 </span>
               </dd>
             </div>
-            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm leading-5 font-medium text-gray-500">
+            <div class="px-4 py-5 bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt class="text-sm font-medium text-gray-500 leading-5">
                 <%= gettext "Message history" %>
               </dt>
-              <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+              <dd class="mt-1 text-sm text-gray-900 leading-5 sm:mt-0 sm:col-span-2">
                 <ul class="border border-gray-200 rounded-md">
-                  <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5">
-                    <div class="w-0 flex-1 flex items-center">
-                      <svg class="flex-shrink-0 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                      </svg>
-                      <span class="ml-2 flex-1 w-0 truncate">
-                        <%= display_date_time(@message.updated_at) %>
-                      </span>
-                    </div>
-                    <div class="ml-4 flex-shrink-0">
-                      <%= gettext "by" %> Max Mustermann
-                    </div>
-                  </li>
-                  <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5">
-                    <div class="w-0 flex-1 flex items-center">
-                      <svg class="flex-shrink-0 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm0 2h10v7h-2l-1 2H8l-1-2H5V5z" clip-rule="evenodd" />
-                      </svg>
-                      <span class="ml-2 flex-1 w-0 truncate">
-                        <%= display_date_time(@message.updated_at) %>
-                      </span>
-                    </div>
-                    <div class="ml-4 flex-shrink-0">
-                      <%= gettext "by" %> Max Mustermann
-                    </div>
-                  </li>
-                  <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5">
-                    <div class="w-0 flex-1 flex items-center">
-                      <svg class="flex-shrink-0 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                      </svg>
-                      <span class="ml-2 flex-1 w-0 truncate">
-                        <%= display_date_time(@message.updated_at) %>
-                      </span>
-                    </div>
-                    <div class="ml-4 flex-shrink-0">
-                      <%= gettext "by" %> Max Mustermann
-                    </div>
-                  </li>
-                  <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm leading-5">
-                    <div class="w-0 flex-1 flex items-center">
-                      <svg class="flex-shrink-0 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z" />
-                        <path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd" />
-                      </svg>
-                      <span class="ml-2 flex-1 w-0 truncate">
-                        <%= display_date_time(@message.updated_at) %>
-                      </span>
-                    </div>
-                    <div class="ml-4 flex-shrink-0">
-                      <%= gettext "by" %> Max Mustermann
-                    </div>
-                  </li>
+                  <%= for change <- @message.changes do %>
+                    <%=
+                      live_component @socket,
+                        DealogBackofficeWeb.Components.ChangeEntryComponent,
+                        change: change
+                    %>
+                  <% end %>
                 </ul>
               </dd>
             </div>
@@ -181,14 +135,14 @@
       </div>
     </footer>
   </article>
-  <aside class="mt-1 w-full sm:mt-0 sm:ml-4 sm:w-1/4">
-    <div class="flex flex-col flex-grow pt-5 pb-4 bg-white overflow-y-auto">
-      <div class="flex-grow flex flex-col">
+  <aside class="w-full mt-1 sm:mt-0 sm:ml-4 sm:w-1/4">
+    <div class="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-white">
+      <div class="flex flex-col flex-grow">
         <nav class="flex-1 px-2 bg-white">
           <div>
             <a
               href="<%= Routes.approvals_path(@socket, :index) %>#<%= @message.id %>"
-              class="mt-1 group w-full flex items-center px-2 py-2 text-sm leading-5 font-medium rounded-md bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
+              class="flex items-center w-full px-2 py-2 mt-1 text-sm font-medium text-gray-600 bg-white group leading-5 rounded-md hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
               <%= gettext "Back to overview" %>
             </a>
           </div>
@@ -196,7 +150,7 @@
             <div>
               <a
                 href="<%= Routes.approvals_path(@socket, :approve, @message) %>"
-                class="mt-1 group w-full flex items-center px-2 py-2 text-sm leading-5 font-medium rounded-md bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
+                class="flex items-center w-full px-2 py-2 mt-1 text-sm font-medium text-gray-600 bg-white group leading-5 rounded-md hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
                 <%= gettext "Approve" %>
               </a>
             </div>
@@ -205,7 +159,7 @@
             <div>
               <a
                 href="<%= Routes.approvals_path(@socket, :reject, @message) %>"
-                class="mt-1 group w-full flex items-center px-2 py-2 text-sm leading-5 font-medium rounded-md bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
+                class="flex items-center w-full px-2 py-2 mt-1 text-sm font-medium text-gray-600 bg-white group leading-5 rounded-md hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
                 <%= gettext "Reject" %>
               </a>
             </div>
@@ -214,7 +168,7 @@
             <div>
               <a
                 href="<%= Routes.approvals_path(@socket, :publish, @message) %>"
-                class="mt-1 group w-full flex items-center px-2 py-2 text-sm leading-5 font-medium rounded-md bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
+                class="flex items-center w-full px-2 py-2 mt-1 text-sm font-medium text-gray-600 bg-white group leading-5 rounded-md hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-50 transition ease-in-out duration-150">
                 <%= gettext "Publish" %>
               </a>
             </div>

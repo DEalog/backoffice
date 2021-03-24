@@ -43,6 +43,27 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
         ]
       )
     end
+
+    @tag :unit
+    test "should successfully build with valid and additional data" do
+      message_id = UUID.uuid4()
+
+      assert_events(
+        struct(CreateMessage, %{
+          message_id: message_id,
+          title: "A title",
+          body: "A body"
+        }),
+        [
+          %MessageCreated{
+            message_id: message_id,
+            status: :draft,
+            title: "A title",
+            body: "A body"
+          }
+        ]
+      )
+    end
   end
 
   describe "change message" do

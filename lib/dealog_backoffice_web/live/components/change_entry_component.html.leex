@@ -1,0 +1,77 @@
+<li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm leading-5">
+  <div class="flex items-center flex-1 w-0">
+    <%= if @change.action == "create" do %>
+      <span title="<%= gettext "Created" %>">
+        <!-- heroicon: plus-circle -->
+        <svg class="flex-shrink-0 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </span>
+    <% end %>
+    <%= if @change.action == "edit" do %>
+      <span title="<%= gettext "Changed" %>">
+        <!-- heroicon: pencil-alt -->
+        <svg class="flex-shrink-0 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+      </span>
+    <% end %>
+    <%= if @change.action == "send_for_approval" do %>
+      <span title="<%= gettext "Sent for approval" %>">
+        <!-- heroicon: inbox-in -->
+        <svg class="flex-shrink-0 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+        </svg>
+      </span>
+    <% end %>
+    <%= if @change.action == "delete" do %>
+      <span title="<%= gettext "Deleted" %>">
+        <!-- heroicon: trash -->
+        <svg class="flex-shrink-0 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        </svg>
+      </span>
+    <% end %>
+    <%= if @change.action == "approve" do %>
+      <span title="<%= gettext "Approved" %>">
+        <!-- heroicon: clipboard-check -->
+        <svg class="flex-shrink-0 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+        </svg>
+      </span>
+    <% end %>
+    <%= if @change.action == "rejecte" do %>
+      <span title="<%= gettext "Rejected" %>">
+        <!-- heroicon: ban -->
+        <svg class="flex-shrink-0 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+        </svg>
+      </span>
+    <% end %>
+    <%= if @change.action == "publish" do %>
+      <span title="<%= gettext "Published" %>">
+        <!-- heroicon: cloud-upload -->
+        <svg class="flex-shrink-0 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+        </svg>
+      </span>
+    <% end %>
+    <%= if @change.action == "archive" do %>
+      <span title="<%= gettext "Archived" %>">
+        <!-- heroicon: archive -->
+        <svg class="flex-shrink-0 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+        </svg>
+      </span>
+    <% end %>
+    <span class="flex-1 w-0 ml-2 truncate">
+      <%= display_date_time(@change.inserted_at) %>
+    </span>
+  </div>
+  <div class="flex-shrink-0 ml-4">
+    <%= gettext "by" %> <%= @change.author.name %>
+    <span class="text-xs">
+      (<%= @change.organization.name %>)
+    </span>
+  </div>
+</li>

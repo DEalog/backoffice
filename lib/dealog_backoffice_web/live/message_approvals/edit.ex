@@ -61,7 +61,9 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.Edit do
   end
 
   defp publish_message(socket, message) do
-    case Messages.publish_message(message) do
+    user = socket.assigns.current_user
+
+    case Messages.publish_message(user, message) do
       {:error, :invalid_transition} ->
         socket
         |> put_flash(

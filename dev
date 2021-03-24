@@ -18,6 +18,7 @@ function check_requirements {
 
 function startup {
   echo "Starting stack. This might take a while on the first run."
+  docker network create dealog_dev
   mutagen project start || mutagen project resume
 }
 

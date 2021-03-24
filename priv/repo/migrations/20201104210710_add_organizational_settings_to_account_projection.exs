@@ -7,6 +7,7 @@ defmodule DealogBackoffice.Repo.Migrations.AddOrganizationalSettingsToAccountPro
       add :organization, :string
       add :position, :string
     end
+
     create index(:accounts, [:administrative_area])
   end
 end

@@ -5,7 +5,7 @@ defmodule DealogBackofficeWeb.AllMessagesLive.IndexTest do
 
   alias DealogBackoffice.Messages
 
-  setup :register_and_log_in_user
+  setup :register_log_in_and_setup_user
 
   describe "empty list" do
     test "disconnected and connected render", %{conn: conn} do
@@ -30,16 +30,16 @@ defmodule DealogBackofficeWeb.AllMessagesLive.IndexTest do
     body: "The body"
   }
 
-  defp fixture(:message) do
-    {:ok, message} = Messages.create_message(@valid_attrs)
-    {:ok, message} = Messages.send_message_for_approval(message)
+  defp fixture(:message, user) do
+    {:ok, message} = Messages.create_message(user, @valid_attrs)
+    {:ok, message} = Messages.send_message_for_approval(user, message)
     {:ok, message_for_approval} = Messages.get_message_for_approval(message.id)
-    {:ok, approved_message} = Messages.approve_message(message_for_approval)
-    {:ok, published_message} = Messages.publish_message(approved_message)
+    {:ok, approved_message} = Messages.approve_message(user, message_for_approval)
+    {:ok, published_message} = Messages.publish_message(user, approved_message)
     published_message
   end
 
-  defp prepare_published_message(_) do
-    {:ok, published_message: fixture(:message)}
+  defp prepare_published_message(%{user: user}) do
+    {:ok, published_message: fixture(:message, user)}
   end
 end

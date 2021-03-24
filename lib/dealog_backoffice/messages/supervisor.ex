@@ -17,20 +17,21 @@ defmodule DealogBackoffice.Messages.Supervisor do
 
   @local_projectors [
     Projectors.Message,
+    Projectors.MessageHistory,
     Projectors.MessageApproval,
     Projectors.DeletedMessage,
     Projectors.PublishedMessage,
     Projectors.ArchivedMessage
   ]
 
-  @addional_projectors [
+  @additional_projectors [
     Projectors.MessageService
   ]
 
   defp projectors do
     case get_projector_config() do
       :all ->
-        @local_projectors ++ @addional_projectors
+        @local_projectors ++ @additional_projectors
 
       :local ->
         @local_projectors

@@ -27,7 +27,8 @@ config :kafka_ex,
     {"kafka", 29092}
   ]
 
-config :dealog_backoffice, :projection, projectors: :all
+config :dealog_backoffice, :projection,
+  projectors: String.to_existing_atom(System.get_env("PROJECTORS") || "local")
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

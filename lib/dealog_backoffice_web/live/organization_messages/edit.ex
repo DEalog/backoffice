@@ -45,10 +45,11 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
   end
 
   defp apply_action(socket, :send_for_approval, %{"id" => id}) do
-    # TODO Move to change_message function to keep API clean
+    user = socket.assigns.current_user
+
     {:ok, original_message} = Messages.get_message(id)
 
-    case Messages.send_message_for_approval(original_message) do
+    case Messages.send_message_for_approval(user, original_message) do
       {:error, :invalid_transition} ->
         socket
         |> put_flash(
@@ -72,7 +73,9 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
   end
 
   defp apply_action(socket, :delete, %{"id" => id}) do
-    case Messages.delete_message(id) do
+    user = socket.assigns.current_user
+
+    case Messages.delete_message(user, id) do
       {:error, :invalid_transition} ->
         socket
         |> put_flash(
@@ -104,7 +107,9 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
   end
 
   defp apply_action(socket, :archive, %{"id" => id}) do
-    case Messages.archive_message(id) do
+    user = socket.assigns.current_user
+
+    case Messages.archive_message(user, id) do
       {:error, :invalid_transition} ->
         socket
         |> put_flash(
@@ -136,7 +141,9 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
   end
 
   defp apply_action(socket, :discard_change, %{"id" => id}) do
-    case Messages.discard_change(id) do
+    user = socket.assigns.current_user
+
+    case Messages.discard_change(user, id) do
       {:ok, message} ->
         socket
         |> put_flash(
@@ -168,7 +175,9 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
   end
 
   defp apply_action(socket, :discard_change_and_archive, %{"id" => id}) do
-    case Messages.discard_change_and_archive(id) do
+    user = socket.assigns.current_user
+
+    case Messages.discard_change_and_archive(user, id) do
       {:ok, message} ->
         socket
         |> put_flash(

@@ -1,10 +1,21 @@
 defmodule DealogBackoffice.Seed do
   alias DealogBackoffice.Messages
 
-  @drafted_amount 7
-  @sent_for_approval_amount 5
-  @approved_amount 6
-  @published_amount 10
+  @user %DealogBackoffice.Accounts.User{
+    email: "system@dealog.de",
+    account: %DealogBackoffice.Accounts.Projections.Account{
+      first_name: "DEalog",
+      last_name: "System",
+      position: "",
+      administrative_area_id: "000000000000",
+      organization: "DEalog Team"
+    }
+  }
+
+  @drafted_amount 3
+  @sent_for_approval_amount 3
+  @approved_amount 2
+  @published_amount 5
 
   def messages do
     Faker.start()
@@ -22,7 +33,7 @@ defmodule DealogBackoffice.Seed do
   defp create_drafted do
     for _ <- 0..@drafted_amount do
       {:ok, _} =
-        Messages.create_message(%{
+        Messages.create_message(@user, %{
           title: random_title(),
           body: random_body()
         })
@@ -32,41 +43,41 @@ defmodule DealogBackoffice.Seed do
   defp create_sent_for_approval do
     for _ <- 0..@sent_for_approval_amount do
       {:ok, message} =
-        Messages.create_message(%{
+        Messages.create_message(@user, %{
           title: random_title(),
           body: random_body()
         })
 
-      {:ok, _} = Messages.send_message_for_approval(message)
+      {:ok, _} = Messages.send_message_for_approval(@user, message)
     end
   end
 
   defp create_approved do
     for _ <- 0..@approved_amount do
       {:ok, message} =
-        Messages.create_message(%{
+        Messages.create_message(@user, %{
           title: random_title(),
           body: random_body()
         })
 
-      {:ok, message_for_approval} = Messages.send_message_for_approval(message)
+      {:ok, message_for_approval} = Messages.send_message_for_approval(@user, message)
       {:ok, message_to_approve} = Messages.get_message_for_approval(message_for_approval.id)
-      {:ok, _} = Messages.approve_message(message_to_approve)
+      {:ok, _} = Messages.approve_message(@user, message_to_approve)
     end
   end
 
   defp create_published do
     for _ <- 0..@published_amount do
       {:ok, message} =
-        Messages.create_message(%{
+        Messages.create_message(@user, %{
           title: random_title(),
           body: random_body()
         })
 
-      {:ok, message_for_approval} = Messages.send_message_for_approval(message)
+      {:ok, message_for_approval} = Messages.send_message_for_approval(@user, message)
       {:ok, message_to_approve} = Messages.get_message_for_approval(message_for_approval.id)
-      {:ok, approved_message} = Messages.approve_message(message_to_approve)
-      {:ok, _} = Messages.publish_message(approved_message)
+      {:ok, approved_message} = Messages.approve_message(@user, message_to_approve)
+      {:ok, _} = Messages.publish_message(@user, approved_message)
     end
   end
 

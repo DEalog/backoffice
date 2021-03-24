@@ -1,6 +1,8 @@
 defmodule DealogBackoffice.Messages.Validators.UniqueMessageIdTest do
   use DealogBackoffice.DataCase
 
+  import DealogBackoffice.MessageTestHelpers
+
   alias DealogBackoffice.Messages
   alias DealogBackoffice.Messages.Validators.UniqueMessageId
 
@@ -9,7 +11,9 @@ defmodule DealogBackoffice.Messages.Validators.UniqueMessageIdTest do
   end
 
   test "should return error when not unique" do
-    {:ok, message} = Messages.create_message(%{title: "The title", body: "The body"})
+    user = build_user()
+
+    {:ok, message} = Messages.create_message(user, %{title: "The title", body: "The body"})
 
     assert {:error, "has already been created"} = UniqueMessageId.validate(message.id, %{})
   end

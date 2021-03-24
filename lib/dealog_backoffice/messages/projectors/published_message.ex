@@ -4,10 +4,14 @@ defmodule DealogBackoffice.Messages.Projectors.PublishedMessage do
     name: "Messages.Projectors.PublishedMessage",
     consistency: :strong
 
+  require Logger
+
   alias DealogBackoffice.Messages.Events.{MessagePublished, MessageUpdated, MessageArchived}
   alias DealogBackoffice.Messages.Projections.PublishedMessage
 
   project(%MessagePublished{} = published, metadata, fn multi ->
+    Logger.debug("Projecting published event to published messages", %{id: published.message_id})
+
     Ecto.Multi.insert(
       multi,
       :create_published_message,
@@ -16,8 +20,9 @@ defmodule DealogBackoffice.Messages.Projectors.PublishedMessage do
         title: published.title,
         body: published.body,
         category: "Other",
-        ars: "059580004004",
-        organization: "DEalog Team",
+        author: get_author(metadata),
+        ars: get_in(metadata, ["organization", "administrative_area_id"]) || "000000000000",
+        organization: get_in(metadata, ["organization", "name"]) || "DEalog System",
         status: published.status,
         inserted_at: metadata.created_at
       }
@@ -25,12 +30,15 @@ defmodule DealogBackoffice.Messages.Projectors.PublishedMessage do
   end)
 
   project(%MessageUpdated{} = updated, metadata, fn multi ->
+    Logger.debug("Projecting updated event to published messages", %{id: updated.message_id})
+
     changes = [
       title: updated.title,
       body: updated.body,
       category: "Other",
-      ars: "059580004004",
-      organization: "DEalog Team",
+      author: get_author(metadata),
+      ars: get_in(metadata, ["organization", "administrative_area_id"]) || "000000000000",
+      organization: get_in(metadata, ["organization", "name"]) || "DEalog System",
       status: updated.status,
       updated_at: metadata.created_at
     ]
@@ -47,4 +55,10 @@ defmodule DealogBackoffice.Messages.Projectors.PublishedMessage do
   defp query(message_id) do
     from(m in PublishedMessage, where: m.id == ^message_id)
   end
+
+  defp get_author(%{"author" => %{"first_name" => first_name, "last_name" => last_name}}) do
+    "#{first_name} #{last_name}"
+  end
+
+  defp get_author(_), do: "Unbekannter Benutzer"
 end

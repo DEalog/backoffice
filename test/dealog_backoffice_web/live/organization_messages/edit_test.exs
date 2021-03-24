@@ -5,7 +5,7 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.EditTest do
 
   alias DealogBackoffice.Messages
 
-  setup :register_and_log_in_user
+  setup :register_log_in_and_setup_user
 
   describe "Create new message" do
     test "disconnected and connected render", %{conn: conn} do
@@ -72,13 +72,13 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.EditTest do
 
   @valid_attrs %{title: "The title", body: "The body"}
 
-  defp fixture(:message) do
-    {:ok, message} = Messages.create_message(@valid_attrs)
+  defp fixture(:message, user) do
+    {:ok, message} = Messages.create_message(user, @valid_attrs)
     message
   end
 
-  defp create_message(_) do
-    message = fixture(:message)
+  defp create_message(%{user: user}) do
+    message = fixture(:message, user)
     {:ok, message: message}
   end
 end

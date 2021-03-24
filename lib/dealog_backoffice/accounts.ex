@@ -96,6 +96,11 @@ defmodule DealogBackoffice.Accounts do
   """
   def get_user(id), do: get(User, id)
 
+  @doc """
+  Get a single user with a preloaded account.
+  """
+  def get_user_with_account(id), do: Repo.get(User, id) |> Repo.preload(:account)
+
   ## User registration
 
   @doc """
@@ -264,7 +269,10 @@ defmodule DealogBackoffice.Accounts do
   """
   def get_user_by_session_token(token) do
     {:ok, query} = UserToken.verify_session_token_query(token)
-    Repo.one(query)
+
+    query
+    |> Repo.one()
+    |> Repo.preload(account: [:administrative_area])
   end
 
   @doc """

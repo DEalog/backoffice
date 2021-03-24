@@ -6,6 +6,7 @@ defmodule DealogBackoffice.Repo.Migrations.AddArsAndOrganizationToPublishedMessa
       add :ars, :string
       add :organization, :string
     end
+
     create index(:published_messages, [:ars])
   end
 end
