@@ -6,7 +6,7 @@
       current_user: @current_user
   %>
 </header>
-<main role="main" class="px-4 pt-4 pb-48 sm:pb:24">
+<main role="main" class="px-4 pt-4 pb-48 mx-auto max-w-7xl sm:pb:24">
   <%= if is_account_incomplete?(@current_user) do %>
     <div class="mb-2 -mx-4 -mt-2">
       <%=
@@ -20,14 +20,14 @@
     <div class="alert alert-info" role="alert"
       phx-value-key="info"
     >
-    <%=
-      live_component @socket,
-        DealogBackofficeWeb.NotificationSuccess,
-        close_automatically?: true,
-        title: gettext("Successfully performed action!"),
-        message: live_flash(@flash, :save_success),
-        class: "sm:py-20"
-    %>
+      <%=
+        live_component @socket,
+          DealogBackofficeWeb.NotificationSuccess,
+          close_automatically?: true,
+          title: gettext("Successfully performed action!"),
+          message: live_flash(@flash, :save_success),
+          class: "sm:py-20"
+      %>
     </div>
   <% end %>
 
@@ -35,14 +35,14 @@
     <div class="alert alert-info" role="alert"
       phx-value-key="info"
     >
-    <%=
-      live_component @socket,
-        DealogBackofficeWeb.NotificationSuccess,
-        close_automatically?: true,
-        title: gettext("Successfully performed action!"),
-        message: live_flash(@flash, :info),
-        class: "sm:py-20"
-    %>
+      <%=
+        live_component @socket,
+          DealogBackofficeWeb.NotificationSuccess,
+          close_automatically?: true,
+          title: gettext("Successfully performed action!"),
+          message: live_flash(@flash, :info),
+          class: "sm:py-20"
+      %>
     </div>
   <% end %>
 
@@ -50,13 +50,13 @@
     <div class="alert alert-error" role="alert"
       phx-value-key="error"
     >
-    <%=
-      live_component @socket,
-        DealogBackofficeWeb.NotificationError,
-        title: gettext("There was an error!"),
-        message: live_flash(@flash, :error),
-        class: "sm:py-20"
-    %>
+      <%=
+        live_component @socket,
+          DealogBackofficeWeb.NotificationError,
+          title: gettext("There was an error!"),
+          message: live_flash(@flash, :error),
+          class: "sm:py-20"
+      %>
     </div>
   <% end %>
 
@@ -64,13 +64,13 @@
     <div class="alert alert-error" role="alert"
       phx-value-key="error"
     >
-    <%=
-      live_component @socket,
-        DealogBackofficeWeb.NotificationError,
-        title: gettext("There was an error!"),
-        message: live_flash(@flash, :save_error),
-        class: "sm:py-20"
-    %>
+      <%=
+        live_component @socket,
+          DealogBackofficeWeb.NotificationError,
+          title: gettext("There was an error!"),
+          message: live_flash(@flash, :save_error),
+          class: "sm:py-20"
+      %>
     </div>
   <% end %>
 
@@ -78,13 +78,13 @@
     <div class="alert alert-error" role="alert"
       phx-value-key="error"
     >
-    <%=
-      live_component @socket,
-        DealogBackofficeWeb.NotificationError,
-        title: gettext("Message not found!"),
-        message: live_flash(@flash, :not_found_error),
-        class: "sm:py-20"
-    %>
+      <%=
+        live_component @socket,
+          DealogBackofficeWeb.NotificationError,
+          title: gettext("Message not found!"),
+          message: live_flash(@flash, :not_found_error),
+          class: "sm:py-20"
+      %>
     </div>
   <% end %>
   <%= @inner_content %>
