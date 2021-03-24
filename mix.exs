@@ -4,7 +4,7 @@ defmodule DealogBackoffice.MixProject do
   def project do
     [
       app: :dealog_backoffice,
-      version: "0.5.0",
+      version: "0.6.0-dev",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
