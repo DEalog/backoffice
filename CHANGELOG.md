@@ -1,5 +1,7 @@
 ## Unreleased
 
+- `FIX` Fix publishing ARS and organization via Kafka
+
 ## 0.5.0
 
 This release provides the user system.
