@@ -22,6 +22,20 @@ defmodule DealogBackoffice.Release do
   end
 
   @doc """
+  Run migerations for event store.
+  """
+  def migrate_event_store do
+    {:ok, _} = Application.ensure_all_started(:postgrex)
+    {:ok, _} = Application.ensure_all_started(:ssl)
+
+    :ok = Application.load(@app)
+
+    config = DealogBackoffice.EventStore.config()
+
+    :ok = EventStore.Tasks.Migrate.exec(config, [])
+  end
+
+  @doc """
   Apply database migrations.
   """
   def migrate do
