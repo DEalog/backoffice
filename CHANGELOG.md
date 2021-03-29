@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `CNG` Update Elixir dependencies
 - `FIX` Fix publishing ARS and organization via Kafka
 
 ## 0.5.0
