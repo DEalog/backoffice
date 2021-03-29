@@ -17,7 +17,7 @@ defmodule DealogBackoffice.Release do
     config = EventStore.Config.parsed(DealogBackoffice.EventStore, @app)
 
     EventStore.Tasks.Create.exec(config, quiet: true)
-    :ok = EventStore.Tasks.Init.exec(DealogBackoffice.EventStore, config, quiet: true)
+    :ok = EventStore.Tasks.Init.exec(config, quiet: true)
     Logger.info("Event store setup finished")
   end
 
