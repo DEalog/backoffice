@@ -8,6 +8,7 @@
 #
 
 export DOKKU_CMD="ssh your-host"
+export DOKKU_HOSTNAME="your-host"
 export DOMAIN="your-domain"
 export PHX_SECRET="a_generated_secret"
 export EMAIL_ADDR="your@email.com"
