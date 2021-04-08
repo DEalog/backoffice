@@ -171,6 +171,8 @@ jobs:
     env:
       AWS_REGION: eu-central-1
       IMAGE_REPO: backoffice
+      IS_MERGED_PR: "${{ github.event.action }} == 'merged'"
+      IS_NOT_MERGED_PR: "${{ github.event.action }} != 'merged'"
 
     steps:
       - name: Fetch version artifact
@@ -186,9 +188,13 @@ jobs:
       - name: Untar application files
         run: tar -xvf app.tar .
 
-      - name: Set env
+      - name: Set version
         run: |
           echo "VERSION=$(cat ./version.txt)" >> ${GITHUB_ENV}
+
+      - name: Build image name
+        run: |
+          echo "IMAGE_NAME=${{ env.VERSION }}"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -196,10 +202,21 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+        if: IS_MERGED_PR
 
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+        if: IS_MERGED_PR
+
+      - name: Build Docker image
+        id: docker-build
+        uses: whoan/docker-build-with-cache-action@v5
+        with:
+          image_name: ${{ env.IMAGE_REPO }}
+          image_tag: ${{ env.IMAGE_TAG }}
+          dockerfile: ./.github/Dockerfile
+        if: IS_NOT_MERGED_PR
 
       - name: Build and push Docker image
         id: docker-build
@@ -208,12 +225,14 @@ jobs:
           username: "${{ secrets.AWS_ACCESS_KEY_ID }}"
           password: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
           image_name: ${{ env.IMAGE_REPO }}
-          image_tag: ${{ env.VERSION }}
+          image_tag: ${{ env.IMAGE_TAG }}
           registry: ${{ steps.login-ecr.outputs.registry }}
           dockerfile: ./.github/Dockerfile
+        if: IS_MERGED_PR
 
       - name: Store docker image name
         run: echo ${{ steps.docker-build.outputs.FULL_IMAGE_NAME }} >> ./full_image_name.txt
+        if: IS_MERGED_PR
 
       - name: Create artifact
         uses: actions/upload-artifact@v2
@@ -222,3 +241,4 @@ jobs:
           path: |
             ./full_image_name.txt
           if-no-files-found: error
+        if: IS_MERGED_PR
