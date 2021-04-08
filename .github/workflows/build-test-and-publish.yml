@@ -171,7 +171,7 @@ jobs:
     env:
       AWS_REGION: eu-central-1
       IMAGE_REPO: backoffice
-      IS_MERGED_PR: "${{ github.event.action == 'merged' }}'"
+      IS_MERGED_PR: "${{ github.event.action == 'merged' }}"
       IS_NOT_MERGED_PR: "${{ github.event.action != 'merged' }}"
 
     steps:
