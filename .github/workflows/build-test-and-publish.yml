@@ -218,6 +218,7 @@ jobs:
           image_tag: ${{ env.IMAGE_TAG }}
           registry: ${{ steps.login-ecr.outputs.registry }}
           dockerfile: ./.github/Dockerfile
+          push_image_and_stages: false
         if: ${{ env.IS_NOT_MERGED_PR }}
 
       - name: Build and push Docker image
