@@ -215,7 +215,7 @@ jobs:
           registry: ${{ steps.login-ecr.outputs.registry }}
           dockerfile: ./.github/Dockerfile
           push_image_and_stages: false
-        if: ${{ github.event.action != 'merged' }}
+        if: ${{ github.ref != 'refs/heads/main' }}
 
       - name: Build and push Docker image
         id: docker-build
@@ -227,11 +227,11 @@ jobs:
           image_tag: ${{ env.IMAGE_TAG }}
           registry: ${{ steps.login-ecr.outputs.registry }}
           dockerfile: ./.github/Dockerfile
-        if: ${{ github.event.action == 'merged' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Store docker image name
         run: echo ${{ steps.docker-build.outputs.FULL_IMAGE_NAME }} >> ./full_image_name.txt
-        if: ${{ github.event.action == 'merged' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Create artifact
         uses: actions/upload-artifact@v2
@@ -240,4 +240,4 @@ jobs:
           path: |
             ./full_image_name.txt
           if-no-files-found: error
-        if: ${{ github.event.action == 'merged' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
