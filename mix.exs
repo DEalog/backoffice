@@ -68,7 +68,7 @@ defmodule DealogBackoffice.MixProject do
       {:phoenix, "~> 1.5.3"},
       {:phoenix_ecto, "~> 4.1"},
       {:phoenix_html, "~> 2.11"},
-      {:phoenix_live_dashboard, "~> 0.2.9"},
+      {:phoenix_live_dashboard, "~> 0.3.6"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.14.0"},
       {:plug_cowboy, "~> 2.0"},
