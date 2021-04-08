@@ -194,7 +194,7 @@ jobs:
 
       - name: Build image name
         run: |
-          echo "IMAGE_NAME=${{ env.VERSION }}"
+          echo "IMAGE_TAG=${{ env.VERSION }}"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
