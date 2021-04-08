@@ -186,9 +186,13 @@ jobs:
       - name: Untar application files
         run: tar -xvf app.tar .
 
-      - name: Set env
+      - name: Set version
         run: |
           echo "VERSION=$(cat ./version.txt)" >> ${GITHUB_ENV}
+
+      - name: Build image name
+        run: |
+          echo "IMAGE_TAG=${{ env.VERSION }}" >> ${GITHUB_ENV}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -201,6 +205,18 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      - name: Build Docker image
+        uses: whoan/docker-build-with-cache-action@v5
+        with:
+          username: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          password: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+          image_name: ${{ env.IMAGE_REPO }}
+          image_tag: ${{ env.IMAGE_TAG }}
+          registry: ${{ steps.login-ecr.outputs.registry }}
+          dockerfile: ./.github/Dockerfile
+          push_image_and_stages: false
+        if: ${{ github.event.action != 'merged' }}
+
       - name: Build and push Docker image
         id: docker-build
         uses: whoan/docker-build-with-cache-action@v5
@@ -208,12 +224,14 @@ jobs:
           username: "${{ secrets.AWS_ACCESS_KEY_ID }}"
           password: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
           image_name: ${{ env.IMAGE_REPO }}
-          image_tag: ${{ env.VERSION }}
+          image_tag: ${{ env.IMAGE_TAG }}
           registry: ${{ steps.login-ecr.outputs.registry }}
           dockerfile: ./.github/Dockerfile
+        if: ${{ github.event.action == 'merged' }}
 
       - name: Store docker image name
         run: echo ${{ steps.docker-build.outputs.FULL_IMAGE_NAME }} >> ./full_image_name.txt
+        if: ${{ github.event.action == 'merged' }}
 
       - name: Create artifact
         uses: actions/upload-artifact@v2
@@ -222,3 +240,4 @@ jobs:
           path: |
             ./full_image_name.txt
           if-no-files-found: error
+        if: ${{ github.event.action == 'merged' }}
