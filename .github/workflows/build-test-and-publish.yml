@@ -210,7 +210,6 @@ jobs:
         if: IS_MERGED_PR
 
       - name: Build Docker image
-        id: docker-build
         uses: whoan/docker-build-with-cache-action@v5
         with:
           image_name: ${{ env.IMAGE_REPO }}
