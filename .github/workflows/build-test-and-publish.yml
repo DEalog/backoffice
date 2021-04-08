@@ -202,12 +202,12 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
-        if: IS_MERGED_PR
+        if: ${{ env.IS_MERGED_PR }}
 
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-        if: ${{ IS_MERGED_PR }}
+        if: ${{ env.IS_MERGED_PR }}
 
       - name: Build Docker image
         uses: whoan/docker-build-with-cache-action@v5
@@ -215,7 +215,7 @@ jobs:
           image_name: ${{ env.IMAGE_REPO }}
           image_tag: ${{ env.IMAGE_TAG }}
           dockerfile: ./.github/Dockerfile
-        if: ${{ IS_NOT_MERGED_PR }}
+        if: ${{ env.IS_NOT_MERGED_PR }}
 
       - name: Build and push Docker image
         id: docker-build
@@ -227,11 +227,11 @@ jobs:
           image_tag: ${{ env.IMAGE_TAG }}
           registry: ${{ steps.login-ecr.outputs.registry }}
           dockerfile: ./.github/Dockerfile
-        if: ${{ IS_MERGED_PR }}
+        if: ${{ env.IS_MERGED_PR }}
 
       - name: Store docker image name
         run: echo ${{ steps.docker-build.outputs.FULL_IMAGE_NAME }} >> ./full_image_name.txt
-        if: ${{ IS_MERGED_PR }}
+        if: ${{ env.IS_MERGED_PR }}
 
       - name: Create artifact
         uses: actions/upload-artifact@v2
@@ -240,4 +240,4 @@ jobs:
           path: |
             ./full_image_name.txt
           if-no-files-found: error
-        if: ${{ IS_MERGED_PR }}
+        if: ${{ env.IS_MERGED_PR }}
