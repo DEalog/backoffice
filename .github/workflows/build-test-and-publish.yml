@@ -212,8 +212,11 @@ jobs:
       - name: Build Docker image
         uses: whoan/docker-build-with-cache-action@v5
         with:
+          username: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          password: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
           image_name: ${{ env.IMAGE_REPO }}
           image_tag: ${{ env.IMAGE_TAG }}
+          registry: ${{ steps.login-ecr.outputs.registry }}
           dockerfile: ./.github/Dockerfile
         if: ${{ env.IS_NOT_MERGED_PR }}
 
