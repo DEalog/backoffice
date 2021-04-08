@@ -59,7 +59,7 @@ defmodule DealogBackoffice.MixProject do
       {:exconstructor, "~> 1.1"},
       {:faker, "~> 0.16", only: [:dev, :test], runtime: false},
       {:floki, ">= 0.0.0", only: :test},
-      {:gen_smtp, "~> 0.13"},
+      {:gen_smtp, "~> 1.1"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.1"},
       {:kafka_ex, "~> 0.11"},
