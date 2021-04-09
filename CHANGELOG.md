@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `FIX` Organization is sent correctly to the message service
 - `NEW` Messages can have a category attached
 - `FIX` Add missing event store migration
 - `CNG` Improve preview deployments
