@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build Elixir project
 
-    container: elixir:1.10.4-alpine
+    container: elixir:1.11.4-alpine
 
     env:
       MIX_ENV: prod
