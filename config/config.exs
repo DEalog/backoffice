@@ -88,8 +88,6 @@ config :commanded,
 # Configure tzdata
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
-config :iex, default_prompt: "DEalog IEx>>>"
-
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
