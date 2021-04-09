@@ -96,7 +96,7 @@ function run_tests_in_watch_mode {
 
 function run_yarn {
   local command="cd assets && yarn $@"
-  run_command web ${command}
+  run_detached_command web ${command}
 }
 
 function run_build_production {
