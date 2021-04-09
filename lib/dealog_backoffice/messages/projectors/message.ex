@@ -31,6 +31,7 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
         id: created.message_id,
         title: created.title,
         body: created.body,
+        category: created.category,
         status: created.status,
         author: get_author(metadata),
         inserted_at: metadata.created_at,
@@ -45,6 +46,7 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     update_message(multi, changed.message_id,
       title: changed.title,
       body: changed.body,
+      category: changed.category,
       status: changed.status,
       author: get_author(metadata),
       updated_at: metadata.created_at
@@ -59,6 +61,7 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     update_message(multi, sent_for_approval.message_id,
       title: sent_for_approval.title,
       body: sent_for_approval.body,
+      category: sent_for_approval.category,
       status: sent_for_approval.status,
       updated_at: metadata.created_at
     )
@@ -118,6 +121,7 @@ defmodule DealogBackoffice.Messages.Projectors.Message do
     update_message(multi, discarded.message_id,
       title: discarded.title,
       body: discarded.body,
+      category: discarded.category,
       status: discarded.status,
       # TODO Revert the date?
       updated_at: metadata.created_at

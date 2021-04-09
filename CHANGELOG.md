@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `NEW` Messages can have a category attached
 - `FIX` Add missing event store migration
 - `CNG` Improve preview deployments
 - `CNG` Update Elixir dependencies
@@ -10,10 +11,10 @@
 This release provides the user system.
 
 - `FIX` Sending message for approval is possible again
-- `ADD` All message actions are disabled when the account is incomplete
-- `ADD` User gets a warning when account is not setup
-- `ADD` Author and organization meta data is saved for all message related events
-- `ADD` Check origin config for websocket connections is introduced
+- `NEW` All message actions are disabled when the account is incomplete
+- `NEW` User gets a warning when account is not setup
+- `NEW` Author and organization meta data is saved for all message related events
+- `NEW` Check origin config for websocket connections is introduced
 - `CNG` Move hostname config to release
 - `NEW` Release startup actions are logged properly
 - `FIX` The updated date on the message for approval projection was fixed

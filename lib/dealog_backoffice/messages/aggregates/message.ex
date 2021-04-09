@@ -3,6 +3,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     :message_id,
     :title,
     :body,
+    :category,
     :status,
     :approval_notes,
     :rejection_reasons,
@@ -36,47 +37,38 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
     ChangeDiscarded
   }
 
-  @doc """
-  Create a new message.
-  """
   def execute(%Message{message_id: nil}, %CreateMessage{} = create) do
     %MessageCreated{
       message_id: create.message_id,
       title: create.title,
       body: create.body,
+      category: create.category,
       status: create.status
     }
   end
 
-  @doc """
-  Change an existing message.
-  """
   def execute(%Message{message_id: message_id}, %ChangeMessage{} = change) do
     %MessageChanged{
       message_id: message_id,
       title: change.title,
       body: change.body,
+      category: change.category,
       status: change.status
     }
   end
 
-  @doc """
-  Send an existing message for approval.
-  """
   def execute(%Message{message_id: message_id, status: :draft}, %SendMessageForApproval{} = send) do
     %MessageSentForApproval{
       message_id: message_id,
       title: send.title,
       body: send.body,
+      category: send.category,
       status: send.status
     }
   end
 
   def execute(%Message{}, %SendMessageForApproval{}), do: {:error, :invalid_state}
 
-  @doc """
-  Delete an existing message.
-  """
   def execute(
         %Message{message_id: message_id, status: :draft} = message,
         %DeleteMessage{} = delete
@@ -85,15 +77,13 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       message_id: message_id,
       title: message.title,
       body: message.body,
+      category: message.category,
       status: delete.status
     }
   end
 
   def execute(%Message{}, %DeleteMessage{}), do: {:error, :invalid_state}
 
-  @doc """
-  Approve an existing message.
-  """
   def execute(
         %Message{message_id: message_id, status: :waiting_for_approval},
         %ApproveMessage{} = approve
@@ -107,9 +97,6 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
 
   def execute(%Message{}, %ApproveMessage{}), do: {:error, :invalid_state}
 
-  @doc """
-  Reject an existing message.
-  """
   def execute(
         %Message{message_id: message_id, status: :waiting_for_approval},
         %RejectMessage{} = reject
@@ -123,9 +110,6 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
 
   def execute(%Message{}, %RejectMessage{}), do: {:error, :invalid_state}
 
-  @doc """
-  Publish an approved message.
-  """
   def execute(
         %Message{message_id: message_id, status: :approved, published?: false} = message,
         %PublishMessage{} = publish
@@ -134,6 +118,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       message_id: message_id,
       title: message.title,
       body: message.body,
+      category: message.category,
       status: publish.status
     }
   end
@@ -146,15 +131,13 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       message_id: message_id,
       title: message.title,
       body: message.body,
+      category: message.category,
       status: publish.status
     }
   end
 
   def execute(%Message{}, %PublishMessage{}), do: {:error, :invalid_state}
 
-  @doc """
-  Archive an existing message if it was or is published.
-  """
   def execute(
         %Message{message_id: message_id, published?: true} = message,
         %ArchiveMessage{} = archive
@@ -163,6 +146,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       message_id: message_id,
       title: message.title,
       body: message.body,
+      category: message.category,
       status: archive.status
     }
   end
@@ -177,6 +161,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       message_id: message_id,
       title: discard_change.title,
       body: discard_change.body,
+      category: discard_change.category,
       status: discard_change.status
     }
   end
@@ -191,6 +176,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       | message_id: created.message_id,
         title: created.title,
         body: created.body,
+        category: created.category,
         status: created.status
     }
   end
@@ -201,6 +187,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       | message_id: changed.message_id,
         title: changed.title,
         body: changed.body,
+        category: changed.category,
         status: changed.status
     }
   end
@@ -211,6 +198,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       | message_id: sent.message_id,
         title: sent.title,
         body: sent.body,
+        category: sent.category,
         status: sent.status
     }
   end
@@ -221,6 +209,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       | message_id: deleted.message_id,
         title: deleted.title,
         body: deleted.body,
+        category: deleted.category,
         status: deleted.status
     }
   end
@@ -250,6 +239,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
         status: published.status,
         title: published.title,
         body: published.body,
+        category: published.category,
         published?: true
     }
   end
@@ -260,7 +250,8 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       | message_id: updated.message_id,
         status: updated.status,
         title: updated.title,
-        body: updated.body
+        body: updated.body,
+        category: updated.category
     }
   end
 
@@ -270,6 +261,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       | message_id: archived.message_id,
         title: archived.title,
         body: archived.body,
+        category: archived.category,
         status: archived.status
     }
   end
@@ -280,6 +272,7 @@ defmodule DealogBackoffice.Messages.Aggregates.Message do
       | message_id: discarded.message_id,
         title: discarded.title,
         body: discarded.body,
+        category: discarded.category,
         status: discarded.status
     }
   end

@@ -13,8 +13,8 @@ defmodule DealogBackoffice.MessagesTest do
     ArchivedMessage
   }
 
-  @valid_data %{title: "The title", body: "The body"}
-  @invalid_data %{title: nil, body: nil}
+  @valid_data %{title: "The title", body: "The body", category: "The category"}
+  @invalid_data %{title: nil, body: nil, category: nil}
 
   describe "create message" do
     setup [:user]
@@ -24,6 +24,7 @@ defmodule DealogBackoffice.MessagesTest do
       assert {:ok, %Message{} = message} = Messages.create_message(user, @valid_data)
       assert message.title == @valid_data.title
       assert message.body == @valid_data.body
+      assert message.category == @valid_data.category
     end
 
     @tag :integration
@@ -36,8 +37,12 @@ defmodule DealogBackoffice.MessagesTest do
   end
 
   describe "change message" do
-    @valid_update_data %{title: "An updated title", body: "An updated body"}
-    @invalid_update_data %{title: nil, body: nil}
+    @valid_update_data %{
+      title: "An updated title",
+      body: "An updated body",
+      category: "An updated category"
+    }
+    @invalid_update_data %{title: nil, body: nil, category: nil}
 
     setup [:user, :newly_created_message]
 
@@ -49,6 +54,7 @@ defmodule DealogBackoffice.MessagesTest do
       refute updated_message == message
       assert updated_message.title == @valid_update_data.title
       assert updated_message.body == @valid_update_data.body
+      assert updated_message.category == @valid_update_data.category
     end
 
     @tag :integration
@@ -205,13 +211,15 @@ defmodule DealogBackoffice.MessagesTest do
       {:ok, %Message{} = updated_message} =
         Messages.change_message(user, loaded_message, %{
           title: "Changed title",
-          body: "Changed body"
+          body: "Changed body",
+          category: "Changed category"
         })
 
       {:ok, %Message{} = reverted_message} = Messages.discard_change(user, updated_message.id)
 
       assert reverted_message.title == @valid_data.title
       assert reverted_message.body == @valid_data.body
+      assert reverted_message.category == @valid_data.category
       assert reverted_message.status == :published
     end
   end
@@ -226,7 +234,8 @@ defmodule DealogBackoffice.MessagesTest do
       {:ok, %Message{} = updated_message} =
         Messages.change_message(user, loaded_message, %{
           title: "Changed title",
-          body: "Changed body"
+          body: "Changed body",
+          category: "Changed category"
         })
 
       {:ok, %ArchivedMessage{} = reverted_message} =
@@ -234,6 +243,7 @@ defmodule DealogBackoffice.MessagesTest do
 
       assert reverted_message.title == @valid_data.title
       assert reverted_message.body == @valid_data.body
+      assert reverted_message.category == @valid_data.category
       assert reverted_message.status == :archived
     end
   end

@@ -410,7 +410,7 @@ defmodule DealogBackoffice.Messages do
     end
   end
 
-  @allowed_keys [:title, :body]
+  @allowed_keys [:title, :body, :category]
 
   # Check if there has been a content change.
   defp has_changed?(message, attrs) do

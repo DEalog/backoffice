@@ -2,6 +2,7 @@ defmodule DealogBackoffice.Messages.Commands.DiscardChange do
   defstruct message_id: "",
             title: "",
             body: "",
+            category: "",
             status: :published
 
   use ExConstructor
@@ -22,6 +23,11 @@ defmodule DealogBackoffice.Messages.Commands.DiscardChange do
     string: true
   )
 
+  validates(:category,
+    presence: [message: "can't be blank"],
+    string: true
+  )
+
   validates(:status,
     inclusion: [in: [:published]]
   )
@@ -31,6 +37,11 @@ defmodule DealogBackoffice.Messages.Commands.DiscardChange do
   end
 
   def apply_data_from(%DiscardChange{} = change, %PublishedMessage{} = published_message) do
-    %DiscardChange{change | title: published_message.title, body: published_message.body}
+    %DiscardChange{
+      change
+      | title: published_message.title,
+        body: published_message.body,
+        category: published_message.category
+    }
   end
 end

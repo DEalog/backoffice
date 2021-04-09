@@ -16,6 +16,7 @@ defmodule DealogBackoffice.Messages.Projectors.DeletedMessage do
         id: deleted.message_id,
         title: deleted.title,
         body: deleted.body,
+        category: deleted.category,
         status: deleted.status,
         inserted_at: metadata.created_at
       }

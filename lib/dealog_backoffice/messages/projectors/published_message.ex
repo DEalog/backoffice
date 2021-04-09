@@ -19,7 +19,7 @@ defmodule DealogBackoffice.Messages.Projectors.PublishedMessage do
         id: published.message_id,
         title: published.title,
         body: published.body,
-        category: "Other",
+        category: published.category,
         author: get_author(metadata),
         ars: get_in(metadata, ["organization", "administrative_area_id"]) || "000000000000",
         organization: get_in(metadata, ["organization", "name"]) || "DEalog System",
@@ -35,7 +35,7 @@ defmodule DealogBackoffice.Messages.Projectors.PublishedMessage do
     changes = [
       title: updated.title,
       body: updated.body,
-      category: "Other",
+      category: updated.category,
       author: get_author(metadata),
       ars: get_in(metadata, ["organization", "administrative_area_id"]) || "000000000000",
       organization: get_in(metadata, ["organization", "name"]) || "DEalog System",

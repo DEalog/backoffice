@@ -32,13 +32,19 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
       message_id = UUID.uuid4()
 
       assert_events(
-        struct(CreateMessage, %{message_id: message_id, title: "A title", body: "A body"}),
+        struct(CreateMessage, %{
+          message_id: message_id,
+          title: "A title",
+          body: "A body",
+          category: "A category"
+        }),
         [
           %MessageCreated{
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ]
       )
@@ -52,14 +58,16 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
         struct(CreateMessage, %{
           message_id: message_id,
           title: "A title",
-          body: "A body"
+          body: "A body",
+          category: "A category"
         }),
         [
           %MessageCreated{
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ]
       )
@@ -77,20 +85,23 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ],
         struct(ChangeMessage, %{
           message_id: message_id,
           title: "A changed title",
-          body: "A changed body"
+          body: "A changed body",
+          category: "A changed category"
         }),
         [
           %MessageChanged{
             message_id: message_id,
             status: :draft,
             title: "A changed title",
-            body: "A changed body"
+            body: "A changed body",
+            category: "A changed category"
           }
         ]
       )
@@ -108,13 +119,15 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ],
         struct(SendMessageForApproval, %{
           message_id: message_id,
           title: "A title",
           body: "A body",
+          category: "A category",
           status: :waiting_for_approval
         }),
         [
@@ -122,7 +135,8 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :waiting_for_approval,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ]
       )
@@ -138,19 +152,22 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageSentForApproval{
             message_id: message_id,
             status: :waiting_for_approval,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ],
         struct(SendMessageForApproval, %{
           message_id: message_id,
           title: "A title",
           body: "A body",
+          category: "A category",
           status: :waiting_for_approval
         }),
         {:error, :invalid_state}
@@ -169,7 +186,8 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ],
         struct(DeleteMessage, %{
@@ -181,6 +199,7 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             title: "A title",
             body: "A body",
+            category: "A category",
             status: :deleted
           }
         ]
@@ -197,13 +216,15 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageSentForApproval{
             message_id: message_id,
             status: :sent_for_approval,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ],
         struct(DeleteMessage, %{
@@ -226,13 +247,15 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageSentForApproval{
             message_id: message_id,
             status: :waiting_for_approval,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ],
         struct(ApproveMessage, %{
@@ -257,13 +280,15 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageSentForApproval{
             message_id: message_id,
             status: :waiting_for_approval,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ],
         struct(ApproveMessage, %{
@@ -290,7 +315,8 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ],
         struct(ApproveMessage, %{
@@ -312,13 +338,15 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageSentForApproval{
             message_id: message_id,
             status: :waiting_for_approval,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ],
         struct(RejectMessage, %{
@@ -343,13 +371,15 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageSentForApproval{
             message_id: message_id,
             status: :waiting_for_approval,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ],
         struct(RejectMessage, %{
@@ -375,7 +405,8 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ],
         struct(RejectMessage, %{
@@ -397,13 +428,15 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageSentForApproval{
             message_id: message_id,
             status: :waiting_for_approval,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageApproved{
             message_id: message_id,
@@ -418,7 +451,8 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :published,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ]
       )
@@ -434,7 +468,8 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ],
         struct(PublishMessage, %{
@@ -454,13 +489,15 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageSentForApproval{
             message_id: message_id,
             status: :waiting_for_approval,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageApproved{
             message_id: message_id,
@@ -470,19 +507,22 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :published,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageChanged{
             message_id: message_id,
             status: :draft,
             title: "A changed title",
-            body: "A changed body"
+            body: "A changed body",
+            category: "A changed category"
           },
           %MessageSentForApproval{
             message_id: message_id,
             status: :waiting_for_approval,
             title: "A changed title",
-            body: "A changed body"
+            body: "A changed body",
+            category: "A changed category"
           },
           %MessageApproved{
             message_id: message_id,
@@ -497,7 +537,8 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :published,
             title: "A changed title",
-            body: "A changed body"
+            body: "A changed body",
+            category: "A changed category"
           }
         ]
       )
@@ -515,13 +556,15 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageSentForApproval{
             message_id: message_id,
             status: :waiting_for_approval,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageApproved{
             message_id: message_id,
@@ -530,7 +573,8 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
           %MessagePublished{
             message_id: message_id,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ],
         struct(ArchiveMessage, %{
@@ -541,7 +585,8 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :archived,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ]
       )
@@ -557,7 +602,8 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ],
         struct(ArchiveMessage, %{
@@ -579,13 +625,15 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageSentForApproval{
             message_id: message_id,
             status: :waiting_for_approval,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageApproved{
             message_id: message_id,
@@ -594,25 +642,29 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
           %MessagePublished{
             message_id: message_id,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           },
           %MessageChanged{
             message_id: message_id,
             title: "A changed title",
-            body: "A changed body"
+            body: "A changed body",
+            category: "A changed category"
           }
         ],
         struct(DiscardChange, %{
           message_id: message_id,
           title: "A title",
-          body: "A body"
+          body: "A body",
+          category: "A category"
         }),
         [
           %ChangeDiscarded{
             message_id: message_id,
             status: :published,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ]
       )
@@ -628,13 +680,15 @@ defmodule DealogBackoffice.Messages.Aggregates.MessageTest do
             message_id: message_id,
             status: :draft,
             title: "A title",
-            body: "A body"
+            body: "A body",
+            category: "A category"
           }
         ],
         struct(DiscardChange, %{
           message_id: message_id,
           title: "A title",
-          body: "A body"
+          body: "A body",
+          category: "A category"
         }),
         {:error, :invalid_state}
       )

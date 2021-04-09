@@ -35,7 +35,8 @@ defmodule DealogBackoffice.Seed do
       {:ok, _} =
         Messages.create_message(@user, %{
           title: random_title(),
-          body: random_body()
+          body: random_body(),
+          category: random_category()
         })
     end
   end
@@ -45,7 +46,8 @@ defmodule DealogBackoffice.Seed do
       {:ok, message} =
         Messages.create_message(@user, %{
           title: random_title(),
-          body: random_body()
+          body: random_body(),
+          category: random_category()
         })
 
       {:ok, _} = Messages.send_message_for_approval(@user, message)
@@ -57,7 +59,8 @@ defmodule DealogBackoffice.Seed do
       {:ok, message} =
         Messages.create_message(@user, %{
           title: random_title(),
-          body: random_body()
+          body: random_body(),
+          category: random_category()
         })
 
       {:ok, message_for_approval} = Messages.send_message_for_approval(@user, message)
@@ -71,7 +74,8 @@ defmodule DealogBackoffice.Seed do
       {:ok, message} =
         Messages.create_message(@user, %{
           title: random_title(),
-          body: random_body()
+          body: random_body(),
+          category: random_category()
         })
 
       {:ok, message_for_approval} = Messages.send_message_for_approval(@user, message)
@@ -99,5 +103,23 @@ defmodule DealogBackoffice.Seed do
     2..5
     |> Faker.Lorem.paragraphs()
     |> Enum.join("\n")
+  end
+
+  defp random_category do
+    [
+      "Other",
+      "Geo",
+      "Met",
+      "Safety",
+      "Security",
+      "Rescue",
+      "Fire",
+      "Health",
+      "Env",
+      "Transport",
+      "Infra",
+      "CBRNE"
+    ]
+    |> Enum.random()
   end
 end

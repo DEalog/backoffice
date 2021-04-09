@@ -21,6 +21,7 @@ defmodule DealogBackoffice.Messages.Projectors.MessageApproval do
         update_message_approval(multi, sent.message_id,
           title: sent.title,
           body: sent.body,
+          category: sent.category,
           status: sent.status,
           author: get_author(metadata),
           updated_at: metadata.created_at
@@ -69,6 +70,7 @@ defmodule DealogBackoffice.Messages.Projectors.MessageApproval do
         id: sent.message_id,
         title: sent.title,
         body: sent.body,
+        category: sent.category,
         status: sent.status,
         author: get_author(metadata),
         inserted_at: metadata.created_at,

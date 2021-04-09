@@ -64,7 +64,7 @@ msgstr "Meine Organisation"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:64
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:19
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:20
 msgid "New message"
 msgstr "Neue Meldung"
 
@@ -266,7 +266,7 @@ msgid "Components"
 msgstr "Komponenten"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:18
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:19
 #: lib/dealog_backoffice_web/live/organization_messages/edit.html.leex:11
 msgid "Create new message"
 msgstr "Neue Meldung erstellen"
@@ -322,7 +322,7 @@ msgid "Insert text here"
 msgstr "Text hier eingeben"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:32
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:33
 msgid "Message %{title} created successfully"
 msgstr "Meldung %{title} erfolgreich erstellt"
 
@@ -437,7 +437,7 @@ msgid "Notifications"
 msgstr "Benachrichtigungen"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:40
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:41
 #: lib/dealog_backoffice_web/live/organization_messages/edit.html.leex:6
 msgid "Change message"
 msgstr "Meldung ändern"
@@ -448,12 +448,12 @@ msgid "Changing the message will set its status back to draft!"
 msgstr "Das Ändern der Meldung setzt diese auf Entwurf zurück!"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:54
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:55
 msgid "Message %{title} changed successfully"
 msgstr "Meldung %{title} erfolgreich geändert"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:69
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:70
 msgid "Message %{title} successfully sent for approval"
 msgstr "Meldung %{title} erfolgreich zur Freigabe geschickt"
 
@@ -478,12 +478,12 @@ msgid "Dismissible error notification"
 msgstr "Ausblendbare Erfolgsmeldung"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:57
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:58
 msgid "Message %{title} has to be in status draft in order to send for approval"
 msgstr "Die Meldung %{title} muss sich im Zustand Entwurf befinden, um zur Freigabe geschickt werden zu können"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:31
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:32
 msgid "Message %{title} is in review an cannot be changed"
 msgstr "Die Meldung %{title} ist in Prüfung und kann momentan nicht geändert werden"
 
@@ -494,7 +494,7 @@ msgid "Successfully performed action!"
 msgstr "Aktion erfolgreich durchgeführt!"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:72
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:89
 msgid "Save message"
 msgstr "Meldung speichern"
 
@@ -562,8 +562,8 @@ msgstr "Zuletzt geändert um"
 #, elixir-format
 #: lib/dealog_backoffice_web/live/all_messages/show.ex:30
 #: lib/dealog_backoffice_web/live/message_approvals/edit.ex:55 lib/dealog_backoffice_web/live/message_approvals/show.ex:30
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:93 lib/dealog_backoffice_web/live/organization_messages/edit.ex:127
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:169 lib/dealog_backoffice_web/live/organization_messages/edit.ex:205
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:94 lib/dealog_backoffice_web/live/organization_messages/edit.ex:128
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:170 lib/dealog_backoffice_web/live/organization_messages/edit.ex:206
 #: lib/dealog_backoffice_web/live/organization_messages/show.ex:30
 msgid "Message %{id} could not be found"
 msgstr "Meldung %{id} konnte nicht gefunden werden"
@@ -654,12 +654,12 @@ msgid "Delete message"
 msgstr "Meldung löschen"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:83
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:84
 msgid "Message %{id} could not be deleted"
 msgstr "Meldung %{id} konnte nicht gelöscht werden"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:103
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:104
 msgid "Message %{title} successfully deleted"
 msgstr "Meldung %{title} erfolgreich gelöscht"
 
@@ -735,7 +735,7 @@ msgstr "Sie müssen angemeldet sein, um diese Seite laden zu können."
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:49
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:66 lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:144
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:83 lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:144
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -783,7 +783,7 @@ msgid "Current password"
 msgstr "Aktuelles Passwort"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:39
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:40
 msgid "Edit message %{title}"
 msgstr "Meldung %{title} bearbeiten"
 
@@ -1078,7 +1078,7 @@ msgid "Archive"
 msgstr "Archivieren"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:159
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:160
 msgid "Changes for message %{id} could not be discarded"
 msgstr "Änderungen für Meldung %{id} konnten nicht zurückgesetzt werden"
 
@@ -1093,27 +1093,27 @@ msgid "Discard unpublished changes and archive"
 msgstr "Unveröffentlichte Änderungen verwerfen und archivieren"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:117
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:118
 msgid "Message %{id} could not be archived"
 msgstr "Meldung %{id} konnte nicht archiviert werden"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:195
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:196
 msgid "Message %{id} could not be reverted and archived"
 msgstr "Meldung %{id} konnte nicht zurückgesetzt und archiviert werden"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:151
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:152
 msgid "Message %{title} reverted to published version"
 msgstr "Meldung %{title} zum veröffentlichten Stand zurückgesetzt"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:185
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:186
 msgid "Message %{title} reverted to published version and archived"
 msgstr "Meldung %{title} zum veröffentlichten Stand zurückgesetzt und archiviert"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:137
+#: lib/dealog_backoffice_web/live/organization_messages/edit.ex:138
 msgid "Message %{title} successfully archived"
 msgstr "Meldung %{title} erfolgreich archiviert"
 
@@ -1161,3 +1161,68 @@ msgstr "Bitte richten Sie ein Benutzerkonto ein um DEalog nutzen zu können."
 #: lib/dealog_backoffice_web/live/components/incomplete_account_banner.html.leex:9
 msgid "The account is not onboarded. Please setup your account in order to use DEalog."
 msgstr "Das Benutzerkonto ist nicht eingerichtet. Bitte richten Sie das Konto ein um DEalog nutzen zu können."
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:66
+msgid "category"
+msgstr "Bereich"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:76
+msgid "Chemical, Biological, Radiological, Nuclear or High-Yield Explosive threat or attack"
+msgstr "Chemische, biologische, radiologische, nukleare oder hochexplosive Bedrohung oder Angriff"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:70
+msgid "Fire suppression and rescue"
+msgstr "Brandbekämpfung und Rettung"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:67
+msgid "General emergency and public safety"
+msgstr "Allgemeiner Notfall und öffentliche Sicherheit"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:65
+msgid "Geophysical (inc. landslide)"
+msgstr "Geophysikalisch (inkl. Erdrutsch)"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:68
+msgid "Law enforcement, military, homeland and local/private security"
+msgstr "Strafverfolgung, Militär, Heimatschutz und lokale/private Sicherheit"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:71
+msgid "Medical and public health"
+msgstr "Medizinische und öffentliche Gesundheit"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:66
+msgid "Meteorological (inc. flood)"
+msgstr "Meteorologisch (inkl. Hochwasser)"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:64
+msgid "Other events"
+msgstr "Andere Ereignisse"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:72
+msgid "Pollution and other environmental"
+msgstr "Verschmutzung und andere Umwelt"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:73
+msgid "Public and private transportation"
+msgstr "Öffentliche und private Verkehrsmittel"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:69
+msgid "Rescue and recovery"
+msgstr "Rettung und Bergung"
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:74
+msgid "Utility, telecommunication, other non-transport infrastructure"
+msgstr "Versorgungs-, Telekommunikations- und andere Nicht-Verkehrsinfrastruktur"
