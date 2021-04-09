@@ -16,7 +16,7 @@ updates:
       interval: "weekly"
 
   - package-ecosystem: "docker"
-    directory: "./github"
+    directory: "/.github"
     schedule:
       interval: "weekly"
 
