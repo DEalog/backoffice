@@ -9,6 +9,7 @@ defmodule DealogBackoffice.Messages.Projections.DeletedMessage do
   schema "deleted_messages" do
     field :title, :string
     field :body, :string
+    field :category, :string
     field :status, Status
 
     timestamps()

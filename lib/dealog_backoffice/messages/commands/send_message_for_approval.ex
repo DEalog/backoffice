@@ -2,6 +2,7 @@ defmodule DealogBackoffice.Messages.Commands.SendMessageForApproval do
   defstruct message_id: "",
             title: "",
             body: "",
+            category: "",
             status: :waiting_for_approval
 
   use ExConstructor
@@ -18,6 +19,11 @@ defmodule DealogBackoffice.Messages.Commands.SendMessageForApproval do
   )
 
   validates(:body,
+    presence: [message: "can't be blank"],
+    string: true
+  )
+
+  validates(:category,
     presence: [message: "can't be blank"],
     string: true
   )

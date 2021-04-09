@@ -321,7 +321,7 @@ msgid "Insert text here"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:32
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:33
 msgid "Message %{title} created successfully"
 msgstr ""
 
@@ -447,7 +447,7 @@ msgid "Changing the message will set its status back to draft!"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:54
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:55
 msgid "Message %{title} changed successfully"
 msgstr ""
 
@@ -493,7 +493,7 @@ msgid "Successfully performed action!"
 msgstr ""
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:72
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:89
 msgid "Save message"
 msgstr ""
 
@@ -734,7 +734,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/message_approvals/form_component.html.leex:49
-#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:66 lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:144
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:83 lib/dealog_backoffice_web/live/settings/accounts/form_component.html.leex:144
 msgid "Cancel"
 msgstr ""
 
@@ -1159,4 +1159,69 @@ msgstr ""
 #, elixir-format
 #: lib/dealog_backoffice_web/live/components/incomplete_account_banner.html.leex:9
 msgid "The account is not onboarded. Please setup your account in order to use DEalog."
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.html.leex:66
+msgid "category"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:75
+msgid "Chemical, Biological, Radiological, Nuclear or High-Yield Explosive threat or attack"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:69
+msgid "Fire suppression and rescue"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:66
+msgid "General emergency and public safety"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:64
+msgid "Geophysical (inc. landslide)"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:67
+msgid "Law enforcement, military, homeland and local/private security"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:70
+msgid "Medical and public health"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:65
+msgid "Meteorological (inc. flood)"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:80
+msgid "Other events"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:71
+msgid "Pollution and other environmental"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:72
+msgid "Public and private transportation"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:68
+msgid "Rescue and recovery"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:73
+msgid "Utility, telecommunication, other non-transport infrastructure"
 msgstr ""

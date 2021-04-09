@@ -9,6 +9,7 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.FormComponent do
       socket
       |> assign(assigns)
       |> assign(message: message)
+      |> assign_available_categories()
 
     {:ok, socket}
   end
@@ -57,6 +58,30 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.FormComponent do
     end
   end
 
-  defp convert(%{"id" => id, "title" => title, "body" => body}),
-    do: %{id: id, title: title, body: body}
+  defp assign_available_categories(socket) do
+    assign(socket,
+      available_categories: [
+        {gettext("Other events"), "Other"},
+        {gettext("Geophysical (inc. landslide)"), "Geo"},
+        {gettext("Meteorological (inc. flood)"), "Met"},
+        {gettext("General emergency and public safety"), "Safety"},
+        {gettext("Law enforcement, military, homeland and local/private security"), "Security"},
+        {gettext("Rescue and recovery"), "Rescue"},
+        {gettext("Fire suppression and rescue"), "Fire"},
+        {gettext("Medical and public health"), "Health"},
+        {gettext("Pollution and other environmental"), "Env"},
+        {gettext("Public and private transportation"), "Transport"},
+        {gettext("Utility, telecommunication, other non-transport infrastructure"), "Infra"},
+        {
+          gettext(
+            "Chemical, Biological, Radiological, Nuclear or High-Yield Explosive threat or attack"
+          ),
+          "CBRNE"
+        }
+      ]
+    )
+  end
+
+  defp convert(%{"id" => id, "title" => title, "body" => body, "category" => category}),
+    do: %{id: id, title: title, body: body, category: category}
 end

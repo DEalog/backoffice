@@ -60,6 +60,23 @@
           class: if has_errors?(f, :body), do: "text-red-700", else: ""
       %>
     </div>
+    <div class="mt-2">
+      <%=
+        label f,
+          gettext("category")
+      %>
+      <%=
+        select f, :category,
+          @available_categories,
+          selected: @message.category,
+          class: "form-select block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :category), do: " border-red-700"}"
+      %>
+      <%=
+        errors_for_field f,
+          :category,
+          class: if has_errors?(f, :category), do: "text-red-700", else: ""
+      %>
+    </div>
     <div class="flex justify-end mt-4">
       <span class="inline-flex ml-3 rounded-md shadow-sm">
         <%=

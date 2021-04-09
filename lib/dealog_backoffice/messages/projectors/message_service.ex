@@ -50,7 +50,7 @@ defmodule DealogBackoffice.Messages.Projectors.MessageService do
           identifier: event.message_id,
           headline: event.title,
           description: event.body,
-          category: "Other",
+          category: event.category,
           ars: get_in(metadata, ["organization", "administrative_area_id"]) || "000000000000",
           organization: get_in(metadata, ["organization", "organization"]) || "DEalog System",
           publishedAt: DateTime.to_unix(metadata.created_at, :millisecond)

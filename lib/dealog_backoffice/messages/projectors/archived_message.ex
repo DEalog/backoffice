@@ -16,6 +16,7 @@ defmodule DealogBackoffice.Messages.Projectors.ArchivedMessage do
         id: archived.message_id,
         title: archived.title,
         body: archived.body,
+        category: archived.category,
         status: archived.status,
         inserted_at: metadata.created_at
       }

@@ -4,6 +4,7 @@ defmodule DealogBackoffice.Messages.Events.ChangeDiscarded do
     :message_id,
     :title,
     :body,
+    :category,
     :status
   ]
 end

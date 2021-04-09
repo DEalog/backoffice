@@ -1,26 +1,25 @@
-defmodule DealogBackoffice.Accounts.Validators.UniqueAccountIdTest do
+defmodule DealogBackoffice.Messages.Validators.UniqueMessageIdTest do
   use DealogBackoffice.DataCase
 
-  import DealogBackoffice.AccountsFixtures
+  import DealogBackoffice.MessageTestHelpers
 
-  alias DealogBackoffice.Accounts
-  alias DealogBackoffice.Accounts.Validators.UniqueAccountId
+  alias DealogBackoffice.Messages
+  alias DealogBackoffice.Messages.Validators.UniqueMessageId
 
   test "should pass if unique" do
-    assert :ok = UniqueAccountId.validate(UUID.uuid4(), %{})
+    assert :ok = UniqueMessageId.validate(UUID.uuid4(), %{})
   end
 
   test "should return error when not unique" do
-    user = user_fixture()
+    user = build_user()
 
-    {:ok, account} =
-      Accounts.create_account(%{
-        first_name: "John",
-        last_name: "Doe",
-        user_id: user.id,
-        administrative_area: "abc"
+    {:ok, message} =
+      Messages.create_message(user, %{
+        title: "The title",
+        body: "The body",
+        category: "The category"
       })
 
-    assert {:error, "has already been created"} = UniqueAccountId.validate(account.id, %{})
+    assert {:error, "has already been created"} = UniqueMessageId.validate(message.id, %{})
   end
 end

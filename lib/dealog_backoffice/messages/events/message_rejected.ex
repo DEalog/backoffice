@@ -9,15 +9,12 @@ defmodule DealogBackoffice.Messages.Events.MessageRejected do
   defimpl Commanded.Event.Upcaster, for: __MODULE__ do
     alias DealogBackoffice.Messages.Events.MessageRejected
 
-    def upcast(%MessageRejected{} = event, _metadata) do
-      case Map.has_key?(event, :reason) do
-        false -> %MessageRejected{event | reason: ""}
-        _ -> event
-      end
+    def upcast(%MessageRejected{status: "rejected", reason: _} = event, _metadata) do
+      %MessageRejected{event | status: :rejected}
     end
 
     def upcast(%MessageRejected{status: "rejected"} = event, _metadata) do
-      %MessageRejected{event | status: :rejected}
+      %MessageRejected{event | reason: "", status: :rejected}
     end
   end
 end

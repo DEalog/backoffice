@@ -2,6 +2,7 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
   use DealogBackofficeWeb, :live_view
 
   alias DealogBackoffice.Messages
+  alias DealogBackoffice.Messages.Projections.Message
 
   @impl true
   def mount(_params, session, socket) do
@@ -18,13 +19,13 @@ defmodule DealogBackofficeWeb.OrganizationMessagesLive.Edit do
       page_title: gettext("Create new message"),
       title: gettext("New message"),
       active_page: :organization_messages,
-      message: %{id: nil, title: nil, body: nil}
+      message: %{id: nil, title: nil, body: nil, category: nil}
     )
   end
 
   defp apply_action(socket, :change, %{"id" => id}) do
     case Messages.get_message(id) do
-      {:ok, %{status: "waiting_for_approval"} = message} ->
+      {:ok, %Message{status: "waiting_for_approval"} = message} ->
         socket
         |> put_flash(
           :save_error,

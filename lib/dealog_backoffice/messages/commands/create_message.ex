@@ -2,6 +2,7 @@ defmodule DealogBackoffice.Messages.Commands.CreateMessage do
   defstruct message_id: "",
             title: "",
             body: "",
+            category: "Other",
             status: :draft
 
   use ExConstructor
@@ -21,6 +22,11 @@ defmodule DealogBackoffice.Messages.Commands.CreateMessage do
   )
 
   validates(:body,
+    presence: [message: "can't be blank"],
+    string: true
+  )
+
+  validates(:category,
     presence: [message: "can't be blank"],
     string: true
   )

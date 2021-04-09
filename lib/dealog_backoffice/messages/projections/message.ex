@@ -11,6 +11,7 @@ defmodule DealogBackoffice.Messages.Projections.Message do
   schema "messages" do
     field :title, :string
     field :body, :string
+    field :category, :string
     field :status, Status
     field :rejection_reason, :string
     field :published, :boolean
