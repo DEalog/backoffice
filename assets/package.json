@@ -24,7 +24,7 @@
     "copy-webpack-plugin": "^6.4.1",
     "cross-env": "^7.0.2",
     "css-loader": "^5.2.4",
-    "mini-css-extract-plugin": "^1.5.0",
+    "mini-css-extract-plugin": "^1.5.1",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
     "terser-webpack-plugin": "^4.2.3",
