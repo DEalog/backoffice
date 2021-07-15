@@ -85,7 +85,12 @@
         </div>
       </form>
     </div>
-    <div class="text-right">
+    <div class="flex justify-between">
+      <%=
+        link gettext("Resend confirmation mail"),
+          to: Routes.user_confirmation_path(@conn, :new),
+          class: "font-medium text-yellow-400 hover:text-yellow-300 focus:outline-none focus:underline transition ease-in-out duration-150"
+      %>
       <%=
         link gettext("Sign in"),
           to: Routes.user_session_path(@conn, :new),
