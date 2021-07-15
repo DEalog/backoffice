@@ -34,7 +34,7 @@ COPY rel rel
 RUN mix do compile, release
 
 # prepare release image
-FROM alpine:3.13.5 AS app
+FROM alpine:3.14.0 AS app
 RUN apk add --no-cache openssl ncurses-libs
 
 WORKDIR /app
