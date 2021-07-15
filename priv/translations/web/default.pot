@@ -717,7 +717,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/dealog_backoffice_web/templates/user_confirmation/new.html.eex:43
-#: lib/dealog_backoffice_web/templates/user_registration/new.html.eex:90 lib/dealog_backoffice_web/templates/user_reset_password/edit.html.eex:94
+#: lib/dealog_backoffice_web/templates/user_registration/new.html.eex:95 lib/dealog_backoffice_web/templates/user_reset_password/edit.html.eex:94
 #: lib/dealog_backoffice_web/templates/user_reset_password/new.html.eex:47 lib/dealog_backoffice_web/templates/user_session/new.html.eex:111
 msgid "Sign in"
 msgstr ""
@@ -1224,4 +1224,9 @@ msgstr ""
 #, elixir-format
 #: lib/dealog_backoffice_web/live/organization_messages/form_component.ex:74
 msgid "Utility, telecommunication, other non-transport infrastructure"
+msgstr ""
+
+#, elixir-format
+#: lib/dealog_backoffice_web/templates/user_registration/new.html.eex:90
+msgid "Resend confirmation mail"
 msgstr ""
