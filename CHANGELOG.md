@@ -1,5 +1,6 @@
 ## Unreleased
 
+- `NEW` ARS IDs are projected for filtering
 - `NEW` Add export of ARS for Heilbronn
 - `NEW` The confirmation email can be resent
 - `FIX` Organization is sent correctly to the message service

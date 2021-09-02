@@ -12,6 +12,8 @@ defmodule DealogBackoffice.Messages.Projections.MessageForApproval do
     field :title, :string
     field :body, :string
     field :category, :string
+    field :ars, :string
+    field :organization, :string
     field :status, Status
     field :reason, :string
     field :note, :string

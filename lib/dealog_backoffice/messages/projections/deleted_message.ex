@@ -10,6 +10,8 @@ defmodule DealogBackoffice.Messages.Projections.DeletedMessage do
     field :title, :string
     field :body, :string
     field :category, :string
+    field :ars, :string
+    field :organization, :string
     field :status, Status
 
     timestamps()
