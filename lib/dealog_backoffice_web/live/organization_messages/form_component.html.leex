@@ -35,7 +35,7 @@
         text_input f,
           :title,
           value: @message.title,
-          class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :title), do: " border-red-700"}"
+          class: "max-w-lg block w-full shadow-sm focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm border-gray-300 rounded-md#{if has_errors?(f, :title), do: " border-red-700"}"
       %>
       <%=
         errors_for_field f,
@@ -52,7 +52,7 @@
         textarea f, :body,
           value: @message.body,
           rows: 10,
-          class: "form-input flex-1 block w-full px-3 py-2 rounded-md sm:text-sm sm:leading-5#{if has_errors?(f, :body), do: " border-red-700"}"
+          class: "max-w-lg block w-full shadow-sm focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm border-gray-300 rounded-md#{if has_errors?(f, :body), do: " border-red-700"}"
       %>
       <%=
         errors_for_field f,
@@ -69,7 +69,7 @@
         select f, :category,
           @available_categories,
           selected: @message.category,
-          class: "form-select block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :category), do: " border-red-700"}"
+          class: "max-w-lg block w-full shadow-sm focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm border-gray-300 rounded-md#{if has_errors?(f, :category), do: " border-red-700"}"
       %>
       <%=
         errors_for_field f,

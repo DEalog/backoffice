@@ -42,7 +42,7 @@
             text_input f,
               :first_name,
               placeholder: gettext("First name, e.g. Maxime"),
-              class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :first_name), do: " border-red-700"}"
+              class: "max-w-lg block w-full shadow-sm focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm border-gray-300 rounded-md#{if has_errors?(f, :first_name), do: " border-red-700"}"
           %>
           <%=
             error_tag f,
@@ -60,7 +60,7 @@
             text_input f,
               :last_name,
               placeholder: gettext("Last name, e.g. Mustermann"),
-              class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :last_name), do: " border-red-700"}"
+              class: "max-w-lg block w-full shadow-sm focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm border-gray-300 rounded-md#{if has_errors?(f, :last_name), do: " border-red-700"}"
           %>
           <%=
             error_tag f,
@@ -90,7 +90,7 @@
             select f,
               :administrative_area_id,
               @administrative_areas,
-              class: "form-select block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :administrative_area_id), do: " border-red-700"}"
+              class: "max-w-lg block focus:ring-yellow-500 focus:border-yellow-500 w-full shadow-sm sm:text-sm border-gray-300 rounded-md#{if has_errors?(f, :administrative_area_id), do: " border-red-700"}"
           %>
           <%=
             error_tag f,
@@ -109,7 +109,7 @@
             text_input f,
               :organization,
               placeholder: gettext("Name of the organization, e.g. fire department"),
-              class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :organization), do: " border-red-700"}"
+              class: "max-w-lg block w-full shadow-sm focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm border-gray-300 rounded-md#{if has_errors?(f, :organization), do: " border-red-700"}"
           %>
           <%=
             error_tag f,
@@ -127,7 +127,7 @@
             text_input f,
               :position,
               placeholder: gettext("Position in the organization, e.g. captain"),
-              class: "form-input block w-full sm:text-sm sm:leading-5#{if has_errors?(f, :position), do: " border-red-700"}"
+              class: "max-w-lg block w-full shadow-sm focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm border-gray-300 rounded-md#{if has_errors?(f, :position), do: " border-red-700"}"
           %>
           <%=
             error_tag f,
