@@ -14,7 +14,9 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.Index do
   end
 
   defp apply_action(socket, :index, _params) do
-    {messages, _total_count} = Messages.list_message_approvals()
+    current_account = get_account(socket.assigns.current_user.account)
+    ars = get_administrative_area(current_account)
+    {messages, _total_count} = Messages.list_message_approvals_for_administrative_area(ars)
 
     assign(socket,
       page_title: gettext("Approvals"),
@@ -22,4 +24,10 @@ defmodule DealogBackofficeWeb.MessageApprovalsLive.Index do
       messages: messages
     )
   end
+
+  defp get_account(nil), do: nil
+  defp get_account(account), do: account
+
+  defp get_administrative_area(nil), do: nil
+  defp get_administrative_area(%{administrative_area: %{ars: ars}}), do: ars
 end

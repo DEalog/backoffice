@@ -1,5 +1,7 @@
 ## Unreleased
 
+- `NEW` Add administrative area filter to approvals
+- `NEW` Add administrative filter to my organization
 - `FIX` Fix form field styles
 - `NEW` ARS IDs are projected for filtering
 - `NEW` Add export of ARS for Heilbronn
