@@ -31,7 +31,9 @@ defmodule DealogBackoffice.Messages do
 
   alias DealogBackoffice.Messages.Queries.{
     ListMessages,
+    ListMessagesByAdministrativeArea,
     ListMessageApprovals,
+    ListMessageApprovalsByAdministrativeArea,
     ListPublishedMessages
   }
 
@@ -138,6 +140,13 @@ defmodule DealogBackoffice.Messages do
   end
 
   @doc """
+  Get a (paginated) list of messages for a given administrative area.
+  """
+  def list_messages_for_administrative_area(ars) do
+    ListMessagesByAdministrativeArea.paginate(Repo, ars)
+  end
+
+  @doc """
   Get a message by its ID.
   """
   def get_message(message_id) do
@@ -159,6 +168,13 @@ defmodule DealogBackoffice.Messages do
   """
   def list_message_approvals do
     ListMessageApprovals.paginate(Repo)
+  end
+
+  @doc """
+  Get a (paginated) list of message approvals for an administrative area.
+  """
+  def list_message_approvals_for_administrative_area(ars) do
+    ListMessageApprovalsByAdministrativeArea.paginate(Repo, ars)
   end
 
   @doc """
