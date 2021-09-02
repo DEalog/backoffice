@@ -12,6 +12,8 @@ defmodule DealogBackoffice.Messages.Projections.Message do
     field :title, :string
     field :body, :string
     field :category, :string
+    field :ars, :string
+    field :organization, :string
     field :status, Status
     field :rejection_reason, :string
     field :published, :boolean

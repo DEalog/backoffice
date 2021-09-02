@@ -17,6 +17,8 @@ defmodule DealogBackoffice.Messages.Projectors.ArchivedMessage do
         title: archived.title,
         body: archived.body,
         category: archived.category,
+        ars: get_in(metadata, ["organization", "administrative_area_id"]) || "000000000000",
+        organization: get_in(metadata, ["organization", "name"]) || "DEalog System",
         status: archived.status,
         inserted_at: metadata.created_at
       }

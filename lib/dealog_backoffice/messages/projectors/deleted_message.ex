@@ -17,6 +17,8 @@ defmodule DealogBackoffice.Messages.Projectors.DeletedMessage do
         title: deleted.title,
         body: deleted.body,
         category: deleted.category,
+        ars: get_in(metadata, ["organization", "administrative_area_id"]) || "000000000000",
+        organization: get_in(metadata, ["organization", "name"]) || "DEalog System",
         status: deleted.status,
         inserted_at: metadata.created_at
       }
