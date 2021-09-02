@@ -42,7 +42,7 @@ msgid "All messages"
 msgstr "Alle Meldungen"
 
 #, elixir-format
-#: lib/dealog_backoffice_web/live/message_approvals/index.ex:20
+#: lib/dealog_backoffice_web/live/message_approvals/index.ex:22
 #: lib/dealog_backoffice_web/live/message_approvals/index.html.leex:3 lib/dealog_backoffice_web/live/navigation_component.html.leex:47
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:161
 msgid "Approvals"
@@ -57,7 +57,7 @@ msgstr "Übersicht"
 
 #, elixir-format
 #: lib/dealog_backoffice_web/live/navigation_component.html.leex:42
-#: lib/dealog_backoffice_web/live/navigation_component.html.leex:156 lib/dealog_backoffice_web/live/organization_messages/index.ex:20
+#: lib/dealog_backoffice_web/live/navigation_component.html.leex:156 lib/dealog_backoffice_web/live/organization_messages/index.ex:22
 #: lib/dealog_backoffice_web/live/organization_messages/index.html.leex:3
 msgid "My organization"
 msgstr "Meine Organisation"
