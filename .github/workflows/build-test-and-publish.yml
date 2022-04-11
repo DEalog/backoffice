@@ -27,7 +27,7 @@ jobs:
           fallback-prefix: "1.0.0-SNAPSHOT-"
 
       - name: Create artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: version
           path: |
@@ -101,7 +101,7 @@ jobs:
         run: tar -cvf app.tar ./_build/prod/rel/backoffice ./rel/run.sh
 
       - name: Create artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: backoffice
           path: |
@@ -234,7 +234,7 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Create artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: dockerized-backoffice
           path: |
