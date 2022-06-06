@@ -53,7 +53,7 @@ jobs:
 
       - name: Cache Elixir dependencies
         id: mix_cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v3.0.3
         with:
           path: |
             ~/.mix
@@ -75,7 +75,7 @@ jobs:
 
       - name: Cache Node.js dependencies
         id: yarn-cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v3.0.3
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -142,7 +142,7 @@ jobs:
 
       - name: Cache Elixir dependencies
         id: mix_cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v3.0.3
         with:
           path: |
             ~/.mix
