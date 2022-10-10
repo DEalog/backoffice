@@ -18,7 +18,7 @@ jobs:
     name: Create version number
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.1.0
 
       - name: Set version number
         id: version
@@ -44,7 +44,7 @@ jobs:
       MIX_ENV: prod
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.1.0
 
       - name: Prepare build environment
         run: |
@@ -134,7 +134,7 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.1.0
 
       - name: Prepare build environment
         run: |
